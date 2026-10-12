@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guest · New request — Guest Service Requests mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0E6E66}a:hover{color:#0A524C}
+</style>
+</head>
+<body>
+<div style="box-sizing: border-box; min-height: 800px; background: #F5F6F3; font-family: 'Figtree', system-ui, sans-serif; color: #1C2B2A; display: flex; flex-direction: column">
+  <header style="background: #FFFFFF; border-bottom: 1px solid #DDE2E0; padding: 14px 32px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+    <div style="display: flex; align-items: center; gap: 12px">
+      <div style="width: 34px; height: 34px; border-radius: 9px; background: #0E6E66; display: flex; align-items: center; justify-content: center">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"></path><path d="M5 10v10h14V10"></path><path d="M10 20v-5h4v5"></path></svg>
+      </div>
+      <span style="font-weight: 700; font-size: 17px">Guest Requests</span>
+      <span style="font-size: 14px; color: #4A5856; padding: 4px 10px; border: 1px solid #DDE2E0; border-radius: 999px">Riverside Suites</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 20px; font-size: 14px">
+      <span>Room 1204 · Ms Tan</span>
+      <a href="04-my-requests.html" style="font-weight: 600">My requests</a>
+    </div>
+  </header>
+  <main style="flex: 1; width: 100%; max-width: 720px; box-sizing: border-box; margin: 0 auto; padding: 48px 32px; display: flex; flex-direction: column; gap: 24px">
+    <h1 style="margin: 0; font-size: 30px; font-weight: 700">New request</h1>
+    <form style="background: #FFFFFF; border: 1px solid #DDE2E0; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 24px">
+      <fieldset style="border: 0; margin: 0; padding: 0">
+        <legend style="font-size: 14px; font-weight: 600; padding: 0; margin-bottom: 10px">What do you need?</legend>
+        <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px">
+          <button type="button" aria-pressed="true" style="height: 84px; border-radius: 12px; border: 2px solid #0E6E66; background: #E3F1EF; color: #1C2B2A; font-family: inherit; font-size: 15px; font-weight: 600; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16"></path><path d="M6 7v11a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7"></path><path d="M9 4h6"></path></svg>
+            Housekeeping
+          </button>
+          <button type="button" aria-pressed="false" style="height: 84px; border-radius: 12px; border: 1.5px solid #C9D0CE; background: #FFFFFF; color: #1C2B2A; font-family: inherit; font-size: 15px; font-weight: 600; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"></path></svg>
+            Maintenance
+          </button>
+          <button type="button" aria-pressed="false" style="height: 84px; border-radius: 12px; border: 1.5px solid #C9D0CE; background: #FFFFFF; color: #1C2B2A; font-family: inherit; font-size: 15px; font-weight: 600; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.9z"></path></svg>
+            Amenities
+          </button>
+          <button type="button" aria-pressed="false" style="height: 84px; border-radius: 12px; border: 1.5px solid #C9D0CE; background: #FFFFFF; color: #1C2B2A; font-family: inherit; font-size: 15px; font-weight: 600; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M8 12h.01M12 12h.01M16 12h.01"></path></svg>
+            Other
+          </button>
+        </div>
+      </fieldset>
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <label for="desc" style="font-size: 14px; font-weight: 600">Describe it in a few words</label>
+        <textarea id="desc" rows="3" style="box-sizing: border-box; border: 1.5px solid #C9D0CE; border-radius: 10px; padding: 12px 14px; font-size: 16px; font-family: inherit; line-height: 1.4; resize: vertical; background: #FFFFFF; color: #1C2B2A">Two extra bath towels and fresh pillowcases, please.</textarea>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px; max-width: 360px">
+        <label for="when" style="font-size: 14px; font-weight: 600">When suits you? <span style="font-weight: 400; color: #4A5856">(optional)</span></label>
+        <select id="when" style="height: 48px; box-sizing: border-box; border: 1.5px solid #C9D0CE; border-radius: 10px; padding: 0 12px; font-size: 16px; font-family: inherit; background: #FFFFFF; color: #1C2B2A">
+          <option>Any time</option>
+          <option selected>This afternoon (2pm – 5pm)</option>
+          <option>This evening (5pm – 9pm)</option>
+          <option>Tomorrow morning (9am – 12pm)</option>
+        </select>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center">
+        <a href="03-request-received.html" style="height: 48px; padding: 0 28px; border-radius: 10px; background: #0E6E66; color: #FFFFFF; font-size: 16px; font-weight: 600; text-decoration: none; display: flex; align-items: center; justify-content: center">Send request</a>
+        <a href="04-my-requests.html" style="font-size: 15px; font-weight: 600; padding: 12px 8px">Cancel</a>
+      </div>
+    </form>
+  </main>
+</div>
+</body>
+</html>
