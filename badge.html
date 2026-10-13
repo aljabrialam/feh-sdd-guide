@@ -303,8 +303,7 @@ a{color:var(--aqua)}
     { id: 'sdd', label: 'SPEC KIT', shape: 'burst', items: ['SPEC FIRST', 'NO VIBE CODING', 'G1 ✓', 'G2 ✓', 'G3 ✓', '/specify', '/clarify', '/plan', 'TRACE IT BACK', 'ACCEPTANCE CRITERIA'] },
     { id: 'stack', label: 'STACK', shape: 'pill', items: ['DJANGO', 'DRF', 'REACT', 'VITE', 'PLAYWRIGHT', 'SQLITE', 'JWT', 'PYTEST'] },
     { id: 'vibe', label: 'VIBE', shape: 'flower', items: ['HERE 2 LEARN', 'HERE 2 SHIP', 'COFFEE POWERED', 'BUG HUNTER', 'FIRST HACKATHON', 'PROMPT WHISPERER', 'WORKS ON MY LAPTOP'] },
-    { id: 'hotel', label: 'HOSPITALITY', shape: 'blob', items: ['GUEST FIRST', 'ROOM SERVICE', '5★ UX', 'CHECK-IN READY', 'FAR EAST FAM', 'DO NOT DISTURB'] },
-    { id: 'pron', label: 'PRONOUNS', shape: 'sun', items: ['SHE/HER', 'HE/HIM', 'THEY/THEM', 'ASK ME'] }
+    { id: 'hotel', label: 'HOSPITALITY', shape: 'blob', items: ['GUEST FIRST', 'ROOM SERVICE', '5★ UX', 'CHECK-IN READY', 'FAR EAST FAM', 'DO NOT DISTURB'] }
   ];
   var CORDS = [
     { id: 'aqua', c: '#7FFFD4', t: '#001D21' }, { id: 'dodger', c: '#1E90FF', t: '#fff' }, { id: 'yale', c: '#0F4D92', t: '#fff' },
@@ -327,7 +326,7 @@ a{color:var(--aqua)}
   var DEFAULT = { name: '', team: '', photo: null, cord: 'aqua', pat: 'grid', border: 'none', stickers: [], drawing: null, idn: 'SDD-' + String(Math.floor(Math.random() * 900) + 100) };
   var S = load();
   function load() {
-    try { var v = JSON.parse(localStorage.getItem(KEY) || 'null'); if (v && typeof v === 'object') return Object.assign({}, DEFAULT, v); } catch (e) {}
+    try { var v = JSON.parse(localStorage.getItem(KEY) || 'null'); if (v && typeof v === 'object') { v = Object.assign({}, DEFAULT, v); v.stickers = (v.stickers || []).filter(function (p) { return p.d.indexOf('pron-') !== 0; }); return v; } } catch (e) {}
     return JSON.parse(JSON.stringify(DEFAULT));
   }
   function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* photo too big or storage blocked */ try { var c = Object.assign({}, S, { photo: null }); localStorage.setItem(KEY, JSON.stringify(c)); } catch (e2) {} } }
