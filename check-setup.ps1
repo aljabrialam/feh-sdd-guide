@@ -115,7 +115,7 @@ if (Test-Path (Join-Path $pw 'chromium*')) { Ok "Playwright Chromium downloaded"
 
 # 9. GitHub Copilot (the script can't see the sign-in: step 10 has a chat test for that)
 if (Have code) {
-  if ($ext -contains 'github.copilot-chat') { Ok "Copilot    Copilot Chat installed (sign in and Agent mode: step 10)" }
+  if ($ext -contains 'github.copilot-chat') { Ok "Copilot    Copilot Chat installed (do the practice run in step 10)" }
   else { Bad "Copilot    Copilot Chat missing: run 'code --install-extension GitHub.copilot-chat' (step 10)" }
 } else { Bad "Copilot    skipped: needs VS Code and the 'code' command first (step 3)" }
 

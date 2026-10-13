@@ -97,7 +97,7 @@ if ls -d "$PWDIR"/chromium* >/dev/null 2>&1; then ok "Playwright Chromium downlo
 
 # 9. GitHub Copilot (the script can't see the sign-in: step 10 has a chat test for that)
 if have code; then
-  if echo "$EXT" | grep -qx "github.copilot-chat"; then ok "Copilot    Copilot Chat installed (sign in and Agent mode: step 10)"
+  if echo "$EXT" | grep -qx "github.copilot-chat"; then ok "Copilot    Copilot Chat installed (do the practice run in step 10)"
   else bad "Copilot    Copilot Chat missing: run 'code --install-extension GitHub.copilot-chat' (step 10)"; fi
 else bad "Copilot    skipped: needs VS Code and the 'code' command first (step 3)"; fi
 
