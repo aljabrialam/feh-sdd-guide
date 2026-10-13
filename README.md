@@ -7,6 +7,7 @@ A single-page, slide-style guide for the two-day Spec-Driven Development worksho
 | `index.html` | Countdown (announcement page) | now |
 | `setup.html` + `check-setup.sh` / `.ps1` | Laptop setup and check scripts | now |
 | `mockup/` | Backup app's target screens | now |
+| `certificate.html` | Certificate of completion: name, role, PNG/PDF, LinkedIn. Unlocks 16 Oct 4:30 pm SGT (preview: `?preview=feh-sdd`) | now (locked) |
 | `badge.html` | Badge maker: name, stickers, doodle, lanyard, PNG and story download | now |
 | `guide.html` | Workshop guide (Day 1) | Day 1 morning |
 | `day2.html` | Day 2 build slides | Day 2 morning |
