@@ -221,14 +221,15 @@ a{color:var(--aqua)}
     </div>
     <div class="panel">
       <div class="row" style="justify-content:space-between"><h2>Build your badge</h2><button class="btn sm ghost" id="back">← Back</button></div>
+      <div class="field">
+        <span class="sec-t">Your photo (optional, stays on your device)</span>
+        <div class="row"><button type="button" class="btn primary" id="camBtn">📷 Take a selfie</button><label class="btn" for="iPhoto" style="cursor:pointer">🖼 Upload</label><input type="file" id="iPhoto" accept="image/*" hidden><input type="file" id="iCap" accept="image/*" capture="user" hidden><button type="button" class="btn sm ghost" id="rmPhoto" hidden>Remove photo</button></div>
+      </div>
       <div class="two">
         <div class="field"><label for="iName">Name</label><input type="text" id="iName" maxlength="28" placeholder="Your name" autocomplete="name"></div>
         <div class="field"><label for="iTeam">Pair / team</label><input type="text" id="iTeam" maxlength="24" placeholder="e.g. Suite 03"></div>
       </div>
-      <div class="field">
-        <span class="sec-t">Photo (optional, stays on your device)</span>
-        <div class="row"><button type="button" class="btn sm" id="camBtn">📷 Take a selfie</button><label class="btn sm" for="iPhoto" style="cursor:pointer">🖼 Upload</label><input type="file" id="iPhoto" accept="image/*" hidden><input type="file" id="iCap" accept="image/*" capture="user" hidden><button type="button" class="btn sm ghost" id="rmPhoto" hidden>Remove photo</button></div>
-      </div>
+
       <div class="field">
         <span class="sec-t">Stickers</span>
         <div class="tabs" role="tablist" id="tabs"></div>
