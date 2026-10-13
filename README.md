@@ -76,3 +76,11 @@ Each slide has its own link, for example `.../feh-sdd-guide/#s001` for Spec 001 
 ## Edit the content
 
 Each slide is a `<section class="slide">` in `index.html`. Any `<pre data-label="...">` block gets a Copy button automatically. Inside a `<pre>`, write `<` as `&lt;`, `>` as `&gt;` and `&` as `&amp;`.
+
+## Always the newest version
+
+Every page carries a build stamp. When a browser opens a cached copy, the page checks the server, and if a newer build exists it loads it once, then tidies the address back to the plain link. Before each commit, run:
+
+```bash
+python3 tools/stamp.py
+```
