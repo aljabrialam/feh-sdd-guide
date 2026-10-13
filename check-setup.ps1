@@ -42,41 +42,63 @@ if (Have node) {
   if ($nm -ge 22) { Ok "Node.js    $nv" } else { Bad "Node.js    $nv found, 22 or later needed (step 4)" }
 } else { Bad "Node.js    not found: install Node.js 22 LTS (step 4)" }
 
-# 4. Python 3.12+
+# 4. Python 3.12+ (a python.org install, or one fetched with 'uv python install 3.12')
 $py = $null
 foreach ($c in @('python','py','python3')) { if (Have $c) { $py = $c; break } }
+$pv = $null; $pyok = $false
 if ($py) {
-  $pv = (& $py -c "import sys;print('%d.%d.%d'%sys.version_info[:3])" | Out-String).Trim()
-  & $py -c "import sys;sys.exit(0 if sys.version_info>=(3,12) else 1)" | Out-Null
-  if ($LASTEXITCODE -eq 0 -and $pv) { Ok "Python     $pv" } else { Bad "Python     '$pv' found, 3.12 or later needed; tick 'Add python.exe to PATH' (step 5)" }
-} else { Bad "Python     not found: install Python 3.12+ (step 5)" }
+  $pv = (& $py -c "import sys;print('%d.%d.%d'%sys.version_info[:3])" 2>$null | Out-String).Trim()
+  & $py -c "import sys;sys.exit(0 if sys.version_info>=(3,12) else 1)" 2>$null | Out-Null
+  $pyok = ($LASTEXITCODE -eq 0 -and $pv)
+}
+$uvpy = $null
+if (-not $pyok -and (Have uv)) { $uvpy = (uv python find '>=3.12' 2>$null | Out-String).Trim() }
+if ($pyok) { Ok "Python     $pv" }
+elseif ($uvpy -and (Test-Path $uvpy)) { Ok ("Python     " + ((& $uvpy -c "import sys;print('%d.%d.%d'%sys.version_info[:3])" | Out-String).Trim()) + " (via uv)") }
+elseif ($pv) { Bad "Python     '$pv' found, 3.12 or later needed: run 'uv python install 3.12' (step 5)" }
+else { Bad "Python     not found: install Python 3.12+, or run 'uv python install 3.12' (step 5)" }
 
 # 5. uv
 if (Have uv) { Ok ("uv         " + ((uv --version).Split(' ')[1])) } else { Bad "uv         not found: install uv, then reopen PowerShell (step 6)" }
 
 # 6. Django + Django REST Framework: create a throwaway project and run Django's own checks
-if (Have uv) {
+#    If it fails on a certificate error, retry trusting the company's certificates to tell the two problems apart.
+function DjCheck {
   $tmp = Join-Path $env:TEMP ("sddcheck-" + [guid]::NewGuid().ToString('N').Substring(0,8))
   New-Item -ItemType Directory -Path $tmp | Out-Null
   Push-Location $tmp
-  $stage = 'ok'
-  uvx -q --from django django-admin startproject smoke . | Out-Null
-  if ($LASTEXITCODE -ne 0) { $stage = 'download' }
-  if ($stage -eq 'ok') {
-    $vers = (uvx -q --with djangorestframework --with djangorestframework-simplejwt --from django python -c "import django,rest_framework,rest_framework_simplejwt;print(django.get_version(),rest_framework.VERSION)" | Out-String).Trim()
-    if ($LASTEXITCODE -ne 0) { $stage = 'download' }
+  $r = @{ stage = 'ok'; vers = ''; err = '' }
+  $r.err = (uvx -q --from django django-admin startproject smoke . 2>&1 | Out-String)
+  if ($LASTEXITCODE -ne 0) { $r.stage = 'download' }
+  if ($r.stage -eq 'ok') {
+    $out = (uvx -q --with djangorestframework --with djangorestframework-simplejwt --from django python -c "import django,rest_framework,rest_framework_simplejwt;print(django.get_version(),rest_framework.VERSION)" 2>&1 | Out-String)
+    if ($LASTEXITCODE -ne 0) { $r.stage = 'download'; $r.err = $out } else { $r.vers = ($out.Trim() -split "`r?`n")[-1] }
   }
-  if ($stage -eq 'ok') {
-    uvx -q --with djangorestframework --from django python manage.py check | Out-Null
-    if ($LASTEXITCODE -ne 0) { $stage = 'check' }
+  if ($r.stage -eq 'ok') {
+    uvx -q --with djangorestframework --from django python manage.py check 2>&1 | Out-Null
+    if ($LASTEXITCODE -ne 0) { $r.stage = 'check' }
   }
   Pop-Location
   Remove-Item -Recurse -Force $tmp -ErrorAction SilentlyContinue
-  if ($stage -eq 'ok') {
-    $parts = $vers.Split(' ')
-    Ok ("Django     " + $parts[0] + " (test project passed 'manage.py check')")
-    Ok ("DRF        " + $parts[1] + " (with simplejwt)")
-  } elseif ($stage -eq 'download') { Bad "Django     could not download Django/DRF: network may be blocking PyPI (step 7)" }
+  return $r
+}
+if (Have uv) {
+  $r = DjCheck; $certfix = $false
+  if ($r.stage -eq 'download' -and $r.err -match 'certificate|UnknownIssuer|system-certs|native-tls') {
+    $env:UV_SYSTEM_CERTS = 'true'; $env:UV_NATIVE_TLS = 'true'
+    $r = DjCheck; $certfix = $true
+    Remove-Item Env:UV_SYSTEM_CERTS, Env:UV_NATIVE_TLS -ErrorAction SilentlyContinue
+  }
+  if ($r.stage -eq 'ok') {
+    $parts = $r.vers.Split(' ')
+    if ($certfix) {
+      Bad "Network    company network detected: run the 'company network fix' at the top of the steps, reopen PowerShell, run this again"
+      Warn ("Django     " + $parts[0] + " and DRF " + $parts[1] + " work once that fix is on")
+    } else {
+      Ok ("Django     " + $parts[0] + " (test project passed 'manage.py check')")
+      Ok ("DRF        " + $parts[1] + " (with simplejwt)")
+    }
+  } elseif ($r.stage -eq 'download') { Bad "Django     could not download Django/DRF: network may be blocking PyPI. Try a phone hotspot, then tell Aljabri (step 7)" }
   else { Bad "Django     test project failed 'manage.py check': send this screen to Aljabri" }
 } else { Bad "Django     skipped: needs uv first" }
 

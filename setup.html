@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261013133735">
+<meta name="build" content="20261013141133">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -132,6 +132,19 @@ table.needs td:first-child{white-space:nowrap}
   <p class="win-only" style="color:var(--muted);margin:0">Use <b>PowerShell</b> for the commands below. After each install, close and reopen PowerShell so the new command is found.</p>
   <p class="mac-only" style="color:var(--muted);margin:0">Use the <b>Terminal</b> app for the commands below. After each install, open a new Terminal window.</p>
 
+  <div class="warnbox" id="company-network">
+    <b>On a company laptop or office Wi-Fi?</b> Many company networks inspect secure traffic, so downloads fail with errors like <code>invalid peer certificate: UnknownIssuer</code>, <code>certificate verify failed</code> or <code>SELF_SIGNED_CERT_IN_CHAIN</code>. Run this <b>once</b> so uv, Node and Git trust your company's certificates, then open a new window:
+    <pre class="mac-only" data-label="Terminal · run once">echo 'export UV_SYSTEM_CERTS=true' >> ~/.zshrc
+echo 'export UV_NATIVE_TLS=true' >> ~/.zshrc
+echo 'export NODE_OPTIONS=--use-system-ca' >> ~/.zshrc
+source ~/.zshrc</pre>
+    <pre class="win-only" data-label="PowerShell · run once">setx UV_SYSTEM_CERTS true
+setx UV_NATIVE_TLS true
+setx NODE_OPTIONS --use-system-ca
+git config --global http.sslBackend schannel</pre>
+    <p style="margin:8px 0 0">It's safe on any network, so if you're unsure, run it anyway. The check script tells you if you need it.</p>
+  </div>
+
   <h2>The steps</h2>
 
   <div class="step">
@@ -184,6 +197,10 @@ code --install-extension ms-playwright.playwright</pre>
     <pre class="mac-only" data-label="Terminal">python3 --version</pre>
     <pre class="win-only" data-label="PowerShell">python --version</pre>
     <p class="expect">✓ Expected: <code>Python 3.12.x</code> or higher, for example <code>Python 3.13.1</code>.</p>
+    <p class="mac-only"><b>Seeing <code>Python 3.9.6</code>?</b> That's the copy built into macOS. Leave it alone. Either install 3.12+ from python.org as above, or, if you can't install software, let uv fetch one after step 6:</p>
+    <p class="win-only"><b>Can't install from python.org</b> (no admin rights, or an old version keeps showing)? Let uv fetch one after step 6:</p>
+    <pre data-label="After step 6 · alternative">uv python install 3.12</pre>
+    <p class="expect">✓ Expected: <code>Installed Python 3.12.x</code>. The check script accepts this, and the workshop project uses it automatically.</p>
   </div>
 
   <div class="step">
@@ -201,6 +218,7 @@ code --install-extension ms-playwright.playwright</pre>
     <pre data-label="Check Django">uvx --from django django-admin --version</pre>
     <pre data-label="Check Django REST Framework">uvx --with djangorestframework --from django python -c "import rest_framework; print('DRF', rest_framework.VERSION)"</pre>
     <p class="expect">✓ Expected: <code>6.x.x</code> (Django 5 or later is fine), then <code>DRF 3.x.x</code>. The first run takes a minute while it downloads.</p>
+    <p><b>Error says <code>invalid peer certificate</code> or <code>UnknownIssuer</code>?</b> Your network inspects secure traffic. Run the <a href="#company-network">company network fix</a> at the top of the steps, open a new window, and try again. Adding <code>--system-certs</code> to one command works too, but the fix makes every later command work.</p>
   </div>
 
   <div class="step">
@@ -289,9 +307,10 @@ npx playwright --version</pre>
     <tr><th>Problem</th><th>What to do</th></tr>
     <tr><td>"command not found" or "not recognized" right after installing</td><td>Close the terminal and open a new one. On Windows, if it still fails, restart the laptop.</td></tr>
     <tr><td>Can't install software (no admin rights)</td><td>Ask your IT team now, and tell Aljabri, so we can arrange access or a spare laptop.</td></tr>
-    <tr><td>Downloads time out or fail with certificate errors</td><td>A company proxy is probably blocking them. Tell Aljabri with a screenshot of the error.</td></tr>
-    <tr><td>Python shows an older version</td><td>On Mac, use <code>python3</code>, not <code>python</code>. On Windows, reinstall and tick <b>Add python.exe to PATH</b>.</td></tr>
-    <tr><td><code>uvx</code> fails to download Django</td><td>Your network is blocking Python packages (PyPI). Tell Aljabri with a screenshot: the backend can't be built without it.</td></tr>
+    <tr><td>Downloads fail with <code>invalid peer certificate</code>, <code>UnknownIssuer</code>, <code>certificate verify failed</code> or <code>SELF_SIGNED_CERT_IN_CHAIN</code></td><td>Your company inspects secure traffic. Run the <a href="#company-network">company network fix</a> once, open a new window, then run the check again.</td></tr>
+    <tr><td>Downloads time out, or still fail after the company network fix</td><td>A proxy may be blocking them outright. Try once on a phone hotspot or home Wi-Fi; if that works, tell Aljabri with a screenshot of the error.</td></tr>
+    <tr><td>Python shows an older version (Mac: <code>3.9.6</code>)</td><td>Run <code>uv python install 3.12</code> (step 5). On Mac, use <code>python3</code>, not <code>python</code>. On Windows, reinstall and tick <b>Add python.exe to PATH</b>.</td></tr>
+    <tr><td><code>uvx</code> fails to download Django</td><td>If the error mentions a certificate, run the <a href="#company-network">company network fix</a>. Otherwise your network is blocking Python packages (PyPI): tell Aljabri with a screenshot, as the backend can't be built without it.</td></tr>
     <tr><td>Windows: "running scripts is disabled on this system"</td><td>Run <code>Set-ExecutionPolicy -Scope CurrentUser RemoteSigned</code>, answer <b>Y</b>, then run the check again.</td></tr>
     <tr><td>Check script says FAIL for Django with "test project failed"</td><td>Send Aljabri the screenshot. Downloads work, but something on the laptop stops Django from running.</td></tr>
     <tr><td><code>code</code> not found, but VS Code is installed</td><td>Mac: run <b>Shell Command: Install 'code' command in PATH</b> from VS Code (step 3). Windows: reinstall VS Code with <b>Add to PATH</b> ticked, then reopen PowerShell.</td></tr>

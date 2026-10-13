@@ -38,34 +38,48 @@ if have node; then
   if [ "$NM" -ge 22 ] 2>/dev/null; then ok "Node.js    $NV"; else bad "Node.js    $NV found, 22 or later needed (step 4)"; fi
 else bad "Node.js    not found: install Node.js 22 LTS (step 4)"; fi
 
-# 4. Python 3.12+
+# 4. Python 3.12+ (a python.org install, or one fetched with 'uv python install 3.12')
 PY=python3; have python3 || PY=python
-if have "$PY"; then
-  PV=$("$PY" -c 'import sys;print("%d.%d.%d"%sys.version_info[:3])' 2>/dev/null)
-  if "$PY" -c 'import sys;sys.exit(0 if sys.version_info>=(3,12) else 1)' 2>/dev/null; then ok "Python     $PV"; else bad "Python     ${PV:-unknown} found, 3.12 or later needed (step 5)"; fi
-else bad "Python     not found: install Python 3.12+ (step 5)"; fi
+PV=""; have "$PY" && PV=$("$PY" -c 'import sys;print("%d.%d.%d"%sys.version_info[:3])' 2>/dev/null)
+if [ -n "$PV" ] && "$PY" -c 'import sys;sys.exit(0 if sys.version_info>=(3,12) else 1)' 2>/dev/null; then ok "Python     $PV"
+elif have uv && UVPY=$(uv python find '>=3.12' 2>/dev/null) && [ -n "$UVPY" ]; then ok "Python     $("$UVPY" -c 'import sys;print("%d.%d.%d"%sys.version_info[:3])' 2>/dev/null) (via uv)"
+elif [ -n "$PV" ]; then bad "Python     $PV found, 3.12 or later needed: run 'uv python install 3.12' (step 5)"
+else bad "Python     not found: install Python 3.12+, or run 'uv python install 3.12' (step 5)"; fi
 
 # 5. uv
 if have uv; then ok "uv         $(uv --version | awk '{print $2}')"; else bad "uv         not found: install uv, then open a new terminal (step 6)"; fi
 
 # 6. Django + Django REST Framework: create a throwaway project and run Django's own checks
-if have uv; then
+#    If it fails on a certificate error, retry trusting the company's certificates to tell the two problems apart.
+djcheck() {
   TMP=$(mktemp -d 2>/dev/null || mktemp -d -t sddcheck)
   (
     cd "$TMP" || exit 1
-    uvx -q --from django django-admin startproject smoke . >/dev/null 2>&1 || exit 2
+    uvx -q --from django django-admin startproject smoke . >/dev/null 2>err.txt || exit 2
     uvx -q --with djangorestframework --with djangorestframework-simplejwt --from django \
-      python -c "import django,rest_framework,rest_framework_simplejwt;print(django.get_version(),rest_framework.VERSION)" > versions.txt 2>/dev/null || exit 3
+      python -c "import django,rest_framework,rest_framework_simplejwt;print(django.get_version(),rest_framework.VERSION)" > versions.txt 2>err.txt || exit 3
     uvx -q --with djangorestframework --from django python manage.py check > check.txt 2>&1 || exit 4
   )
   RC=$?
-  if [ $RC -eq 0 ]; then
-    read -r DJ DRF < "$TMP/versions.txt"
-    ok "Django     $DJ (test project passed 'manage.py check')"
-    ok "DRF        $DRF (with simplejwt)"
-  elif [ $RC -eq 2 ] || [ $RC -eq 3 ]; then bad "Django     could not download Django/DRF: network may be blocking PyPI (step 7)"
-  else bad "Django     test project failed 'manage.py check': send this screen to Aljabri"; fi
+  ERR=$(cat "$TMP/err.txt" 2>/dev/null); VERS=$(cat "$TMP/versions.txt" 2>/dev/null)
   rm -rf "$TMP"
+}
+if have uv; then
+  djcheck; CERTFIX=0
+  if { [ $RC -eq 2 ] || [ $RC -eq 3 ]; } && echo "$ERR" | grep -qiE 'certificate|UnknownIssuer|--system-certs|native-tls'; then
+    export UV_SYSTEM_CERTS=true UV_NATIVE_TLS=true; djcheck; unset UV_SYSTEM_CERTS UV_NATIVE_TLS; CERTFIX=1
+  fi
+  if [ $RC -eq 0 ]; then
+    read -r DJ DRF <<< "$VERS"
+    if [ $CERTFIX -eq 1 ]; then
+      bad "Network    company network detected: run the 'company network fix' at the top of the steps, open a new window, run this again"
+      warn "Django     $DJ and DRF $DRF work once that fix is on"
+    else
+      ok "Django     $DJ (test project passed 'manage.py check')"
+      ok "DRF        $DRF (with simplejwt)"
+    fi
+  elif [ $RC -eq 2 ] || [ $RC -eq 3 ]; then bad "Django     could not download Django/DRF: network may be blocking PyPI. Try a phone hotspot, then tell Aljabri (step 7)"
+  else bad "Django     test project failed 'manage.py check': send this screen to Aljabri"; fi
 else bad "Django     skipped: needs uv first"; fi
 
 # 7. Spec Kit
