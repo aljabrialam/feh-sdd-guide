@@ -162,7 +162,13 @@ summary{cursor:pointer;font-weight:600}
   body{grid-template-columns:1fr;font-size:16px}
   #side{position:fixed;inset:0 auto 0 0;width:min(300px,86vw);z-index:10;transform:translateX(-102%);transition:transform .2s}
   body.open #side{transform:none;box-shadow:0 0 0 100vmax rgba(0,0,0,.55)}
-  #menu{display:inline-block}
+  #menu{display:inline-block;white-space:nowrap}
+  body.open{overflow:hidden}
+  #side{overflow-y:auto;-webkit-overflow-scrolling:touch}
+  .slide .cobrand{flex-wrap:nowrap}
+  .slide .cobrand .logo{height:30px}
+  .slide .cobrand .feh-logo{height:30px}
+  #nav .sp{display:none}
   .slide{padding:26px 16px 44px}
   .row3,.cards{grid-template-columns:1fr}
   .arch{grid-template-columns:1fr}
@@ -1198,7 +1204,7 @@ Give each item with its line and a suggested rewording.</pre>
 </main>
 
 <div id="nav">
-  <button class="btn" id="menu" type="button" aria-label="Open step list">☰</button>
+  <button class="btn" id="menu" type="button" aria-label="Open step list" aria-expanded="false" aria-controls="side">☰ Steps</button>
   <button class="btn" id="prev" type="button">← Back</button>
   <span class="sp" id="pos"></span>
   <button class="btn" id="next" type="button">Skip →</button>
@@ -1319,7 +1325,13 @@ function boot() {
   document.getElementById('done').addEventListener('click', function () {
     state.done[slides[cur].id] = true; save(); go(cur + 1);
   });
-  document.getElementById('menu').addEventListener('click', function () { document.body.classList.toggle('open'); });
+  var menuBtn = document.getElementById('menu');
+  function setMenu(open) { document.body.classList.toggle('open', open); menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false'); }
+  menuBtn.addEventListener('click', function (e) { e.stopPropagation(); setMenu(!document.body.classList.contains('open')); });
+  document.addEventListener('click', function (e) {
+    if (document.body.classList.contains('open') && !e.target.closest('#side') && !e.target.closest('#menu')) setMenu(false);
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setMenu(false); });
   document.getElementById('reset').addEventListener('click', function () {
     if (!confirm('Clear all ticks and checklists in this browser?')) return;
     state = { done: {}, checks: {} }; save();
