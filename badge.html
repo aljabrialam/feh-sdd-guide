@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Badge Maker · FEH × VISEO SDD Hackathon</title>
+<meta name="description" content="Make your sticker badge for the FEH × VISEO Spec-Driven Development hackathon, 15–16 October 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js"></script>
+<style>
+:root{
+  --bg:#001D21; --panel:#04282D; --panel2:#073339; --line:#14484F; --text:#EEFAF7; --muted:#8FB5B1;
+  --aqua:#7FFFD4; --dodger:#1E90FF; --yale:#0F4D92; --coral:#FF6B5B; --sun:#FFD23F; --lilac:#B69CFF; --mint:#3DDC97;
+  --sans:'Sora',system-ui,-apple-system,Segoe UI,Roboto,sans-serif; --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100dvh;overflow-x:hidden;
+  background-image:radial-gradient(700px 520px at 10% 8%,rgba(127,255,212,.12),transparent 70%),radial-gradient(760px 600px at 92% 92%,rgba(30,144,255,.16),transparent 70%),linear-gradient(rgba(127,255,212,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(127,255,212,.05) 1px,transparent 1px);
+  background-size:auto,auto,48px 48px,48px 48px;background-attachment:fixed}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:var(--aqua)}
+.top{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:14px clamp(16px,4vw,40px);border-bottom:1px solid var(--line);background:rgba(4,40,45,.85);backdrop-filter:blur(6px);position:sticky;top:0;z-index:20}
+.brand{display:flex;align-items:center;gap:12px}
+.brand img.v{height:24px}.brand img.f{height:28px;filter:brightness(0) invert(1)}.brand .x{color:var(--muted)}
+.top nav{display:flex;gap:8px;flex-wrap:wrap}
+.top nav a{font-size:13px;font-weight:600;text-decoration:none;padding:7px 12px;border:1px solid var(--line);border-radius:999px;color:var(--text)}
+.top nav a:hover{border-color:var(--aqua);color:var(--aqua)}
+.screen{display:none}.screen.on{display:block}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line);background:var(--panel2);border-radius:12px;padding:11px 16px;font-weight:700;font-size:15px;transition:transform .12s,border-color .12s,background .12s}
+.btn:hover{border-color:var(--aqua)}
+.btn:active{transform:translateY(1px)}
+.btn.primary{background:var(--aqua);color:#001D21;border-color:var(--aqua)}
+.btn.primary:hover{background:#a8ffe4}
+.btn.ghost{background:transparent}
+.btn.sm{padding:7px 11px;font-size:13px;border-radius:10px}
+.btn[aria-pressed="true"]{background:var(--aqua);color:#001D21;border-color:var(--aqua)}
+.eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:.16em;color:var(--aqua);font-weight:700;text-transform:uppercase}
+
+/* ---------- landing ---------- */
+.land{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:center;max-width:1180px;margin:0 auto;padding:40px clamp(16px,4vw,40px) 60px;min-height:calc(100dvh - 64px)}
+.land h1{font-size:clamp(40px,6vw,76px);line-height:1;letter-spacing:-.03em;margin:14px 0 18px}
+.land h1 em{font-style:normal;color:var(--aqua)}
+.land p{font-size:19px;line-height:1.55;color:#C9E3DF;max-width:520px;margin:0 0 26px}
+.land .steps{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 28px}
+.land .steps span{font-family:var(--mono);font-size:13px;padding:7px 12px;border:1px solid var(--line);border-radius:999px;background:var(--panel)}
+.land .cta{display:flex;gap:12px;flex-wrap:wrap}
+.land .btn.primary{font-size:18px;padding:15px 24px;border-radius:14px}
+
+/* ---------- lanyard + badge ---------- */
+.hang{position:relative;display:flex;flex-direction:column;align-items:center;transform-origin:50% 0}
+.hang.swing{animation:swing 4.5s ease-in-out infinite}
+@keyframes swing{0%,100%{transform:rotate(-2.2deg)}50%{transform:rotate(2.2deg)}}
+@media (prefers-reduced-motion:reduce){.hang.swing{animation:none}}
+.cord{display:block;width:240px;height:150px;margin-bottom:-14px;position:relative;z-index:1;overflow:visible}
+.clip{width:46px;height:30px;border-radius:8px 8px 6px 6px;background:linear-gradient(180deg,#d9e6e4,#8fa7a4);border:2px solid #5f7a77;position:relative;z-index:2;margin-bottom:-8px;box-shadow:0 2px 0 rgba(0,0,0,.25)}
+.clip::after{content:"";position:absolute;left:50%;bottom:-10px;width:14px;height:14px;border:3px solid #8fa7a4;border-top:none;border-radius:0 0 8px 8px;transform:translateX(-50%)}
+
+.badge{--w:360px;width:var(--w);aspect-ratio:360/540;border-radius:26px;position:relative;z-index:3;overflow:hidden;background:#F4FBF9;color:#001D21;
+  box-shadow:0 30px 60px -20px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.2) inset;display:flex;flex-direction:column;user-select:none;-webkit-user-select:none;touch-action:none}
+.badge .slot{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:62px;height:12px;border-radius:999px;background:#001D21;opacity:.85;z-index:6}
+.badge .head{background:#001D21;color:#EEFAF7;padding:34px 20px 14px;display:flex;flex-direction:column;gap:8px;position:relative}
+.badge .logos{display:flex;align-items:center;gap:8px}
+.badge .logos img.v{height:16px}.badge .logos img.f{height:19px;filter:brightness(0) invert(1)}.badge .logos .x{color:var(--muted);font-size:12px}
+.badge .ev{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;color:var(--aqua);font-weight:700}
+.badge .body{flex:1;position:relative;padding:16px 20px 0;display:flex;flex-direction:column;gap:2px;min-height:0}
+.badge .who{display:flex;align-items:center;gap:12px;position:relative;z-index:1}
+.badge .ph{width:64px;height:64px;flex:none;border-radius:50%;background:#dfeeeb center/cover no-repeat;border:3px solid #001D21;display:none}
+.badge.has-photo .ph{display:block}
+.badge .nm{font-weight:800;font-size:30px;line-height:1.02;letter-spacing:-.02em;word-break:break-word}
+.badge .nm.long{font-size:24px}.badge .nm.xlong{font-size:19px}
+.badge .tm{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;color:#0F4D92;margin-top:4px;text-transform:uppercase}
+.badge .zone{position:absolute;inset:0}
+.badge canvas.draw{position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none}
+.badge.drawing canvas.draw{pointer-events:auto;cursor:crosshair}
+.badge .foot{height:30%;position:relative;overflow:hidden;flex:none}
+.badge .foot .pat{position:absolute;inset:0}
+.badge .foot .meta{position:absolute;left:14px;right:14px;bottom:12px;display:flex;justify-content:space-between;align-items:flex-end;gap:10px;z-index:2}
+.badge .flow{font-family:var(--mono);font-size:8.5px;font-weight:700;letter-spacing:.06em;background:rgba(0,29,33,.82);color:#EEFAF7;padding:5px 8px;border-radius:7px;line-height:1.5}
+.badge .flow b{color:var(--aqua)}
+.badge .idn{font-family:var(--mono);font-size:10px;font-weight:800;background:#EEFAF7;color:#001D21;padding:5px 8px;border-radius:7px}
+.badge.b-dashed{outline:3px dashed #001D21;outline-offset:-10px}
+.badge.b-dotted{outline:4px dotted #001D21;outline-offset:-10px}
+.badge.b-double{outline:6px double #001D21;outline-offset:-12px}
+/* glare */
+.badge .glare{position:absolute;inset:0;z-index:8;pointer-events:none;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.22) 45%,transparent 60%);mix-blend-mode:screen;opacity:.8}
+
+/* foot patterns */
+.p-grid{background:#1E90FF;background-image:linear-gradient(rgba(255,255,255,.35) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.35) 1px,transparent 1px);background-size:18px 18px;animation:pan 8s linear infinite}
+.p-waves{background:#7FFFD4;background-image:radial-gradient(circle at 50% 120%,transparent 14px,#001D21 15px,#001D21 18px,transparent 19px);background-size:36px 22px;animation:pan 10s linear infinite}
+.p-dots{background:#FF6B5B;background-image:radial-gradient(#FFD23F 22%,transparent 24%),radial-gradient(#FFD23F 22%,transparent 24%);background-size:26px 26px;background-position:0 0,13px 13px;animation:pan 9s linear infinite}
+.p-stripes{background:repeating-linear-gradient(135deg,#0F4D92 0 14px,#1E90FF 14px 28px);background-size:200% 200%;animation:pan 6s linear infinite}
+.p-circuit{background:#001D21;background-image:linear-gradient(90deg,transparent 46%,#7FFFD4 46% 54%,transparent 54%),linear-gradient(transparent 46%,#7FFFD4 46% 54%,transparent 54%),radial-gradient(#7FFFD4 18%,transparent 20%);background-size:40px 40px,40px 40px,40px 40px;background-position:0 0,20px 20px,20px 0;opacity:1;animation:pan 12s linear infinite}
+.p-sunset{background:linear-gradient(180deg,#FFD23F,#FF6B5B 55%,#B69CFF);}
+.p-sunset::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,29,33,.25) 0 3px,transparent 3px 10px)}
+@keyframes pan{to{background-position:72px 36px,92px 56px,72px 36px}}
+@media (prefers-reduced-motion:reduce){.badge .foot .pat{animation:none!important}}
+
+/* stickers */
+.st{position:absolute;display:flex;align-items:center;justify-content:center;text-align:center;font-family:var(--mono);font-weight:800;letter-spacing:.02em;line-height:1.05;cursor:grab;z-index:2;filter:drop-shadow(0 2px 0 rgba(0,0,0,.18)) drop-shadow(0 6px 10px rgba(0,0,0,.18));touch-action:none}
+.st svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.st span{position:relative;padding:0 10px;white-space:pre-line}
+.st.sel{outline:2px dashed #0F4D92;outline-offset:6px;border-radius:10px}
+.st.dragging{cursor:grabbing}
+
+/* ---------- maker ---------- */
+.make{display:grid;grid-template-columns:minmax(380px,1fr) minmax(0,520px);gap:32px;max-width:1180px;margin:0 auto;padding:28px clamp(16px,4vw,40px) 60px;align-items:start}
+.stage{position:sticky;top:84px;display:flex;flex-direction:column;align-items:center;gap:14px}
+.selbar{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;min-height:36px}
+.selbar .hint{font-size:13px;color:var(--muted);align-self:center}
+.panel{background:rgba(4,40,45,.92);border:1px solid var(--line);border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:22px}
+.panel h2{margin:0;font-size:22px}
+.field{display:flex;flex-direction:column;gap:7px}
+.field label,.sec-t{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--muted);font-weight:700;text-transform:uppercase}
+.field input[type=text]{width:100%;min-width:0;background:#001D21;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:16px;outline:none}
+.field input[type=text]:focus{border-color:var(--aqua)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tabs button{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.06em;padding:7px 11px;border-radius:999px;border:1px solid var(--line);background:transparent}
+.tabs button[aria-selected="true"]{background:var(--aqua);color:#001D21;border-color:var(--aqua)}
+.tray{display:flex;flex-wrap:wrap;gap:14px 12px;padding:16px 8px 8px;min-height:120px;background:#001D21;border:1px solid var(--line);border-radius:14px}
+.tray .st{position:relative;cursor:pointer;transition:transform .12s}
+.tray .st:hover{transform:scale(1.06) rotate(0deg)!important}
+.sw{width:36px;height:36px;border-radius:50%;border:2px solid var(--line);padding:0}
+.sw[aria-pressed="true"]{outline:3px solid var(--aqua);outline-offset:2px}
+.pat-sw{width:58px;height:38px;border-radius:10px;border:2px solid var(--line);position:relative;overflow:hidden;padding:0}
+.pat-sw[aria-pressed="true"]{outline:3px solid var(--aqua);outline-offset:2px}
+.pat-sw .pat{position:absolute;inset:0}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.note{font-size:13px;color:var(--muted);margin:0}
+
+/* ---------- done ---------- */
+.done{max-width:1100px;margin:0 auto;padding:30px clamp(16px,4vw,40px) 60px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,440px);gap:40px;align-items:center}
+.done h2{font-size:clamp(34px,5vw,56px);line-height:1.02;letter-spacing:-.02em;margin:10px 0 14px}
+.done h2 em{font-style:normal;color:var(--aqua)}
+.done p{color:#C9E3DF;font-size:17px;line-height:1.55}
+.dl{display:flex;flex-direction:column;gap:10px;margin:22px 0}
+.caption{background:#001D21;border:1px solid var(--line);border-radius:12px;padding:14px;font-size:14px;line-height:1.5;color:#C9E3DF;white-space:pre-line}
+
+/* export poster (off-screen) */
+#poster{position:fixed;left:-99999px;top:0;width:1080px;height:1920px;background:#001D21;color:#EEFAF7;font-family:var(--sans);display:flex;flex-direction:column;align-items:center;padding:110px 80px 90px;overflow:hidden;
+  background-image:radial-gradient(620px 520px at 18% 12%,rgba(127,255,212,.18),transparent 70%),radial-gradient(680px 600px at 86% 88%,rgba(30,144,255,.24),transparent 70%),linear-gradient(rgba(127,255,212,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(127,255,212,.06) 1px,transparent 1px);background-size:auto,auto,60px 60px,60px 60px}
+#poster .plogos{display:flex;align-items:center;gap:22px}
+#poster .plogos img.v{height:48px}#poster .plogos img.f{height:56px;filter:brightness(0) invert(1)}#poster .plogos .x{font-size:28px;color:var(--muted)}
+#poster .pk{margin-top:56px;font-family:var(--mono);font-size:26px;letter-spacing:.16em;color:var(--aqua);font-weight:700}
+#poster .pt{font-size:78px;font-weight:800;letter-spacing:-.02em;line-height:1.02;text-align:center;margin-top:16px}
+#poster .pslot{margin-top:40px;transform:scale(1.55);transform-origin:50% 0}
+#poster .pfoot{margin-top:auto;text-align:center;display:flex;flex-direction:column;gap:12px}
+#poster .pfoot b{font-family:var(--mono);font-size:30px;color:var(--aqua)}
+#poster .pfoot span{font-size:24px;color:#C9E3DF}
+
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:var(--aqua);color:#001D21;font-weight:700;padding:12px 18px;border-radius:12px;transition:transform .25s;z-index:50}
+.toast.on{transform:translateX(-50%) translateY(0)}
+
+@media (max-width:900px){
+  .land,.done{grid-template-columns:1fr;text-align:left}
+  .land .hangwrap{order:-1}
+  .make{grid-template-columns:minmax(0,1fr)}
+  .land,.done{grid-template-columns:minmax(0,1fr)}
+  .two{grid-template-columns:minmax(0,1fr)}
+  .panel{padding:16px}
+  .stage{position:relative;top:0}
+  .badge{--w:min(340px,86vw)}
+  .cord{width:200px;height:110px}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><img class="v" src="logo.svg" alt="VISEO"><span class="x">×</span><img class="f" src="feh-logo.svg" alt="Far East Hospitality"></div>
+  <nav><a href="index.html">Countdown</a><a href="guide.html">Workshop guide</a><a href="setup.html">Laptop setup</a></nav>
+</header>
+
+<!-- ============ LANDING ============ -->
+<section class="screen on" id="s-land">
+  <div class="land">
+    <div>
+      <span class="eyebrow">SDD Hackathon · 15–16 Oct 2026</span>
+      <h1>Make your<br><em>badge.</em></h1>
+      <p>Spec first, badge second. Add your name, stick on your role, your stack and your vibe, doodle a little, pick your lanyard, then download it for your story.</p>
+      <div class="steps"><span>1 · Name</span><span>2 · Stickers</span><span>3 · Doodle</span><span>4 · Lanyard</span><span>5 · Share</span></div>
+      <div class="cta"><button class="btn primary" id="go">Make my badge →</button><a class="btn ghost" href="guide.html" style="text-decoration:none">Open the guide</a></div>
+    </div>
+    <div class="hangwrap" style="display:flex;justify-content:center"><div id="demoHang"></div></div>
+  </div>
+</section>
+
+<!-- ============ MAKER ============ -->
+<section class="screen" id="s-make">
+  <div class="make">
+    <div class="stage">
+      <div id="makeHang"></div>
+      <div class="selbar" id="selbar"><span class="hint">Tap a sticker to add it. Drag stickers on the badge to move them.</span></div>
+    </div>
+    <div class="panel">
+      <div class="row" style="justify-content:space-between"><h2>Build your badge</h2><button class="btn sm ghost" id="back">← Back</button></div>
+      <div class="two">
+        <div class="field"><label for="iName">Name</label><input type="text" id="iName" maxlength="28" placeholder="Your name" autocomplete="name"></div>
+        <div class="field"><label for="iTeam">Pair / team</label><input type="text" id="iTeam" maxlength="24" placeholder="e.g. Suite 03"></div>
+      </div>
+      <div class="field">
+        <span class="sec-t">Photo (optional, stays on your device)</span>
+        <div class="row"><label class="btn sm" for="iPhoto" style="cursor:pointer">Add photo</label><input type="file" id="iPhoto" accept="image/*" hidden><button class="btn sm ghost" id="rmPhoto" hidden>Remove photo</button></div>
+      </div>
+      <div class="field">
+        <span class="sec-t">Stickers</span>
+        <div class="tabs" role="tablist" id="tabs"></div>
+        <div class="tray" id="tray" role="tabpanel"></div>
+      </div>
+      <div class="field">
+        <span class="sec-t">Doodle</span>
+        <div class="row" id="pens"><button class="btn sm" id="drawBtn" aria-pressed="false">✏️ Draw</button></div>
+        <div class="row"><button class="btn sm ghost" id="clearDraw">Clear doodle</button></div>
+      </div>
+      <div class="field"><span class="sec-t">Lanyard</span><div class="row" id="cords"></div></div>
+      <div class="field"><span class="sec-t">Pattern</span><div class="row" id="pats"></div></div>
+      <div class="field"><span class="sec-t">Border</span><div class="row" id="borders"></div></div>
+      <div class="actions">
+        <button class="btn" id="surprise">🎲 Surprise me</button>
+        <button class="btn ghost" id="reset">Start over</button>
+        <button class="btn primary" id="finish" style="margin-left:auto">Done →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DONE ============ -->
+<section class="screen" id="s-done">
+  <div class="done">
+    <div>
+      <span class="eyebrow">Badge approved · G0 ✓</span>
+      <h2>Looking <em>spec-tacular.</em></h2>
+      <p>Download your badge and post it with the caption below. See you on Thursday at 9:00 am.</p>
+      <div class="dl">
+        <button class="btn primary" id="dlBadge">⬇ Download badge (PNG)</button>
+        <button class="btn" id="dlStory">⬇ Download story (1080×1920)</button>
+        <button class="btn ghost" id="edit">← Keep editing</button>
+      </div>
+      <span class="sec-t">Caption</span>
+      <div class="caption" id="cap"></div>
+      <div class="row" style="margin-top:10px"><button class="btn sm" id="copyCap">Copy caption</button></div>
+    </div>
+    <div style="display:flex;justify-content:center"><div id="doneHang"></div></div>
+  </div>
+</section>
+
+<div id="poster" aria-hidden="true">
+  <div class="plogos"><img class="v" src="logo.svg" alt=""><span class="x">×</span><img class="f" src="feh-logo.svg" alt=""></div>
+  <div class="pk">SDD HACKATHON · 15–16 OCT 2026</div>
+  <div class="pt">I'm building with<br>spec-driven development</div>
+  <div class="pslot" id="pslot"></div>
+  <div class="pfoot"><b>#SpecFirst  #FEHxVISEO</b><span>Idea in. Working app out.</span></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function () {
+  'use strict';
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+
+  /* ---------- data ---------- */
+  var COLORS = {
+    aqua: ['#7FFFD4', '#001D21'], dodger: ['#1E90FF', '#fff'], coral: ['#FF6B5B', '#fff'], sun: ['#FFD23F', '#001D21'],
+    lilac: ['#B69CFF', '#001D21'], mint: ['#3DDC97', '#001D21'], yale: ['#0F4D92', '#fff'], ink: ['#001D21', '#7FFFD4'], paper: ['#FFFFFF', '#001D21']
+  };
+  var CK = Object.keys(COLORS);
+  var TABS = [
+    { id: 'role', label: 'ROLE', shape: 'ticket', items: ['FEH PRODUCT OWNER', 'VISEO DRIVER', 'NAVIGATOR', 'FACILITATOR', 'SPEC WRITER', 'QA HAWK'] },
+    { id: 'sdd', label: 'SPEC KIT', shape: 'burst', items: ['SPEC FIRST', 'NO VIBE CODING', 'G1 ✓', 'G2 ✓', 'G3 ✓', '/specify', '/clarify', '/plan', 'TRACE IT BACK', 'ACCEPTANCE CRITERIA'] },
+    { id: 'stack', label: 'STACK', shape: 'pill', items: ['DJANGO', 'DRF', 'REACT', 'VITE', 'PLAYWRIGHT', 'SQLITE', 'JWT', 'PYTEST'] },
+    { id: 'vibe', label: 'VIBE', shape: 'flower', items: ['HERE 2 LEARN', 'HERE 2 SHIP', 'COFFEE POWERED', 'BUG HUNTER', 'FIRST HACKATHON', 'PROMPT WHISPERER', 'WORKS ON MY LAPTOP'] },
+    { id: 'hotel', label: 'HOSPITALITY', shape: 'blob', items: ['GUEST FIRST', 'ROOM SERVICE', '5★ UX', 'CHECK-IN READY', 'FAR EAST FAM', 'DO NOT DISTURB'] },
+    { id: 'pron', label: 'PRONOUNS', shape: 'sun', items: ['SHE/HER', 'HE/HIM', 'THEY/THEM', 'ASK ME'] }
+  ];
+  var CORDS = [
+    { id: 'aqua', c: '#7FFFD4', t: '#001D21' }, { id: 'dodger', c: '#1E90FF', t: '#fff' }, { id: 'yale', c: '#0F4D92', t: '#fff' },
+    { id: 'coral', c: '#FF6B5B', t: '#fff' }, { id: 'ink', c: '#0b0f10', t: '#7FFFD4' }, { id: 'sun', c: '#FFD23F', t: '#001D21' }
+  ];
+  var PATS = ['grid', 'waves', 'dots', 'stripes', 'circuit', 'sunset'];
+  var BORDERS = [{ id: 'none', l: 'None' }, { id: 'dashed', l: 'Dashed' }, { id: 'dotted', l: 'Dotted' }, { id: 'double', l: 'Double' }];
+  var PENS = ['#001D21', '#1E90FF', '#FF6B5B', '#3DDC97', '#B69CFF'];
+
+  var defs = {}; // id -> def
+  TABS.forEach(function (t) {
+    t.items.forEach(function (label, i) {
+      var id = t.id + '-' + i;
+      defs[id] = { id: id, tab: t.id, label: label, shape: t.shape, color: CK[(i + TABS.indexOf(t) * 2) % CK.length], tilt: ((i % 2) ? 1 : -1) * (2 + (i % 4)) };
+    });
+  });
+
+  /* ---------- state ---------- */
+  var KEY = 'feh-sdd-badge-v1';
+  var DEFAULT = { name: '', team: '', photo: null, cord: 'aqua', pat: 'grid', border: 'none', stickers: [], drawing: null, idn: 'SDD-' + String(Math.floor(Math.random() * 900) + 100) };
+  var S = load();
+  function load() {
+    try { var v = JSON.parse(localStorage.getItem(KEY) || 'null'); if (v && typeof v === 'object') return Object.assign({}, DEFAULT, v); } catch (e) {}
+    return JSON.parse(JSON.stringify(DEFAULT));
+  }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* photo too big or storage blocked */ try { var c = Object.assign({}, S, { photo: null }); localStorage.setItem(KEY, JSON.stringify(c)); } catch (e2) {} } }
+
+  /* ---------- sticker shapes ---------- */
+  function shapeSVG(shape, w, h, fill) {
+    var s = '<svg viewBox="0 0 ' + w + ' ' + h + '" preserveAspectRatio="none" aria-hidden="true">';
+    var stroke = ' stroke="#ffffff" stroke-width="4" stroke-linejoin="round"';
+    if (shape === 'pill') s += '<rect x="2" y="2" width="' + (w - 4) + '" height="' + (h - 4) + '" rx="' + (h / 2 - 2) + '" fill="' + fill + '"' + stroke + '/>';
+    else if (shape === 'ticket') {
+      var r = 8, p = 'M8,2 H' + (w - 8) + ' Q' + (w - 2) + ',2 ' + (w - 2) + ',8 V' + (h / 2 - r) + ' A' + r + ',' + r + ' 0 0 0 ' + (w - 2) + ',' + (h / 2 + r) + ' V' + (h - 8) + ' Q' + (w - 2) + ',' + (h - 2) + ' ' + (w - 8) + ',' + (h - 2) + ' H8 Q2,' + (h - 2) + ' 2,' + (h - 8) + ' V' + (h / 2 + r) + ' A' + r + ',' + r + ' 0 0 0 2,' + (h / 2 - r) + ' V8 Q2,2 8,2 Z';
+      s += '<path d="' + p + '" fill="' + fill + '"' + stroke + '/>';
+    } else {
+      var cx = w / 2, cy = h / 2, pts = [], n, i, a, rr;
+      if (shape === 'burst') { n = 28; for (i = 0; i < n; i++) { a = Math.PI * 2 * i / n; rr = (i % 2 ? 0.86 : 1); pts.push([cx + Math.cos(a) * (cx - 3) * rr, cy + Math.sin(a) * (cy - 3) * rr]); } }
+      else if (shape === 'sun') { n = 16; for (i = 0; i < n; i++) { a = Math.PI * 2 * i / n; rr = (i % 2 ? 0.78 : 1); pts.push([cx + Math.cos(a) * (cx - 3) * rr, cy + Math.sin(a) * (cy - 3) * rr]); } }
+      else if (shape === 'blob') { n = 60; for (i = 0; i < n; i++) { a = Math.PI * 2 * i / n; rr = 0.9 + 0.08 * Math.sin(a * 5) + 0.02 * Math.cos(a * 3); pts.push([cx + Math.cos(a) * (cx - 3) * rr, cy + Math.sin(a) * (cy - 3) * rr]); } }
+      else { /* flower */ n = 80; for (i = 0; i < n; i++) { a = Math.PI * 2 * i / n; rr = 0.84 + 0.14 * Math.abs(Math.cos(a * 3)); pts.push([cx + Math.cos(a) * (cx - 3) * rr, cy + Math.sin(a) * (cy - 3) * rr]); } }
+      s += '<polygon points="' + pts.map(function (q) { return q[0].toFixed(1) + ',' + q[1].toFixed(1); }).join(' ') + '" fill="' + fill + '"' + stroke + '/>';
+    }
+    return s + '</svg>';
+  }
+  function stickerSize(d) {
+    var len = d.label.length;
+    if (d.shape === 'pill' || d.shape === 'ticket') { var fs = len > 14 ? 11 : 13; return { w: Math.round(len * fs * 0.66 + 34), h: 40, fs: fs }; }
+    var words = d.label.split(' ');
+    var longest = Math.max.apply(null, words.map(function (x) { return x.length; }));
+    var size = Math.max(78, Math.min(118, longest * 10 + 34 + (words.length > 2 ? 10 : 0)));
+    return { w: size, h: size, fs: longest > 9 ? 10.5 : 12.5, wrap: true };
+  }
+  function stickerEl(d) {
+    var z = stickerSize(d), c = COLORS[d.color];
+    var el = document.createElement('div');
+    el.className = 'st';
+    el.style.width = z.w + 'px'; el.style.height = z.h + 'px'; el.style.fontSize = z.fs + 'px'; el.style.color = c[1];
+    el.innerHTML = shapeSVG(d.shape, z.w, z.h, c[0]);
+    var sp = document.createElement('span');
+    sp.textContent = z.wrap ? d.label.split(' ').join('\n') : d.label;
+    el.appendChild(sp);
+    return el;
+  }
+
+  /* ---------- badge builder ---------- */
+  function cordSVG(cordId) {
+    var c = CORDS.filter(function (x) { return x.id === cordId; })[0] || CORDS[0];
+    var uid = 'p' + Math.random().toString(36).slice(2, 7);
+    return '<svg class="cord" viewBox="0 0 240 150" aria-hidden="true">' +
+      '<defs><path id="' + uid + 'a" d="M18,-6 C40,60 90,110 112,146"/><path id="' + uid + 'b" d="M222,-6 C200,60 150,110 128,146"/></defs>' +
+      '<use href="#' + uid + 'a" stroke="' + c.c + '" stroke-width="22" fill="none" stroke-linecap="round"/>' +
+      '<use href="#' + uid + 'b" stroke="' + c.c + '" stroke-width="22" fill="none" stroke-linecap="round"/>' +
+      '<use href="#' + uid + 'a" stroke="rgba(0,0,0,.18)" stroke-width="22" fill="none" stroke-dasharray="2 6"/>' +
+      '<use href="#' + uid + 'b" stroke="rgba(0,0,0,.18)" stroke-width="22" fill="none" stroke-dasharray="2 6"/>' +
+      '<text font-family="JetBrains Mono, monospace" font-size="9" font-weight="800" letter-spacing="1.5" fill="' + c.t + '" dy="3"><textPath href="#' + uid + 'a" startOffset="6%">SPEC FIRST ✦ BUILD SECOND ✦</textPath></text>' +
+      '<text font-family="JetBrains Mono, monospace" font-size="9" font-weight="800" letter-spacing="1.5" fill="' + c.t + '" dy="3"><textPath href="#' + uid + 'b" startOffset="6%">FEH × VISEO ✦ SDD 2026 ✦</textPath></text>' +
+      '</svg>';
+  }
+  function buildHang(host, opts) {
+    host.innerHTML = '';
+    var hang = document.createElement('div'); hang.className = 'hang' + (opts.swing ? ' swing' : '');
+    hang.innerHTML = cordSVG(opts.state.cord) + '<div class="clip"></div>';
+    var b = document.createElement('div'); b.className = 'badge';
+    b.innerHTML =
+      '<div class="slot"></div>' +
+      '<div class="head"><div class="logos"><img class="v" src="logo.svg" alt="VISEO"><span class="x">×</span><img class="f" src="feh-logo.svg" alt="Far East Hospitality"></div>' +
+      '<div class="ev">SPEC-DRIVEN DEVELOPMENT HACKATHON · 15–16 OCT 2026</div></div>' +
+      '<div class="body"><div class="who"><div class="ph"></div><div><div class="nm"></div><div class="tm"></div></div></div><div class="zone"></div><canvas class="draw"></canvas></div>' +
+      '<div class="foot"><div class="pat"></div><div class="meta"><div class="flow">specify → clarify → <b>plan</b><br>tasks → implement → <b>ship</b></div><div class="idn"></div></div></div>' +
+      '<div class="glare"></div>';
+    hang.appendChild(b);
+    host.appendChild(hang);
+    paintBadge(b, opts.state, opts.interactive);
+    return b;
+  }
+  function paintBadge(b, st, interactive) {
+    var nm = $('.nm', b), name = (st.name || '').trim();
+    nm.textContent = name || (interactive ? 'Your name' : 'You');
+    nm.style.opacity = name ? 1 : .35;
+    nm.className = 'nm' + (name.length > 18 ? ' xlong' : name.length > 11 ? ' long' : '');
+    $('.tm', b).textContent = (st.team || '').trim() ? '◆ ' + st.team.trim() : '';
+    var ph = $('.ph', b);
+    if (st.photo) { b.classList.add('has-photo'); ph.style.backgroundImage = 'url(' + st.photo + ')'; } else { b.classList.remove('has-photo'); ph.style.backgroundImage = ''; }
+    $('.pat', b).className = 'pat p-' + st.pat;
+    $('.idn', b).textContent = st.idn;
+    b.classList.remove('b-dashed', 'b-dotted', 'b-double');
+    if (st.border !== 'none') b.classList.add('b-' + st.border);
+    // stickers
+    var zone = $('.zone', b); zone.innerHTML = '';
+    st.stickers.forEach(function (p) {
+      var d = defs[p.d]; if (!d) return;
+      var el = stickerEl(d);
+      el.dataset.uid = p.u;
+      el.style.left = p.x + '%'; el.style.top = p.y + '%';
+      el.style.transform = 'translate(-50%,-50%) rotate(' + p.r + 'deg) scale(' + (p.s || 1) + ')';
+      if (interactive && p.u === selected) el.classList.add('sel');
+      zone.appendChild(el);
+    });
+    // drawing
+    var cv = $('canvas.draw', b);
+    sizeCanvas(cv);
+    if (st.drawing) { var img = new Image(); img.onload = function () { var ctx = cv.getContext('2d'); ctx.clearRect(0, 0, cv.width, cv.height); ctx.drawImage(img, 0, 0, cv.width, cv.height); }; img.src = st.drawing; }
+  }
+  function sizeCanvas(cv) {
+    var r = cv.getBoundingClientRect();
+    var w = Math.max(1, Math.round((r.width || 320) * 2)), h = Math.max(1, Math.round((r.height || 300) * 2));
+    if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h; }
+  }
+
+  /* ---------- screens ---------- */
+  function show(id) {
+    ['land', 'make', 'done'].forEach(function (s) { $('#s-' + s).classList.toggle('on', s === id); });
+    window.scrollTo(0, 0);
+    if (id === 'make') renderMaker();
+    if (id === 'done') renderDone();
+  }
+  var DEMO = { name: 'You', team: 'Suite 01', photo: null, cord: 'aqua', pat: 'grid', border: 'none', idn: 'SDD-001', drawing: null,
+    stickers: [{ u: 'a', d: 'role-1', x: 30, y: 52, r: -8 }, { u: 'b', d: 'sdd-0', x: 74, y: 44, r: 8 }, { u: 'c', d: 'stack-2', x: 32, y: 82, r: 4 }, { u: 'd', d: 'vibe-1', x: 74, y: 80, r: -6 }] };
+  buildHang($('#demoHang'), { state: DEMO, swing: true });
+  $('#go').addEventListener('click', function () { show('make'); });
+  $('#back').addEventListener('click', function () { show('land'); });
+  $('#finish').addEventListener('click', function () { selected = null; show('done'); });
+  $('#edit').addEventListener('click', function () { show('make'); });
+
+  /* ---------- maker ---------- */
+  var badge = null, selected = null, activeTab = 'role', drawing = false, pen = PENS[0];
+  function renderMaker() {
+    badge = buildHang($('#makeHang'), { state: S, interactive: true });
+    wireBadge(badge);
+    $('#iName').value = S.name; $('#iTeam').value = S.team;
+    $('#rmPhoto').hidden = !S.photo;
+    renderTabs(); renderTray(); renderOptions(); renderSel();
+    badge.classList.toggle('drawing', drawing);
+  }
+  function refresh() { paintBadge(badge, S, true); wireStickerSel(); renderSel(); save(); }
+  $('#iName').addEventListener('input', function (e) { S.name = e.target.value; refresh(); });
+  $('#iTeam').addEventListener('input', function (e) { S.team = e.target.value; refresh(); });
+  $('#iPhoto').addEventListener('change', function (e) {
+    var f = e.target.files && e.target.files[0]; if (!f) return;
+    var rd = new FileReader();
+    rd.onload = function () {
+      var img = new Image();
+      img.onload = function () { // square-crop + shrink to 240px
+        var c = document.createElement('canvas'), s = Math.min(img.width, img.height); c.width = c.height = 240;
+        c.getContext('2d').drawImage(img, (img.width - s) / 2, (img.height - s) / 2, s, s, 0, 0, 240, 240);
+        S.photo = c.toDataURL('image/jpeg', .86); $('#rmPhoto').hidden = false; refresh();
+      };
+      img.src = rd.result;
+    };
+    rd.readAsDataURL(f); e.target.value = '';
+  });
+  $('#rmPhoto').addEventListener('click', function () { S.photo = null; $('#rmPhoto').hidden = true; refresh(); });
+
+  function renderTabs() {
+    var t = $('#tabs'); t.innerHTML = '';
+    TABS.forEach(function (tab) {
+      var b = document.createElement('button'); b.type = 'button'; b.role = 'tab'; b.textContent = tab.label;
+      b.setAttribute('aria-selected', tab.id === activeTab ? 'true' : 'false');
+      b.addEventListener('click', function () { activeTab = tab.id; renderTabs(); renderTray(); });
+      t.appendChild(b);
+    });
+  }
+  function renderTray() {
+    var tray = $('#tray'); tray.innerHTML = '';
+    Object.keys(defs).forEach(function (id) {
+      var d = defs[id]; if (d.tab !== activeTab) return;
+      var el = stickerEl(d); el.style.transform = 'rotate(' + d.tilt + 'deg)';
+      el.setAttribute('role', 'button'); el.tabIndex = 0; el.setAttribute('aria-label', 'Add sticker ' + d.label);
+      var add = function () { addSticker(id); };
+      el.addEventListener('click', add);
+      el.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); add(); } });
+      tray.appendChild(el);
+    });
+  }
+  function addSticker(defId) {
+    var u = Math.random().toString(36).slice(2, 9);
+    S.stickers.push({ u: u, d: defId, x: 18 + Math.random() * 64, y: 40 + Math.random() * 48, r: Math.round(Math.random() * 20 - 10), s: 1 });
+    if (S.stickers.length > 24) S.stickers.shift();
+    selected = u; refresh();
+    if (window.innerWidth < 900) toast('Sticker added ↑ scroll up to see it');
+  }
+  function renderOptions() {
+    var cords = $('#cords'); cords.innerHTML = '';
+    CORDS.forEach(function (c) {
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'sw'; b.style.background = c.c; b.title = c.id; b.setAttribute('aria-label', 'Lanyard ' + c.id);
+      b.setAttribute('aria-pressed', S.cord === c.id ? 'true' : 'false');
+      b.addEventListener('click', function () { S.cord = c.id; save(); renderMaker(); });
+      cords.appendChild(b);
+    });
+    var pats = $('#pats'); pats.innerHTML = '';
+    PATS.forEach(function (p) {
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'pat-sw'; b.title = p; b.setAttribute('aria-label', 'Pattern ' + p);
+      b.innerHTML = '<span class="pat p-' + p + '"></span>';
+      b.setAttribute('aria-pressed', S.pat === p ? 'true' : 'false');
+      b.addEventListener('click', function () { S.pat = p; refresh(); renderOptions(); });
+      pats.appendChild(b);
+    });
+    var bs = $('#borders'); bs.innerHTML = '';
+    BORDERS.forEach(function (o) {
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'btn sm'; b.textContent = o.l;
+      b.setAttribute('aria-pressed', S.border === o.id ? 'true' : 'false');
+      b.addEventListener('click', function () { S.border = o.id; refresh(); renderOptions(); });
+      bs.appendChild(b);
+    });
+    var pens = $('#pens'); [].slice.call(pens.querySelectorAll('.sw')).forEach(function (x) { x.remove(); });
+    PENS.forEach(function (c) {
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'sw'; b.style.background = c; b.style.width = b.style.height = '30px'; b.setAttribute('aria-label', 'Pen colour');
+      b.setAttribute('aria-pressed', pen === c ? 'true' : 'false');
+      b.addEventListener('click', function () { pen = c; if (!drawing) toggleDraw(true); renderOptions(); });
+      pens.appendChild(b);
+    });
+  }
+
+  /* selection bar */
+  function selSticker() { return S.stickers.filter(function (p) { return p.u === selected; })[0]; }
+  function renderSel() {
+    var bar = $('#selbar'), p = selSticker();
+    if (drawing) { bar.innerHTML = '<span class="hint">Drawing on the badge. Tap ✏️ Draw again to stop.</span>'; return; }
+    if (!p) { bar.innerHTML = '<span class="hint">Tap a sticker to add it. Drag stickers on the badge to move them.</span>'; return; }
+    bar.innerHTML = '';
+    [['⟲', 'Rotate left', function () { p.r -= 10; }], ['⟳', 'Rotate right', function () { p.r += 10; }], ['−', 'Smaller', function () { p.s = Math.max(.6, (p.s || 1) - .1); }], ['+', 'Bigger', function () { p.s = Math.min(1.8, (p.s || 1) + .1); }],
+     ['⬆ Front', 'Bring to front', function () { S.stickers = S.stickers.filter(function (q) { return q !== p; }).concat([p]); }],
+     ['🗑 Remove', 'Remove sticker', function () { S.stickers = S.stickers.filter(function (q) { return q !== p; }); selected = null; }],
+     ['Done', 'Deselect', function () { selected = null; }]].forEach(function (a) {
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'btn sm'; b.textContent = a[0]; b.title = a[1]; b.setAttribute('aria-label', a[1]);
+      b.addEventListener('click', function () { a[2](); refresh(); });
+      bar.appendChild(b);
+    });
+  }
+
+  /* drag stickers + doodle */
+  function wireStickerSel() {
+    [].forEach.call(badge.querySelectorAll('.zone .st'), function (el) { el.classList.toggle('sel', el.dataset.uid === selected); });
+  }
+  function wireBadge(b) {
+    var zone = $('.zone', b), body = $('.body', b), drag = null;
+    body.addEventListener('pointerdown', function (e) {
+      if (drawing) return;
+      var el = e.target.closest('.st');
+      if (!el) { if (selected) { selected = null; refresh(); } return; }
+      var p = S.stickers.filter(function (q) { return q.u === el.dataset.uid; })[0]; if (!p) return;
+      selected = p.u; wireStickerSel(); renderSel();
+      var r = zone.getBoundingClientRect();
+      drag = { p: p, el: el, r: r, ox: e.clientX, oy: e.clientY, sx: p.x, sy: p.y, moved: false };
+      el.classList.add('dragging'); el.setPointerCapture(e.pointerId); e.preventDefault();
+    });
+    body.addEventListener('pointermove', function (e) {
+      if (!drag) return;
+      var dx = (e.clientX - drag.ox) / drag.r.width * 100, dy = (e.clientY - drag.oy) / drag.r.height * 100;
+      drag.p.x = Math.max(4, Math.min(96, drag.sx + dx)); drag.p.y = Math.max(4, Math.min(98, drag.sy + dy));
+      drag.el.style.left = drag.p.x + '%'; drag.el.style.top = drag.p.y + '%';
+    });
+    var end = function () { if (!drag) return; drag.el.classList.remove('dragging'); drag = null; save(); };
+    body.addEventListener('pointerup', end); body.addEventListener('pointercancel', end);
+
+    var cv = $('canvas.draw', b), ctx = cv.getContext('2d'), down = false, last = null;
+    function pt(e) { var r = cv.getBoundingClientRect(); return [(e.clientX - r.left) * cv.width / r.width, (e.clientY - r.top) * cv.height / r.height]; }
+    cv.addEventListener('pointerdown', function (e) { if (!drawing) return; sizeCanvas(cv); down = true; last = pt(e); cv.setPointerCapture(e.pointerId); e.preventDefault(); dot(last); });
+    cv.addEventListener('pointermove', function (e) { if (!down) return; var p = pt(e); ctx.strokeStyle = pen; ctx.lineWidth = 7; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.beginPath(); ctx.moveTo(last[0], last[1]); ctx.lineTo(p[0], p[1]); ctx.stroke(); last = p; });
+    function dot(p) { ctx.fillStyle = pen; ctx.beginPath(); ctx.arc(p[0], p[1], 3.5, 0, Math.PI * 2); ctx.fill(); }
+    var stop = function () { if (!down) return; down = false; S.drawing = cv.toDataURL('image/png'); save(); };
+    cv.addEventListener('pointerup', stop); cv.addEventListener('pointercancel', stop);
+  }
+  function toggleDraw(on) {
+    drawing = typeof on === 'boolean' ? on : !drawing;
+    $('#drawBtn').setAttribute('aria-pressed', drawing ? 'true' : 'false');
+    if (badge) badge.classList.toggle('drawing', drawing);
+    if (drawing) selected = null;
+    if (badge) { wireStickerSel(); renderSel(); }
+  }
+  $('#drawBtn').addEventListener('click', function () { toggleDraw(); });
+  $('#clearDraw').addEventListener('click', function () { S.drawing = null; var cv = $('canvas.draw', badge); cv.getContext('2d').clearRect(0, 0, cv.width, cv.height); save(); });
+  $('#reset').addEventListener('click', function () {
+    if (!confirm('Start over? This clears your name, stickers and doodle.')) return;
+    S = JSON.parse(JSON.stringify(DEFAULT)); S.idn = 'SDD-' + String(Math.floor(Math.random() * 900) + 100); selected = null; save(); renderMaker();
+  });
+  $('#surprise').addEventListener('click', function () {
+    var pick = function (tab) { var ids = Object.keys(defs).filter(function (k) { return defs[k].tab === tab; }); return ids[Math.floor(Math.random() * ids.length)]; };
+    var slots = [[28, 50], [74, 46], [30, 82], [74, 82], [52, 66]];
+    var tabs = ['role', 'sdd', 'stack', 'vibe', 'hotel'];
+    S.stickers = tabs.map(function (t, i) { return { u: Math.random().toString(36).slice(2, 9), d: pick(t), x: slots[i][0] + (Math.random() * 6 - 3), y: slots[i][1] + (Math.random() * 6 - 3), r: Math.round(Math.random() * 20 - 10), s: 1 }; });
+    S.cord = CORDS[Math.floor(Math.random() * CORDS.length)].id; S.pat = PATS[Math.floor(Math.random() * PATS.length)];
+    selected = null; save(); renderMaker();
+  });
+  window.addEventListener('resize', function () { if ($('#s-make').classList.contains('on') && badge) paintBadge(badge, S, true); });
+
+  /* ---------- done ---------- */
+  var finalBadge = null;
+  function caption() {
+    var n = (S.name || '').trim();
+    return (n ? "I'm " + n + ' and ' : 'I’m ') + 'building at the FEH × VISEO Spec-Driven Development hackathon, 15–16 Oct. 🛠️\n' +
+      'Day 1: we write the spec. Day 2: the AI agent builds it.\n#SpecFirst #FEHxVISEO #SpecDrivenDevelopment';
+  }
+  function renderDone() {
+    finalBadge = buildHang($('#doneHang'), { state: S, swing: true });
+    $('#cap').textContent = caption();
+  }
+  function fname(suffix) { return 'SDD-badge-' + ((S.name || 'me').trim().replace(/[^a-z0-9]+/gi, '-') || 'me') + suffix; }
+  function download(dataUrl, name) { var a = document.createElement('a'); a.href = dataUrl; a.download = name; document.body.appendChild(a); a.click(); a.remove(); }
+  function toast(t) { var el = $('#toast'); el.textContent = t; el.classList.add('on'); setTimeout(function () { el.classList.remove('on'); }, 2200); }
+  function ready() { return window.htmlToImage && document.fonts ? document.fonts.ready : Promise.resolve(); }
+  $('#dlBadge').addEventListener('click', function () {
+    if (!window.htmlToImage) { alert('The image tool did not load. Check your connection and refresh.'); return; }
+    var src = $('#doneHang .hang'); src.classList.remove('swing');
+    ready().then(function () { return htmlToImage.toPng(src, { pixelRatio: 3, cacheBust: true }); })
+      .then(function (url) { download(url, fname('.png')); toast('Badge downloaded'); })
+      .catch(function (e) { console.error(e); alert('Could not create the image. Try Chrome or Safari.'); })
+      .then(function () { src.classList.add('swing'); });
+  });
+  $('#dlStory').addEventListener('click', function () {
+    if (!window.htmlToImage) { alert('The image tool did not load. Check your connection and refresh.'); return; }
+    var slot = $('#pslot'); buildHang(slot, { state: S, swing: false });
+    var poster = $('#poster');
+    ready().then(function () { return htmlToImage.toPng(poster, { width: 1080, height: 1920, pixelRatio: 1, cacheBust: true, style: { left: '0', position: 'static' } }); })
+      .then(function (url) { download(url, fname('-story.png')); toast('Story downloaded'); })
+      .catch(function (e) { console.error(e); alert('Could not create the image. Try Chrome or Safari.'); });
+  });
+  $('#copyCap').addEventListener('click', function () {
+    var t = caption();
+    (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(function () { toast('Caption copied'); }, function () { prompt('Copy the caption:', t); });
+  });
+})();
+</script>
+</body>
+</html>
