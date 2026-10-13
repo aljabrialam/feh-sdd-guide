@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js"></script>
+<script src="vendor/html-to-image.js"></script>
 <style>
 :root{
   --bg:#001D21; --panel:#04282D; --panel2:#073339; --line:#14484F; --text:#EEFAF7; --muted:#8FB5B1;
@@ -153,6 +153,15 @@ a{color:var(--aqua)}
 #poster .pfoot b{font-family:var(--mono);font-size:30px;color:var(--aqua)}
 #poster .pfoot span{font-size:24px;color:#C9E3DF}
 
+.modal{position:fixed;inset:0;z-index:60;background:rgba(0,10,12,.78);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:16px}
+[hidden]{display:none!important}
+.mbox{width:min(440px,100%);max-height:100%;overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.camview{position:relative;width:100%;aspect-ratio:1;border-radius:16px;overflow:hidden;background:#000}
+.camview video,.camview img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.camview video.mirror{transform:scaleX(-1)}
+.camview .ring{position:absolute;inset:12%;border:3px dashed rgba(127,255,212,.8);border-radius:50%;pointer-events:none}
+.viewbadge{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:30;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.viewbadge[hidden]{display:none}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:var(--aqua);color:#001D21;font-weight:700;padding:12px 18px;border-radius:12px;transition:transform .25s;z-index:50}
 .toast.on{transform:translateX(-50%) translateY(0)}
 
@@ -204,7 +213,7 @@ a{color:var(--aqua)}
       </div>
       <div class="field">
         <span class="sec-t">Photo (optional, stays on your device)</span>
-        <div class="row"><label class="btn sm" for="iPhoto" style="cursor:pointer">Add photo</label><input type="file" id="iPhoto" accept="image/*" hidden><button class="btn sm ghost" id="rmPhoto" hidden>Remove photo</button></div>
+        <div class="row"><button type="button" class="btn sm" id="camBtn">📷 Take a selfie</button><label class="btn sm" for="iPhoto" style="cursor:pointer">🖼 Upload</label><input type="file" id="iPhoto" accept="image/*" hidden><input type="file" id="iCap" accept="image/*" capture="user" hidden><button type="button" class="btn sm ghost" id="rmPhoto" hidden>Remove photo</button></div>
       </div>
       <div class="field">
         <span class="sec-t">Stickers</span>
@@ -256,6 +265,27 @@ a{color:var(--aqua)}
   <div class="pfoot"><b>#SpecFirst  #FEHxVISEO</b><span>Idea in. Working app out.</span></div>
 </div>
 <div class="toast" id="toast"></div>
+<button type="button" class="btn primary viewbadge" id="viewBadge" hidden>↑ View badge</button>
+
+<div class="modal" id="cam" hidden role="dialog" aria-modal="true" aria-labelledby="camT">
+  <div class="mbox">
+    <div class="row" style="justify-content:space-between"><strong id="camT">Take a selfie</strong><button type="button" class="btn sm ghost" id="camClose" aria-label="Close">✕</button></div>
+    <div class="camview"><video id="camVid" playsinline autoplay muted></video><img id="camShot" alt="Your photo" hidden><div class="ring"></div></div>
+    <p class="note" id="camMsg">Centre your face in the circle.</p>
+    <div class="row" id="camLive"><button type="button" class="btn" id="camFlip" title="Switch camera">🔄 Flip</button><button type="button" class="btn primary" id="camSnap" style="flex:1">📸 Capture</button></div>
+    <div class="row" id="camDone" hidden><button type="button" class="btn" id="camRetake">↺ Retake</button><button type="button" class="btn primary" id="camUse" style="flex:1">✓ Use this photo</button></div>
+    <div class="row" id="camFallback" hidden><label class="btn primary" for="iCap" style="flex:1;cursor:pointer">📷 Open phone camera</label><label class="btn" for="iPhoto" style="cursor:pointer">🖼 Upload</label></div>
+  </div>
+</div>
+
+<div class="modal" id="out" hidden role="dialog" aria-modal="true" aria-labelledby="outT">
+  <div class="mbox">
+    <div class="row" style="justify-content:space-between"><strong id="outT">Your image is ready</strong><button type="button" class="btn sm ghost" id="outClose" aria-label="Close">✕</button></div>
+    <img id="outImg" alt="Your badge image" style="width:100%;max-height:58dvh;object-fit:contain;border-radius:12px;background:#001D21">
+    <p class="note" id="outHint">On a phone, you can also press and hold the image to save it to Photos.</p>
+    <div class="row"><button type="button" class="btn primary" id="outShare" style="flex:1" hidden>📤 Share / Save</button><a class="btn" id="outDl" download style="flex:1;text-decoration:none">⬇ Download</a></div>
+  </div>
+</div>
 
 <script>
 (function () {
@@ -344,12 +374,12 @@ a{color:var(--aqua)}
   function cordSVG(cordId) {
     var c = CORDS.filter(function (x) { return x.id === cordId; })[0] || CORDS[0];
     var uid = 'p' + Math.random().toString(36).slice(2, 7);
+    var A = 'M18,-6 C40,60 90,110 112,146', B = 'M222,-6 C200,60 150,110 128,146';
+    var path = function (d, extra) { return '<path d="' + d + '" fill="none" stroke-linecap="round" ' + extra + '/>'; };
     return '<svg class="cord" viewBox="0 0 240 150" aria-hidden="true">' +
-      '<defs><path id="' + uid + 'a" d="M18,-6 C40,60 90,110 112,146"/><path id="' + uid + 'b" d="M222,-6 C200,60 150,110 128,146"/></defs>' +
-      '<use href="#' + uid + 'a" stroke="' + c.c + '" stroke-width="22" fill="none" stroke-linecap="round"/>' +
-      '<use href="#' + uid + 'b" stroke="' + c.c + '" stroke-width="22" fill="none" stroke-linecap="round"/>' +
-      '<use href="#' + uid + 'a" stroke="rgba(0,0,0,.18)" stroke-width="22" fill="none" stroke-dasharray="2 6"/>' +
-      '<use href="#' + uid + 'b" stroke="rgba(0,0,0,.18)" stroke-width="22" fill="none" stroke-dasharray="2 6"/>' +
+      '<defs><path id="' + uid + 'a" d="' + A + '"/><path id="' + uid + 'b" d="' + B + '"/></defs>' +
+      path(A, 'stroke="' + c.c + '" stroke-width="22"') + path(B, 'stroke="' + c.c + '" stroke-width="22"') +
+      path(A, 'stroke="rgba(0,0,0,.18)" stroke-width="22" stroke-dasharray="2 6" stroke-linecap="butt"') + path(B, 'stroke="rgba(0,0,0,.18)" stroke-width="22" stroke-dasharray="2 6" stroke-linecap="butt"') +
       '<text font-family="JetBrains Mono, monospace" font-size="9" font-weight="800" letter-spacing="1.5" fill="' + c.t + '" dy="3"><textPath href="#' + uid + 'a" startOffset="6%">SPEC FIRST ✦ BUILD SECOND ✦</textPath></text>' +
       '<text font-family="JetBrains Mono, monospace" font-size="9" font-weight="800" letter-spacing="1.5" fill="' + c.t + '" dy="3"><textPath href="#' + uid + 'b" startOffset="6%">FEH × VISEO ✦ SDD 2026 ✦</textPath></text>' +
       '</svg>';
@@ -409,6 +439,7 @@ a{color:var(--aqua)}
   function show(id) {
     ['land', 'make', 'done'].forEach(function (s) { $('#s-' + s).classList.toggle('on', s === id); });
     window.scrollTo(0, 0);
+    $('#viewBadge').hidden = true;
     if (id === 'make') renderMaker();
     if (id === 'done') renderDone();
   }
@@ -433,20 +464,69 @@ a{color:var(--aqua)}
   function refresh() { paintBadge(badge, S, true); wireStickerSel(); renderSel(); save(); }
   $('#iName').addEventListener('input', function (e) { S.name = e.target.value; refresh(); });
   $('#iTeam').addEventListener('input', function (e) { S.team = e.target.value; refresh(); });
-  $('#iPhoto').addEventListener('change', function (e) {
-    var f = e.target.files && e.target.files[0]; if (!f) return;
-    var rd = new FileReader();
-    rd.onload = function () {
-      var img = new Image();
-      img.onload = function () { // square-crop + shrink to 240px
-        var c = document.createElement('canvas'), s = Math.min(img.width, img.height); c.width = c.height = 240;
-        c.getContext('2d').drawImage(img, (img.width - s) / 2, (img.height - s) / 2, s, s, 0, 0, 240, 240);
-        S.photo = c.toDataURL('image/jpeg', .86); $('#rmPhoto').hidden = false; refresh();
-      };
-      img.src = rd.result;
+  function setPhotoFrom(src, mirror) {
+    var img = new Image();
+    img.onload = function () { // square-crop + shrink to 360px
+      var c = document.createElement('canvas'), s = Math.min(img.naturalWidth, img.naturalHeight), ctx = c.getContext('2d'); c.width = c.height = 360;
+      if (mirror) { ctx.translate(360, 0); ctx.scale(-1, 1); }
+      ctx.drawImage(img, (img.naturalWidth - s) / 2, (img.naturalHeight - s) / 2, s, s, 0, 0, 360, 360);
+      S.photo = c.toDataURL('image/jpeg', .88); $('#rmPhoto').hidden = false; refresh(); toast('Photo added');
     };
-    rd.readAsDataURL(f); e.target.value = '';
+    img.onerror = function () { alert('That image could not be read. Try a JPG or PNG.'); };
+    img.src = src;
+  }
+  function fileToPhoto(e) {
+    var f = e.target.files && e.target.files[0]; if (!f) return;
+    closeCam();
+    var url = URL.createObjectURL(f);
+    setPhotoFrom(url, false);
+    e.target.value = '';
+  }
+  $('#iPhoto').addEventListener('change', fileToPhoto);
+  $('#iCap').addEventListener('change', fileToPhoto);
+
+  /* camera */
+  var stream = null, facing = 'user', shot = null;
+  var hasCam = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) && window.isSecureContext;
+  function stopStream() { if (stream) { stream.getTracks().forEach(function (t) { t.stop(); }); stream = null; } }
+  function camState(mode) {
+    $('#camLive').hidden = mode !== 'live'; $('#camDone').hidden = mode !== 'shot'; $('#camFallback').hidden = mode !== 'fallback';
+    $('#camVid').hidden = mode === 'shot'; $('#camShot').hidden = mode !== 'shot';
+  }
+  function startCam() {
+    stopStream(); camState('live'); $('#camMsg').textContent = 'Starting camera…';
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: facing, width: { ideal: 1280 }, height: { ideal: 1280 } }, audio: false })
+      .then(function (st) {
+        stream = st; var v = $('#camVid'); v.srcObject = st; v.classList.toggle('mirror', facing === 'user');
+        var p = v.play(); if (p && p.catch) p.catch(function () {});
+        $('#camMsg').textContent = 'Centre your face in the circle, then tap Capture.';
+      })
+      .catch(function (err) {
+        console.warn(err); camState('fallback');
+        $('#camMsg').textContent = (err && err.name === 'NotAllowedError') ? 'Camera permission was blocked. Use your phone camera app instead, or upload a photo.' : 'This browser can\'t open the camera here. Use your phone camera app instead, or upload a photo.';
+      });
+  }
+  function openCam() {
+    $('#cam').hidden = false; shot = null;
+    if (hasCam) startCam(); else { camState('fallback'); $('#camMsg').textContent = 'Use your phone camera app, or upload a photo.'; }
+  }
+  function closeCam() { stopStream(); $('#cam').hidden = true; }
+  $('#camBtn').addEventListener('click', openCam);
+  $('#camClose').addEventListener('click', closeCam);
+  $('#cam').addEventListener('click', function (e) { if (e.target === this) closeCam(); });
+  $('#camFlip').addEventListener('click', function () { facing = facing === 'user' ? 'environment' : 'user'; startCam(); });
+  $('#camSnap').addEventListener('click', function () {
+    var v = $('#camVid'); if (!v.videoWidth) return;
+    var c = document.createElement('canvas'), s = Math.min(v.videoWidth, v.videoHeight), ctx = c.getContext('2d'); c.width = c.height = 720;
+    if (facing === 'user') { ctx.translate(720, 0); ctx.scale(-1, 1); }
+    ctx.drawImage(v, (v.videoWidth - s) / 2, (v.videoHeight - s) / 2, s, s, 0, 0, 720, 720);
+    shot = c.toDataURL('image/jpeg', .9); $('#camShot').src = shot; camState('shot'); $('#camMsg').textContent = 'Happy with it?';
+    stopStream();
   });
+  $('#camRetake').addEventListener('click', startCam);
+  $('#camUse').addEventListener('click', function () { if (shot) setPhotoFrom(shot, false); closeCam(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closeCam(); $('#out').hidden = true; } });
+
   $('#rmPhoto').addEventListener('click', function () { S.photo = null; $('#rmPhoto').hidden = true; refresh(); });
 
   function renderTabs() {
@@ -475,7 +555,7 @@ a{color:var(--aqua)}
     S.stickers.push({ u: u, d: defId, x: 18 + Math.random() * 64, y: 40 + Math.random() * 48, r: Math.round(Math.random() * 20 - 10), s: 1 });
     if (S.stickers.length > 24) S.stickers.shift();
     selected = u; refresh();
-    if (window.innerWidth < 900) toast('Sticker added ↑ scroll up to see it');
+    if (window.innerWidth < 900) toast('Sticker added. Tap ↑ View badge to place it');
   }
   function renderOptions() {
     var cords = $('#cords'); cords.innerHTML = '';
@@ -594,25 +674,63 @@ a{color:var(--aqua)}
     $('#cap').textContent = caption();
   }
   function fname(suffix) { return 'SDD-badge-' + ((S.name || 'me').trim().replace(/[^a-z0-9]+/gi, '-') || 'me') + suffix; }
-  function download(dataUrl, name) { var a = document.createElement('a'); a.href = dataUrl; a.download = name; document.body.appendChild(a); a.click(); a.remove(); }
-  function toast(t) { var el = $('#toast'); el.textContent = t; el.classList.add('on'); setTimeout(function () { el.classList.remove('on'); }, 2200); }
-  function ready() { return window.htmlToImage && document.fonts ? document.fonts.ready : Promise.resolve(); }
+  function toast(t) { var el = $('#toast'); el.textContent = t; el.classList.add('on'); clearTimeout(toast._t); toast._t = setTimeout(function () { el.classList.remove('on'); }, 2200); }
+  var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  function render(node, opts) {
+    var go = function () { return htmlToImage.toPng(node, opts); };
+    var p = document.fonts ? document.fonts.ready : Promise.resolve();
+    // Safari sometimes paints images and fonts only on the second pass
+    return p.then(go).then(function (u) { return isIOS ? go() : u; });
+  }
+  var outFile = null;
+  function showOut(dataUrl, name) {
+    $('#outImg').src = dataUrl; var a = $('#outDl'); a.href = dataUrl; a.download = name;
+    outFile = null; $('#outShare').hidden = true;
+    fetch(dataUrl).then(function (r) { return r.blob(); }).then(function (b) {
+      var f = new File([b], name, { type: 'image/png' });
+      if (navigator.canShare && navigator.canShare({ files: [f] })) { outFile = f; $('#outShare').hidden = false; }
+    }).catch(function () {});
+    $('#out').hidden = false;
+  }
+  $('#outShare').addEventListener('click', function () {
+    if (!outFile) return;
+    navigator.share({ files: [outFile], title: 'My SDD hackathon badge', text: caption() }).catch(function (e) { if (e && e.name !== 'AbortError') toast('Sharing failed. Use Download instead.'); });
+  });
+  $('#outClose').addEventListener('click', function () { $('#out').hidden = true; });
+  $('#out').addEventListener('click', function (e) { if (e.target === this) this.hidden = true; });
+  function busy(btn, on, label) { btn.disabled = on; if (on) { btn.dataset.l = btn.textContent; btn.textContent = label; } else if (btn.dataset.l) btn.textContent = btn.dataset.l; }
   $('#dlBadge').addEventListener('click', function () {
-    if (!window.htmlToImage) { alert('The image tool did not load. Check your connection and refresh.'); return; }
-    var src = $('#doneHang .hang'); src.classList.remove('swing');
-    ready().then(function () { return htmlToImage.toPng(src, { pixelRatio: 3, cacheBust: true }); })
-      .then(function (url) { download(url, fname('.png')); toast('Badge downloaded'); })
+    var btn = this;
+    if (!window.htmlToImage) { alert('The image tool did not load. Refresh the page and try again.'); return; }
+    var src = $('#doneHang .hang'); src.classList.remove('swing'); src.style.transform = 'none';
+    busy(btn, true, 'Creating image…');
+    render($('#doneHang'), { pixelRatio: 3, cacheBust: true, backgroundColor: '#001D21', style: { padding: '28px 36px 40px' }, width: $('#doneHang').offsetWidth + 72, height: $('#doneHang').offsetHeight + 68 })
+      .then(function (url) { showOut(url, fname('.png')); })
       .catch(function (e) { console.error(e); alert('Could not create the image. Try Chrome or Safari.'); })
-      .then(function () { src.classList.add('swing'); });
+      .then(function () { src.style.transform = ''; src.classList.add('swing'); busy(btn, false); });
   });
   $('#dlStory').addEventListener('click', function () {
-    if (!window.htmlToImage) { alert('The image tool did not load. Check your connection and refresh.'); return; }
+    var btn = this;
+    if (!window.htmlToImage) { alert('The image tool did not load. Refresh the page and try again.'); return; }
     var slot = $('#pslot'); buildHang(slot, { state: S, swing: false });
     var poster = $('#poster');
-    ready().then(function () { return htmlToImage.toPng(poster, { width: 1080, height: 1920, pixelRatio: 1, cacheBust: true, style: { left: '0', position: 'static' } }); })
-      .then(function (url) { download(url, fname('-story.png')); toast('Story downloaded'); })
-      .catch(function (e) { console.error(e); alert('Could not create the image. Try Chrome or Safari.'); });
+    busy(btn, true, 'Creating story…');
+    render(poster, { width: 1080, height: 1920, pixelRatio: 1, cacheBust: true, style: { left: '0', position: 'static' } })
+      .then(function (url) { showOut(url, fname('-story.png')); })
+      .catch(function (e) { console.error(e); alert('Could not create the image. Try Chrome or Safari.'); })
+      .then(function () { busy(btn, false); });
   });
+
+  /* mobile: floating "view badge" button when the badge is off screen */
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (en) {
+      var vis = en[0].isIntersecting;
+      $('#viewBadge').hidden = vis || !$('#s-make').classList.contains('on') || window.innerWidth >= 900;
+    }, { threshold: 0.15 });
+    io.observe($('#makeHang'));
+    $('#viewBadge').addEventListener('click', function () { $('#makeHang').scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+  }
+
   $('#copyCap').addEventListener('click', function () {
     var t = caption();
     (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(function () { toast('Caption copied'); }, function () { prompt('Copy the caption:', t); });
