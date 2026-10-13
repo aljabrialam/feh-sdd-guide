@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261013130859">
+<meta name="build" content="20261013133735">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -14,9 +14,7 @@ var m=t.match(/<meta name="build" content="(\d+)"/);if(m&&m[1]!==me){u.searchPar
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Badge Maker · FEH × VISEO SDD Hackathon</title>
 <meta name="description" content="Make your sticker badge for the FEH × VISEO Spec-Driven Development hackathon, 15–16 October 2026.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="vendor/fonts/fonts.css">
 <script src="vendor/html-to-image.js"></script>
 <script src="vendor/qrcode.js"></script>
 <style>
@@ -75,21 +73,21 @@ a{color:var(--aqua)}
 .badge .head{background:#001D21;color:#EEFAF7;padding:34px 20px 14px;display:flex;flex-direction:column;gap:8px;position:relative}
 .badge .logos{display:flex;align-items:center;gap:8px}
 .badge .logos img.v{height:16px}.badge .logos img.f{height:19px;filter:brightness(0) invert(1)}.badge .logos .x{color:var(--muted);font-size:12px}
-.badge .ev{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;color:var(--aqua);font-weight:700}
+.badge .ev{white-space:nowrap;font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--aqua);font-weight:700}
 .badge .body{flex:1;position:relative;padding:16px 20px 0;display:flex;flex-direction:column;gap:2px;min-height:0}
 .badge .who{display:flex;align-items:center;gap:12px;position:relative;z-index:1}
 .badge .ph{width:64px;height:64px;flex:none;border-radius:50%;background:#dfeeeb center/cover no-repeat;border:3px solid #001D21;display:none}
 .badge.has-photo .ph{display:block}
 .badge .nm{font-weight:800;font-size:30px;line-height:1.02;letter-spacing:-.02em;word-break:break-word}
 .badge .nm.long{font-size:24px}.badge .nm.xlong{font-size:19px}
-.badge .tm{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;color:#0F4D92;margin-top:4px;text-transform:uppercase}
+.badge .tm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;color:#0F4D92;margin-top:4px;text-transform:uppercase}
 .badge .zone{position:absolute;inset:0}
 .badge canvas.draw{position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none}
 .badge.drawing canvas.draw{pointer-events:auto;cursor:crosshair}
 .badge .foot{height:30%;position:relative;overflow:hidden;flex:none}
 .badge .foot .pat{position:absolute;inset:0}
 .badge .foot .meta{position:absolute;left:14px;right:14px;bottom:12px;display:flex;justify-content:space-between;align-items:flex-end;gap:10px;z-index:2}
-.badge .flow{font-family:var(--mono);font-size:8.5px;font-weight:700;letter-spacing:.06em;background:rgba(0,29,33,.82);color:#EEFAF7;padding:5px 8px;border-radius:7px;line-height:1.5}
+.badge .flow{white-space:nowrap;font-family:var(--mono);font-size:8.5px;font-weight:700;letter-spacing:.06em;background:rgba(0,29,33,.82);color:#EEFAF7;padding:5px 8px;border-radius:7px;line-height:1.5}
 .badge .flow b{color:var(--aqua)}
 .badge .idn{font-family:var(--mono);font-size:10px;font-weight:800;background:#EEFAF7;color:#001D21;padding:5px 8px;border-radius:7px}
 .badge.b-dashed{outline:3px dashed #001D21;outline-offset:-10px}
@@ -456,7 +454,7 @@ a{color:var(--aqua)}
     b.innerHTML =
       '<div class="slot"></div>' +
       '<div class="head"><div class="logos"><img class="v" src="logo.svg" alt="VISEO"><span class="x">×</span><img class="f" src="feh-logo.svg" alt="Far East Hospitality"></div>' +
-      '<div class="ev">SPEC-DRIVEN DEVELOPMENT HACKATHON · 15–16 OCT 2026</div></div>' +
+      '<div class="ev">SDD HACKATHON · 15–16 OCT 2026</div></div>' +
       '<div class="body"><div class="who"><div class="ph"></div><div><div class="nm"></div><div class="tm"></div></div></div><div class="zone"></div><canvas class="draw"></canvas></div>' +
       '<div class="foot"><div class="pat"></div><div class="meta"><div class="flow">specify → clarify → <b>plan</b><br>tasks → implement → <b>ship</b></div><div class="idn"></div></div></div>' +
       '<div class="glare"></div>';
@@ -718,7 +716,7 @@ a{color:var(--aqua)}
   });
   $('#surprise').addEventListener('click', function () {
     var pick = function (tab) { var ids = Object.keys(defs).filter(function (k) { return defs[k].tab === tab; }); return ids[Math.floor(Math.random() * ids.length)]; };
-    var slots = [[28, 50], [74, 46], [30, 82], [74, 82], [52, 66]];
+    var slots = [[28, 58], [74, 54], [30, 86], [74, 86], [52, 72]];
     var tabs = ['role', 'sdd', 'stack', 'vibe', 'hotel'];
     S.stickers = tabs.map(function (t, i) { return { u: Math.random().toString(36).slice(2, 9), d: pick(t), x: slots[i][0] + (Math.random() * 6 - 3), y: slots[i][1] + (Math.random() * 6 - 3), r: Math.round(Math.random() * 20 - 10), s: 1 }; });
     S.cord = CORDS[Math.floor(Math.random() * CORDS.length)].id; S.pat = PATS[Math.floor(Math.random() * PATS.length)];
@@ -846,7 +844,8 @@ a{color:var(--aqua)}
   var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   function render(node, opts) {
     var go = function () { return htmlToImage.toPng(node, opts); };
-    var p = document.fonts ? document.fonts.ready : Promise.resolve();
+    var faces = ['400 16px Sora', '600 16px Sora', '700 16px Sora', '800 16px Sora', '500 12px "JetBrains Mono"', '700 12px "JetBrains Mono"', '800 12px "JetBrains Mono"'];
+    var p = document.fonts ? Promise.all(faces.map(function (f) { return document.fonts.load(f); })).then(function () { return document.fonts.ready; }) : Promise.resolve();
     // Safari sometimes paints images and fonts only on the second pass
     return p.then(go).then(function (u) { return isIOS ? go() : u; });
   }

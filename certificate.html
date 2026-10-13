@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261013130859">
+<meta name="build" content="20261013133735">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -14,9 +14,7 @@ var m=t.match(/<meta name="build" content="(\d+)"/);if(m&&m[1]!==me){u.searchPar
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Certificate · FEH × VISEO SDD Hackathon</title>
 <meta name="description" content="Certificate of completion for the FEH × VISEO Spec-Driven Development hackathon, 15–16 October 2026.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,500&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="vendor/fonts/fonts.css">
 <script src="vendor/html-to-image.js"></script>
 <script src="vendor/qrcode.js"></script>
 <style>
@@ -218,7 +216,7 @@ h1 em{font-style:normal;color:var(--aqua)}
         '<div class="kicker">CERTIFICATE OF COMPLETION</div>' +
         '<div class="title">Spec-Driven Development Hackathon</div>' +
         '<div class="pre">This certifies that</div>' +
-        '<div class="name' + (state.n.trim() ? '' : '" style="opacity:.3') + '">' + esc(name) + '</div>' +
+        '<div class="name" style="' + (state.n.trim() ? '' : 'opacity:.3;') + 'font-size:' + (name.length > 30 ? 58 : name.length > 22 ? 76 : 96) + 'px">' + esc(name) + '</div>' +
         '<div class="role">' + esc(state.r) + '</div>' +
         '<div class="body">completed the two-day <b>FEH × VISEO</b> hands-on hackathon on 15–16 October 2026 in Singapore, taking a real business idea from an approved specification to a working app, <b>' + esc(app) + '</b>, built with an AI coding agent and proven by acceptance tests.</div>' +
         '<div class="skills"><span>Writing testable specs</span><span>Clarify &amp; decide</span><span>Plan &amp; sign-off gates</span><span>AI-assisted build</span><span>Acceptance testing</span></div>' +
@@ -285,7 +283,8 @@ h1 em{font-style:normal;color:var(--aqua)}
     host.innerHTML = certHTML(); document.body.appendChild(host); qr(host.querySelector('.qr'));
     var node = host.querySelector('.cert');
     var go = function () { return htmlToImage.toPng(node, { width: 1600, height: 1131, pixelRatio: 1.5, cacheBust: true }); };
-    return (document.fonts ? document.fonts.ready : Promise.resolve()).then(go).then(function (u) { return isIOS ? go() : u; })
+    var faces = ['400 16px Sora', '700 16px Sora', '800 16px Sora', '700 12px "JetBrains Mono"', '600 16px Fraunces', 'italic 500 16px Fraunces', '600 16px Caveat'];
+    return (document.fonts ? Promise.all(faces.map(function (f) { return document.fonts.load(f); })).then(function () { return document.fonts.ready; }) : Promise.resolve()).then(go).then(function (u) { return isIOS ? go() : u; })
       .then(function (u) { host.remove(); return u; }, function (e) { host.remove(); throw e; });
   }
   var outFile = null;
