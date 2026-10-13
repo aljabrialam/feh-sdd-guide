@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261013144814">
+<meta name="build" content="20261013164654">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -217,8 +217,8 @@ git reset --hard checkpoint/001-G2</pre>
   <div class="flow">
     <span>3 Scaffold</span><span>4 UI on mock data</span><span>5 API endpoints</span><span>6 Connect</span><span>7 Integration tests</span><span class="g">8 E2E tests</span>
   </div>
-  <pre class="tall" data-label="Prompt · paste into your AI agent">
-/speckit.tasks
+  <pre class="tall" data-label="Prompt · paste into Copilot Chat">
+/speckit-tasks
 
 Order the tasks in these phases. Finish and check each phase before
 starting the next, and name the acceptance criterion IDs each task
@@ -243,8 +243,8 @@ serves. Mark tasks that can run in parallel.
 8. End-to-end tests: Playwright journeys with both servers running,
    including the shared tests in e2e/acceptance/. Check: all pass.</pre>
   <div class="row3" style="grid-template-columns:repeat(2,minmax(0,1fr))">
-    <pre data-label="Prompt">/speckit.implement</pre>
-    <pre data-label="Prompt">/speckit.converge</pre>
+    <pre data-label="Prompt">/speckit-implement</pre>
+    <pre data-label="Prompt">/speckit-converge</pre>
   </div>
   <div class="note"><b>Why UI on mock data first</b>FEH sees and corrects the screens early, before any backend work, and the API contract stays the single agreement between frontend and backend. If the UI on mock data doesn't match the mockup, stop and fix it there: it's cheapest at that point.</div>
   <h3><span class="ph">Run it</span></h3>
@@ -269,7 +269,7 @@ npm run dev</pre>
     <li>Every AC-001 criterion has a passing test whose name contains its ID</li>
     <li>The shared acceptance tests pass: <code>cd e2e &amp;&amp; npx playwright test acceptance</code></li>
     <li>The screens match the mockup and <code>docs/reference.md</code> labels</li>
-    <li><code>/speckit.converge</code> reports no gaps against the spec</li>
+    <li><code>/speckit-converge</code> reports no gaps against the spec</li>
     <li>The app does nothing that spec 001 didn't ask for</li>
     <li><code>gates/G3.md</code> is signed by both and committed</li>
   </ul>
@@ -280,8 +280,8 @@ npm run dev</pre>
   <h2>Plan and build spec 002</h2>
   <p class="lead">The full loop for one spec, on its own, in an afternoon.</p>
   <h3><span class="ph">3 · Plan</span></h3>
-  <pre data-label="Prompt · paste into your AI agent (backup idea)">
-/speckit.plan
+  <pre data-label="Prompt · paste into Copilot Chat (backup idea)">
+/speckit-plan
 
 Extend the existing application from spec 001; do not change its
 stack. Add staff sign-in using the staff accounts in docs/reference.md
@@ -311,8 +311,8 @@ git reset --hard checkpoint/002-G2</pre>
   <div class="flow">
     <span>4 UI on mock data</span><span>5 API endpoints</span><span>6 Connect</span><span>7 Integration tests</span><span class="g">8 E2E tests</span>
   </div>
-  <pre class="tall" data-label="Prompt · paste into your AI agent">
-/speckit.tasks
+  <pre class="tall" data-label="Prompt · paste into Copilot Chat">
+/speckit-tasks
 
 Order the tasks in the same phases as spec 001, skipping the scaffold:
 the projects already exist. Finish and check each phase before starting
@@ -330,8 +330,8 @@ tasks that can run in parallel.
 8. End-to-end tests: the pick-up and complete journey and the shared
    tests in e2e/acceptance/. All spec 001 tests must still pass.</pre>
   <div class="row3" style="grid-template-columns:repeat(2,minmax(0,1fr))">
-    <pre data-label="Prompt">/speckit.implement</pre>
-    <pre data-label="Prompt">/speckit.converge</pre>
+    <pre data-label="Prompt">/speckit-implement</pre>
+    <pre data-label="Prompt">/speckit-converge</pre>
   </div>
   <h3><span class="ph gate">G3</span> Acceptance checklist</h3>
   <ul class="checks">
@@ -352,7 +352,7 @@ tasks that can run in parallel.
   <ol>
     <li>Ask the agent to amend the spec, not the code:</li>
   </ol>
-  <pre data-label="Prompt · paste into your AI agent">
+  <pre data-label="Prompt · paste into Copilot Chat">
 Do not change any code yet.
 
 Amend specs/001-*/spec.md: a guest submitting a maintenance request can
@@ -364,7 +364,7 @@ spec. Then stop and show me the changed criteria.</pre>
     <li>FEH re-approves at G1 (add a dated line to <code>gates/G1.md</code>).</li>
     <li>Then let the agent update the plan and code:</li>
   </ol>
-  <pre data-label="Prompt · paste into your AI agent">
+  <pre data-label="Prompt · paste into Copilot Chat">
 The amended spec 001 has been re-approved at G1. Update the plan and
 tasks for the new acceptance criteria only, implement them with tests
 named after their IDs, confirm all existing tests still pass, then stop
@@ -383,7 +383,7 @@ and report.</pre>
   <h3><span class="ph">3</span> Show a decision</h3>
   <p>Open a <code>G1.md</code> and read one business decision FEH made during clarify. That decision is now in the code and covered by a test.</p>
   <h3><span class="ph">4</span> Ask the agent</h3>
-  <pre data-label="Prompt · paste into your AI agent">
+  <pre data-label="Prompt · paste into Copilot Chat">
 List every acceptance criterion in specs/, and for each one the test
 that proves it and whether that test currently passes. Show the result
 as a table. Do not change anything.</pre>

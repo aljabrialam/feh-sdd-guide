@@ -83,15 +83,23 @@ if have uv; then
 else bad "Django     skipped: needs uv first"; fi
 
 # 7. Spec Kit
-if have specify; then ok "Spec Kit   $(specify --version 2>/dev/null | tail -1)"; else bad "Spec Kit   'specify' not found: install it, then open a new terminal (step 8)"; fi
+if have specify; then
+  SV=$(specify --version 2>/dev/null | tail -1 | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1)
+  SMAJ=${SV%%.*}; SMIN=${SV#*.}; SMIN=${SMIN%%.*}
+  if [ -n "$SV" ] && { [ "$SMAJ" -gt 1 ] || { [ "$SMAJ" -eq 1 ] && [ "$SMIN" -ge 1 ]; }; } 2>/dev/null; then ok "Spec Kit   $SV"
+  else bad "Spec Kit   ${SV:-unknown version} found, 1.1 or later needed: run 'uv tool install --force specify-cli' (step 8)"; fi
+else bad "Spec Kit   'specify' not found: install it, then open a new terminal (step 8)"; fi
 
 # 8. Playwright Chromium
 PWDIR="${PLAYWRIGHT_BROWSERS_PATH:-}"
 [ -z "$PWDIR" ] && { [ -d "$HOME/Library/Caches/ms-playwright" ] && PWDIR="$HOME/Library/Caches/ms-playwright" || PWDIR="$HOME/.cache/ms-playwright"; }
 if ls -d "$PWDIR"/chromium* >/dev/null 2>&1; then ok "Playwright Chromium downloaded"; else bad "Playwright Chromium not found: run 'npx playwright install chromium' (step 9)"; fi
 
-# 9. AI coding agent
-warn "AI agent   TBC: we will confirm which one and how to install it (step 10)"
+# 9. GitHub Copilot (the script can't see the sign-in: step 10 has a chat test for that)
+if have code; then
+  if echo "$EXT" | grep -qx "github.copilot-chat"; then ok "Copilot    Copilot Chat installed (sign in and Agent mode: step 10)"
+  else bad "Copilot    Copilot Chat missing: run 'code --install-extension GitHub.copilot-chat' (step 10)"; fi
+else bad "Copilot    skipped: needs VS Code and the 'code' command first (step 3)"; fi
 
 echo
 if [ $FAIL -eq 0 ]; then printf "${G}${B}All set.${N} Take a screenshot of this window and send it to Aljabri.\n\n"

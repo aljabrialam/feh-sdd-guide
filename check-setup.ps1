@@ -103,14 +103,21 @@ if (Have uv) {
 } else { Bad "Django     skipped: needs uv first" }
 
 # 7. Spec Kit
-if (Have specify) { Ok ("Spec Kit   " + ((specify --version | Select-Object -Last 1))) } else { Bad "Spec Kit   'specify' not found: install it, then reopen PowerShell (step 8)" }
+if (Have specify) {
+  $sv = ([regex]::Match(((specify --version 2>$null) | Out-String), '\d+\.\d+\.\d+')).Value
+  if ($sv -and ([version]$sv -ge [version]'1.1.0')) { Ok "Spec Kit   $sv" }
+  else { Bad ("Spec Kit   " + $(if ($sv) { $sv } else { 'unknown version' }) + " found, 1.1 or later needed: run 'uv tool install --force specify-cli' (step 8)") }
+} else { Bad "Spec Kit   'specify' not found: install it, then reopen PowerShell (step 8)" }
 
 # 8. Playwright Chromium
 $pw = if ($env:PLAYWRIGHT_BROWSERS_PATH) { $env:PLAYWRIGHT_BROWSERS_PATH } else { Join-Path $env:LOCALAPPDATA 'ms-playwright' }
 if (Test-Path (Join-Path $pw 'chromium*')) { Ok "Playwright Chromium downloaded" } else { Bad "Playwright Chromium not found: run 'npx playwright install chromium' (step 9)" }
 
-# 9. AI coding agent
-Warn "AI agent   TBC: we will confirm which one and how to install it (step 10)"
+# 9. GitHub Copilot (the script can't see the sign-in: step 10 has a chat test for that)
+if (Have code) {
+  if ($ext -contains 'github.copilot-chat') { Ok "Copilot    Copilot Chat installed (sign in and Agent mode: step 10)" }
+  else { Bad "Copilot    Copilot Chat missing: run 'code --install-extension GitHub.copilot-chat' (step 10)" }
+} else { Bad "Copilot    skipped: needs VS Code and the 'code' command first (step 3)" }
 
 Write-Host ""
 if (-not $script:fail) { Write-Host "All set. Take a screenshot of this window and send it to Aljabri." -ForegroundColor Green }

@@ -31,7 +31,7 @@ Without the `gh` CLI: create the repo on github.com, push, then go to **Settings
 
 ## Laptop setup page
 
-`setup.html` is the participant setup guide: Mac and Windows steps with copy buttons, a saved checklist and troubleshooting. The AI coding agent step is marked **TBC**; update it in `setup.html` (step 10), in `check-setup.sh` / `check-setup.ps1` and in the guide's Step 0 once the agent is confirmed. Share `https://aljabrialam.github.io/feh-sdd-guide/setup.html`.
+`setup.html` is the participant setup guide: Mac and Windows steps with copy buttons, a saved checklist and troubleshooting. The AI agent is **GitHub Copilot** (Copilot Chat in VS Code, Agent mode) with Spec Kit 1.1+ in its default skills mode: `specify init . --integration copilot`, skills under `.github/skills/`, invoked as `/speckit-specify` etc.
 
 **Check scripts:** `check-setup.sh` (Mac/Linux) and `check-setup.ps1` (Windows) must be uploaded to the repo root next to `setup.html`; participants run them straight from GitHub Pages and send a screenshot. They only read versions and build a throwaway Django project in a temp folder, which they delete.
 

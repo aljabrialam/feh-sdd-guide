@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261013144814">
+<meta name="build" content="20261013164654">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -264,8 +264,8 @@ summary{cursor:pointer;font-weight:600}
     <tr><td>10:30</td><td>Agree the constitution</td></tr>
     <tr><td>11:15</td><td>Pick the app idea, split it into features</td></tr>
     <tr><td>12:00</td><td class="muted">Lunch</td></tr>
-    <tr><td>1:00</td><td><code>/speckit.specify</code>: deep dive, then spec 001</td></tr>
-    <tr><td>2:00</td><td><code>/speckit.clarify</code>: deep dive, then spec 001</td></tr>
+    <tr><td>1:00</td><td><code>/speckit-specify</code>: deep dive, then spec 001</td></tr>
+    <tr><td>2:00</td><td><code>/speckit-clarify</code>: deep dive, then spec 001</td></tr>
     <tr><td>2:45</td><td>Specs 002 and 003 in pairs, pitfalls review</td></tr>
     <tr><td>3:45</td><td><b>G1: FEH approves the specs</b></td></tr>
     <tr><td>4:15</td><td>Plan + G2 for spec 001 (facilitator-led), sync</td></tr>
@@ -319,7 +319,7 @@ summary{cursor:pointer;font-weight:600}
     <tr><td><b>2 · Decisions made once</b></td><td>Clarify questions are answered by FEH once, for the whole room. Every pair pastes the same <b>room decisions</b> block.</td></tr>
     <tr><td><b>3 · Converge at every gate</b></td><td>Pairs practise specify, clarify and plan themselves, then sync to the room's approved version (a checkpoint) before moving on.</td></tr>
     <tr><td><b>4 · Shared acceptance tests</b></td><td>The facilitator's checkpoint includes end-to-end tests written from the approved spec. Every pair's build must pass the same tests at G3.</td></tr>
-    <tr><td><b>5 · Same tools</b></td><td>Same Spec Kit and AI agent versions, checked in Step 0. Node 22+ and Python 3.12+.</td></tr>
+    <tr><td><b>5 · Same tools</b></td><td>Same Spec Kit version and GitHub Copilot in Agent mode, checked in Step 0. Node 22+ and Python 3.12+.</td></tr>
   </table>
   <h3>Checkpoints</h3>
   <p>The facilitator builds the whole app once in the dry run and tags each gate. A pair that falls behind or drifts resets to the latest checkpoint and carries on.</p>
@@ -361,16 +361,16 @@ npx playwright install chromium</pre>
   <pre data-label="Mac · Terminal">curl -fsSL https://aljabrialam.github.io/feh-sdd-guide/check-setup.sh | bash</pre>
   <pre data-label="Windows · PowerShell">irm https://aljabrialam.github.io/feh-sdd-guide/check-setup.ps1 | iex</pre>
   <ul class="checks">
-    <li>The check script shows <b>OK</b> on every line (WARN for the AI agent is expected while it's TBC)</li>
+    <li>The check script shows <b>OK</b> on every line</li>
     <li><code>node --version</code> prints 22 or higher</li>
     <li><code>python3 --version</code> (or <code>python --version</code> on Windows) prints 3.12 or higher</li>
     <li><code>npx playwright install chromium</code> finished without errors</li>
     <li><code>uvx --from django django-admin --version</code> prints a Django version</li>
     <li><code>git --version</code> prints a version and <code>git config --global user.email</code> prints your email</li>
     <li><code>code --version</code> works and the 4 VS Code extensions are installed</li>
-    <li>AI coding agent: <b>TBC</b>. We will confirm which one and how to install it</li>
+    <li>GitHub Copilot Chat is installed in VS Code, you're signed in, and it answers in <b>Agent</b> mode</li>
     <li><code>specify --version</code> prints a version</li>
-    <li>Spec Kit and AI agent versions match the ones the facilitator posted</li>
+    <li><code>specify --version</code> shows 1.1 or later, matching the version the facilitator posted</li>
   </ul>
   <div class="warnbox"><b>Company laptops</b>If installs are blocked by policy or a proxy, raise it with the facilitator before Day 1, not on the morning.</div>
 </section>
@@ -386,17 +386,17 @@ cd feh-app
 git checkout checkpoint/start -B main
 ls docs/reference.md .specify</pre>
   <p>The repo has Spec Kit already set up, <code>docs/reference.md</code> (seed data, screen labels and colours for the backup idea) and <code>docs/mockup/</code> (the target screens as images). The app code is created on Day 2 from the approved plan.</p>
-  <div class="warnbox"><b>Open the right folder</b>Open your AI agent inside <code>feh-app/</code>. If the <code>/speckit.*</code> commands don't appear, restart VS Code fully.</div>
+  <div class="warnbox"><b>Open the right folder</b>Open <code>feh-app/</code> itself in VS Code (<code>code .</code> from inside it), then open Copilot Chat and pick <b>Agent</b> mode. If the <code>/speckit-*</code> skills don't appear, run <b>Developer: Reload Window</b> or restart VS Code fully.</div>
   <ul class="checks">
-    <li>Your AI agent is open in <code>feh-app/</code></li>
-    <li>Typing <code>/speckit</code> lists the Spec Kit commands</li>
+    <li>VS Code is open on <code>feh-app/</code> with Copilot Chat in <b>Agent</b> mode</li>
+    <li>Typing <code>/speckit</code> in Copilot Chat lists the Spec Kit skills</li>
     <li><code>docs/reference.md</code> exists</li>
   </ul>
   <details>
     <summary>Facilitator: how the starter repo was made</summary>
     <pre data-label="Terminal · facilitator only">
 mkdir feh-app &amp;&amp; cd feh-app &amp;&amp; git init -b main
-specify init . --integration claude     # replace "claude" with the agent we confirm; --ai on older versions
+specify init . --integration copilot    # GitHub Copilot, skills mode (Spec Kit 1.1+)
 mkdir -p docs/mockup                     # then save docs/reference.md from the Reference slide
 cp ../feh-sdd-guide/mockup/0*.png docs/mockup/   # the screen images from the guide repo
 git add -A &amp;&amp; git commit -m "chore: starter repo"
@@ -410,33 +410,32 @@ git push -u origin main --tags</pre>
 <section class="slide" id="anatomy" data-group="Day 1 · Learn" data-title="Anatomy of Spec Kit">
   <p class="eyebrow">Day 1 · 9:45</p>
   <h2>Anatomy of Spec Kit</h2>
-  <p class="lead">Spec Kit is GitHub's open-source toolkit for Spec-Driven Development. It has two halves: a command-line tool that sets a project up once, and a set of slash commands the AI agent runs inside that project.</p>
+  <p class="lead">Spec Kit is GitHub's open-source toolkit for Spec-Driven Development. It has two halves: a command-line tool that sets a project up once, and a set of skills GitHub Copilot runs inside that project.</p>
 
   <h3><span class="ph">Part 1</span> The <code>specify</code> CLI · you run it in a terminal</h3>
-  <p>It installs the templates, scripts and slash commands into a repo. You use it once per project (<code>specify init</code>), plus <code>specify check</code> to verify tools. It never writes a spec itself, despite the name.</p>
+  <p>It installs the templates, scripts and Copilot skills into a repo. You use it once per project (<code>specify init</code>), plus <code>specify check</code> to verify tools. It never writes a spec itself, despite the name.</p>
 
-  <h3><span class="ph">Part 2</span> The slash commands · you run them inside your AI agent</h3>
-  <p>Each command is a prompt file the agent follows. Each one reads what the previous step produced and writes the next document.</p>
+  <h3><span class="ph">Part 2</span> The skills · you run them in Copilot Chat</h3>
+  <p>Each skill is a <code>SKILL.md</code> prompt file Copilot follows when you type its name in chat, like <code>/speckit-specify</code>. Each one reads what the previous step produced and writes the next document.</p>
   <table>
     <tr><th>Command</th><th>Reads</th><th>Writes</th><th>Question it answers</th></tr>
-    <tr><td><code>/speckit.constitution</code></td><td>Your principles</td><td><code>.specify/memory/constitution.md</code></td><td>What rules does every decision follow?</td></tr>
-    <tr><td><code>/speckit.specify</code></td><td>Your feature description, the constitution</td><td><code>specs/NNN-name/spec.md</code> and a new git branch</td><td><b>What</b> should it do, and <b>why</b>?</td></tr>
-    <tr><td><code>/speckit.clarify</code></td><td><code>spec.md</code></td><td>Answers written back into <code>spec.md</code></td><td>What did we leave unclear?</td></tr>
-    <tr><td><code>/speckit.plan</code></td><td><code>spec.md</code>, your technical direction</td><td><code>plan.md</code>, <code>research.md</code>, <code>data-model.md</code>, <code>contracts/</code>, <code>quickstart.md</code></td><td><b>How</b> will we build it?</td></tr>
-    <tr><td><code>/speckit.tasks</code></td><td>The plan documents</td><td><code>tasks.md</code></td><td>In what small steps?</td></tr>
-    <tr><td><code>/speckit.implement</code></td><td><code>tasks.md</code> and everything above</td><td>Code and tests</td><td>Build it.</td></tr>
-    <tr><td><code>/speckit.analyze</code>, <code>/speckit.checklist</code></td><td>Spec, plan, tasks</td><td>A report or a checklist</td><td>Do the documents agree with each other?</td></tr>
+    <tr><td><code>/speckit-constitution</code></td><td>Your principles</td><td><code>.specify/memory/constitution.md</code></td><td>What rules does every decision follow?</td></tr>
+    <tr><td><code>/speckit-specify</code></td><td>Your feature description, the constitution</td><td><code>specs/NNN-name/spec.md</code> and a new git branch</td><td><b>What</b> should it do, and <b>why</b>?</td></tr>
+    <tr><td><code>/speckit-clarify</code></td><td><code>spec.md</code></td><td>Answers written back into <code>spec.md</code></td><td>What did we leave unclear?</td></tr>
+    <tr><td><code>/speckit-plan</code></td><td><code>spec.md</code>, your technical direction</td><td><code>plan.md</code>, <code>research.md</code>, <code>data-model.md</code>, <code>contracts/</code>, <code>quickstart.md</code></td><td><b>How</b> will we build it?</td></tr>
+    <tr><td><code>/speckit-tasks</code></td><td>The plan documents</td><td><code>tasks.md</code></td><td>In what small steps?</td></tr>
+    <tr><td><code>/speckit-implement</code></td><td><code>tasks.md</code> and everything above</td><td>Code and tests</td><td>Build it.</td></tr>
+    <tr><td><code>/speckit-analyze</code>, <code>/speckit-checklist</code></td><td>Spec, plan, tasks</td><td>A report or a checklist</td><td>Do the documents agree with each other?</td></tr>
   </table>
 
   <h3><span class="ph">Part 3</span> What lands in the repo</h3>
   <pre class="tall" data-label="Folder layout · after init, and after one feature">
 feh-app/
-├── .claude/commands/          ← the slash commands (one prompt file each);
-│                                 the folder name depends on the AI agent
-│   ├── speckit.constitution.md
-│   ├── speckit.specify.md
-│   ├── speckit.clarify.md
-│   └── ... plan, tasks, implement, analyze, checklist
+├── .github/skills/            ← the Copilot skills (one folder each)
+│   ├── speckit-constitution/SKILL.md
+│   ├── speckit-specify/SKILL.md
+│   ├── speckit-clarify/SKILL.md
+│   └── ... plan, tasks, implement, converge, analyze, checklist
 ├── .specify/
 │   ├── memory/
 │   │   └── constitution.md    ← the project's rules
@@ -448,12 +447,12 @@ feh-app/
 ├── docs/reference.md          ← ours: seed data, labels, colours
 └── specs/
     └── 001-guest-service-request/   ← one folder per feature
-        ├── spec.md            ← /speckit.specify, updated by /speckit.clarify
+        ├── spec.md            ← /speckit-specify, updated by /speckit-clarify
         ├── checklists/requirements.md
-        ├── plan.md            ← /speckit.plan (with research, data model...)
-        ├── tasks.md           ← /speckit.tasks
+        ├── plan.md            ← /speckit-plan (with research, data model...)
+        ├── tasks.md           ← /speckit-tasks
         └── gates/G1.md ...    ← ours: who approved what, and when</pre>
-  <div class="note"><b>Version note</b>The layout shown is for Claude Code; with another agent the slash commands live in that agent's own folder. File names also shift a little between Spec Kit releases. The next slide has you open your own copy, which is always the source of truth.</div>
+  <div class="note"><b>Version note</b>The layout shown is Spec Kit 1.1 with GitHub Copilot. Spec Kit's own docs sometimes write the commands as <code>/speckit.specify</code>; in Copilot they are skills spelled <code>/speckit-specify</code>. File names also shift a little between Spec Kit releases. The next slide has you open your own copy, which is always the source of truth.</div>
 </section>
 
 <section class="slide" id="who" data-group="Day 1 · Learn" data-title="Who writes what">
@@ -480,25 +479,24 @@ feh-app/
   <p class="eyebrow">Hands-on · 15 minutes</p>
   <h2>Open the machinery</h2>
   <p class="lead">Before running anything, look at what the agent will be following. Nothing here is magic: it's prompts and templates you can read and change.</p>
-  <h3><span class="ph">1</span> List the slash commands</h3>
+  <h3><span class="ph">1</span> List the skills</h3>
   <pre data-label="Terminal">
-ls -a                      # find your agent's folder, e.g. .claude/
-ls .claude/commands        # Claude Code; other agents use their own folder
+ls .github/skills          # one folder per Spec Kit skill
 ls .specify/templates .specify/scripts/*</pre>
   <h3><span class="ph">2</span> Read the spec template</h3>
   <pre data-label="Terminal">
 sed -n '1,80p' .specify/templates/spec-template.md</pre>
   <p>Find the sections marked mandatory. These are what every spec in this project will contain.</p>
-  <h3><span class="ph">3</span> Read the specify command</h3>
+  <h3><span class="ph">3</span> Read the specify skill</h3>
   <pre data-label="Terminal">
-sed -n '1,80p' .claude/commands/speckit.specify.md   # adjust the folder for your agent</pre>
-  <p>This is the actual instruction the agent receives when you type <code>/speckit.specify</code>. Look for where it says to focus on what and why, and how many [NEEDS CLARIFICATION] markers it allows.</p>
+sed -n '1,80p' .github/skills/speckit-specify/SKILL.md</pre>
+  <p>This is the actual instruction the agent receives when you type <code>/speckit-specify</code>. Look for where it says to focus on what and why, and how many [NEEDS CLARIFICATION] markers it allows.</p>
   <h3><span class="ph">4</span> Ask the agent to explain it</h3>
-  <pre data-label="Prompt · paste into your AI agent">
+  <pre data-label="Prompt · paste into Copilot Chat">
 Do not change any files.
 
 Explain, for someone new to Spec Kit, what happens step by step when I
-run /speckit.specify in this repository: which script runs, which
+run /speckit-specify in this repository: which script runs, which
 branch and folder it creates, which template it fills, which sections
 are mandatory, and what it does with information I didn't give it.
 Base the answer only on the slash-command files and the files in .specify.</pre>
@@ -515,8 +513,8 @@ Base the answer only on the slash-command files and the files in .specify.</pre>
   <p class="eyebrow">Day 1 · 10:30</p>
   <h2>Agree the constitution</h2>
   <p class="lead">The constitution is the set of rules every spec, plan and line of code must obey. This is a starting draft: read it with FEH, change anything that doesn't fit, then paste it.</p>
-  <pre data-label="Prompt · paste into your AI agent">
-/speckit.constitution
+  <pre data-label="Prompt · paste into Copilot Chat">
+/speckit-constitution
 
 This project is a proof-of-concept web application for Far East
 Hospitality (FEH), built with Spec-Driven Development during a two-day
@@ -590,7 +588,7 @@ Out of scope for now:
 - &lt;payments, integrations with existing systems, ...&gt;</pre>
 
   <h3><span class="ph">2</span> Ask the agent to split it into features</h3>
-  <pre data-label="Prompt · paste into your AI agent, then paste the canvas underneath">
+  <pre data-label="Prompt · paste into Copilot Chat, then paste the canvas underneath">
 Do not write any code or specifications yet.
 
 Below is an app idea from Far East Hospitality. Split it into 3 or 4
@@ -620,7 +618,7 @@ proof of concept.
 
 <section class="slide" id="specify101" data-group="Day 1 · Spec" data-title="Deep dive · specify">
   <p class="eyebrow">Day 1 · 1:00 · before running spec 001</p>
-  <h2>Deep dive: <code>/speckit.specify</code></h2>
+  <h2>Deep dive: <code>/speckit-specify</code></h2>
   <p class="lead">Turns a plain-language feature description into a structured specification. Your description is the most important input of the whole workshop: everything downstream is built from it.</p>
 
   <h3><span class="ph">What you give it</span></h3>
@@ -684,7 +682,7 @@ Acceptance scenarios
 
 <section class="slide" id="clarify101" data-group="Day 1 · Spec" data-title="Deep dive · clarify">
   <p class="eyebrow">Day 1 · 2:00</p>
-  <h2>Deep dive: <code>/speckit.clarify</code></h2>
+  <h2>Deep dive: <code>/speckit-clarify</code></h2>
   <p class="lead">Finds what the spec leaves open and asks you. It's the step where the business makes decisions, and the step most often skipped. Skipping it means the agent decides instead.</p>
 
   <h3><span class="ph">How it works</span></h3>
@@ -727,8 +725,8 @@ Written into spec.md:
 <section class="slide" id="clarify" data-group="Day 1 · Spec" data-title="Toolkit · clarify prompt">
   <p class="eyebrow">Toolkit · used for every spec</p>
   <h2>The clarify review prompt</h2>
-  <p class="lead">Run <code>/speckit.clarify</code> first, then paste this. The agent produces questions; the FEH product owner answers them.</p>
-  <pre data-label="Prompt · paste after every /speckit.clarify">
+  <p class="lead">Run <code>/speckit-clarify</code> first, then paste this. The agent produces questions; the FEH product owner answers them.</p>
+  <pre data-label="Prompt · paste after every /speckit-clarify">
 Review the specification and identify:
 - Missing requirements
 - Ambiguous wording
@@ -859,8 +857,8 @@ Buttons and inputs at least 44px tall.</pre>
   <p class="lead">Using FEH's own idea? Use the <button class="link" data-goto="own">write your own spec</button> slide instead, and follow the same steps.</p>
 
   <h3><span class="ph">1 · Specify</span></h3>
-  <pre data-label="Prompt · paste into your AI agent">
-/speckit.specify
+  <pre data-label="Prompt · paste into Copilot Chat">
+/speckit-specify
 
 A guest staying at a Far East Hospitality hotel or serviced residence
 can ask for a service online without calling the front desk.
@@ -880,7 +878,7 @@ stay, newest first, each with its reference, type and status.
 Label every acceptance criterion AC-001-&lt;nn&gt;.</pre>
 
   <h3><span class="ph">2 · Clarify</span></h3>
-  <pre data-label="Prompt">/speckit.clarify</pre>
+  <pre data-label="Prompt">/speckit-clarify</pre>
   <p>Then paste the <button class="link" data-goto="clarify">clarify review prompt</button>. Questions FEH should expect:</p>
   <ul>
     <li>Is room number and last name enough to identify a guest, or is a booking reference needed?</li>
@@ -892,7 +890,7 @@ Label every acceptance criterion AC-001-&lt;nn&gt;.</pre>
 
     <h3><span class="ph">Room decisions</span> Paste after FEH has answered</h3>
   <p>FEH answers the questions above once, for the whole room. These are the default answers; the facilitator edits them on screen if FEH decides differently, and every pair pastes the same block.</p>
-  <pre data-label="Prompt · paste into your AI agent">
+  <pre data-label="Prompt · paste into Copilot Chat">
 Apply these business decisions, agreed by FEH for the whole room, to
 the specification. Add or adjust acceptance criteria to match, keeping
 the AC-001 numbering. Do not add anything else.
@@ -921,8 +919,8 @@ git fetch origin --tags
 git reset --hard checkpoint/001-G1</pre>
 
   <h3><span class="ph">3 · Plan</span> End of Day 1</h3>
-  <pre data-label="Prompt · paste into your AI agent">
-/speckit.plan
+  <pre data-label="Prompt · paste into Copilot Chat">
+/speckit-plan
 
 Stack: a Django backend with Django REST Framework, and a React
 frontend built with Vite and TypeScript. SQLite is the database.
@@ -986,8 +984,8 @@ git reset --hard checkpoint/001-G2</pre>
   <h2>Staff work the request queue</h2>
 
   <h3><span class="ph">1 · Specify</span></h3>
-  <pre data-label="Prompt · paste into your AI agent">
-/speckit.specify
+  <pre data-label="Prompt · paste into Copilot Chat">
+/speckit-specify
 
 Staff at a Far East Hospitality property handle the service requests
 guests submit.
@@ -1008,7 +1006,7 @@ the staff screens.
 Label every acceptance criterion AC-002-&lt;nn&gt;.</pre>
 
   <h3><span class="ph">2 · Clarify</span></h3>
-  <pre data-label="Prompt">/speckit.clarify</pre>
+  <pre data-label="Prompt">/speckit-clarify</pre>
   <p>Then paste the <button class="link" data-goto="clarify">clarify review prompt</button>. Questions FEH should expect:</p>
   <ul>
     <li>Do different teams (housekeeping, engineering) see only their own request types?</li>
@@ -1019,7 +1017,7 @@ Label every acceptance criterion AC-002-&lt;nn&gt;.</pre>
 
     <h3><span class="ph">Room decisions</span> Paste after FEH has answered</h3>
   <p>FEH answers the questions above once, for the whole room. These are the default answers; the facilitator edits them on screen if FEH decides differently, and every pair pastes the same block.</p>
-  <pre data-label="Prompt · paste into your AI agent">
+  <pre data-label="Prompt · paste into Copilot Chat">
 Apply these business decisions, agreed by FEH for the whole room, to
 the specification. Add or adjust acceptance criteria to match, keeping
 the AC-002 numbering. Do not add anything else.
@@ -1058,8 +1056,8 @@ git reset --hard checkpoint/002-G1</pre>
   <h2>Guest tracks status and gives feedback</h2>
 
   <h3><span class="ph">1 · Specify</span></h3>
-  <pre data-label="Prompt · paste into your AI agent">
-/speckit.specify
+  <pre data-label="Prompt · paste into Copilot Chat">
+/speckit-specify
 
 A guest can follow what is happening with their requests, and tell the
 hotel how it went.
@@ -1078,7 +1076,7 @@ submitted to done, and the average rating.
 Label every acceptance criterion AC-003-&lt;nn&gt;.</pre>
 
   <h3><span class="ph">2 · Clarify</span></h3>
-  <pre data-label="Prompt">/speckit.clarify</pre>
+  <pre data-label="Prompt">/speckit-clarify</pre>
   <p>Then paste the <button class="link" data-goto="clarify">clarify review prompt</button>. Questions FEH should expect:</p>
   <ul>
     <li>Should the guest be notified when the status changes, or just see it when they look?</li>
@@ -1088,7 +1086,7 @@ Label every acceptance criterion AC-003-&lt;nn&gt;.</pre>
 
     <h3><span class="ph">Room decisions</span> Paste after FEH has answered</h3>
   <p>FEH answers the questions above once, for the whole room. These are the default answers; the facilitator edits them on screen if FEH decides differently, and every pair pastes the same block.</p>
-  <pre data-label="Prompt · paste into your AI agent">
+  <pre data-label="Prompt · paste into Copilot Chat">
 Apply these business decisions, agreed by FEH for the whole room, to
 the specification. Add or adjust acceptance criteria to match, keeping
 the AC-003 numbering. Do not add anything else.
@@ -1115,8 +1113,8 @@ git reset --hard checkpoint/003-G1</pre>
   <p class="eyebrow">Using FEH's idea</p>
   <h2>Write a specify block for any feature</h2>
   <p class="lead">Fill in the angle brackets for each feature on the board. Describe what people can do and see. Leave out screens, buttons and technology.</p>
-  <pre data-label="Prompt · fill in, then paste into your AI agent">
-/speckit.specify
+  <pre data-label="Prompt · fill in, then paste into Copilot Chat">
+/speckit-specify
 
 &lt;Who&gt; at a Far East Hospitality &lt;hotel / serviced residence / office&gt;
 can &lt;what they can now do&gt;, so that &lt;why it matters to them or FEH&gt;.
@@ -1132,7 +1130,7 @@ when that happens.&gt;
 Label every acceptance criterion AC-&lt;spec number&gt;-&lt;nn&gt;.</pre>
   <h3>Then, for each feature</h3>
   <ol>
-    <li><code>/speckit.clarify</code> and the <button class="link" data-goto="clarify">clarify review prompt</button></li>
+    <li><code>/speckit-clarify</code> and the <button class="link" data-goto="clarify">clarify review prompt</button></li>
     <li>FEH answers every [NEEDS CLARIFICATION]</li>
     <li>G1 signed by the FEH product owner (<button class="link" data-goto="gates">gate template</button>)</li>
     <li>For spec 001 only, finish Day 1 with the plan, adapting the plan block on the <button class="link" data-goto="s001">spec 001</button> slide</li>
@@ -1156,7 +1154,7 @@ Label every acceptance criterion AC-&lt;spec number&gt;-&lt;nn&gt;.</pre>
     <tr><td><b>Too big</b></td><td>More than about 3 user stories, or can't be shown in half a day</td><td>Split it into two specs before G1.</td></tr>
     <tr><td><b>Edited by hand, then re-run</b></td><td>Changes vanish after running a command again</td><td>Ask the agent to make spec changes, so every change is recorded the same way.</td></tr>
   </table>
-  <pre data-label="Prompt · paste into your AI agent before G1">
+  <pre data-label="Prompt · paste into Copilot Chat before G1">
 Do not change any files.
 
 Review specs/&lt;spec folder&gt;/spec.md against the constitution and list:
@@ -1188,7 +1186,7 @@ Give each item with its line and a suggested rewording.</pre>
     <li>Specs 001–003 are approved at G1, with gate records committed</li>
     <li>The plan for spec 001 is approved at G2</li>
     <li>Your repo is synced to the latest checkpoint</li>
-    <li>Your laptop is charged, and your AI agent still signs in</li>
+    <li>Your laptop is charged, and GitHub Copilot still signs in</li>
   </ul>
 </section>
 
