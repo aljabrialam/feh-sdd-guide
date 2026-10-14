@@ -43,7 +43,7 @@ Without the `gh` CLI: create the repo on github.com, push, then go to **Settings
 
 ## Mockup
 
-`mockup/` holds the backup app's seven target screens: an HTML page and a PNG for each, a gallery (`mockup/index.html`) and a zip of everything. Publish the folder with the guide; the Reference slide links to it. Copy the PNGs into the starter repo's `docs/mockup/` so the agent can use them.
+`mockup/` holds the backup app's seven target screens: an HTML page and a PNG for each, a gallery (`mockup/index.html`) and a zip of everything. Publish the folder with the guide; the Reference slide links to it. Participants download them with `docs/reference.md` as `starter/feh-sdd-docs.zip` in Step 1 of the guide; rebuild that zip if the reference or mockups change.
 
 ## Releasing Day 2
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261014111727">
+<meta name="build" content="20261014112404">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -277,7 +277,7 @@ summary{cursor:pointer;font-weight:600}
     <div><b>Participants · developers</b>Each runs GitHub Copilot on their own laptop, pastes the prompts, reviews the plan and the code, and keeps the build to the spec.</div>
     <div><b>FEH · product owners</b>Know the business. Answer clarify questions, decide what is in or out, sign G1, accept at G3.</div>
     <div><b>FEH and VISEO guests</b>Join the discussions, challenge the specs and ask questions. No laptop needed.</div>
-    <div><b>Facilitators</b>Run each decision once for the whole room, tag the checkpoints, and unblock setup problems.</div>
+    <div><b>Facilitators</b>Run each decision once for the whole room on the big screen, post approved files when someone falls behind, and unblock setup problems.</div>
   </div>
 </section>
 
@@ -318,27 +318,15 @@ summary{cursor:pointer;font-weight:600}
   <p class="lead">An AI agent never writes identical code twice, so "the same result" means the same behaviour: same specs, same decisions, same data, same screens, and the same acceptance tests passing. Five controls make that happen.</p>
   <table>
     <tr><th>Control</th><th>How it works</th></tr>
-    <tr><td><b>1 · One starter repo</b></td><td>Every participant clones the same repo: Spec Kit set up, and <code>docs/reference.md</code> fixing the seed data, screen labels and colours.</td></tr>
+    <tr><td><b>1 · One run sheet</b></td><td>Everyone sets up the project the same way (Step 1) and pastes the same blocks in the same order: constitution, then spec 001, 002, 003. <code>docs/reference.md</code> fixes the seed data, screen labels and colours.</td></tr>
     <tr><td><b>2 · Decisions made once</b></td><td>Clarify questions are answered by FEH once, for the whole room. Every participant pastes the same <b>room decisions</b> block.</td></tr>
-    <tr><td><b>3 · Converge at every gate</b></td><td>Participants practise specify, clarify and plan themselves, then sync to the room's approved version (a checkpoint) before moving on.</td></tr>
-    <tr><td><b>4 · Shared acceptance tests</b></td><td>The facilitator's checkpoint includes end-to-end tests written from the approved spec. Every participant's build must pass the same tests at G3.</td></tr>
+    <tr><td><b>3 · Converge at every gate</b></td><td>Participants practise specify, clarify and plan themselves, then match the room's approved version on the big screen before moving on.</td></tr>
+    <tr><td><b>4 · Tests named after the criteria</b></td><td>Every acceptance criterion in the approved spec gets a test with its ID in the name. At G3, everyone's build must pass a test for every criterion.</td></tr>
     <tr><td><b>5 · Same tools</b></td><td>Same Spec Kit version and GitHub Copilot in Agent mode, checked in Step 0. Node 22+ and Python 3.12+.</td></tr>
   </table>
-  <h3>Checkpoints</h3>
-  <p>The facilitator builds the whole app once in the dry run and tags each gate. A participant who falls behind or drifts resets to the latest checkpoint and carries on.</p>
-  <table>
-    <tr><th>Checkpoint tag</th><th>Contains</th><th>Used</th></tr>
-    <tr><td><code>checkpoint/start</code></td><td>Spec Kit, <code>docs/reference.md</code></td><td>Before Day 1</td></tr>
-    <tr><td><code>checkpoint/constitution</code></td><td>The constitution as agreed in the room</td><td>Day 1, 10:45</td></tr>
-    <tr><td><code>checkpoint/001-G1</code>, <code>002-G1</code>, <code>003-G1</code></td><td>Approved specs</td><td>Day 1 afternoon</td></tr>
-    <tr><td><code>checkpoint/001-G2</code></td><td>Approved plan + acceptance tests for 001</td><td>Day 1, 5:00</td></tr>
-    <tr><td><code>checkpoint/001-G3</code></td><td>Working spec 001 (fallback only)</td><td>Day 2, before lunch</td></tr>
-    <tr><td><code>checkpoint/002-G2</code>, <code>002-G3</code></td><td>Plan, acceptance tests, working spec 002</td><td>Day 2 afternoon</td></tr>
-  </table>
-  <pre data-label="Terminal · facilitator, after each gate in the dry run and in the room">
-git tag -f checkpoint/001-G1
-git push -f origin checkpoint/001-G1</pre>
-  <div class="note"><b>If FEH decides differently in the room</b>The facilitator updates the room decisions on screen, re-runs that step once, and re-tags the checkpoint. Participants then sync. Nobody's answer is lost: each participant's own attempt is kept on an <code>attempt/…</code> branch.</div>
+  <h3>Falling behind is fine</h3>
+  <p>Nobody needs Git skills to catch up. At each gate the facilitator approves one version on the big screen and posts the approved file in the Teams chat. Anyone who is behind, or whose version drifted, pastes it in with the "catch up" prompt on that slide and carries on from the same place as everyone else.</p>
+  <div class="note"><b>If FEH decides differently in the room</b>The facilitator updates the room decisions on screen, re-runs that step once, and posts the new approved file. Everyone's own attempt stays in their Git history.</div>
 </section>
 
 <!-- ======================= SETUP ======================= -->
@@ -378,35 +366,31 @@ npx playwright install chromium</pre>
   <div class="warnbox"><b>Company laptops</b>If installs are blocked by policy or a proxy, raise it with the facilitator before Day 1, not on the morning.</div>
 </section>
 
-<section class="slide" id="repo" data-group="Setup (before Day 1)" data-title="Step 1 · Clone the starter repo">
+<section class="slide" id="repo" data-group="Setup (before Day 1)" data-title="Step 1 · Create your project">
   <p class="eyebrow">Step 1 · do this before Day 1</p>
-  <h2>Clone the starter repo</h2>
-  <p class="lead">Everyone starts from the same repo, so everyone starts from the same place. The facilitator sends the URL.</p>
-  <pre data-label="Terminal">
+  <h2>Create your project</h2>
+  <p class="lead">Everyone creates the project the same way, so everyone starts from the same place. Copy the block for your computer and paste it into a terminal, one line at a time.</p>
+  <pre data-label="Mac · Terminal">
 mkdir -p ~/feh-sdd &amp;&amp; cd ~/feh-sdd
-git clone &lt;STARTER_REPO_URL&gt; feh-app
+specify init feh-app --integration copilot
 cd feh-app
-git checkout checkpoint/start -B main
-ls docs/reference.md .specify</pre>
-  <p>The repo has Spec Kit already set up, <code>docs/reference.md</code> (seed data, screen labels and colours for the backup idea) and <code>docs/mockup/</code> (the target screens as images). The app code is created on Day 2 from the approved plan.</p>
-  <div class="warnbox"><b>Open the right folder</b>Open <code>feh-app/</code> itself in VS Code (<code>code .</code> from inside it), then open Copilot Chat and pick <b>Agent</b> mode. If the <code>/speckit-*</code> skills don't appear, run <b>Developer: Reload Window</b> or restart VS Code fully.</div>
+curl -fsSL https://aljabrialam.github.io/feh-sdd-guide/starter/feh-sdd-docs.zip -o docs.zip &amp;&amp; unzip -oq docs.zip &amp;&amp; rm docs.zip
+git init -b main &amp;&amp; git add -A &amp;&amp; git commit -qm "Start: Spec Kit and workshop docs"
+code .</pre>
+  <pre data-label="Windows · PowerShell">
+New-Item -ItemType Directory -Force $HOME\feh-sdd | Out-Null; cd $HOME\feh-sdd
+specify init feh-app --integration copilot
+cd feh-app
+irm https://aljabrialam.github.io/feh-sdd-guide/starter/feh-sdd-docs.zip -OutFile docs.zip; Expand-Archive docs.zip -DestinationPath . -Force; Remove-Item docs.zip
+git init -b main; git add -A; git commit -qm "Start: Spec Kit and workshop docs"
+code .</pre>
+  <p>What each line does: makes a workshop folder, sets up Spec Kit for GitHub Copilot in <code>feh-app</code>, downloads the workshop docs (<code>docs/reference.md</code> with the seed data, screen labels and colours, and <code>docs/mockup/</code> with the target screens), saves a starting point in Git, and opens the project in VS Code. The app code is created on Day 2 from the approved plan.</p>
+  <div class="warnbox"><b>Open the right folder</b>VS Code must be open on <code>feh-app</code> itself. Open Copilot Chat and pick <b>Agent</b> mode. If the <code>/speckit-*</code> skills don't appear, run <b>Developer: Reload Window</b> or restart VS Code fully.</div>
   <ul class="checks">
     <li>VS Code is open on <code>feh-app/</code> with Copilot Chat in <b>Agent</b> mode</li>
     <li>Typing <code>/speckit</code> in Copilot Chat lists the Spec Kit skills</li>
-    <li><code>docs/reference.md</code> exists</li>
+    <li><code>docs/reference.md</code> and <code>docs/mockup/</code> exist in the Explorer</li>
   </ul>
-  <details>
-    <summary>Facilitator: how the starter repo was made</summary>
-    <pre data-label="Terminal · facilitator only">
-mkdir feh-app &amp;&amp; cd feh-app &amp;&amp; git init -b main
-specify init . --integration copilot    # GitHub Copilot, skills mode (Spec Kit 1.1+)
-mkdir -p docs/mockup                     # then save docs/reference.md from the Reference slide
-cp ../feh-sdd-guide/mockup/0*.png docs/mockup/   # the screen images from the guide repo
-git add -A &amp;&amp; git commit -m "chore: starter repo"
-git tag checkpoint/start
-git remote add origin &lt;STARTER_REPO_URL&gt;
-git push -u origin main --tags</pre>
-  </details>
 </section>
 
 <!-- ======================= DAY 1 ======================= -->
@@ -565,11 +549,11 @@ specification and is signed by the FEH product owner. G2 approves the
 plan and is signed by the VISEO technical lead. G3 accepts the working
 feature and is signed by both. Gates are recorded in
 specs/&lt;spec&gt;/gates/ and never approved retroactively.</pre>
-  <p>The facilitator pastes it once on the big screen, with the room's changes, and tags <code>checkpoint/constitution</code>. Participants then sync:</p>
-  <pre data-label="Terminal · sync to the room's approved version">
-git add -A &amp;&amp; git commit -qm "my attempt"; git branch -f attempt/constitution
-git fetch origin --tags
-git reset --hard checkpoint/constitution</pre>
+  <p>The facilitator pastes it once on the big screen, with the room's changes. Everyone else pastes the same block, so every constitution matches.</p>
+  <div class="note"><b>Match the room before moving on</b>Compare your <code>constitution.md</code> with the approved version on the big screen. Different, or fell behind? The facilitator posts the approved file in the Teams chat. Paste this into Copilot Chat, then paste the approved file underneath:</div>
+  <pre data-label="Prompt · catch up to the room's approved version">
+Replace the contents of .specify/memory/constitution.md with the approved
+version below, exactly as written. Do not change any other file.</pre>
   <div class="note"><b>Talking point for FEH</b>Principles 1, 5 and 7 are the ones a business owner cares about most: nothing is built that you didn't approve, no real guest data, and changes go through you.</div>
 </section>
 
@@ -784,12 +768,12 @@ git add -A &amp;&amp; git commit -m "gate: G1 approved"</pre>
 </section>
 
 <section class="slide" id="reference" data-group="Day 1 · Spec" data-title="Reference: data &amp; screens">
-  <p class="eyebrow">Backup idea · in the starter repo</p>
+  <p class="eyebrow">Backup idea · in your project</p>
   <h2>The reference everyone builds to</h2>
-  <p class="lead">This file is already in the starter repo as <code>docs/reference.md</code>. Every plan points the agent at it, so everyone gets the same data, labels and look. Open the mockup to see the target screens.</p>
+  <p class="lead">This file is already in your project as <code>docs/reference.md</code> (downloaded in Step 1). Every plan points the agent at it, so everyone gets the same data, labels and look. Open the mockup to see the target screens.</p>
   <ul>
     <li><b>Mockup:</b> <a href="mockup/" target="_blank" rel="noopener">open the seven target screens</a> (five guest screens, staff sign-in and the staff queue), or <a href="mockup/guest-service-requests-mockup.zip" download>download them all as a zip</a>. Requests and reference numbers on the screens are illustrative; the seed below starts with none.</li>
-    <li><b>For the agent:</b> the same images are in the starter repo under <code>docs/mockup/</code>. AI coding agents can read images, so every plan points at them.</li>
+    <li><b>For the agent:</b> the same images are in your project under <code>docs/mockup/</code>. AI coding agents can read images, so every plan points at them.</li>
   </ul>
   <pre data-label="File · docs/reference.md">
 # Reference — Guest Service Requests (backup idea)
@@ -915,11 +899,11 @@ Then stop and show me the full list of acceptance criteria.</pre>
 
   <h3><span class="ph gate">G1</span> FEH approves the spec</h3>
   <p>Save and commit <code>gates/G1.md</code> from the <button class="link" data-goto="gates">gate template</button>, listing the business decisions made during clarify.</p>
-  <p>The facilitator approves the room's version with FEH and tags <code>checkpoint/001-G1</code>. Every participant then syncs, so the plan starts from one approved spec:</p>
-  <pre data-label="Terminal · sync to the room's approved version">
-git add -A &amp;&amp; git commit -qm "my attempt"; git branch -f attempt/001-spec
-git fetch origin --tags
-git reset --hard checkpoint/001-G1</pre>
+  <p>The facilitator approves the room's version with FEH on the big screen, so the plan starts from one approved spec.</p>
+  <div class="note"><b>Match the room before moving on</b>Compare your <code>spec.md</code> with the approved version on the big screen. Different, or fell behind? The facilitator posts the approved file in the Teams chat. Paste this into Copilot Chat, then paste the approved file underneath:</div>
+  <pre data-label="Prompt · catch up to the room's approved version">
+Replace the contents of specs/001-*/spec.md with the approved
+version below, exactly as written. Do not change any other file.</pre>
 
   <h3><span class="ph">3 · Plan</span> End of Day 1</h3>
   <pre data-label="Prompt · paste into Copilot Chat">
@@ -975,11 +959,11 @@ status tracking (spec 003) can be added without reworking them.</pre>
 
   <h3><span class="ph gate">G2</span> VISEO approves the plan</h3>
   <div class="note"><b>G2 must confirm</b>Every AC-001 criterion is mapped to a test, the plan follows <code>docs/reference.md</code>, and nothing in it goes beyond the spec.</div>
-  <p>The facilitator tags <code>checkpoint/001-G2</code>, which also adds the shared acceptance tests in <code>e2e/acceptance/</code>. Participants sync before leaving on Day 1:</p>
-  <pre data-label="Terminal · sync to the room's approved version">
-git add -A &amp;&amp; git commit -qm "my attempt"; git branch -f attempt/001-plan
-git fetch origin --tags
-git reset --hard checkpoint/001-G2</pre>
+  <p>The facilitator approves the room's plan on the big screen before everyone leaves on Day 1.</p>
+  <div class="note"><b>Match the room before moving on</b>Compare your <code>plan.md</code> with the approved version on the big screen. Different, or fell behind? The facilitator posts the approved file in the Teams chat. Paste this into Copilot Chat, then paste the approved file underneath:</div>
+  <pre data-label="Prompt · catch up to the room's approved version">
+Replace the contents of specs/001-*/plan.md with the approved
+version below, exactly as written. Do not change any other file.</pre>
 </section>
 
 <section class="slide" id="s002" data-group="Day 1 · Spec" data-title="Spec 002 · Staff queue">
@@ -1047,11 +1031,11 @@ Then stop and show me the full list of acceptance criteria.</pre>
 
   <h3><span class="ph gate">G1</span> FEH approves the spec</h3>
   <p>Save and commit <code>gates/G1.md</code>. The plan for this spec is done on Day 2.</p>
-  <p>The facilitator approves the room's version with FEH and tags <code>checkpoint/002-G1</code>. Every participant then syncs, so the plan starts from one approved spec:</p>
-  <pre data-label="Terminal · sync to the room's approved version">
-git add -A &amp;&amp; git commit -qm "my attempt"; git branch -f attempt/002-spec
-git fetch origin --tags
-git reset --hard checkpoint/002-G1</pre>
+  <p>The facilitator approves the room's version with FEH on the big screen, so the plan starts from one approved spec.</p>
+  <div class="note"><b>Match the room before moving on</b>Compare your <code>spec.md</code> with the approved version on the big screen. Different, or fell behind? The facilitator posts the approved file in the Teams chat. Paste this into Copilot Chat, then paste the approved file underneath:</div>
+  <pre data-label="Prompt · catch up to the room's approved version">
+Replace the contents of specs/002-*/spec.md with the approved
+version below, exactly as written. Do not change any other file.</pre>
 </section>
 
 <section class="slide" id="s003" data-group="Day 1 · Spec" data-title="Spec 003 · Status &amp; feedback">
@@ -1105,11 +1089,11 @@ Then stop and show me the full list of acceptance criteria.</pre>
 
   <h3><span class="ph gate">G1</span> FEH approves the spec</h3>
   <p>Save and commit <code>gates/G1.md</code>.</p>
-  <p>The facilitator approves the room's version with FEH and tags <code>checkpoint/003-G1</code>. Every participant then syncs, so the plan starts from one approved spec:</p>
-  <pre data-label="Terminal · sync to the room's approved version">
-git add -A &amp;&amp; git commit -qm "my attempt"; git branch -f attempt/003-spec
-git fetch origin --tags
-git reset --hard checkpoint/003-G1</pre>
+  <p>The facilitator approves the room's version with FEH on the big screen, so the plan starts from one approved spec.</p>
+  <div class="note"><b>Match the room before moving on</b>Compare your <code>spec.md</code> with the approved version on the big screen. Different, or fell behind? The facilitator posts the approved file in the Teams chat. Paste this into Copilot Chat, then paste the approved file underneath:</div>
+  <pre data-label="Prompt · catch up to the room's approved version">
+Replace the contents of specs/003-*/spec.md with the approved
+version below, exactly as written. Do not change any other file.</pre>
 </section>
 
 <section class="slide" id="own" data-group="Day 1 · Spec" data-title="Write your own spec">
@@ -1188,7 +1172,7 @@ Give each item with its line and a suggested rewording.</pre>
   <ul class="checks">
     <li>Specs 001–003 are approved at G1, with gate records committed</li>
     <li>The plan for spec 001 is approved at G2</li>
-    <li>Your repo is synced to the latest checkpoint</li>
+    <li>Your spec and plan match the approved versions on the big screen</li>
     <li>Your laptop is charged, and GitHub Copilot still signs in</li>
   </ul>
 </section>

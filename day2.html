@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261014111727">
+<meta name="build" content="20261014112404">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -209,11 +209,11 @@ body:not(.standalone) .jump{display:none}
   <p class="eyebrow">Day 2 · 10:00</p>
   <h2>Build spec 001</h2>
   <p class="lead">The plan was approved yesterday. Now the agent breaks it into tasks and builds them. Run these one at a time and read what the agent reports after each.</p>
-  <p>Start from the approved plan, in case anything changed overnight:</p>
-  <pre data-label="Terminal · sync to the room's approved version">
-git add -A &amp;&amp; git commit -qm "my attempt"; git branch -f attempt/001-plan
-git fetch origin --tags
-git reset --hard checkpoint/001-G2</pre>
+  <p>Start from the approved plan, in case anything changed overnight.</p>
+  <div class="note"><b>Match the room before moving on</b>Compare your <code>plan.md</code> with the approved version on the big screen. Different, or fell behind? The facilitator posts the approved file in the Teams chat. Paste this into Copilot Chat, then paste the approved file underneath:</div>
+  <pre data-label="Prompt · catch up to the room's approved version">
+Replace the contents of specs/001-*/plan.md with the approved
+version below, exactly as written. Do not change any other file.</pre>
   <h3><span class="ph">Tasks</span> Build in eight steps</h3>
   <p>Steps 1 and 2 were done on Day 1: specify and clarify defined the requirements, and the plan defined the API contract (<code>contracts/</code>) and data model (<code>data-model.md</code>). The tasks now follow steps 3 to 8, and each phase is checked before the next starts.</p>
   <div class="flow">
@@ -243,7 +243,7 @@ serves. Mark tasks that can run in parallel.
    real tokens and the database: identify a stay, create requests,
    list them, and the rejected cases. Check: all pass.
 8. End-to-end tests: Playwright journeys with both servers running,
-   including the shared tests in e2e/acceptance/. Check: all pass.</pre>
+   one test per acceptance criterion, named after its ID. Check: all pass.</pre>
   <div class="row3" style="grid-template-columns:repeat(2,minmax(0,1fr))">
     <pre data-label="Prompt">/speckit-implement</pre>
     <pre data-label="Prompt">/speckit-converge</pre>
@@ -269,7 +269,7 @@ npm run dev</pre>
   <ul class="checks">
     <li>The FEH product owner walked through the feature on the running app</li>
     <li>Every AC-001 criterion has a passing test whose name contains its ID</li>
-    <li>The shared acceptance tests pass: <code>cd e2e &amp;&amp; npx playwright test acceptance</code></li>
+    <li>The end-to-end tests pass, one per acceptance criterion: <code>cd e2e &amp;&amp; npx playwright test</code></li>
     <li>The screens match the mockup and <code>docs/reference.md</code> labels</li>
     <li><code>/speckit-converge</code> reports no gaps against the spec</li>
     <li>The app does nothing that spec 001 didn't ask for</li>
@@ -304,11 +304,11 @@ Every test name contains its AC-002 ID. All spec 001 tests must still
 pass.</pre>
   <p class="muted">Using FEH's own idea? Write the same kind of block: what to extend, what to enforce on the server, which tests prove what.</p>
   <h3><span class="ph gate">G2</span> VISEO approves the plan</h3>
-  <p>The facilitator tags <code>checkpoint/002-G2</code> with the shared acceptance tests. Participants sync:</p>
-  <pre data-label="Terminal · sync to the room's approved version">
-git add -A &amp;&amp; git commit -qm "my attempt"; git branch -f attempt/002-plan
-git fetch origin --tags
-git reset --hard checkpoint/002-G2</pre>
+  <p>The facilitator approves the room's plan on the big screen.</p>
+  <div class="note"><b>Match the room before moving on</b>Compare your <code>plan.md</code> with the approved version on the big screen. Different, or fell behind? The facilitator posts the approved file in the Teams chat. Paste this into Copilot Chat, then paste the approved file underneath:</div>
+  <pre data-label="Prompt · catch up to the room's approved version">
+Replace the contents of specs/002-*/plan.md with the approved
+version below, exactly as written. Do not change any other file.</pre>
   <h3><span class="ph">4 · Build</span> Same eight steps, without the scaffold</h3>
   <div class="flow">
     <span>4 UI on mock data</span><span>5 API endpoints</span><span>6 Connect</span><span>7 Integration tests</span><span class="g">8 E2E tests</span>
@@ -329,8 +329,8 @@ tasks that can run in parallel.
 6. Connect: switch the staff screens to the real API.
 7. Integration tests: the status order, property boundaries and token
    rules called end to end through the API.
-8. End-to-end tests: the pick-up and complete journey and the shared
-   tests in e2e/acceptance/. All spec 001 tests must still pass.</pre>
+8. End-to-end tests: the pick-up and complete journey, one test per
+   acceptance criterion. All spec 001 tests must still pass.</pre>
   <div class="row3" style="grid-template-columns:repeat(2,minmax(0,1fr))">
     <pre data-label="Prompt">/speckit-implement</pre>
     <pre data-label="Prompt">/speckit-converge</pre>
@@ -339,7 +339,7 @@ tasks that can run in parallel.
   <ul class="checks">
     <li>FEH walked through the feature on the running app</li>
     <li>Every AC-002 criterion has a passing test</li>
-    <li>The shared acceptance tests pass: <code>cd e2e &amp;&amp; npx playwright test acceptance</code></li>
+    <li>The end-to-end tests pass, one per acceptance criterion: <code>cd e2e &amp;&amp; npx playwright test</code></li>
     <li>All spec 001 tests still pass</li>
     <li><code>gates/G3.md</code> is signed and committed</li>
   </ul>
@@ -401,7 +401,7 @@ as a table. Do not change anything.</pre>
     <tr><td><b>Clarify questions get guessed</b></td><td>The developer answers instead of FEH. Stop and ask the product owner; a guess becomes a wrong feature.</td></tr>
     <tr><td><b>Someone edits code by hand</b></td><td>The code and the spec drift apart. Amend the spec first, then let the agent change the code.</td></tr>
     <tr><td><b>A spec is too big</b></td><td>If it can't be built in half a day, split it before G1, not during implement.</td></tr>
-    <tr><td><b>A participant falls behind or drifts</b></td><td>Keep the attempt on a branch and reset to the latest checkpoint (the sync block on each spec slide). Nobody needs to catch up by hand.</td></tr>
+    <tr><td><b>A participant falls behind or drifts</b></td><td>Paste the approved file from the Teams chat with the catch-up prompt on that slide. Nobody needs Git commands to catch up.</td></tr>
     <tr><td><b>The database is in a strange state</b></td><td>In <code>backend/</code>, run <code>uv run python manage.py seed_demo</code> to reload the invented seed data.</td></tr>
     <tr><td><b>The screens show "network error"</b></td><td>The backend isn't running, or the frontend isn't proxying <code>/api</code>. Check Terminal 1, then ask the agent to check the Vite proxy setting.</td></tr>
     <tr><td><b>Spec Kit commands vanish or change</b></td><td>Never re-run <code>specify init</code> in the project. Use <code>specify self upgrade</code>, and check <code>specify init --help</code> for flag changes.</td></tr>
