@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261014110047">
+<meta name="build" content="20261014111727">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -216,7 +216,7 @@ code --install-extension ms-playwright.playwright</pre>
 
   <div class="step">
     <h3><span class="n">7</span>Django and Django REST Framework <span style="color:var(--muted);font-weight:400;font-size:14px">· the backend framework</span></h3>
-    <p>Check that Django and Django REST Framework download and run on your laptop. This uses uv to fetch them into a temporary environment, so nothing is installed system-wide. On Day 2 the project installs its own copy with <code>uv sync</code>, so every pair gets the same versions.</p>
+    <p>Check that Django and Django REST Framework download and run on your laptop. This uses uv to fetch them into a temporary environment, so nothing is installed system-wide. On Day 2 the project installs its own copy with <code>uv sync</code>, so everyone gets the same versions.</p>
     <pre data-label="Check Django">uvx --from django django-admin --version</pre>
     <pre data-label="Check Django REST Framework">uvx --with djangorestframework --from django python -c "import rest_framework; print('DRF', rest_framework.VERSION)"</pre>
     <p class="expect">✓ Expected: <code>6.x.x</code> (Django 5 or later is fine), then <code>DRF 3.x.x</code>. The first run takes a minute while it downloads.</p>

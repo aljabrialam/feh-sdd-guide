@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261014110047">
+<meta name="build" content="20261014111727">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -304,7 +304,7 @@ Every test name contains its AC-002 ID. All spec 001 tests must still
 pass.</pre>
   <p class="muted">Using FEH's own idea? Write the same kind of block: what to extend, what to enforce on the server, which tests prove what.</p>
   <h3><span class="ph gate">G2</span> VISEO approves the plan</h3>
-  <p>The facilitator tags <code>checkpoint/002-G2</code> with the shared acceptance tests. Pairs sync:</p>
+  <p>The facilitator tags <code>checkpoint/002-G2</code> with the shared acceptance tests. Participants sync:</p>
   <pre data-label="Terminal · sync to the room's approved version">
 git add -A &amp;&amp; git commit -qm "my attempt"; git branch -f attempt/002-plan
 git fetch origin --tags
@@ -377,11 +377,11 @@ and report.</pre>
 <section class="slide" id="demo" data-group="Day 2 · Build" data-title="Final demo">
   <p class="eyebrow">Day 2 · 3:30</p>
   <h2>Final demo: trace it back</h2>
-  <p class="lead">Each pair has 5 minutes. FEH asks the questions.</p>
+  <p class="lead">Each participant has 5 minutes. FEH asks the questions.</p>
   <h3><span class="ph">1</span> Show it running</h3>
   <p>The guest journey, then the staff screen, side by side in two browser windows.</p>
   <h3><span class="ph">2</span> FEH picks any screen</h3>
-  <p>The pair names the acceptance criterion behind it, opens it in <code>spec.md</code>, and shows the test whose name contains that ID.</p>
+  <p>The participant names the acceptance criterion behind it, opens it in <code>spec.md</code>, and shows the test whose name contains that ID.</p>
   <h3><span class="ph">3</span> Show a decision</h3>
   <p>Open a <code>G1.md</code> and read one business decision FEH made during clarify. That decision is now in the code and covered by a test.</p>
   <h3><span class="ph">4</span> Ask the agent</h3>
@@ -398,10 +398,10 @@ as a table. Do not change anything.</pre>
     <tr><th>What happens</th><th>What to do</th></tr>
     <tr><td><b>The agent builds more than asked</b></td><td>It adds features "while it's there". Cite Principle 6 and ask it to remove anything no criterion asks for.</td></tr>
     <tr><td><b>The spec turns into a design</b></td><td>Screens, buttons and databases creep into specify. Move them to the plan; the spec says only what users can do and see.</td></tr>
-    <tr><td><b>Clarify questions get guessed</b></td><td>The driver answers instead of FEH. Stop and ask the product owner; a guess becomes a wrong feature.</td></tr>
+    <tr><td><b>Clarify questions get guessed</b></td><td>The developer answers instead of FEH. Stop and ask the product owner; a guess becomes a wrong feature.</td></tr>
     <tr><td><b>Someone edits code by hand</b></td><td>The code and the spec drift apart. Amend the spec first, then let the agent change the code.</td></tr>
     <tr><td><b>A spec is too big</b></td><td>If it can't be built in half a day, split it before G1, not during implement.</td></tr>
-    <tr><td><b>A pair falls behind or drifts</b></td><td>Keep the attempt on a branch and reset to the latest checkpoint (the sync block on each spec slide). Nobody needs to catch up by hand.</td></tr>
+    <tr><td><b>A participant falls behind or drifts</b></td><td>Keep the attempt on a branch and reset to the latest checkpoint (the sync block on each spec slide). Nobody needs to catch up by hand.</td></tr>
     <tr><td><b>The database is in a strange state</b></td><td>In <code>backend/</code>, run <code>uv run python manage.py seed_demo</code> to reload the invented seed data.</td></tr>
     <tr><td><b>The screens show "network error"</b></td><td>The backend isn't running, or the frontend isn't proxying <code>/api</code>. Check Terminal 1, then ask the agent to check the Vite proxy setting.</td></tr>
     <tr><td><b>Spec Kit commands vanish or change</b></td><td>Never re-run <code>specify init</code> in the project. Use <code>specify self upgrade</code>, and check <code>specify init --help</code> for flag changes.</td></tr>

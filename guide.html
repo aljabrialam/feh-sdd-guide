@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261014110047">
+<meta name="build" content="20261014111727">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -223,7 +223,7 @@ summary{cursor:pointer;font-weight:600}
   <h1>Spec-Driven Development: from idea to working app</h1>
   <p class="lead">On Day 1 we agree in writing what the app must do. On Day 2 an AI coding agent builds it from those specs, and every screen traces back to a requirement FEH approved.</p>
   <div class="cards">
-    <div><b>Follow along</b>Every step is a slide. Work through them in order with your pair.</div>
+    <div><b>Follow along</b>Every step is a slide. Work through them in order on your own laptop.</div>
     <div><b>Copy, don't type</b>Each prompt and command has a <b style="display:inline;color:inherit">Copy</b> button. Paste it as given, then fill in anything in &lt;angle brackets&gt;.</div>
     <div><b>Track progress</b>Press <b style="display:inline;color:inherit">Done → next</b> to tick a step. Your progress is saved in this browser.</div>
   </div>
@@ -268,24 +268,25 @@ summary{cursor:pointer;font-weight:600}
     <tr><td>12:00</td><td class="muted">Lunch</td></tr>
     <tr><td>1:00</td><td><code>/speckit-specify</code>: deep dive, then spec 001</td></tr>
     <tr><td>2:00</td><td><code>/speckit-clarify</code>: deep dive, then spec 001</td></tr>
-    <tr><td>2:45</td><td>Specs 002 and 003 in pairs, pitfalls review</td></tr>
+    <tr><td>2:45</td><td>Specs 002 and 003 hands-on, pitfalls review</td></tr>
     <tr><td>3:45</td><td><b>G1: FEH approves the specs</b></td></tr>
     <tr><td>4:15</td><td>Plan + G2 for spec 001 (facilitator-led), sync</td></tr>
   </table>
-  <h3>Working in mixed pairs</h3>
+  <h3>Who's in the room</h3>
   <div class="cards">
-    <div><b>FEH · product owner</b>Knows the business. Answers clarify questions, decides what is in or out, signs G1, accepts at G3.</div>
-    <div><b>VISEO · driver</b>Runs the agent, pastes the prompts, reviews the plan and the code, keeps the build to the spec.</div>
-    <div><b>Facilitator</b>Runs each decision once for the whole room, tags the checkpoints, and unblocks setup problems.</div>
+    <div><b>Participants · developers</b>Each runs GitHub Copilot on their own laptop, pastes the prompts, reviews the plan and the code, and keeps the build to the spec.</div>
+    <div><b>FEH · product owners</b>Know the business. Answer clarify questions, decide what is in or out, sign G1, accept at G3.</div>
+    <div><b>FEH and VISEO guests</b>Join the discussions, challenge the specs and ask questions. No laptop needed.</div>
+    <div><b>Facilitators</b>Run each decision once for the whole room, tag the checkpoints, and unblock setup problems.</div>
   </div>
 </section>
 
 <section class="slide" id="outcomes" data-group="Start" data-title="Expected outcomes">
   <p class="eyebrow">After the 2 days</p>
-  <h2>What FEH and every pair leave with</h2>
+  <h2>What FEH and every participant leave with</h2>
   <p class="lead">An approved specification for the app, and a first working slice of it built from those specs.</p>
 
-  <h3><span class="ph gate">Built</span> In each pair's repo</h3>
+  <h3><span class="ph gate">Built</span> In each participant's repo</h3>
   <ul class="checks">
     <li>A constitution agreed by FEH and VISEO</li>
     <li>3–4 feature specs, clarified with FEH and approved at G1</li>
@@ -308,23 +309,23 @@ summary{cursor:pointer;font-weight:600}
   <h3><span class="ph">Reuse</span> For the real project</h3>
   <p>The constitution, the approved specs and the plan are a head start for whichever app FEH commissions. They move into the real project unchanged.</p>
 
-  <div class="note"><b>How we'll know it worked</b>In the final demo, FEH picks any screen and the pair shows the approved criterion behind it, and the test that proves it.</div>
+  <div class="note"><b>How we'll know it worked</b>In the final demo, FEH picks any screen and the participant shows the approved criterion behind it, and the test that proves it.</div>
 </section>
 
 <section class="slide" id="same" data-group="Start" data-title="One room, one result">
-  <p class="eyebrow">For facilitators and every pair</p>
-  <h2>Every pair ends with the same app</h2>
+  <p class="eyebrow">For facilitators and every participant</p>
+  <h2>Every participant ends with the same app</h2>
   <p class="lead">An AI agent never writes identical code twice, so "the same result" means the same behaviour: same specs, same decisions, same data, same screens, and the same acceptance tests passing. Five controls make that happen.</p>
   <table>
     <tr><th>Control</th><th>How it works</th></tr>
-    <tr><td><b>1 · One starter repo</b></td><td>Every pair clones the same repo: Spec Kit set up, and <code>docs/reference.md</code> fixing the seed data, screen labels and colours.</td></tr>
-    <tr><td><b>2 · Decisions made once</b></td><td>Clarify questions are answered by FEH once, for the whole room. Every pair pastes the same <b>room decisions</b> block.</td></tr>
-    <tr><td><b>3 · Converge at every gate</b></td><td>Pairs practise specify, clarify and plan themselves, then sync to the room's approved version (a checkpoint) before moving on.</td></tr>
-    <tr><td><b>4 · Shared acceptance tests</b></td><td>The facilitator's checkpoint includes end-to-end tests written from the approved spec. Every pair's build must pass the same tests at G3.</td></tr>
+    <tr><td><b>1 · One starter repo</b></td><td>Every participant clones the same repo: Spec Kit set up, and <code>docs/reference.md</code> fixing the seed data, screen labels and colours.</td></tr>
+    <tr><td><b>2 · Decisions made once</b></td><td>Clarify questions are answered by FEH once, for the whole room. Every participant pastes the same <b>room decisions</b> block.</td></tr>
+    <tr><td><b>3 · Converge at every gate</b></td><td>Participants practise specify, clarify and plan themselves, then sync to the room's approved version (a checkpoint) before moving on.</td></tr>
+    <tr><td><b>4 · Shared acceptance tests</b></td><td>The facilitator's checkpoint includes end-to-end tests written from the approved spec. Every participant's build must pass the same tests at G3.</td></tr>
     <tr><td><b>5 · Same tools</b></td><td>Same Spec Kit version and GitHub Copilot in Agent mode, checked in Step 0. Node 22+ and Python 3.12+.</td></tr>
   </table>
   <h3>Checkpoints</h3>
-  <p>The facilitator builds the whole app once in the dry run and tags each gate. A pair that falls behind or drifts resets to the latest checkpoint and carries on.</p>
+  <p>The facilitator builds the whole app once in the dry run and tags each gate. A participant who falls behind or drifts resets to the latest checkpoint and carries on.</p>
   <table>
     <tr><th>Checkpoint tag</th><th>Contains</th><th>Used</th></tr>
     <tr><td><code>checkpoint/start</code></td><td>Spec Kit, <code>docs/reference.md</code></td><td>Before Day 1</td></tr>
@@ -337,14 +338,14 @@ summary{cursor:pointer;font-weight:600}
   <pre data-label="Terminal · facilitator, after each gate in the dry run and in the room">
 git tag -f checkpoint/001-G1
 git push -f origin checkpoint/001-G1</pre>
-  <div class="note"><b>If FEH decides differently in the room</b>The facilitator updates the room decisions on screen, re-runs that step once, and re-tags the checkpoint. Pairs then sync. Nobody's answer is lost: each pair's own attempt is kept on an <code>attempt/…</code> branch.</div>
+  <div class="note"><b>If FEH decides differently in the room</b>The facilitator updates the room decisions on screen, re-runs that step once, and re-tags the checkpoint. Participants then sync. Nobody's answer is lost: each participant's own attempt is kept on an <code>attempt/…</code> branch.</div>
 </section>
 
 <!-- ======================= SETUP ======================= -->
 <section class="slide" id="prereq" data-group="Setup (before Day 1)" data-title="Step 0 · Install the tools">
   <p class="eyebrow">Step 0 · do this before Day 1</p>
   <h2>Install the tools</h2>
-  <p class="lead">Every VISEO driver's laptop needs these. The full step-by-step, for Mac and Windows, is on the <a href="setup.html">laptop setup page</a>. The laptop needs: <b>Git</b> (with your name and email set), <b>VS Code</b> (with the <code>code</code> command and the Python, ESLint, Prettier and Playwright extensions), <b>Chrome</b>, <b>Node.js 22+</b>, <b>Python 3.12+</b>, plus the tools below. Admin rights, 8 GB RAM and 10 GB free disk.</p>
+  <p class="lead">Every participant's laptop needs these. The full step-by-step, for Mac and Windows, is on the <a href="setup.html">laptop setup page</a>. The laptop needs: <b>Git</b> (with your name and email set), <b>VS Code</b> (with the <code>code</code> command and the Python, ESLint, Prettier and Playwright extensions), <b>Chrome</b>, <b>Node.js 22+</b>, <b>Python 3.12+</b>, plus the tools below. Admin rights, 8 GB RAM and 10 GB free disk.</p>
   <pre data-label="Terminal">
 # uv (provides uvx)
 curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -380,7 +381,7 @@ npx playwright install chromium</pre>
 <section class="slide" id="repo" data-group="Setup (before Day 1)" data-title="Step 1 · Clone the starter repo">
   <p class="eyebrow">Step 1 · do this before Day 1</p>
   <h2>Clone the starter repo</h2>
-  <p class="lead">Every pair starts from the same repo, so every pair starts from the same place. The facilitator sends the URL.</p>
+  <p class="lead">Everyone starts from the same repo, so everyone starts from the same place. The facilitator sends the URL.</p>
   <pre data-label="Terminal">
 mkdir -p ~/feh-sdd &amp;&amp; cd ~/feh-sdd
 git clone &lt;STARTER_REPO_URL&gt; feh-app
@@ -502,7 +503,7 @@ run /speckit-specify in this repository: which script runs, which
 branch and folder it creates, which template it fills, which sections
 are mandatory, and what it does with information I didn't give it.
 Base the answer only on the slash-command files and the files in .specify.</pre>
-  <h3>Discuss in pairs</h3>
+  <h3>Discuss with the room</h3>
   <ul class="checks">
     <li>We found where the constitution lives and who can change it</li>
     <li>We can name the mandatory sections of a spec</li>
@@ -564,7 +565,7 @@ specification and is signed by the FEH product owner. G2 approves the
 plan and is signed by the VISEO technical lead. G3 accepts the working
 feature and is signed by both. Gates are recorded in
 specs/&lt;spec&gt;/gates/ and never approved retroactively.</pre>
-  <p>The facilitator pastes it once on the big screen, with the room's changes, and tags <code>checkpoint/constitution</code>. Pairs then sync:</p>
+  <p>The facilitator pastes it once on the big screen, with the room's changes, and tags <code>checkpoint/constitution</code>. Participants then sync:</p>
   <pre data-label="Terminal · sync to the room's approved version">
 git add -A &amp;&amp; git commit -qm "my attempt"; git branch -f attempt/constitution
 git fetch origin --tags
@@ -721,7 +722,7 @@ Written into spec.md:
 
   <h3><span class="ph">Then our review prompt</span></h3>
   <p>Built-in clarify asks only a handful of questions. Our <button class="link" data-goto="clarify">clarify review prompt</button> then sweeps the whole spec for anything else that's missing. Use both, in that order.</p>
-  <div class="warnbox"><b>Watch for</b>The driver answering business questions to keep things moving. If FEH didn't answer it, it isn't decided.</div>
+  <div class="warnbox"><b>Watch for</b>The developer answering business questions to keep things moving. If FEH didn't answer it, it isn't decided.</div>
 </section>
 
 <section class="slide" id="clarify" data-group="Day 1 · Spec" data-title="Toolkit · clarify prompt">
@@ -749,7 +750,7 @@ write the question the business owner must answer. Do not invent
 business rules.
 
 Do not generate implementation. Do not generate code.</pre>
-  <div class="note"><b>Answering [NEEDS CLARIFICATION]</b>The FEH product owner answers each question out loud; the driver types the answer into the spec. Any answer that's "it depends" becomes two acceptance criteria.</div>
+  <div class="note"><b>Answering [NEEDS CLARIFICATION]</b>The FEH product owner answers each question out loud; the developer types the answer into the spec. Any answer that's "it depends" becomes two acceptance criteria.</div>
 </section>
 
 <section class="slide" id="gates" data-group="Day 1 · Spec" data-title="Toolkit · gate record">
@@ -784,8 +785,8 @@ git add -A &amp;&amp; git commit -m "gate: G1 approved"</pre>
 
 <section class="slide" id="reference" data-group="Day 1 · Spec" data-title="Reference: data &amp; screens">
   <p class="eyebrow">Backup idea · in the starter repo</p>
-  <h2>The reference every pair builds to</h2>
-  <p class="lead">This file is already in the starter repo as <code>docs/reference.md</code>. Every plan points the agent at it, so every pair gets the same data, labels and look. Open the mockup to see the target screens.</p>
+  <h2>The reference everyone builds to</h2>
+  <p class="lead">This file is already in the starter repo as <code>docs/reference.md</code>. Every plan points the agent at it, so everyone gets the same data, labels and look. Open the mockup to see the target screens.</p>
   <ul>
     <li><b>Mockup:</b> <a href="mockup/" target="_blank" rel="noopener">open the seven target screens</a> (five guest screens, staff sign-in and the staff queue), or <a href="mockup/guest-service-requests-mockup.zip" download>download them all as a zip</a>. Requests and reference numbers on the screens are illustrative; the seed below starts with none.</li>
     <li><b>For the agent:</b> the same images are in the starter repo under <code>docs/mockup/</code>. AI coding agents can read images, so every plan points at them.</li>
@@ -891,7 +892,7 @@ Label every acceptance criterion AC-001-&lt;nn&gt;.</pre>
   </ul>
 
     <h3><span class="ph">Room decisions</span> Paste after FEH has answered</h3>
-  <p>FEH answers the questions above once, for the whole room. These are the default answers; the facilitator edits them on screen if FEH decides differently, and every pair pastes the same block.</p>
+  <p>FEH answers the questions above once, for the whole room. These are the default answers; the facilitator edits them on screen if FEH decides differently, and every participant pastes the same block.</p>
   <pre data-label="Prompt · paste into Copilot Chat">
 Apply these business decisions, agreed by FEH for the whole room, to
 the specification. Add or adjust acceptance criteria to match, keeping
@@ -914,7 +915,7 @@ Then stop and show me the full list of acceptance criteria.</pre>
 
   <h3><span class="ph gate">G1</span> FEH approves the spec</h3>
   <p>Save and commit <code>gates/G1.md</code> from the <button class="link" data-goto="gates">gate template</button>, listing the business decisions made during clarify.</p>
-  <p>The facilitator approves the room's version with FEH and tags <code>checkpoint/001-G1</code>. Every pair then syncs, so the plan starts from one approved spec:</p>
+  <p>The facilitator approves the room's version with FEH and tags <code>checkpoint/001-G1</code>. Every participant then syncs, so the plan starts from one approved spec:</p>
   <pre data-label="Terminal · sync to the room's approved version">
 git add -A &amp;&amp; git commit -qm "my attempt"; git branch -f attempt/001-spec
 git fetch origin --tags
@@ -974,7 +975,7 @@ status tracking (spec 003) can be added without reworking them.</pre>
 
   <h3><span class="ph gate">G2</span> VISEO approves the plan</h3>
   <div class="note"><b>G2 must confirm</b>Every AC-001 criterion is mapped to a test, the plan follows <code>docs/reference.md</code>, and nothing in it goes beyond the spec.</div>
-  <p>The facilitator tags <code>checkpoint/001-G2</code>, which also adds the shared acceptance tests in <code>e2e/acceptance/</code>. Pairs sync before leaving on Day 1:</p>
+  <p>The facilitator tags <code>checkpoint/001-G2</code>, which also adds the shared acceptance tests in <code>e2e/acceptance/</code>. Participants sync before leaving on Day 1:</p>
   <pre data-label="Terminal · sync to the room's approved version">
 git add -A &amp;&amp; git commit -qm "my attempt"; git branch -f attempt/001-plan
 git fetch origin --tags
@@ -1018,7 +1019,7 @@ Label every acceptance criterion AC-002-&lt;nn&gt;.</pre>
   </ul>
 
     <h3><span class="ph">Room decisions</span> Paste after FEH has answered</h3>
-  <p>FEH answers the questions above once, for the whole room. These are the default answers; the facilitator edits them on screen if FEH decides differently, and every pair pastes the same block.</p>
+  <p>FEH answers the questions above once, for the whole room. These are the default answers; the facilitator edits them on screen if FEH decides differently, and every participant pastes the same block.</p>
   <pre data-label="Prompt · paste into Copilot Chat">
 Apply these business decisions, agreed by FEH for the whole room, to
 the specification. Add or adjust acceptance criteria to match, keeping
@@ -1046,7 +1047,7 @@ Then stop and show me the full list of acceptance criteria.</pre>
 
   <h3><span class="ph gate">G1</span> FEH approves the spec</h3>
   <p>Save and commit <code>gates/G1.md</code>. The plan for this spec is done on Day 2.</p>
-  <p>The facilitator approves the room's version with FEH and tags <code>checkpoint/002-G1</code>. Every pair then syncs, so the plan starts from one approved spec:</p>
+  <p>The facilitator approves the room's version with FEH and tags <code>checkpoint/002-G1</code>. Every participant then syncs, so the plan starts from one approved spec:</p>
   <pre data-label="Terminal · sync to the room's approved version">
 git add -A &amp;&amp; git commit -qm "my attempt"; git branch -f attempt/002-spec
 git fetch origin --tags
@@ -1087,7 +1088,7 @@ Label every acceptance criterion AC-003-&lt;nn&gt;.</pre>
   </ul>
 
     <h3><span class="ph">Room decisions</span> Paste after FEH has answered</h3>
-  <p>FEH answers the questions above once, for the whole room. These are the default answers; the facilitator edits them on screen if FEH decides differently, and every pair pastes the same block.</p>
+  <p>FEH answers the questions above once, for the whole room. These are the default answers; the facilitator edits them on screen if FEH decides differently, and every participant pastes the same block.</p>
   <pre data-label="Prompt · paste into Copilot Chat">
 Apply these business decisions, agreed by FEH for the whole room, to
 the specification. Add or adjust acceptance criteria to match, keeping
@@ -1104,7 +1105,7 @@ Then stop and show me the full list of acceptance criteria.</pre>
 
   <h3><span class="ph gate">G1</span> FEH approves the spec</h3>
   <p>Save and commit <code>gates/G1.md</code>.</p>
-  <p>The facilitator approves the room's version with FEH and tags <code>checkpoint/003-G1</code>. Every pair then syncs, so the plan starts from one approved spec:</p>
+  <p>The facilitator approves the room's version with FEH and tags <code>checkpoint/003-G1</code>. Every participant then syncs, so the plan starts from one approved spec:</p>
   <pre data-label="Terminal · sync to the room's approved version">
 git add -A &amp;&amp; git commit -qm "my attempt"; git branch -f attempt/003-spec
 git fetch origin --tags
