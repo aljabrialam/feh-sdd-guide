@@ -4,7 +4,7 @@ A single-page, slide-style guide for the two-day Spec-Driven Development worksho
 
 ## The workshop app
 
-The main build is FEH's **Meeting Action Tracker** (requirements of 13 Oct 2026), MVP 1a slice in four specs: 001 meeting screen and inline action grid, 002 item detail with results, update log and change history, 003 My actions and changes by others, 004 group roll-up (stretch). Stack follows FEH's architecture: Django with server-rendered templates, HTMX only for the inline grid, SQLite locally. Entra ID sign-in, emails, export, MVP 1b (microphone and AI), Databricks and Teams are stubbed or left out.
+The main build is a small MVP of FEH's **Meeting Action Tracker** (requirements of 13 Oct 2026), sized so every participant can finish it: 001 meetings and the action list (carry-forward, overdue), 002 updates and results (update log, result, outcome, change history), 003 My actions (stretch). Each person belongs to one hotel; no roles, numeric targets or group view. Stack follows FEH's architecture: Django with server-rendered templates, HTMX only for the action list, SQLite locally. Entra ID sign-in is a "Sign in as" page; Teams transcripts, MVP 1b (microphone and AI), emails, export, Databricks and Azure are left out, so nothing needs IT approval or an AI service other than GitHub Copilot.
 
 `starter/docs/` is the source of the docs pack participants download in Step 1 (`starter/feh-sdd-docs.zip`, rebuilt with `python3 tools/build_docs.py`): `docs/reference.md` for the tracker, and the backup idea (Guest Service Requests) under `docs/backup/`. FEH's own screen mockups are **not** published here: facilitators share `feh-action-tracker-mockups.zip` in the Teams chat, and Step 1 unzips it into `docs/mockup/`.
 

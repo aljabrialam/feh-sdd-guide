@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261014114938">
+<meta name="build" content="20261014115430">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -262,7 +262,7 @@ summary{cursor:pointer;font-weight:600}
   <p class="lead">Day 1 is mostly about Spec Kit itself: how it works, what each step produces, and who decides what. We use it on FEH's real brief, the Meeting Action Tracker.</p>
   <table>
     <tr><th>Time</th><th>Day 1 · Spec Kit and the specs (FEH-led)</th><th>Day 2 · Build (VISEO-led)</th></tr>
-    <tr><td>9:00</td><td>Why SDD: specs, gates and who decides</td><td rowspan="11" style="vertical-align:middle;color:var(--muted)">Revealed on the morning of Day 2.<br><br>Copilot builds what FEH approves on Day 1, spec by spec, and the day ends with a demo of the working tracker.</td></tr>
+    <tr><td>9:00</td><td>Why SDD: specs, gates and who decides</td><td rowspan="11" style="vertical-align:middle;color:var(--muted)">Revealed on the morning of Day 2.<br><br>Copilot builds the small MVP FEH approves on Day 1, spec by spec, and the day ends with a demo of the working tracker.</td></tr>
     <tr><td>9:30</td><td>Anatomy of Spec Kit, who writes what</td></tr>
     <tr><td>10:15</td><td>Hands-on: open the machinery (skills and templates)</td></tr>
     <tr><td>10:45</td><td>Agree the constitution</td></tr>
@@ -270,7 +270,7 @@ summary{cursor:pointer;font-weight:600}
     <tr><td>12:00</td><td class="muted">Lunch</td></tr>
     <tr><td>1:00</td><td>Deep dive <code>/speckit-specify</code>, then spec 001</td></tr>
     <tr><td>1:45</td><td>Deep dive <code>/speckit-clarify</code>, FEH answers for spec 001</td></tr>
-    <tr><td>2:30</td><td>Specs 002 and 003 hands-on (004 if time)</td></tr>
+    <tr><td>2:30</td><td>Spec 002 hands-on (003 if time)</td></tr>
     <tr><td>3:30</td><td>Quality checks: analyze, checklist, pitfalls · <b>G1: FEH approves the specs</b></td></tr>
     <tr><td>4:15</td><td>Deep dive <code>/speckit-plan</code>, plan for spec 001 · <b>G2</b></td></tr>
   </table>
@@ -286,16 +286,16 @@ summary{cursor:pointer;font-weight:600}
 <section class="slide" id="outcomes" data-group="Start" data-title="Expected outcomes">
   <p class="eyebrow">After the 2 days</p>
   <h2>What FEH and every participant leave with</h2>
-  <p class="lead">Approved specifications for the first slice of FEH's Meeting Action Tracker (MVP 1a), and that slice working, built from those specs.</p>
+  <p class="lead">Approved specifications for a small MVP of FEH's Meeting Action Tracker, and that MVP working, built from those specs.</p>
 
   <h3><span class="ph gate">Built</span> In each participant's repo</h3>
   <ul class="checks">
     <li>A constitution agreed by FEH and VISEO</li>
-    <li>Specs 001–003 (and 004 if time), clarified with FEH and approved at G1</li>
+    <li>Specs 001 and 002 (and 003 if time), clarified with FEH and approved at G1</li>
     <li>An approved plan (G2) for the features built on Day 2</li>
     <li>Spec 001, the meeting screen with its spreadsheet-style grid, running locally as a Django app and accepted at G3</li>
     <li>Automated tests named after the acceptance criteria they prove, all passing</li>
-    <li>Specs 002 and 003 built and accepted (spec 004 as a stretch goal)</li>
+    <li>Spec 002 built and accepted (spec 003 as a stretch goal)</li>
   </ul>
 
   <h3><span class="ph">Learned</span> What people can do afterwards</h3>
@@ -320,7 +320,7 @@ summary{cursor:pointer;font-weight:600}
   <p class="lead">An AI agent never writes identical code twice, so "the same result" means the same behaviour: same specs, same decisions, same data, same screens, and the same acceptance tests passing. Five controls make that happen.</p>
   <table>
     <tr><th>Control</th><th>How it works</th></tr>
-    <tr><td><b>1 · One run sheet</b></td><td>Everyone sets up the project the same way (Step 1) and pastes the same blocks in the same order: constitution, then spec 001, 002, 003 (004). <code>docs/reference.md</code> fixes the seed data, screen labels and colours.</td></tr>
+    <tr><td><b>1 · One run sheet</b></td><td>Everyone sets up the project the same way (Step 1) and pastes the same blocks in the same order: constitution, then spec 001, 002 (003). <code>docs/reference.md</code> fixes the seed data, screen labels and colours.</td></tr>
     <tr><td><b>2 · Decisions made once</b></td><td>Clarify questions are answered by FEH once, for the whole room. Every participant pastes the same <b>room decisions</b> block.</td></tr>
     <tr><td><b>3 · Converge at every gate</b></td><td>Participants practise specify, clarify and plan themselves, then match the room's approved version on the big screen before moving on.</td></tr>
     <tr><td><b>4 · Tests named after the criteria</b></td><td>Every acceptance criterion in the approved spec gets a test with its ID in the name. At G3, everyone's build must pass a test for every criterion.</td></tr>
@@ -393,7 +393,7 @@ code .</pre>
   <ul class="checks">
     <li>VS Code is open on <code>feh-app/</code> with Copilot Chat in <b>Agent</b> mode</li>
     <li>Typing <code>/speckit</code> in Copilot Chat lists the Spec Kit skills</li>
-    <li><code>docs/reference.md</code> exists, and <code>docs/mockup/</code> has FEH's four screens (01, 02, 03, 05)</li>
+    <li><code>docs/reference.md</code> exists, and <code>docs/mockup/</code> has FEH's three screens (01, 02, 03)</li>
   </ul>
 </section>
 
@@ -533,10 +533,10 @@ Principles:
    automated test whose name contains its ID. A feature is not done
    until all its tests pass.
 
-4. Property Isolation. All data belongs to one property (hotel). A user
-   sees and changes only the properties they are a member of, with the
-   role they hold there. Isolation is enforced in one place, so no
-   screen or query can return another property's items.
+4. Hotel Isolation. All data belongs to one hotel. Each person belongs
+   to one hotel and sees and changes only that hotel's meetings and
+   items. Isolation is enforced in one place, so no screen or query can
+   return another hotel's items.
 
 5. Nothing Disappears. Every change to an action item is recorded with
    who, when, the old value and the new value. Items are never deleted;
@@ -549,7 +549,8 @@ Principles:
 
 7. Keep It Simple. One web application, one local database, no paid or
    external services. Sign-in, email and AI features that need external
-   services are stubbed or left out. Anything not needed by an approved
+   services are stubbed or left out. The workshop builds a small MVP
+   that can be finished in two days. Anything not needed by an approved
    acceptance criterion is not built.
 
 8. Change Through the Spec. When behaviour needs to change, the
@@ -583,36 +584,36 @@ version below, exactly as written. Do not change any other file.</pre>
     <div><b>MVP 1b</b>Listen to the meeting through the microphone and propose action items for review.</div>
     <div><b>Phase 2 · Final</b>Actual results from Databricks, dashboards, Teams transcripts, summaries.</div>
   </div>
-  <h3><span class="ph">1</span> The workshop slice: four specs</h3>
+  <h3><span class="ph">1</span> The workshop MVP: small enough to finish</h3>
+  <p>Two days is for learning SDD on FEH's real requirements, not for building the whole tracker. We build a small MVP that every participant can finish and demo, and FEH's full requirements document becomes the backlog.</p>
   <table>
     <tr><th>Spec</th><th>What a user can do</th><th>From FEH's requirements</th><th>FEH screen</th></tr>
-    <tr><td><b>001</b></td><td>Create a weekly meeting and record its actions in a spreadsheet-style grid that saves as you type. Open items from earlier meetings are already there.</td><td>FR-002, 004–009, 013 · NFR-001, 004</td><td>01 Meeting screen</td></tr>
-    <tr><td><b>002</b></td><td>Open an item to record anticipated and actual results, post updates, see every change, and close it.</td><td>FR-007, 008, 010–012, 014 · NFR-002</td><td>03 Item detail</td></tr>
-    <tr><td><b>003</b></td><td>See my actions across all meetings, filter them, and see what others changed on my items.</td><td>FR-015 (in the app), FR-016</td><td>02 My actions</td></tr>
-    <tr><td>004 <span class="muted">stretch</span></td><td>Group viewers see open and overdue counts across all hotels.</td><td>FR-020</td><td>05 Group roll-up</td></tr>
+    <tr><td><b>001</b></td><td>Create the weekly meeting and record its actions in a spreadsheet-style list that saves as you type. Open items from earlier meetings are already there; overdue ones are flagged.</td><td>FR-004–007, 009, 013</td><td>01 Meeting screen</td></tr>
+    <tr><td><b>002</b></td><td>Open an action to post updates, record what was expected and what happened, rate the outcome, see every change, and close it.</td><td>FR-009–011, 014</td><td>03 Item detail</td></tr>
+    <tr><td>003 <span class="muted">stretch</span></td><td>See my open, overdue and done actions across all meetings.</td><td>FR-016 (My actions)</td><td>02 My actions</td></tr>
   </table>
   <h3><span class="ph">2</span> What we stub or leave out, and why</h3>
   <table>
     <tr><th>FEH requirement</th><th>In the workshop</th></tr>
-    <tr><td>Microsoft Entra ID sign-in (FR-003)</td><td>A "Sign in as" page listing the invented users. Real SSO needs FEH's tenant.</td></tr>
-    <tr><td>Admin screens for properties, members and lists (FR-001, FR-019)</td><td>Seeded from <code>docs/reference.md</code> and editable in Django's built-in admin.</td></tr>
-    <tr><td>Email reminders (FR-017), owner emails (FR-015)</td><td>Left out; spec 003 shows changes inside the app instead.</td></tr>
-    <tr><td>Excel and PDF export (FR-018)</td><td>Left out: a good first spec for after the workshop.</td></tr>
-    <tr><td>Microphone and AI (MVP 1b), Databricks, Teams, Azure</td><td>Left out: they need FEH's Azure services. The specs are written so they can be added later without rework.</td></tr>
+    <tr><td>Teams transcripts (Final), microphone and AI extraction (MVP 1b)</td><td>Left out: they need IT approval and Azure AI services. Nothing in the workshop needs an AI service other than GitHub Copilot.</td></tr>
+    <tr><td>Microsoft Entra ID sign-in (FR-003)</td><td>A "Sign in as" page listing the invented people. Real SSO needs FEH's tenant.</td></tr>
+    <tr><td>Roles, people in several hotels, group roll-up (FR-001, 002, 019, 020)</td><td>Simplified: each person belongs to one hotel and can do everything there.</td></tr>
+    <tr><td>Numeric targets, supporting owners, stay periods (parts of FR-008, 011, 012)</td><td>Left out: results are text plus an outcome rating.</td></tr>
+    <tr><td>Email reminders and notifications, export, Databricks, Azure hosting</td><td>Left out: good first specs for after the workshop.</td></tr>
   </table>
   <h3><span class="ph">3</span> Ask the agent to check the split</h3>
   <pre data-label="Prompt · paste into Copilot Chat">
 Do not write any code or specifications yet.
 
 Read docs/reference.md. Far East Hospitality wants a Meeting Action
-Tracker. For this workshop we plan four specifications, in this order:
-001 meeting screen with the action grid and carry-forward; 002 item
-detail with results, update log and change history; 003 my actions with
-filters and changes by others; 004 group roll-up.
+Tracker. For this two-day workshop we plan a small MVP in three
+specifications, in this order: 001 meetings and the action list with
+carry-forward and overdue; 002 updates and results with the change
+history; 003 (stretch) my actions.
 
 For each, say in one sentence what a user can do when it is finished,
 what it depends on, and whether it is small enough to build in half a
-day. Flag anything in the order that would force rework later.</pre>
+day. Flag anything that would force rework later.</pre>
   <h3><span class="ph">4</span> FEH agrees the list and the order</h3>
   <p>Write them on the board. FEH's own wording goes into each specify block.</p>
   <div class="note"><b>Backup</b>If the room decides to practise on something simpler, the Guest Service Requests idea is ready in the <button class="link" data-goto="bref">backup slides</button>, with its own reference and screens.</div>
@@ -715,7 +716,7 @@ Written into spec.md:
   <table>
     <tr><th>Kind of question</th><th>Who answers</th><th>Example</th></tr>
     <tr><td>Business rule</td><td><b>FEH</b></td><td>Does the chair or the owner rate the outcome?</td></tr>
-    <tr><td>Policy or risk</td><td><b>FEH</b></td><td>Can a read-only user export the minutes?</td></tr>
+    <tr><td>Policy or risk</td><td><b>FEH</b></td><td>Should people at one hotel ever see another hotel's actions?</td></tr>
     <tr><td>Feasibility or cost</td><td><b>VISEO dev</b></td><td>Can we send real emails in a two-day workshop?</td></tr>
     <tr><td>Nobody in the room knows</td><td>Nobody guesses</td><td>Deferred, and listed in the G1 record</td></tr>
   </table>
@@ -792,162 +793,143 @@ git add -A &amp;&amp; git commit -m "gate: G1 approved"</pre>
     <li><b>Sign-in:</b> a "Sign in as" page stands in for Microsoft Entra ID, so nobody types a password.</li>
   </ul>
   <pre class="tall" data-label="File · docs/reference.md">
-# Reference — Meeting Action Tracker (workshop build)
+# Reference — Meeting Action Tracker (workshop MVP)
 
 Source: FEH &quot;Meeting Action Tracker: Requirements&quot; (13 Oct 2026) and its
-five screen mockups in docs/mockup/. This file fixes the data, labels and
-look for the two-day workshop. All hotels, people and figures below are
-invented. Use exactly these.
+screen mockups in docs/mockup/. This file fixes the data, labels and look
+for the two-day workshop. All hotels, people and text below are invented.
+Use exactly these.
 
 ## Workshop scope
-Built in the workshop: a slice of MVP 1a (specs 001 to 004).
-Stubbed for the workshop:
-- Microsoft Entra ID sign-in (FR-003): replaced by a &quot;Sign in as&quot; page that
-  lists the seeded users. No passwords anywhere.
-- Properties, members, segments, categories and metrics (FR-001, FR-019):
-  seeded, and editable in the Django admin by the group admin.
-Not built in the workshop: email reminders (FR-017), Excel and PDF export
-(FR-018), microphone capture and AI extraction (MVP 1b), Databricks and
-Teams (Phase 2 and Final), Azure hosting.
+A small MVP from MVP 1a, in three specs:
+- 001 Meetings and the action list (carry-forward, overdue)
+- 002 Updates and results (update log, result, outcome, change history)
+- 003 My actions (stretch, if time allows)
 
-## Properties
-| Code | Name    | Currency | Time zone      | Weekly meeting   |
-|------|---------|----------|----------------|------------------|
-| HTA  | Hotel A | SGD      | Asia/Singapore | Tuesday 10:00    |
-| HTB  | Hotel B | SGD      | Asia/Singapore | Wednesday 09:30  |
-| HTC  | Hotel C | SGD      | Asia/Singapore | Thursday 10:00   |
+Kept deliberately simple for the workshop:
+- Each person belongs to one hotel and can do everything there. No roles,
+  no read-only users, no group view.
+- Sign-in: a &quot;Sign in as&quot; page lists the people below (stand-in for
+  Microsoft Entra ID). No passwords.
+- Results are text plus an outcome rating. No metrics, baselines,
+  targets or currencies.
+- One owner per item. No supporting owners, stay periods or linked
+  references.
+Not built in the workshop: email reminders, export, group roll-up,
+microphone and AI (MVP 1b), Teams transcripts, Databricks, Azure hosting.
 
-## People and roles
-A person can hold a different role in each property.
-| Name       | Email             | Roles                                       |
-|------------|-------------------|---------------------------------------------|
-| Mary Tan   | mary@tracker.demo | Member at Hotel A                           |
-| John Lim   | john@tracker.demo | Property admin at Hotel A (chairs meetings) |
-| Alex Wong  | alex@tracker.demo | Member at Hotel A; Read-only at Hotel B     |
-| Sam Ng     | sam@tracker.demo  | Member at Hotel A                           |
-| Priya Rao  | priya@tracker.demo| Member at Hotel A                           |
-| Lee Chen   | lee@tracker.demo  | Member at Hotel A; Member at Hotel B        |
-| Grace Teo  | grace@tracker.demo| Property admin at Hotel B                   |
-| Ben Tay    | ben@tracker.demo  | Member at Hotel C                           |
-| Chris Lau  | chris@tracker.demo| Group viewer (all properties, counts only)  |
-| Dana Ong   | dana@tracker.demo | Group admin (Django admin access)           |
+## Hotels
+| Name    | Code | Time zone      |
+|---------|------|----------------|
+| Hotel A | HTA  | Asia/Singapore |
+| Hotel B | HTB  | Asia/Singapore |
 
-Roles: Member · Property admin · Read-only (per property);
-Group viewer · Group admin (all properties).
+## People
+| Name      | Email              | Hotel   |
+|-----------|--------------------|---------|
+| Mary Tan  | mary@tracker.demo  | Hotel A |
+| John Lim  | john@tracker.demo  | Hotel A |
+| Alex Wong | alex@tracker.demo  | Hotel A |
+| Sam Ng    | sam@tracker.demo   | Hotel A |
+| Priya Rao | priya@tracker.demo | Hotel A |
+| Grace Teo | grace@tracker.demo | Hotel B |
+| Lee Chen  | lee@tracker.demo   | Hotel B |
 
-## Shared lists (group admin maintains; seed exactly these)
+## Lists (fixed; seed exactly these)
 Market segments: Corporate · MICE / Groups · Leisure / Transient · OTA ·
 Wholesale · Government · Airline · Direct
 Issue categories: Pace / pickup · Rate / ADR · Mix · Cancellations / wash ·
 Competitor · Event / compression · Distribution · Service
-Target metrics: Room nights · ADR · Revenue · Occupancy · RevPAR · Pickup ·
-Group conversion
-Fixed lists (not admin-maintained):
-- Status: Open · In progress · Blocked · Done · Cancelled.
-  &quot;Overdue&quot; is not a status: an item is overdue when its due date is before
-  today and its status is Open, In progress or Blocked.
-- Priority: High · Medium · Low (default Medium)
-- Outcome rating: Achieved · Partially achieved · Not achieved ·
-  Not measurable · (blank = not rated)
-- Actual value source: Manual (System arrives in Phase 2)
-- Item source: Manual (AI-captured and Imported arrive later)
+Priority: High · Medium · Low (default Medium)
+Status: Open · In progress · Blocked · Done · Cancelled (default Open).
+&quot;Overdue&quot; is not a status: an item is overdue when its due date is before
+today and its status is Open, In progress or Blocked.
+Outcome rating: Not rated (default) · Achieved · Partially achieved ·
+Not achieved · Not measurable
 
 ## Meetings in the seed
 Hotel A, &quot;Weekly performance meeting&quot;, chair John Lim, attendees Mary Tan,
-John Lim, Alex Wong, Sam Ng, Priya Rao, Lee Chen:
-Tue 22 Sep 2026 · Tue 29 Sep 2026 · Tue 6 Oct 2026 · Tue 13 Oct 2026
-(all Completed).
-Hotel B, &quot;Weekly performance meeting&quot;, chair Grace Teo, attendees Grace Teo,
-Lee Chen: Wed 7 Oct 2026 · Wed 14 Oct 2026 (Completed).
-Hotel C, chair Ben Tay: Thu 8 Oct 2026 (Completed).
+John Lim, Alex Wong, Sam Ng, Priya Rao: Tue 29 Sep 2026 · Tue 6 Oct 2026 ·
+Tue 13 Oct 2026, each at 10:00.
+Hotel B, &quot;Weekly performance meeting&quot;, chair Grace Teo, attendees Grace
+Teo, Lee Chen: Wed 7 Oct 2026, 09:30.
 
 ## Action items in the seed
 Hotel A (raised in the meeting on the date shown):
-1. 6 Oct · Corporate · Pace / pickup · &quot;Corporate segment below forecast&quot; ·
-   &quot;Review upcoming opportunities for sales&quot; · John Lim · High · due 10 Oct ·
-   In progress · stay 1–30 Nov · anticipated &quot;Target 4,600 room nights&quot; ·
-   Room nights, baseline 4,200, target 4,600
-2. 29 Sep · MICE / Groups · Cancellations / wash · &quot;Group wash risk for
+1. 29 Sep · MICE / Groups · Cancellations / wash · &quot;Group wash risk for
    Company ABC&quot; · &quot;Contact company organizer for rooming list update&quot; ·
-   Mary Tan (supporting: Alex Wong) · Medium · due 16 Oct · Blocked ·
-   stay 22–25 Oct · anticipated &quot;Updated rooming list received and wash
-   held under 10% of the block&quot; · Room nights, baseline 80, target 110
-3. 22 Sep · OTA · Rate / ADR · &quot;Parity gap on weekend rates&quot; · &quot;Adjust
+   Mary Tan · Medium · due 16 Oct · Blocked · anticipated &quot;Updated rooming
+   list received and wash held under 10% of the block&quot;
+2. 29 Sep · OTA · Rate / ADR · &quot;Parity gap on weekend rates&quot; · &quot;Adjust
    weekend rates on OTA channels&quot; · Alex Wong · Medium · due 11 Oct ·
-   In progress · stay 16–31 Oct · anticipated &quot;ADR 5% higher&quot; · ADR,
-   baseline 210, target 220
-4. 6 Oct · Government · Pace / pickup · &quot;Forecast not submitted&quot; · &quot;Send Q4
-   forecast to regional office&quot; · Mary Tan · Medium · due 9 Oct ·
-   In progress · stay 1 Nov–31 Dec · anticipated &quot;Forecast submitted&quot;
-5. 13 Oct · Leisure / Transient · Event / compression · &quot;Concert on 14 Nov
-   compresses demand&quot; · &quot;Set minimum stay for 13 to 15 Nov&quot; · Sam Ng · High ·
-   due 20 Oct · Open · stay 13–15 Nov · anticipated &quot;ADR higher on 14 Nov&quot; ·
-   ADR, baseline 230, target 280
-6. 13 Oct · Airline · Distribution · &quot;Crew block release date not confirmed&quot;
-   · &quot;Confirm release date with airline contact&quot; · Priya Rao · Low · due
-   23 Oct · Open · stay 1–15 Dec · anticipated &quot;Block confirmed&quot;
-7. 13 Oct · Wholesale · Pace / pickup · &quot;Wholesale pickup behind forecast&quot; ·
-   &quot;Call top three wholesale partners&quot; · Mary Tan · Medium · due 20 Oct · Open
-8. 13 Oct · Corporate · Rate / ADR · &quot;Rate sheet expires 31 Oct&quot; · &quot;Refresh
-   corporate rate sheet&quot; · Mary Tan · Medium · due 24 Oct · Open
-9. 22 Sep · MICE / Groups · Service · &quot;Breakfast queue complaints from group&quot;
-   · &quot;Open second breakfast station for groups over 40&quot; · Lee Chen · Medium ·
-   due 29 Sep · Done (closed 29 Sep by Lee Chen) · outcome Achieved ·
+   In progress · anticipated &quot;Weekend ADR 5% higher&quot;
+3. 29 Sep · MICE / Groups · Service · &quot;Breakfast queue complaints from
+   group&quot; · &quot;Open second breakfast station for groups over 40&quot; · Sam Ng ·
+   Medium · due 6 Oct · Done (closed 6 Oct by Sam Ng) · outcome Achieved ·
    actual &quot;No complaints in the next two group stays&quot;
-10. 29 Sep · Direct · Distribution · &quot;Website booking engine slow&quot; · &quot;Raise
-   ticket with booking engine vendor&quot; · Priya Rao · Low · due 6 Oct ·
-   Cancelled (closed 6 Oct by John Lim) · note &quot;Vendor fixed it before
-   ticket was raised&quot;
+4. 6 Oct · Corporate · Pace / pickup · &quot;Corporate segment below forecast&quot; ·
+   &quot;Review upcoming opportunities for sales&quot; · John Lim · High · due
+   10 Oct · In progress · anticipated &quot;Corporate pickup back on forecast&quot;
+5. 6 Oct · Government · Pace / pickup · &quot;Forecast not submitted&quot; · &quot;Send Q4
+   forecast to regional office&quot; · Mary Tan · Medium · due 9 Oct ·
+   In progress · anticipated &quot;Forecast submitted&quot;
+6. 13 Oct · Leisure / Transient · Event / compression · &quot;Concert on 14 Nov
+   compresses demand&quot; · &quot;Set minimum stay for 13 to 15 Nov&quot; · Sam Ng ·
+   High · due 20 Oct · Open · anticipated &quot;ADR higher on 14 Nov&quot;
+7. 13 Oct · Airline · Distribution · &quot;Crew block release date not
+   confirmed&quot; · &quot;Confirm release date with airline contact&quot; · Priya Rao ·
+   Low · due 23 Oct · Open · anticipated &quot;Block confirmed&quot;
+8. 13 Oct · Wholesale · Pace / pickup · &quot;Wholesale pickup behind forecast&quot;
+   · &quot;Call top three wholesale partners&quot; · Mary Tan · Medium · due 20 Oct ·
+   Open
 Hotel B:
-11. 7 Oct · Corporate · Pace / pickup · &quot;Two key accounts slowing&quot; · &quot;Meet
+9. 7 Oct · Corporate · Pace / pickup · &quot;Two key accounts slowing&quot; · &quot;Meet
    both accounts&#x27; travel managers&quot; · Grace Teo · High · due 12 Oct ·
    In progress
-12. 14 Oct · Leisure / Transient · Competitor · &quot;New hotel opening nearby&quot; ·
+10. 7 Oct · Leisure / Transient · Competitor · &quot;New hotel opening nearby&quot; ·
    &quot;Prepare rate response plan&quot; · Lee Chen · Medium · due 21 Oct · Open
-Hotel C:
-13. 8 Oct · OTA · Mix · &quot;OTA share above target&quot; · &quot;Shift budget to direct
-   campaigns&quot; · Ben Tay · Medium · due 22 Oct · Open
-Update log for item 2: 29 Sep 10:40 John Lim &quot;Item raised. Mary to contact
-the organizer for an updated rooming list.&quot; · 9 Oct 15:20 Alex Wong status
-In progress → Blocked, due 14 Oct → 16 Oct · 13 Oct 10:12 Mary Tan
+
+Update log for item 1 (spec 002): 29 Sep 10:40 John Lim &quot;Item raised. Mary
+to contact the organizer for an updated rooming list.&quot; · 9 Oct 15:20 Alex
+Wong changed status In progress → Blocked · 13 Oct 10:12 Mary Tan
 &quot;Organizer has not replied to two emails. Raised again in today&#x27;s meeting.&quot;
 
 Provide a management command, seed_demo, that clears the database and
 loads exactly this data. Store dates and times in UTC; show them in the
-property&#x27;s time zone (NFR-007).
+hotel&#x27;s time zone.
 
 ## Screens and exact labels
-Desktop and tablet browser. Follow the images in docs/mockup/.
-Top bar (all screens): &quot;Action Tracker&quot; · property switcher (only the
-properties the user belongs to) · &quot;Meetings&quot; · &quot;My actions&quot; ·
-&quot;Group view&quot; (group viewers only) · &quot;Admin&quot; (group admin only) · the user&#x27;s
-name and role at the current property.
-- Sign in as (workshop only): heading &quot;Sign in&quot;, one button per seeded user
-  showing name and roles; footer note &quot;Workshop sign-in. Microsoft Entra ID
-  replaces this page in the real product.&quot;
-- Meetings (spec 001): newest first; button &quot;New meeting&quot;. New meeting form:
-  &quot;Date&quot;, &quot;Title&quot; (default &quot;Weekly performance meeting&quot;), &quot;Chair&quot;,
-  &quot;Attendees&quot;, &quot;Teams meeting link&quot; (optional); button &quot;Create meeting&quot;.
+Desktop browser. Follow the images in docs/mockup/, leaving out anything
+this file says is not built.
+Top bar (all screens): &quot;Action Tracker&quot; · &quot;Meetings&quot; · &quot;My actions&quot;
+(spec 003) · the person&#x27;s name and hotel · &quot;Sign out&quot;.
+- Sign in as: heading &quot;Sign in&quot;, one button per person showing name and
+  hotel; note &quot;Workshop sign-in. Microsoft Entra ID replaces this page in
+  the real product.&quot;
+- Meetings (spec 001): the hotel&#x27;s meetings, newest first, each with date,
+  title, chair and number of open items; button &quot;New meeting&quot;. New meeting
+  form: &quot;Date&quot;, &quot;Time&quot;, &quot;Title&quot; (default &quot;Weekly performance meeting&quot;),
+  &quot;Chair&quot;, &quot;Attendees&quot;, &quot;Teams meeting link&quot; (optional); button
+  &quot;Create meeting&quot;.
 - Meeting screen (spec 001): docs/mockup/01-meeting-screen.png. Counters
-  &quot;Carried forward&quot;, &quot;Raised in this meeting&quot;, &quot;Overdue&quot;, &quot;Due this week&quot;.
-  Grid columns &quot;Market segment&quot;, &quot;Issue category&quot;, &quot;Issue&quot;,
-  &quot;Action required&quot;, &quot;Owner&quot;, &quot;Priority&quot;, &quot;Due&quot;, &quot;Status&quot;,
-  &quot;Anticipated / actual&quot;. Group headings &quot;Carried forward from earlier
-  meetings (n)&quot; and &quot;Raised in this meeting (n)&quot;. Due cell shows the date
-  and &quot;Overdue by n days&quot; (red) or &quot;Due in n days&quot;. Hint &quot;Press Tab to move
-  to the next cell, Enter to add the next row.&quot; Save status &quot;All changes
-  save automatically. Saved just now.&quot; Buttons &quot;Complete meeting&quot;.
-  &quot;Record meeting&quot; and &quot;Export Excel / PDF&quot; are not built in the workshop.
-- Item detail (spec 002): docs/mockup/03-item-detail.png. Sections
-  &quot;Issue and action&quot;, &quot;Ownership and timing&quot;, &quot;Anticipated result&quot;,
-  &quot;Actual result&quot;, &quot;Update log&quot; (field &quot;Add a comment&quot;, button
-  &quot;Post comment&quot;), &quot;Change history&quot;. Buttons &quot;Cancel item&quot;, &quot;Mark as done&quot;.
-- My actions (spec 003): docs/mockup/02-my-actions.png. Tabs
-  &quot;My open actions (n)&quot;, &quot;Overdue (n)&quot;, &quot;Due this week (n)&quot;,
-  &quot;All open at &lt;property&gt; (n)&quot;, &quot;Done (n)&quot;. Panel &quot;Changes by others on
-  your items&quot; with an &quot;n new&quot; badge.
-- Group roll-up (spec 004): docs/mockup/05-group-rollup.png.
-- docs/mockup/04-review-proposed-items.png is MVP 1b: not built.
+  &quot;Carried forward&quot;, &quot;Raised in this meeting&quot;, &quot;Overdue&quot;. Columns
+  &quot;Market segment&quot;, &quot;Issue category&quot;, &quot;Issue&quot;, &quot;Action required&quot;, &quot;Owner&quot;,
+  &quot;Priority&quot;, &quot;Due&quot;, &quot;Status&quot;. Group headings &quot;Carried forward from earlier
+  meetings (n)&quot; and &quot;Raised in this meeting (n)&quot;. Under each issue &quot;Raised
+  &lt;date&gt;&quot;. Due cell shows the date and &quot;Overdue by n days&quot; (red),
+  &quot;Due today&quot; or &quot;Due in n days&quot;. A blank entry row at the bottom. Save
+  status &quot;All changes save automatically. Saved just now.&quot; Not built:
+  &quot;Record meeting&quot;, &quot;Export Excel / PDF&quot;, &quot;Complete meeting&quot;, &quot;Due this
+  week&quot;, filters, &quot;Anticipated / actual&quot; column.
+- Item detail (spec 002): docs/mockup/03-item-detail.png, simplified to
+  sections &quot;Issue and action&quot;, &quot;Ownership and timing&quot; (owner, due date,
+  status, priority), &quot;Result&quot; (fields &quot;What we expect&quot;, &quot;What happened&quot;,
+  &quot;Outcome rating&quot;), &quot;Update log&quot; (field &quot;Add a comment&quot;, button &quot;Post
+  comment&quot;), &quot;Change history&quot;. Buttons &quot;Cancel item&quot;, &quot;Mark as done&quot;.
+- My actions (spec 003, stretch): docs/mockup/02-my-actions.png,
+  simplified to tabs &quot;My open actions (n)&quot;, &quot;Overdue (n)&quot;, &quot;Done (n)&quot; and
+  columns &quot;Action and issue&quot;, &quot;Segment&quot;, &quot;Raised&quot;, &quot;Due&quot;, &quot;Status&quot;. No
+  filters and no &quot;Changes by others&quot; panel.
 
 ## Look (sampled from FEH&#x27;s mockups)
 Font: Inter (Google Fonts). Page background #F3F5F7, cards #FFFFFF with
@@ -961,12 +943,12 @@ Low #EEF1F4 on #34454F.
 Status dots: Open #4A5A68 · In progress #1F4F99 · Blocked #8A5200 ·
 Done #0B7A55 · Cancelled #9AA3AB.
 Owner shown as initials in a circle (#E3EAEE) followed by the name.
-Desktop and tablet browsers; buttons and inputs at least 40px tall.</pre>
+Buttons and inputs at least 40px tall.</pre>
 </section>
 
-<section class="slide" id="s001" data-group="Day 1 · Spec" data-title="Spec 001 · Meeting &amp; action grid">
+<section class="slide" id="s001" data-group="Day 1 · Spec" data-title="Spec 001 · Meetings &amp; action list">
   <p class="eyebrow">Spec 001 · FEH screen 01 · Day 1, 1:00</p>
-  <h2>Meeting screen and action grid</h2>
+  <h2>Meetings and the action list</h2>
   <p class="lead">The heart of the tracker: it replaces the spreadsheet. Everything else builds on it.</p>
 
   <h3><span class="ph">1 · Specify</span></h3>
@@ -977,30 +959,28 @@ Team leaders at a Far East Hospitality hotel meet every week to review
 performance and agree actions. This feature replaces the spreadsheet
 they record those actions in today.
 
-A member of a hotel creates a meeting for that hotel with a date, a
+A person at a hotel creates a meeting for their hotel with a date, a
 title, a chair, the attendees and, optionally, a Teams meeting link.
-They see the hotel's meetings, newest first.
+They see their hotel's meetings, newest first.
 
-In a meeting, members record action items in a grid that works like a
+In a meeting, they record action items in a list that works like a
 spreadsheet: each row has a market segment, an issue category, the
 issue, the action required, one owner, a priority, a due date and a
-status. They add a row and change any value directly in the grid,
-moving between cells with the keyboard, and every change is kept
-without pressing a save button.
+status. They add a row and change any value directly in the list, and
+every change is kept without pressing a save button.
 
 When a new meeting is created, every unfinished item from earlier
 meetings of the same hotel is already listed, shown separately as
-carried forward, above the items raised in this meeting. Each item
-shows when it was raised and the stay period it affects.
+carried forward, above the items raised in this meeting.
 
 The status is Open, In progress, Blocked, Done or Cancelled. An item
 whose due date has passed and is not Done or Cancelled is shown as
-overdue, with by how many days. The meeting shows four counts: carried
-forward, raised in this meeting, overdue and due this week.
+overdue, with by how many days. The meeting shows how many items were
+carried forward, how many were raised in this meeting, and how many
+are overdue.
 
-Every item must have an owner, chosen from the hotel's members, and a
-due date. Nobody sees or changes another hotel's meetings or items.
-Read-only users can view a meeting but not change it.
+Every item must have an owner from the same hotel and a due date.
+Nobody sees or changes another hotel's meetings or items.
 
 Label every acceptance criterion AC-001-&lt;nn&gt;.</pre>
 
@@ -1009,10 +989,9 @@ Label every acceptance criterion AC-001-&lt;nn&gt;.</pre>
   <p>Then paste the <button class="link" data-goto="clarify">clarify review prompt</button>. Questions FEH should expect:</p>
   <ul>
     <li>Which items carry forward: are <b>Blocked</b> items included? Done ones?</li>
-    <li>Is an item due <b>today</b> overdue? What is "this week": Monday to Sunday?</li>
-    <li>What does <b>Complete meeting</b> do? Can items still change afterwards?</li>
-    <li>Who can be an owner: any attendee, or only members of the hotel?</li>
-    <li>What if two people change the same cell at the same moment?</li>
+    <li>Is an item due <b>today</b> overdue?</li>
+    <li>Who can be an owner: any attendee, or anyone at the hotel?</li>
+    <li>What if two people change the same value at the same moment?</li>
     <li>Can a hotel have two meetings on the same date?</li>
   </ul>
 
@@ -1024,32 +1003,27 @@ the specification. Add or adjust acceptance criteria to match, keeping
 the AC-001 numbering. Do not add anything else.
 
 - Sign-in uses the "Sign in as" page in docs/reference.md, standing in
-  for Microsoft Entra ID. A user who belongs to several hotels switches
-  between them with the property switcher. Group viewers do not see
-  meetings.
+  for Microsoft Entra ID. Each person belongs to one hotel and can do
+  everything there.
 - Carried forward means every item from earlier meetings of the same
   hotel that is Open, In progress or Blocked, oldest first. Done and
   Cancelled items are not carried forward. An item always keeps the
-  meeting it was raised in.
+  meeting it was raised in, shown as "Raised <date>".
 - Overdue means the due date is before today in the hotel's time zone
   and the status is not Done or Cancelled; it shows "Overdue by n days".
-  An item due today is not overdue; it shows "Due today". "Due this
-  week" means due between Monday and Sunday of the current week and not
-  overdue, Done or Cancelled.
+  An item due today is not overdue; it shows "Due today".
 - Required for every item: market segment, issue category, issue (up to
   300 characters), action required (up to 300 characters), owner and
   due date. Priority defaults to Medium, status to Open. Segments and
   categories are the lists in docs/reference.md.
-- The owner must be a Member or Property admin of that hotel.
+- The owner can be anyone at the same hotel.
 - A value that is not accepted is not saved: the reason is shown next
-  to that cell and the last saved value stays.
-- If two people change the same value, the last change wins. No locking
-  in this version.
-- One meeting per hotel per date. "Complete meeting" marks the meeting
-  Completed: no new items can be raised in it, but its items stay
-  editable and carry forward to the next meeting.
-- Not in this spec: supporting owners, results and the update log (spec
-  002); filters and My actions (spec 003); Record meeting and Export.
+  to it and the last saved value stays.
+- If two people change the same value, the last change wins.
+- One meeting per hotel per date.
+- Not in this spec: the update log, results and change history (spec
+  002); My actions (spec 003). Not in the workshop: completing a
+  meeting, filters, export, recording.
 
 Then stop and show me the full list of acceptance criteria.</pre>
 
@@ -1062,36 +1036,34 @@ Replace the contents of specs/001-*/spec.md with the approved
 version below, exactly as written. Do not change any other file.</pre>
 </section>
 
-<section class="slide" id="s002" data-group="Day 1 · Spec" data-title="Spec 002 · Item detail &amp; history">
+<section class="slide" id="s002" data-group="Day 1 · Spec" data-title="Spec 002 · Updates &amp; results">
   <p class="eyebrow">Spec 002 · FEH screen 03 · Day 1, 2:30</p>
-  <h2>Item detail, results and history</h2>
-  <p class="lead">Where the "did it work?" lives: anticipated versus actual results, the running update log, and the audit trail that makes open editing safe.</p>
+  <h2>Updates and results</h2>
+  <p class="lead">Where "did it work?" lives: what was expected, what happened, the running update log, and the change history that makes open editing safe.</p>
 
   <h3><span class="ph">1 · Specify</span></h3>
   <pre data-label="Prompt · paste into Copilot Chat">
 /speckit-specify
 
-A member opens any action item of their hotel to see and change
-everything about it.
+A person at a hotel opens any action item of their hotel to follow it
+up.
 
-Besides what the meeting grid shows, an item records supporting owners
-(other members helping the owner), the stay period it affects, the
-anticipated result as text, and a measurable target: a metric, a
-baseline value and a target value. Later, members record the actual
-result as text and as a number, and rate the outcome as achieved,
-partially achieved, not achieved or not measurable. Each actual value
-records where it came from and when it was entered.
+They see everything the meeting list shows and can change it. They
+record what the action is expected to achieve, and later what actually
+happened, and rate the outcome as achieved, partially achieved, not
+achieved or not measurable.
 
-Each item has an update log: members post dated comments, and status
+Each item has an update log: people post dated comments, and status
 changes appear in it automatically, each showing who and when.
 
-Every change to an item, made in the meeting grid or on the item
+Every change to an item, made in the meeting list or on the item
 itself, is recorded with who made it, when, the old value and the new
-value, and anyone who can see the item can read that history. Nobody
-can change or remove the history.
+value, and anyone at the hotel can read that history. Nobody can change
+or remove the history.
 
 An item is finished either by marking it done, which records who closed
-it and when, or by cancelling it. Items are never deleted.
+it and when, or by cancelling it with a reason. Items are never
+deleted.
 
 Label every acceptance criterion AC-002-&lt;nn&gt;.</pre>
 
@@ -1102,7 +1074,6 @@ Label every acceptance criterion AC-002-&lt;nn&gt;.</pre>
     <li>Who rates the outcome: the <b>chair</b> or the <b>owner</b>? <em>(open item in FEH's requirements)</em></li>
     <li>Can a Done item be reopened?</li>
     <li>Does cancelling need a reason?</li>
-    <li>Can the actual result be recorded before the stay period ends?</li>
     <li>Can a comment be edited or deleted after it is posted?</li>
   </ul>
 
@@ -1113,29 +1084,20 @@ Apply these business decisions, agreed by FEH for the whole room, to
 the specification. Add or adjust acceptance criteria to match, keeping
 the AC-002 numbering. Do not add anything else.
 
-- Any Member or Property admin of the hotel can record results and rate
-  the outcome; the change history shows who did it. (FEH to confirm in
-  the room: chair or owner.)
-- In this version every actual value is Manual, stamped with the time
-  it was entered. Values from Databricks, and override reasons, come in
-  Phase 2.
-- Results can be recorded at any time; nobody is prompted to record
-  them in this version.
-- Metrics are the list in docs/reference.md. Baseline, target and actual
-  values are numbers of zero or more; ADR and Revenue are shown in the
-  hotel's currency.
+- Anyone at the hotel can record the result and rate the outcome; the
+  change history shows who did it. (FEH to confirm in the room: chair
+  or owner.)
+- "What we expect" and "What happened" are text, up to 500 characters
+  each. The outcome rating starts as Not rated.
 - "Mark as done" sets the status to Done and records the closed date and
   who closed it. A Done item can be reopened by changing its status
   back to In progress; that clears the closed date and is recorded.
 - "Cancel item" asks for a short reason (up to 300 characters), which is
   posted to the update log.
 - Comments are 1 to 500 characters and cannot be edited or deleted.
-- Supporting owners are zero or more Members or Property admins of the
-  hotel, never the owner themself.
 - The change history lists the newest change first: date and time,
   person, field, old value and new value. Creating an item shows as
   "Item created".
-- Read-only users see everything on the item but cannot change it.
 
 Then stop and show me the full list of acceptance criteria.</pre>
 
@@ -1149,34 +1111,21 @@ version below, exactly as written. Do not change any other file.</pre>
 </section>
 
 <section class="slide" id="s003" data-group="Day 1 · Spec" data-title="Spec 003 · My actions">
-  <p class="eyebrow">Spec 003 · FEH screen 02 · Day 1, 2:30</p>
-  <h2>My actions and changes by others</h2>
-  <p class="lead">The view each owner opens before the next meeting, so open items are not forgotten between weeks.</p>
+  <p class="eyebrow">Spec 003 · FEH screen 02 · stretch, if time allows</p>
+  <h2>My actions</h2>
+  <p class="lead">The page each owner opens before the next meeting, so nothing is forgotten between weeks.</p>
 
   <h3><span class="ph">1 · Specify</span></h3>
   <pre data-label="Prompt · paste into Copilot Chat">
 /speckit-specify
 
-A member sees, in one place, the actions they are responsible for
-across all meetings of their hotel, and what other people have changed
-on them.
+A person sees, in one place, the action items they own across all
+meetings of their hotel.
 
-"My actions" lists the items where the person is the owner or a
-supporting owner. They can switch between their open actions, their
-overdue actions, their actions due this week, all open items at the
-hotel, and done items. They can narrow the list by market segment,
-issue category, priority, due date and stay period. Each row shows the
-action and the issue, the latest update, the segment, when it was
-raised, when it is due (with overdue days) and the status, and opens
-the item.
-
-When someone else changes an item the person owns or supports, the
-change appears in a list of changes by others on their items, newest
-first, saying who changed what and when, and showing how many are new
-since they last looked.
-
-In the meeting grid, members can also narrow the items by segment,
-owner and status, or show overdue items only.
+They can switch between their open actions, their overdue actions and
+their done actions, with how many are in each. Each row shows the
+action and the issue, the segment, when it was raised, when it is due
+(with overdue days) and the status, and opens the item.
 
 Label every acceptance criterion AC-003-&lt;nn&gt;.</pre>
 
@@ -1184,10 +1133,8 @@ Label every acceptance criterion AC-003-&lt;nn&gt;.</pre>
   <pre data-label="Prompt">/speckit-clarify</pre>
   <p>Then paste the <button class="link" data-goto="clarify">clarify review prompt</button>. Questions FEH should expect:</p>
   <ul>
-    <li>Should owners also get an <b>email</b>? (FEH asked for one in FR-015)</li>
-    <li>Do supporting owners see changes too, or only the owner?</li>
-    <li>What counts as "new", and how far back does the list go?</li>
-    <li>Do my own changes appear in the list?</li>
+    <li>Should owners also get an <b>email</b> when something changes? (FR-015)</li>
+    <li>In what order should the actions be listed?</li>
   </ul>
 
   <h3><span class="ph">Room decisions</span> Paste after FEH has answered</h3>
@@ -1197,89 +1144,20 @@ Apply these business decisions, agreed by FEH for the whole room, to
 the specification. Add or adjust acceptance criteria to match, keeping
 the AC-003 numbering. Do not add anything else.
 
-- Owners are told about changes inside the app only. Emails (FR-015,
-  FR-017) are out of scope for the workshop.
-- The owner and the supporting owners all see changes by others on the
-  item. A person's own changes never appear in their list.
-- "New" means made since the person last opened My actions; opening the
-  page marks them as seen. The list shows the last 14 days, at most 20
-  changes.
-- Tabs and counts use the labels in docs/reference.md. "All open at
-  <hotel>" shows every open item at the hotel, whoever owns it. "Done"
-  shows Done items, most recently closed first.
-- Filters combine: an item must match all of them. Due date options:
-  Any date, Overdue, This week, Next 14 days. The stay period filter
-  matches items whose stay period overlaps the chosen dates.
-- The meeting grid filters (segment, owner, status, overdue only) follow
-  the same rules and keep the carried-forward and raised groups.
+- No emails in the workshop; owners see their actions when they open
+  the page.
+- Open means Open, In progress or Blocked, earliest due date first.
+  Overdue uses the same rule as spec 001. Done shows Done items, most
+  recently closed first; Cancelled items are not shown.
 
 Then stop and show me the full list of acceptance criteria.</pre>
 
   <h3><span class="ph gate">G1</span> FEH approves the spec</h3>
-  <p>Save and commit <code>gates/G1.md</code> from the <button class="link" data-goto="gates">gate template</button>, listing the business decisions made during clarify.</p>
+  <p>Save and commit <code>gates/G1.md</code> from the <button class="link" data-goto="gates">gate template</button>, listing the business decisions made during clarify. The plan for this spec is done on Day 2, only if time allows.</p>
   <p>The facilitator approves the room's version with FEH on the big screen, so the plan starts from one approved spec.</p>
   <div class="note"><b>Match the room before moving on</b>Compare your <code>spec.md</code> with the approved version on the big screen. Different, or fell behind? The facilitator posts the approved file in the Teams chat. Paste this into Copilot Chat, then paste the approved file underneath:</div>
   <pre data-label="Prompt · catch up to the room's approved version">
 Replace the contents of specs/003-*/spec.md with the approved
-version below, exactly as written. Do not change any other file.</pre>
-</section>
-
-<section class="slide" id="s004" data-group="Day 1 · Spec" data-title="Spec 004 · Group roll-up">
-  <p class="eyebrow">Spec 004 · FEH screen 05 · stretch, if time allows</p>
-  <h2>Group roll-up</h2>
-  <p class="lead">For group leadership: where actions are piling up, without opening anyone's items.</p>
-
-  <h3><span class="ph">1 · Specify</span></h3>
-  <pre data-label="Prompt · paste into Copilot Chat">
-/speckit-specify
-
-Group viewers at Far East Hospitality see a read-only roll-up of
-actions across all hotels, so the group can see where actions are
-piling up.
-
-They see totals for open actions, overdue actions, actions due this
-week and actions closed in the chosen period; a table by hotel with
-open, overdue, due this week, raised and closed; and open actions by
-market segment and hotel, with how many of them are overdue. They can
-choose the period and a market segment.
-
-They see counts only: they cannot open or change any meeting or item.
-
-Label every acceptance criterion AC-004-&lt;nn&gt;.</pre>
-
-  <h3><span class="ph">2 · Clarify</span></h3>
-  <pre data-label="Prompt">/speckit-clarify</pre>
-  <p>Then paste the <button class="link" data-goto="clarify">clarify review prompt</button>. Questions FEH should expect:</p>
-  <ul>
-    <li>Which periods: last 7, 30 or 90 days?</li>
-    <li>Does "closed" include Cancelled items?</li>
-    <li>Can property admins see the roll-up for other hotels?</li>
-  </ul>
-
-  <h3><span class="ph">Room decisions</span> Paste after FEH has answered</h3>
-  <p>FEH answers the questions above once, for the whole room. These are the default answers; the facilitator edits them on screen if FEH decides differently, and every participant pastes the same block.</p>
-  <pre data-label="Prompt · paste into Copilot Chat">
-Apply these business decisions, agreed by FEH for the whole room, to
-the specification. Add or adjust acceptance criteria to match, keeping
-the AC-004 numbering. Do not add anything else.
-
-- Period options: last 7 days, last 30 days (default), last 90 days.
-  The period applies to the raised and closed counts; open, overdue and
-  due this week are as of today.
-- Closed counts Done and Cancelled items.
-- Only group viewers and group admins see the roll-up. Members and
-  property admins never see other hotels' counts.
-- Counts only: no item, meeting or person is named, and nothing links
-  to an item.
-
-Then stop and show me the full list of acceptance criteria.</pre>
-
-  <h3><span class="ph gate">G1</span> FEH approves the spec</h3>
-  <p>Save and commit <code>gates/G1.md</code> from the <button class="link" data-goto="gates">gate template</button>, listing the business decisions made during clarify.</p>
-  <p>The facilitator approves the room's version with FEH on the big screen, so the plan starts from one approved spec.</p>
-  <div class="note"><b>Match the room before moving on</b>Compare your <code>spec.md</code> with the approved version on the big screen. Different, or fell behind? The facilitator posts the approved file in the Teams chat. Paste this into Copilot Chat, then paste the approved file underneath:</div>
-  <pre data-label="Prompt · catch up to the room's approved version">
-Replace the contents of specs/004-*/spec.md with the approved
 version below, exactly as written. Do not change any other file.</pre>
 </section>
 
@@ -1294,9 +1172,9 @@ version below, exactly as written. Do not change any other file.</pre>
   </table>
   <h3><span class="ph">Try it</span> on spec 001</h3>
   <pre data-label="Prompt · paste into Copilot Chat">
-/speckit-checklist Check spec 001 for property isolation, read-only
-access, carry-forward and overdue rules, and the audit requirements in
-the constitution. Focus on gaps a hotel team leader would notice.</pre>
+/speckit-checklist Check spec 001 for hotel isolation, the carry-forward
+and overdue rules, required fields, and the change-history requirement
+in the constitution. Focus on gaps a hotel team leader would notice.</pre>
   <p>Go through the checklist with FEH. Every unchecked item is either answered now (and added with a room decision) or written into the G1 record as deferred.</p>
   <h3><span class="ph">Then</span> our own review</h3>
   <p>Run the review prompt on the <button class="link" data-goto="pitfalls">Day 1 pitfalls</button> slide for each spec. It catches technology that has crept in and rules nobody in the room said.</p>
@@ -1382,8 +1260,8 @@ Give each item with its line and a suggested rewording.</pre>
   <p class="lead">Until now, nobody has said a word about technology. The plan is where VISEO decides <em>how</em>, and where the constitution is checked against those decisions.</p>
   <h3><span class="ph">What you give it</span> the technical direction</h3>
   <div class="cards">
-    <div><b>Stack</b>FEH's own architecture: Django, with HTMX only for the inline grid. SQLite locally instead of Azure PostgreSQL.</div>
-    <div><b>Constraints</b>Property isolation in one place, an audit trail on every model, dates in UTC, the meeting screen fast with 100 items.</div>
+    <div><b>Stack</b>FEH's own architecture: Django, with HTMX only for the action list. SQLite locally instead of Azure PostgreSQL.</div>
+    <div><b>Constraints</b>Hotel isolation in one place, a change history on the models from the start, dates in UTC, the meeting screen fast with 100 items.</div>
     <div><b>Testing</b>Which tests prove which kind of rule, and that every test name carries its criterion ID.</div>
   </div>
   <h3><span class="ph">What the agent does</span> in order</h3>
@@ -1397,9 +1275,9 @@ Give each item with its line and a suggested rewording.</pre>
   <ul class="checks">
     <li>Every acceptance criterion maps to at least one planned test</li>
     <li>The constitution check passed, with no unexplained exceptions</li>
-    <li>Isolation and the audit trail are designed in, not left for later</li>
+    <li>Hotel isolation and the change history are designed in, not left for later</li>
     <li>Nothing is planned that no criterion asks for</li>
-    <li>The data model leaves room for specs 002–004 without rework</li>
+    <li>The data model leaves room for specs 002 and 003 without rework</li>
   </ul>
 </section>
 
@@ -1412,12 +1290,12 @@ Give each item with its line and a suggested rewording.</pre>
 
 Stack, following FEH's architecture: Python 3.12+ with Django 5,
 server-rendered Django templates and plain CSS. HTMX is used only for
-the inline action grid on the meeting screen: changing a cell saves it
-and re-renders just that row and the four counts, adding a row inserts
-it, and a rejected value shows its error next to the cell. Every other
-page is a normal Django page with ordinary forms. No React, no separate
-frontend, no REST API. Serve htmx from the project's static files, not
-a CDN. SQLite is the database. Python dependencies are managed with uv.
+the action list on the meeting screen: changing a value saves it and
+re-renders just that row and the counts, adding a row inserts it, and a
+rejected value shows its error next to it. Every other page is a normal
+Django page with ordinary forms. No React, no separate frontend, no
+REST API. Serve htmx from the project's static files, not a CDN.
+SQLite is the database. Python dependencies are managed with uv.
 Everything runs locally; no external services.
 
 Layout: manage.py at the repository root, a Django project
@@ -1426,27 +1304,25 @@ tracker/templates/), and e2e/ for Playwright tests in TypeScript.
 
 Sign-in: Django authentication behind the "Sign in as" page in
 docs/reference.md, standing in for Microsoft Entra ID. Keep it in one
-place so Entra ID (OpenID Connect) can replace it later.
+place so Entra ID can replace it later. Each person belongs to one
+hotel.
 
-Property isolation (Principle 4): every query for meetings and items
-goes through one property-scoped manager and one view mixin that check
-the user's membership and role at the current property. Anything
-outside the user's hotels returns 404; read-only users get no edit
-controls and every change they attempt is refused.
+Hotel isolation (Principle 4): every query for meetings and items goes
+through one hotel-scoped manager and one view mixin. Anything from
+another hotel returns 404, whether opened or changed.
 
-Audit (Principle 5): add django-simple-history to the meeting and
-action item models now, so spec 002 can show the change history,
-including changes made in the grid. Items are never deleted.
+Change history (Principle 5): add django-simple-history to the meeting
+and action item models now, so spec 002 can show every change,
+including changes made in the action list. Items are never deleted.
 
 Store dates and times in UTC; show them in the hotel's time zone.
 
 Seed data, lists, labels and colours come from docs/reference.md, and
-the meeting screen follows docs/mockup/01-meeting-screen.png exactly.
-Provide a management command, seed_demo, that clears the database and
-loads exactly the seed. Enable the Django admin for the group admin.
+the meeting screen follows docs/mockup/01-meeting-screen.png, leaving
+out what the reference says is not built. Provide a management command,
+seed_demo, that clears the database and loads exactly the seed.
 
-The meeting screen loads in under 2 seconds with 100 items and a cell
-saves in under 1 second: avoid one query per row.
+Keep the meeting screen fast with 100 items: avoid one query per row.
 
 Testing: pytest with pytest-django for the rules, isolation and every
 page and HTMX endpoint; Playwright (TypeScript, e2e/) for the meeting
@@ -1459,13 +1335,12 @@ uv run python manage.py runserver · uv run pytest ·
 cd e2e, then npm install and npx playwright test
 
 Write data-model.md and contracts/ (every page and every HTMX endpoint:
-URL, method, who may use it, what it returns) before any code. Design
-the model so supporting owners, results and the update log (spec 002),
-My actions and change notices (spec 003) and the group roll-up (spec
-004) can be added without reworking it.</pre>
+URL, method, what it returns) before any code. Keep the model small,
+with room for the update log, results and closing (spec 002) and
+My actions (spec 003) without rework.</pre>
 
   <h3><span class="ph gate">G2</span> VISEO approves the plan</h3>
-  <div class="note"><b>G2 must confirm</b>Every AC-001 criterion is mapped to a test, isolation lives in one place, history is on the models from the start, the plan follows <code>docs/reference.md</code>, and nothing in it goes beyond the spec.</div>
+  <div class="note"><b>G2 must confirm</b>Every AC-001 criterion is mapped to a test, isolation lives in one place, the change history is on the models from the start, the plan follows <code>docs/reference.md</code>, and nothing in it goes beyond the spec.</div>
   <p>The facilitator approves the room's plan on the big screen before everyone leaves on Day 1.</p>
   <div class="note"><b>Match the room before moving on</b>Compare your <code>plan.md</code> with the approved version on the big screen. Different, or fell behind? The facilitator posts the approved file in the Teams chat. Paste this into Copilot Chat, then paste the approved file underneath:</div>
   <pre data-label="Prompt · catch up to the room's approved version">
@@ -1482,7 +1357,7 @@ version below, exactly as written. Do not change any other file.</pre>
   <p class="lead">The build steps appear here on the morning of Day 2. Today is about getting the specification right: on Day 2 the agent builds exactly what FEH approved today, so every decision made today shows up in the app.</p>
   <h3>Before you leave today</h3>
   <ul class="checks">
-    <li>Specs 001–003 (and 004 if done) are approved at G1, with gate records committed</li>
+    <li>Specs 001 and 002 (and 003 if done) are approved at G1, with gate records committed</li>
     <li>The plan for spec 001 is approved at G2</li>
     <li>Your spec and plan match the approved versions on the big screen</li>
     <li>Your laptop is charged, and GitHub Copilot still signs in</li>
