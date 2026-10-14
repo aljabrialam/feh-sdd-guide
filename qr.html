@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261014151916">
+<meta name="build" content="20261014152125">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -50,7 +50,7 @@ h1 em{font-style:normal;background:linear-gradient(90deg,#7FFFD4,#2EA8FF);-webki
 .card .qrbox{padding:14px;border-radius:16px;box-shadow:none}
 .card h3{font-size:24px;font-weight:800;margin:16px 0 4px}
 .card p{color:var(--muted);margin:0;font-size:15px}
-.card code{display:block;font-family:'JetBrains Mono',monospace;color:var(--aqua);font-weight:700;font-size:13px;margin-top:8px}
+.card code{display:block;font-family:'JetBrains Mono',monospace;color:var(--aqua);font-weight:700;font-size:13px;line-height:1.45;margin-top:8px}
 .card .n{position:absolute;top:-14px;left:-14px;width:42px;height:42px;border-radius:50%;background:var(--aqua);color:var(--bg);display:grid;place-items:center;font-weight:800;font-size:20px}
 .wifi-info{display:grid;grid-template-columns:auto auto;gap:6px 18px;margin-top:20px;font-size:clamp(18px,2vw,28px)}
 .wifi-info dt{color:var(--muted)}.wifi-info dd{margin:0;font-weight:700;font-family:'JetBrains Mono',monospace}
@@ -95,6 +95,7 @@ footer a{color:var(--aqua)}
     { id: 'certificate', tab: 'Certificate', title: 'Certificate', sub: 'Unlocks Fri 16 Oct, 4:30 pm', url: BASE + 'certificate.html', short: '…/certificate.html' }
   ];
 
+  function full(u) { return u.replace('https://', '').split(/(?<=\/)/).map(function (seg) { return '<span style="white-space:nowrap">' + esc(seg) + '</span>'; }).join('<wbr>'); }
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function qrSvg(text) {
     var q = qrcode(0, 'Q'); q.addData(text, 'Byte'); q.make();
@@ -128,7 +129,7 @@ footer a{color:var(--aqua)}
   nav.innerHTML = tabs.map(function (t) { return '<button role="tab" id="tab-' + t.id + '" aria-controls="p-' + t.id + '" data-id="' + t.id + '">' + esc(t.tab) + '</button>'; }).join('');
   var html = '<section class="panel" role="tabpanel" id="p-all" aria-labelledby="tab-all"><p class="eyebrow">FEH × VISEO · Spec-Driven Development workshop</p>' +
     '<h1>Scan with your <em>phone camera</em></h1><p class="sub">Start with your track\'s guide. Tap a code to show it full size.</p><div class="grid4">' +
-    LINKS.map(function (l, i) { return '<div class="card" data-id="' + l.id + '"><span class="n">' + (i + 1) + '</span><div class="qrbox">' + qrSvg(l.url) + '</div><h3>' + esc(l.title) + '</h3><p>' + esc(l.sub) + '</p><code>' + esc(l.short) + '</code></div>'; }).join('') +
+    LINKS.map(function (l, i) { return '<div class="card" data-id="' + l.id + '"><span class="n">' + (i + 1) + '</span><div class="qrbox">' + qrSvg(l.url) + '</div><h3>' + esc(l.title) + '</h3><p>' + esc(l.sub) + '</p><code>' + full(l.url) + '</code></div>'; }).join('') +
     '</div></section>';
   html += LINKS.map(function (l) {
     return '<section class="panel" role="tabpanel" id="p-' + l.id + '" aria-labelledby="tab-' + l.id + '" hidden><p class="eyebrow">' + esc(l.sub) + '</p><h1>' + esc(l.title) + '</h1>' +
