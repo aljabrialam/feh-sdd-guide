@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261014163027">
+<meta name="build" content="20261014165216">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -2524,25 +2524,33 @@ Give each item with its line and a suggested rewording.</pre>
 <section class="slide" id="plan101" data-group="Day 1 · Execute" data-title="How to execute a spec">
   <p class="eyebrow">Day 1 · 4:00 · from here on we execute</p>
   <h2>How to execute a spec</h2>
-  <p class="lead">Every approved spec goes through the same cycle, in the order of the run sheet. Same prompts for everyone, one spec at a time, one commit per spec.</p>
-  <pre data-label="The cycle for every spec">
-git checkout NNN-…  then  git merge &lt;previous branch&gt;   switch to the spec
-/speckit-plan → /speckit-tasks → /speckit-analyze          G2  VISEO approves
-/speckit-implement (tests first) → /speckit-converge       G3  FEH and VISEO accept
-git commit                                                 one spec, one commit</pre>
-  <div class="cards">
-    <div><b>Plan</b>Copilot decides <em>how</em>, following the constitution's Technology Standards, and checks every principle. You check nothing beyond the spec crept in.</div>
-    <div><b>Tasks and analyze</b>Small tasks, one capability each, tests first. Analyze reads spec, plan and tasks together and reports gaps before any code exists.</div>
-    <div><b>Implement and converge</b>Copilot builds task by task and stops. Converge compares the code with the spec and adds anything missing as new tasks.</div>
-  </div>
+  <p class="lead">This morning we wrote the specs: <em>what</em> the app should do. Now Copilot turns each spec into working software, one spec at a time. You don't need to write code or remember any commands: every spec has its own <b>Execute</b> slide with each prompt and command ready to copy, in the right order. This slide explains what those steps mean, so you know what you're looking at.</p>
+
+  <h3>The steps, in plain words</h3>
+  <p>Think of building a house: we have the client's approved brief (the spec). Next comes the architect's drawing, then a job list for the builders, a check that drawing and job list match the brief, the building work, an inspection, and finally a photo for the records.</p>
+  <table>
+    <tr><th>#</th><th>Step</th><th>What you do</th><th>What happens</th><th>What you check</th></tr>
+    <tr><td>1</td><td><b>Switch to the spec</b></td><td>Copy two lines into the terminal (not needed for 001: <code>/speckit-specify</code> already did it)</td><td>Your project moves to this spec's own working copy (a Git <em>branch</em>) and brings in everything built so far, so you continue from where the last spec ended</td><td>The terminal says "Switched to branch …"</td></tr>
+    <tr><td>2</td><td><b>Plan</b> <code>/speckit-plan</code></td><td>Paste a prompt into Copilot Chat</td><td>Copilot writes <code>plan.md</code>: <em>how</em> it will build the spec, using only the tools the constitution allows. Like the architect's drawing.</td><td>Nothing appears in it that the spec didn't ask for</td></tr>
+    <tr><td>3</td><td><b>Tasks</b> <code>/speckit-tasks</code></td><td>Paste a prompt</td><td>Copilot breaks the plan into a numbered to-do list, <code>tasks.md</code>, with the tests listed before the code</td><td>The list is there; you don't need to read every line</td></tr>
+    <tr><td>4</td><td><b>Analyze</b> <code>/speckit-analyze</code></td><td>Paste a prompt</td><td>Copilot reads the spec, plan and tasks side by side and lists anything missing or contradictory, before any code exists</td><td>No item marked <b>CRITICAL</b></td></tr>
+    <tr><td><span class="tag ok">G2</span></td><td><b>Approve the plan</b></td><td>Wait for the VISEO technical lead to say "approved", then record it</td><td>The <button class="link" data-goto="gates">gate record</button> prompt saves the decision</td><td>The four checks on the slide</td></tr>
+    <tr><td>5</td><td><b>Build</b> <code>/speckit-implement</code></td><td>Paste a prompt, then wait 10–20 minutes. When Copilot asks to run a command or change a file, read it and click <b>Allow</b></td><td>Copilot works through the to-do list: it writes each test first, sees it fail, then writes the code that makes it pass. It stops and reports when done.</td><td>Its report says the tests pass</td></tr>
+    <tr><td>6</td><td><b>Check against the spec</b> <code>/speckit-converge</code></td><td>Paste a prompt</td><td>Copilot compares the finished code with the spec and adds anything it missed as new tasks</td><td>"No gaps"</td></tr>
+    <tr><td>7</td><td><b>Run it and look</b></td><td>Copy the commands that start the app, open <code>localhost:8000</code> in Chrome, and run the tests</td><td>You see the app working, next to the <a href="mvp1/" target="_blank" rel="noopener">interactive mockup</a></td><td>Same screens, labels and numbers as the mockup; all tests pass, including earlier specs'</td></tr>
+    <tr><td><span class="tag ok">G3</span></td><td><b>Accept</b></td><td>FEH and VISEO both say "approved"; record it</td><td>The gate record prompt saves the decision</td><td>The checks on the slide</td></tr>
+    <tr><td>8</td><td><b>Save</b> <code>git commit</code></td><td>Copy two lines into the terminal</td><td>Git saves a snapshot of the whole project with a name, like "feat: 002-weekly-meetings". You can always go back to it.</td><td>The terminal shows the name</td></tr>
+  </table>
+  <div class="note"><b>Words you'll hear</b><b>Branch</b>: a separate working copy of the project for one spec. <b>Commit</b>: a saved, named snapshot. <b>Terminal</b>: the panel at the bottom of VS Code where you paste commands (View → Terminal). <b>Prompt</b>: the text you paste into Copilot Chat. <b>Test</b>: a small program that checks the app does one acceptance criterion; tests are how we prove it works.</div>
+
   <h3>Working rules</h3>
   <ul class="checks">
-    <li>Each spec extends the app from the one before: never start a spec on a branch that doesn't have the previous spec's work, and check every earlier test still passes before G3</li>
-    <li>Paste the blocks in order; read what Copilot reports before the next one</li>
+    <li>Do the steps in order, and read what Copilot reports before pasting the next prompt</li>
+    <li>Each spec adds to the app from the one before, so always do step 1 (switch) first, and check that earlier specs' tests still pass</li>
     <li>After each spec, put your app next to the <a href="mvp1/" target="_blank" rel="noopener">interactive mockup</a>: same labels, same numbers, same behaviour</li>
     <li>When Copilot asks to run a command or edit a file, read it, then choose <b>Allow</b></li>
     <li>Something wrong? Fix the spec, plan or task and re-run it; don't hand-edit the code (Principle X)</li>
-    <li>A task needs Entra ID, email, Teams or AI? The task is wrong, not the scope (Principle XI)</li>
+    <li>Copilot wants to add something the spec doesn't mention (for example Microsoft sign-in, emails or Teams)? Tell the facilitator; the plan is wrong, not the scope (Principle XI)</li>
     <li>Commit after every spec, even if the next one is starting late</li>
   </ul>
   <div class="note"><b>Your Copilot credits</b>Each participant has 12,000 AI credits for the workshop, enough for both days if you: pick a mid-range model in the Copilot Chat model menu (not the most expensive one), start a <b>new chat for each spec</b> so old history isn't re-sent, close files you don't need, and use the catch-up prompt instead of re-running a whole step. Check your usage meter at the end of Day 1; if you're above 6,000, tell the facilitator.</div>
