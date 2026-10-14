@@ -1,7 +1,7 @@
 # Target screens
 
 Put FEH's screen mockups here. The facilitator shares them in the Teams
-chat as feh-action-tracker-mockups.zip; Step 1 of the guide unzips them
+chat as feh-workshop-files.zip; Step 1 of the guide unzips them
 into this folder:
 
 - 01-meeting-screen.png

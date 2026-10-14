@@ -14,7 +14,7 @@ mkdir -p ~/feh-sdd && cd ~/feh-sdd
 specify init feh-app --integration copilot
 cd feh-app
 # docs pack: docs/constitution.md, docs/specs.md, docs/reference.md
-# FEH screens from Teams: docs/mockup/01-meeting-screen.png, 03-item-detail.png
+# from Teams (feh-workshop-files.zip): docs/feh-requirements.md, docs/mockup/
 git init -b main && git add -A && git commit -m "chore: spec kit and workshop docs"
 code .
 ```
@@ -58,9 +58,9 @@ capability.
 git commit
 ```
 
-Day 1 afternoon: specify and clarify 001–005, G1 for all five.
-Late Day 1: plan, tasks, analyze and implement 001 (and 002 if time).
-Day 2: execute 002–005 in order; 006 and 007 only if time allows.
+Day 1 afternoon: draft, compare, specify and clarify 001–005; G1 for
+all five. Late Day 1: execute 001. Day 2: execute 002–005 in order;
+006 and 007 only if time allows.
 
 ---
 
@@ -71,10 +71,10 @@ Build in this order. Each line marks what you have if you stop there.
 | Order | Spec | When | If you stop here |
 |---|---|---|---|
 | 1 | 001 Workshop Sign-in and Hotel Access | Late Day 1 | People sign in and see only their own hotel. Isolation exists before any data does. |
-| 2 | 002 Weekly Meetings | Late Day 1 / Day 2 morning | Meetings can be created and listed. The weekly meeting exists in the tracker. |
-| 3 | 003 Action Items in a Meeting | Day 2 morning | Actions are recorded with an owner and a due date. The spreadsheet could be retired. |
-| 4 | 004 Carry Forward Open Items | Day 2 late morning | Open items are never lost between weeks: FEH's main pain is solved. |
-| 5 | 005 Overdue Flags and Meeting Counts | Day 2 early afternoon | The meeting shows what is late at a glance. The MVP is complete. |
+| 2 | 002 Weekly Meetings | Day 2, 9:00 | Meetings can be created and listed. The weekly meeting exists in the tracker. |
+| 3 | 003 Action Items in a Meeting | Day 2, 10:00 | Actions are recorded with an owner and a due date. The spreadsheet could be retired. |
+| 4 | 004 Carry Forward Open Items | Day 2, 11:30 | Open items are never lost between weeks: FEH's main pain is solved. |
+| 5 | 005 Overdue Flags and Meeting Counts | Day 2, 1:30 | The meeting shows what is late at a glance. The MVP is complete. |
 | 6 | 006 Spreadsheet-style Editing (stretch) | Day 2 stretch | The action list feels like FEH's spreadsheet. |
 | 7 | 007 Comments and Mark as Done (stretch) | Day 2 stretch | Follow-up between meetings is recorded, and actions can be closed properly. |
 

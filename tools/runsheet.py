@@ -61,7 +61,7 @@ isolation in one place (a hotel-scoped manager and a view mixin) that
 every later feature will reuse.''',
   ),
  dict(n='002', id='002-weekly-meetings', name='Weekly Meetings', short='Weekly meetings',
-  when='Late Day 1 / Day 2 morning', stop='Meetings can be created and listed. The weekly meeting exists in the tracker.',
+  when='Day 2, 9:00', stop='Meetings can be created and listed. The weekly meeting exists in the tracker.',
   goal='''Let a team member create the weekly performance meeting for their
 hotel and see all of their hotel's meetings.''',
   value='''Each action in FEH's spreadsheet belongs to a meeting date. Meetings
@@ -96,7 +96,7 @@ Meetings list and "New meeting" form with the exact labels in
 docs/reference.md; seed_demo also loads the seeded meetings.''',
   ),
  dict(n='003', id='003-action-items', name='Action Items in a Meeting', short='Action items',
-  when='Day 2 morning', stop='Actions are recorded with an owner and a due date. The spreadsheet could be retired.',
+  when='Day 2, 10:00', stop='Actions are recorded with an owner and a due date. The spreadsheet could be retired.',
   goal='''Let a team member record each action agreed in the meeting, with its
 owner and due date, and change it later.''',
   value='''This replaces FEH's spreadsheet columns (issue, action required,
@@ -139,7 +139,7 @@ docs/mockup/01-meeting-screen.png without the parts docs/reference.md
 says are not built. seed_demo also loads the seeded actions.''',
   ),
  dict(n='004', id='004-carry-forward', name='Carry Forward Open Items', short='Carry forward',
-  when='Day 2 late morning', stop='Open items are never lost between weeks: FEH\'s main pain is solved.',
+  when='Day 2, 11:30', stop='Open items are never lost between weeks: FEH\'s main pain is solved.',
   goal='''Make every unfinished action from earlier meetings appear in the next
 meeting automatically, so nothing is lost between weeks.''',
   value='''FEH: "open items are easy to lose between weeks". Success measure:
@@ -173,7 +173,7 @@ copy of any data. Show the two groups with the headings and colours in
 docs/reference.md and the constitution.''',
   ),
  dict(n='005', id='005-overdue-and-counts', name='Overdue Flags and Meeting Counts', short='Overdue and counts',
-  when='Day 2 early afternoon', stop='The meeting shows what is late at a glance. The MVP is complete.',
+  when='Day 2, 1:30', stop='The meeting shows what is late at a glance. The MVP is complete.',
   goal='''Make late actions impossible to miss, and give the meeting a
 one-glance summary.''',
   value='''In the weekly meeting the chair needs to see immediately what is
@@ -381,7 +381,7 @@ mkdir -p ~/feh-sdd && cd ~/feh-sdd
 specify init feh-app --integration copilot
 cd feh-app
 # docs pack: docs/constitution.md, docs/specs.md, docs/reference.md
-# FEH screens from Teams: docs/mockup/01-meeting-screen.png, 03-item-detail.png
+# from Teams (feh-workshop-files.zip): docs/feh-requirements.md, docs/mockup/
 git init -b main && git add -A && git commit -m "chore: spec kit and workshop docs"
 code .
 ```
@@ -425,9 +425,9 @@ capability.
 git commit
 ```
 
-Day 1 afternoon: specify and clarify 001–005, G1 for all five.
-Late Day 1: plan, tasks, analyze and implement 001 (and 002 if time).
-Day 2: execute 002–005 in order; 006 and 007 only if time allows.
+Day 1 afternoon: draft, compare, specify and clarify 001–005; G1 for
+all five. Late Day 1: execute 001. Day 2: execute 002–005 in order;
+006 and 007 only if time allows.
 
 ---
 

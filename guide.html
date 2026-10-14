@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261014131915">
+<meta name="build" content="20261014132630">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -258,31 +258,32 @@ summary{cursor:pointer;font-weight:600}
 
 <section class="slide" id="flow" data-group="Start" data-title="The two days">
   <p class="eyebrow">Agenda</p>
-  <h2>Learn Spec Kit, then execute the specs</h2>
-  <p class="lead">Day 1 morning is about Spec Kit itself. From the afternoon we work FEH's real requirements the way VISEO runs a spec-driven project: one constitution, one run sheet of specs, executed in order, one spec at a time.</p>
+  <h2>Day 1: how we build the constitution and the specs. Day 2: execute them.</h2>
+  <p class="lead">Day 1 teaches the way VISEO runs a spec-driven project, on FEH's real requirements: participants write the constitution and the specs themselves, compare them with our answer key, and the room agrees one version. Late on Day 1 we start executing; Day 2 executes the rest.</p>
   <table>
-    <tr><th>Time</th><th>Day 1 · Learn, specify, start building</th><th>Day 2 · Execute the specs</th></tr>
-    <tr><td>9:00</td><td>Why SDD: specs, gates and who decides</td><td>Execute 002 (if not done) and 003</td></tr>
-    <tr><td>9:30</td><td>Anatomy of Spec Kit, who writes what</td><td></td></tr>
-    <tr><td>10:15</td><td>Hands-on: open the machinery</td><td></td></tr>
-    <tr><td>10:45</td><td>The constitution</td><td></td></tr>
-    <tr><td>11:00</td><td></td><td>Execute 004 · carry forward</td></tr>
-    <tr><td>11:15</td><td>FEH's brief and our proposed MVP</td><td></td></tr>
+    <tr><th>Time</th><th>Day 1 · Learn and write</th><th>Day 2 · Execute the specs</th></tr>
+    <tr><td>9:00</td><td>Why SDD: specs, gates and who decides</td><td>Finish 001 · execute 002</td></tr>
+    <tr><td>9:30</td><td>Anatomy of Spec Kit, who writes what, open the machinery</td><td></td></tr>
+    <tr><td>10:00</td><td></td><td>Execute 003 · action items</td></tr>
+    <tr><td>10:30</td><td>How we build a constitution</td><td></td></tr>
+    <tr><td>11:00</td><td>Write the constitution: draft, compare, adopt</td><td></td></tr>
+    <tr><td>11:30</td><td></td><td>Execute 004 · carry forward</td></tr>
     <tr><td>12:00</td><td class="muted">Lunch</td><td class="muted">Lunch</td></tr>
-    <tr><td>1:00</td><td>Specify and clarify 001–005 with FEH</td><td>Execute 005 · overdue and counts · <b>MVP complete</b></td></tr>
-    <tr><td>2:00</td><td></td><td>Stretch: 006 spreadsheet-style editing, 007 comments</td></tr>
-    <tr><td>3:10</td><td>Quality checks · <b>G1: FEH approves 001–005</b></td><td></td></tr>
+    <tr><td>1:00</td><td>FEH's brief: how we split work into specs, draft the split</td><td></td></tr>
+    <tr><td>1:25</td><td>How we write a spec</td><td></td></tr>
+    <tr><td>1:30</td><td></td><td>Execute 005 · overdue and counts · <b>MVP complete</b></td></tr>
+    <tr><td>1:50</td><td>Specs 001–005: draft, compare, specify, clarify with FEH</td><td></td></tr>
+    <tr><td>2:30</td><td></td><td>Stretch: 006, 007</td></tr>
     <tr><td>3:15</td><td></td><td>Live change request through the spec</td></tr>
-    <tr><td>3:30</td><td>How to execute a spec · <b>execute 001</b></td><td></td></tr>
-    <tr><td>3:45</td><td></td><td>Final demo: trace every screen to its spec</td></tr>
-    <tr><td>4:30</td><td>Execute 002 (finished on Day 2 if needed)</td><td></td></tr>
+    <tr><td>3:45</td><td>Quality checks · <b>G1: FEH approves 001–005</b></td><td>Final demo: trace every screen to its spec</td></tr>
+    <tr><td>4:00</td><td>How to execute a spec · <b>execute 001</b></td><td></td></tr>
   </table>
   <h3>Who's in the room</h3>
   <div class="cards">
-    <div><b>Participants · developers</b>Each runs GitHub Copilot on their own laptop, pastes the run sheet in order, reviews every result, and keeps the build to the spec.</div>
-    <div><b>FEH · product owners</b>Know the business. Answer clarify questions, decide what is in or out, sign G1, accept at G3.</div>
-    <div><b>FEH and VISEO guests</b>Join the discussions, challenge the specs and ask questions. No laptop needed.</div>
-    <div><b>Facilitators</b>Run each step once on the big screen, post approved files when someone falls behind, and unblock problems.</div>
+    <div><b>Participants · developers</b>Write the constitution and specs with Copilot, compare them with the answer key, then execute the agreed specs on their own laptop.</div>
+    <div><b>FEH · product owners</b>Know the business. Confirm principles, agree the split, answer clarify questions, sign G1, accept at G3.</div>
+    <div><b>FEH and VISEO guests</b>Join the discussions, challenge the drafts and ask questions. No laptop needed.</div>
+    <div><b>Facilitators</b>Teach the patterns, show the answer key, keep the room's agreed version on the big screen, and post it in Teams.</div>
   </div>
 </section>
 
@@ -294,7 +295,7 @@ summary{cursor:pointer;font-weight:600}
   <h3><span class="ph gate">Built</span> In each participant's repo</h3>
   <ul class="checks">
     <li>A constitution agreed by FEH and VISEO</li>
-    <li>Specs 001–005 written from FEH's requirements, clarified with FEH and approved at G1</li>
+    <li>A constitution and specs 001–005 written by the participants from FEH's requirements, agreed with FEH and approved at G1</li>
     <li>Each spec planned, built and accepted one at a time: one spec, one commit</li>
     <li>The MVP running locally: sign-in, weekly meetings, action items, carry-forward and overdue flags</li>
     <li>Automated tests named after the acceptance criteria they prove, all passing</li>
@@ -374,13 +375,13 @@ npx playwright install chromium</pre>
 <section class="slide" id="repo" data-group="Setup (before Day 1)" data-title="Step 1 · Create your project">
   <p class="eyebrow">Step 1 · do this before Day 1</p>
   <h2>Create your project</h2>
-  <p class="lead">Everyone creates the project the same way, so everyone starts from the same place. First save <b>feh-action-tracker-mockups.zip</b> from the Teams chat into your Downloads folder. Then copy the block for your computer and paste it into a terminal, one line at a time.</p>
+  <p class="lead">Everyone creates the project the same way, so everyone starts from the same place. First save <b>feh-workshop-files.zip</b> from the Teams chat into your Downloads folder. Then copy the block for your computer and paste it into a terminal, one line at a time.</p>
   <pre data-label="Mac · Terminal">
 mkdir -p ~/feh-sdd &amp;&amp; cd ~/feh-sdd
 specify init feh-app --integration copilot
 cd feh-app
 curl -fsSL https://aljabrialam.github.io/feh-sdd-guide/starter/feh-sdd-docs.zip -o docs.zip &amp;&amp; unzip -oq docs.zip &amp;&amp; rm docs.zip
-unzip -oq ~/Downloads/feh-action-tracker-mockups.zip
+unzip -oq ~/Downloads/feh-workshop-files.zip
 git init -b main &amp;&amp; git add -A &amp;&amp; git commit -qm "Start: Spec Kit and workshop docs"
 code .</pre>
   <pre data-label="Windows · PowerShell">
@@ -388,15 +389,15 @@ New-Item -ItemType Directory -Force $HOME\feh-sdd | Out-Null; cd $HOME\feh-sdd
 specify init feh-app --integration copilot
 cd feh-app
 irm https://aljabrialam.github.io/feh-sdd-guide/starter/feh-sdd-docs.zip -OutFile docs.zip; Expand-Archive docs.zip -DestinationPath . -Force; Remove-Item docs.zip
-Expand-Archive $HOME\Downloads\feh-action-tracker-mockups.zip -DestinationPath . -Force
+Expand-Archive $HOME\Downloads\feh-workshop-files.zip -DestinationPath . -Force
 git init -b main; git add -A; git commit -qm "Start: Spec Kit and workshop docs"
 code .</pre>
-  <p>What each line does: makes a workshop folder, sets up Spec Kit for GitHub Copilot in <code>feh-app</code>, downloads the workshop docs (<code>docs/constitution.md</code>, <code>docs/specs.md</code> the run sheet, <code>docs/reference.md</code>: the seed data, screen labels and colours for the Meeting Action Tracker, plus the backup idea in <code>docs/backup/</code>), adds FEH's screens to <code>docs/mockup/</code>, saves a starting point in Git, and opens the project in VS Code. The app code is created on Day 2 from the approved plan.</p>
+  <p>What each line does: makes a workshop folder, sets up Spec Kit for GitHub Copilot in <code>feh-app</code>, downloads the workshop docs (<code>docs/constitution.md</code>, <code>docs/specs.md</code> the run sheet, <code>docs/reference.md</code>: the seed data, screen labels and colours for the Meeting Action Tracker, plus the backup idea in <code>docs/backup/</code>), adds FEH's requirements (<code>docs/feh-requirements.md</code>) and screens (<code>docs/mockup/</code>) from the Teams file, saves a starting point in Git, and opens the project in VS Code. The app code is created on Day 2 from the approved plan.</p>
   <div class="warnbox"><b>Open the right folder</b>VS Code must be open on <code>feh-app</code> itself. Open Copilot Chat and pick <b>Agent</b> mode. If the <code>/speckit-*</code> skills don't appear, run <b>Developer: Reload Window</b> or restart VS Code fully.</div>
   <ul class="checks">
     <li>VS Code is open on <code>feh-app/</code> with Copilot Chat in <b>Agent</b> mode</li>
     <li>Typing <code>/speckit</code> in Copilot Chat lists the Spec Kit skills</li>
-    <li><code>docs/constitution.md</code>, <code>docs/specs.md</code> and <code>docs/reference.md</code> exist, and <code>docs/mockup/</code> has FEH's screens (01 and 03)</li>
+    <li><code>docs/constitution.md</code>, <code>docs/specs.md</code> and <code>docs/reference.md</code> exist, and <code>docs/mockup/</code> has FEH's screens (01 and 03), and <code>docs/feh-requirements.md</code> is there</li>
   </ul>
 </section>
 
@@ -507,39 +508,79 @@ based only on the files in .github/skills.</pre>
 </section>
 
 
-<section class="slide" id="constitution" data-group="Day 1 · Spec" data-title="Constitution">
-  <p class="eyebrow">Day 1 · 10:45</p>
-  <h2>The constitution</h2>
-  <p class="lead">The rules every spec, plan, task and line of code must obey. It's written from FEH's own requirements and the way VISEO runs spec-driven projects. Read it with FEH, agree any changes in the room, then everyone adopts the same version.</p>
+<section class="slide" id="c101" data-group="Day 1 · Constitution" data-title="How we build a constitution">
+  <p class="eyebrow">Day 1 · 10:30 · how VISEO does it</p>
+  <h2>How we build a constitution</h2>
+  <p class="lead">On every spec-driven project we run, the constitution is the contract every spec, plan, task and line of code is checked against. It always has the same five parts, and every rule in it can be failed in a review.</p>
   <table>
-    <tr><th>Principle</th><th>In one line</th></tr>
-    <tr><td>I Specification First</td><td>No code without an approved spec; criteria are observable and have IDs</td></tr>
-    <tr><td>II Hotel Isolation</td><td>A person only ever sees their own hotel, enforced in one place (FEH NFR-001)</td></tr>
-    <tr><td>III Nothing Disappears</td><td>Actions are cancelled, never deleted; every change is recorded (FR-014)</td></tr>
-    <tr><td>IV Synthetic Data Only</td><td>All data from <code>docs/reference.md</code></td></tr>
-    <tr><td>V End-to-End Traceability</td><td>Every criterion maps to a test named after it</td></tr>
-    <tr><td>VI Test-First</td><td>Tests written and failing before the code</td></tr>
-    <tr><td>VII Testing Pyramid</td><td>Mostly pytest; Playwright for the main journey</td></tr>
-    <tr><td>VIII Human Review</td><td>Copilot drafts, a person reviews before every commit</td></tr>
-    <tr><td>IX Single Capability</td><td>One spec, one commit, one capability on screen</td></tr>
-    <tr><td>X Built Through Spec Kit</td><td>No hand patches around the cycle</td></tr>
-    <tr><td>XI Keep It Small</td><td>No Entra ID, emails, export, Teams, AI, Databricks or Azure</td></tr>
-    <tr><td>XII Change Through the Spec</td><td>Amend and re-approve the spec first</td></tr>
-    <tr><td>XIII Stop and Report</td><td>The agent never starts the next spec unprompted</td></tr>
-    <tr><td>XIV Demonstrability</td><td>Every spec says what it looks like on screen</td></tr>
+    <tr><th>Part</th><th>What goes in</th><th>Why</th></tr>
+    <tr><td><b>Core Principles</b></td><td>Numbered rules (I, II, III…), each with a short title, MUST / MUST NOT statements, and a <b>Rationale</b></td><td>Plans and reviews cite them by number: "this task violates Principle II"</td></tr>
+    <tr><td><b>Technology Standards</b></td><td>The fixed stack, test tools, and the visual design tokens, each colour with a meaning</td><td>Copilot stops choosing technology; every plan starts from the same decisions</td></tr>
+    <tr><td><b>Development Workflow</b></td><td>specify → clarify <b>G1</b> → plan → tasks → analyze <b>G2</b> → implement → converge <b>G3</b> → commit</td><td>Everyone knows who decides at each gate</td></tr>
+    <tr><td><b>Definition of Done</b></td><td>A checklist a spec must pass: approved, tests pass, traceability confirmed, shown on screen, committed</td><td>"Done" is never a matter of opinion</td></tr>
+    <tr><td><b>Governance</b></td><td>How it changes: a stated reason, a semantic version bump, sign-off, a version line</td><td>Changing the rules is visible and deliberate</td></tr>
   </table>
-  <pre data-label="Prompt · paste into Copilot Chat">
-/speckit-constitution
+  <h3><span class="ph">What makes a good principle</span></h3>
+  <ul class="checks">
+    <li><b>It can be failed.</b> Written with MUST, MUST NOT or SHALL. "Be secure" is a wish; "a person MUST only see their own hotel's data" is a rule.</li>
+    <li><b>It says why.</b> Every principle ends with a Rationale, citing the client's requirement ID where there is one (FEH NFR-001).</li>
+    <li><b>It's specific to this project.</b> The client's hard constraints become principles; generic good advice doesn't.</li>
+    <li><b>It's enforceable in one place.</b> "Isolation enforced in one place" gives the plan something concrete to design.</li>
+    <li><b>There are few enough to remember.</b> If a principle never changes a decision, cut it.</li>
+  </ul>
+  <h3><span class="ph">Where principles come from</span> patterns from our past projects</h3>
+  <table>
+    <tr><th>Source</th><th>Pattern we've used</th><th>In this project</th></tr>
+    <tr><td>The client's hard constraints</td><td>A travel agent: "every fact MUST trace to an API response". An on-prem imaging kiosk: "zero network calls at runtime", "detect, don't alter".</td><td>Hotel isolation · nothing disappears · synthetic data only</td></tr>
+    <tr><td>How we deliver, on every project</td><td>Traceability (every criterion → a test) · test-first · single capability (one spec, one commit) · AI under human review · stop and report · change through the spec</td><td>The same, unchanged</td></tr>
+    <tr><td>The time box</td><td>Scope freeze on a date · completeness before polish · demonstrability ("every spec states what it looks like on screen")</td><td>Keep it small · demonstrability</td></tr>
+  </table>
+  <div class="note"><b>The test</b>Read a principle and ask: could a reviewer reject a pull request because of it? If not, rewrite it or remove it.</div>
+</section>
 
-Adopt docs/constitution.md as this project's constitution, exactly as
-written: all fourteen principles, the Technology Standards, the
-Development Workflow, the Definition of Done and Governance.</pre>
-  <p>The facilitator adopts it once on the big screen, with any changes FEH asks for; everyone else pastes the same prompt.</p>
-  <div class="note"><b>Match the room before moving on</b>Compare your <code>constitution.md</code> with the approved version on the big screen. Different, or fell behind? The facilitator posts the approved file in the Teams chat. Paste this into Copilot Chat, then paste the approved file underneath:</div>
-  <pre data-label="Prompt · catch up to the room's approved version">
-Replace the contents of .specify/memory/constitution.md with the approved
-version below, exactly as written. Do not change any other file.</pre>
-  <details><summary>Read the full constitution (also in your project as <code>docs/constitution.md</code>)</summary>
+<section class="slide" id="constitution" data-group="Day 1 · Constitution" data-title="Write the constitution">
+  <p class="eyebrow">Day 1 · 11:00 · hands-on, 50 minutes</p>
+  <h2>Write the constitution</h2>
+  <p class="lead">Each participant drafts the constitution from FEH's requirements, the way we just described. Then we compare drafts with the answer key, FEH and the room agree one version, and everyone adopts it.</p>
+  <h3><span class="ph">1</span> Draft it with Copilot · 20 min</h3>
+  <pre class="tall" data-label="Prompt · paste into Copilot Chat">
+Do not run any Spec Kit skill and do not change anything in .specify.
+
+Read docs/feh-requirements.md and docs/reference.md. Create
+docs/drafts/constitution-draft.md: a constitution for a two-day workshop
+build of the Meeting Action Tracker MVP, with exactly these parts:
+
+1. Core Principles, numbered I, II, III... Each has a short title, rules
+   written with MUST / MUST NOT, and a "Rationale" paragraph saying why,
+   citing the FEH requirement ID where there is one.
+   Include principles from FEH's hard constraints (look at the
+   non-functional requirements and "Decisions made") and these delivery
+   practices: traceability from every acceptance criterion to a test,
+   test-first, one spec = one commit = one capability, AI under human
+   review, stop and report after each spec, change through the spec,
+   keep the scope small, every spec states what it looks like on screen.
+2. Technology Standards: Django with server-rendered templates, HTMX
+   only for the spreadsheet-style grid, SQLite locally, uv, pytest and
+   Playwright, and the colours in docs/reference.md with what each one
+   means.
+3. Development Workflow: specify, clarify (G1), plan, tasks, analyze
+   (G2), implement, converge (G3), commit.
+4. Definition of Done as a checklist.
+5. Governance: how it is amended, semantic versioning, a version line.
+
+Every principle must be one a reviewer could reject a change for.
+Then list which FEH requirements you turned into principles and which
+you deliberately left out.</pre>
+  <h3><span class="ph">2</span> Review your own draft · 5 min</h3>
+  <ul class="checks">
+    <li>Every principle uses MUST / MUST NOT and has a Rationale</li>
+    <li>FEH's isolation and audit requirements (NFR-001, FR-014) are principles, not just mentioned</li>
+    <li>Nothing in it is generic advice that would never change a decision</li>
+    <li>The scope limits are explicit: no Entra ID, Teams, AI, emails, export, Databricks or Azure</li>
+  </ul>
+  <h3><span class="ph">3</span> Compare with the answer key · 15 min, as a room</h3>
+  <p>The facilitator opens <code>docs/constitution.md</code> (it's in your project too). Discuss: which principles did you have that we didn't, and the other way round? Which would you add? FEH confirms the ones that come from its requirements.</p>
+  <details><summary>Answer key: VISEO's version, in your project as <code>docs/constitution.md</code></summary>
   <pre class="tall" data-label="File · docs/constitution.md">
 # Meeting Action Tracker Constitution
 
@@ -770,11 +811,22 @@ constitution. Non-compliance found during review MUST be raised before
 the artefact is committed.
 
 **Version**: 1.0.0 | **Ratified**: 2026-10-15 | **Last Amended**: 2026-10-15</pre></details>
-  <div class="note"><b>Talking point for FEH</b>Principles II and III come straight from FEH's requirements. Principles IX and XI are why the workshop can stop at any spec and still have something working.</div>
+  <h3><span class="ph">4</span> Adopt the room's version · 5 min</h3>
+  <p>The facilitator updates <code>docs/constitution.md</code> on the big screen with anything the room agreed and posts it in Teams. Everyone saves it over their own copy, then:</p>
+  <pre data-label="Prompt · paste into Copilot Chat">
+/speckit-constitution
+
+Adopt docs/constitution.md as this project's constitution, exactly as
+written: every principle, the Technology Standards, the Development
+Workflow, the Definition of Done and Governance.</pre>
+  <div class="note"><b>Match the room before moving on</b>Compare your <code>constitution.md</code> with the approved version on the big screen. Different, or fell behind? The facilitator posts the approved file in the Teams chat. Paste this into Copilot Chat, then paste the approved file underneath:</div>
+  <pre data-label="Prompt · catch up to the room's approved version">
+Replace the contents of .specify/memory/constitution.md with the approved
+version below, exactly as written. Do not change any other file.</pre>
 </section>
 
 <section class="slide" id="idea" data-group="Day 1 · Spec" data-title="FEH's brief &amp; the MVP">
-  <p class="eyebrow">Day 1 · 11:15</p>
+  <p class="eyebrow">Day 1 · 1:00 · after lunch</p>
   <h2>FEH's brief, and the MVP we propose</h2>
   <p class="lead">Each week, team leaders at every hotel review performance and agree actions. Today those actions live in a spreadsheet, results are never recorded, and open items get lost between weeks. FEH's requirements describe the full Meeting Action Tracker; two days can't cover all of it, so we propose an MVP that can realistically be finished in the session.</p>
   <div class="cards">
@@ -782,8 +834,27 @@ the artefact is committed.
     <div><b>MVP 1b</b>Listen to the meeting and propose actions. Needs Azure AI: not in the workshop.</div>
     <div><b>Phase 2 · Final</b>Databricks results, dashboards, Teams transcripts. Needs IT approval: not in the workshop.</div>
   </div>
-  <h3><span class="ph">1</span> The run sheet: delivery order and stop lines</h3>
-  <p>Each spec is one capability. Each line marks what FEH has if we stop there. <b>Minimum viable demonstration: through 005.</b></p>
+  <h3><span class="ph">1</span> How we split work into specs</h3>
+  <ul class="checks">
+    <li><b>One capability per spec.</b> Something a person can do and FEH can see, built and accepted on its own (Principle IX).</li>
+    <li><b>Foundation first.</b> Whatever every later spec depends on (here: who you are and which hotel) comes first.</li>
+    <li><b>A stop line per spec.</b> Each line in the delivery order says what the client has if we stop there.</li>
+    <li><b>A minimum viable demonstration.</b> The line we commit to finishing; everything after it is stretch.</li>
+  </ul>
+  <h3><span class="ph">2</span> Draft the split yourself · 10 min</h3>
+  <pre data-label="Prompt · paste into Copilot Chat">
+Do not write any code or specifications yet.
+
+Read docs/feh-requirements.md and docs/constitution.md. Propose an MVP
+that a developer can build with GitHub Copilot in about one and a half
+days. Split it into specifications of one demonstrable capability each,
+in delivery order, as a table with columns: order, spec number and
+name, what a person can do when it is done, and "if we stop here, FEH
+has...". Mark the minimum viable demonstration. Then list which FEH
+requirements you left out and why.</pre>
+  <h3><span class="ph">3</span> Compare with our proposal · 15 min, as a room</h3>
+  <details><summary>Answer key: VISEO's delivery order and stop lines (the run sheet in <code>docs/specs.md</code>)</summary>
+  <p style="margin-top:10px"><b>Minimum viable demonstration: through 005.</b></p>
   <table>
     <tr><th>Order</th><th>Spec</th><th>When</th><th>If you stop here</th></tr>
     <tr><td>1</td><td><b>001</b> Workshop Sign-in and Hotel Access</td><td>Late Day 1</td><td>People sign in and see only their own hotel. Isolation exists before any data does.</td></tr>
@@ -794,7 +865,8 @@ the artefact is committed.
     <tr><td>6</td><td><b>006</b> Spreadsheet-style Editing <span class="muted">stretch</span></td><td>Day 2 stretch</td><td>The action list feels like FEH&#x27;s spreadsheet.</td></tr>
     <tr><td>7</td><td><b>007</b> Comments and Mark as Done <span class="muted">stretch</span></td><td>Day 2 stretch</td><td>Follow-up between meetings is recorded, and actions can be closed properly.</td></tr>
   </table>
-  <h3><span class="ph">2</span> What we stub or leave out</h3>
+  </details>
+  <h3><span class="ph">4</span> What we stub or leave out</h3>
   <table>
     <tr><th>FEH requirement</th><th>In the workshop</th></tr>
     <tr><td>Microsoft Entra ID sign-in (FR-003)</td><td>A "Sign in as" page (spec 001). Real SSO needs FEH's tenant.</td></tr>
@@ -802,16 +874,7 @@ the artefact is committed.
     <tr><td>Roles, several hotels per person, group roll-up, admin screens</td><td>Simplified: one hotel per person, everyone can do everything there.</td></tr>
     <tr><td>Results, targets, change-history screen, My actions, reminders, export, Databricks, Azure</td><td>Backlog for after the workshop.</td></tr>
   </table>
-  <h3><span class="ph">3</span> Ask the agent to check the split</h3>
-  <pre data-label="Prompt · paste into Copilot Chat">
-Do not write any code or specifications yet.
-
-Read docs/specs.md and docs/reference.md. For each specification from
-001 to 005, say in one sentence what a person can do when it is
-finished, what it depends on, and whether it is small enough to build
-in about an hour. Flag anything in the order that would force rework
-later.</pre>
-  <h3><span class="ph">4</span> FEH agrees the list and the order</h3>
+  <h3><span class="ph">5</span> FEH agrees the list and the order</h3>
   <p>If FEH wants to swap something in or out, we change <code>docs/specs.md</code> now, before anything is specified.</p>
   <div class="note"><b>Backup</b>If the room decides to practise on something simpler, the Guest Service Requests idea is ready in the <button class="link" data-goto="bref">backup slides</button>.</div>
 </section>
@@ -921,6 +984,82 @@ Written into spec.md:
   <h3><span class="ph">Then our review prompt</span></h3>
   <p>Built-in clarify asks only a handful of questions. Our <button class="link" data-goto="clarify">clarify review prompt</button> then sweeps the whole spec for anything else that's missing. Use both, in that order.</p>
   <div class="warnbox"><b>Watch for</b>The developer answering business questions to keep things moving. If FEH didn't answer it, it isn't decided.</div>
+</section>
+
+<section class="slide" id="spec101" data-group="Day 1 · Spec" data-title="How we write a spec">
+  <p class="eyebrow">Day 1 · 1:25 · how VISEO does it</p>
+  <h2>How we write a spec</h2>
+  <p class="lead"><code>/speckit-specify</code> will happily turn one vague sentence into a long spec full of guesses. On our projects we give it a structured block instead, so every spec has the same shape and nothing important is left to the agent.</p>
+  <table>
+    <tr><th>Part of the block</th><th>What it does</th></tr>
+    <tr><td><b>Feature ID, Name</b></td><td>The folder and branch name; the order in the run sheet</td></tr>
+    <tr><td><b>Business Goal</b></td><td>What a person can do when it's finished. One capability.</td></tr>
+    <tr><td><b>Business Value</b></td><td>Why the client cares, citing their requirement or success measure</td></tr>
+    <tr><td><b>Business Actors, Capability</b></td><td>Who uses it, and the one capability it adds</td></tr>
+    <tr><td><b>Reference</b></td><td>Where the truth lives: the client's requirement IDs, the reference file, the mockup</td></tr>
+    <tr><td><b>FR-nnn The system shall…</b></td><td>One observable behaviour each. No technology, no screen widgets.</td></tr>
+    <tr><td><b>Non-Functional</b></td><td>Measurable limits: time, isolation, "never deleted"</td></tr>
+    <tr><td><b>What It Looks Like On Screen</b></td><td>The demo, in seed-data terms (Principle XIV). If you can't write it, the spec is too vague.</td></tr>
+    <tr><td><b>Out of Scope</b></td><td>The neighbouring capabilities, by spec number, so the agent doesn't build them</td></tr>
+    <tr><td><b>Closing lines</b></td><td>"Label every criterion AC-nnn-nn. Follow the Spec Kit format. Do not generate implementation details or source code."</td></tr>
+  </table>
+  <h3><span class="ph">Good and poor requirements</span></h3>
+  <table>
+    <tr><th>Good · observable, business language</th><th>Poor</th></tr>
+    <tr><td>"FR-002 The system shall require segment, category, issue, action required, owner and due date, and shall tell the person which is missing."</td><td>"Validate the form properly." (untestable)</td></tr>
+    <tr><td>"FR-005 The system shall only ever show a person data that belongs to their own hotel."</td><td>"Filter the queryset by hotel_id." (technology: that's the plan's job)</td></tr>
+    <tr><td>"FR-001 …under the heading 'Carried forward from earlier meetings (n)', oldest first."</td><td>"Show old items nicely." (nobody can check "nicely")</td></tr>
+  </table>
+  <h3><span class="ph">Our clarify block</span> where your experience goes</h3>
+  <p>Built-in clarify finds generic gaps. Our clarify block adds <b>"Give particular attention to:"</b>, a list of the edge cases you already suspect: the person who types another hotel's address, the action due today, two people editing at once. Thinking of those is the developer's most valuable contribution on Day 1. And it always ends with: <em>"When a question is about a business rule, wait for the answer FEH gives. Do not invent business rules."</em></p>
+  <h3><span class="ph">Template</span> for drafting</h3>
+  <pre class="tall" data-label="Prompt · fill in, then paste into Copilot Chat to review your draft">
+Do not run any Spec Kit skill yet.
+
+Review my draft specification below against VISEO&#x27;s template: Feature
+ID, Feature Name, Business Goal, Business Value, Business Actors,
+Business Capability, Reference, Functional Requirements written as
+&quot;FR-nnn The system shall ...&quot;, Non-Functional Requirements, What It
+Looks Like On Screen, Out of Scope.
+
+List: missing parts; any requirement that names technology, tables or
+screen elements; any requirement a person could not observe; anything
+in docs/feh-requirements.md for this feature that my draft misses.
+Do not rewrite it for me.
+
+Feature ID
+&lt;nnn-short-name&gt;
+
+Feature Name
+&lt;name&gt;
+
+Business Goal
+&lt;what a person can do when this is finished, in one or two sentences&gt;
+
+Business Value
+&lt;why it matters to FEH; cite the FEH requirement or success measure&gt;
+
+Business Actors
+&lt;who uses it&gt;
+
+Business Capability
+&lt;the one capability this delivers&gt;
+
+Reference
+&lt;FEH requirement IDs, docs/reference.md sections, docs/mockup/ screen&gt;
+
+Functional Requirements
+FR-001 The system shall ...
+FR-002 The system shall ...
+
+Non-Functional Requirements
+&lt;measurable: time, isolation, never deleted ...&gt;
+
+What It Looks Like On Screen
+&lt;what FEH will see in the demo, with seed data names&gt;
+
+Out of Scope
+&lt;what this spec does not do, naming the spec that does it&gt;</pre>
 </section>
 
 <section class="slide" id="clarify" data-group="Day 1 · Spec" data-title="Toolkit · clarify prompt">
@@ -1147,11 +1286,15 @@ Buttons and inputs at least 40px tall.</pre>
 </section>
 
 <section class="slide" id="s001" data-group="Day 1 · Spec" data-title="Spec 001 · Sign-in and hotel access">
-  <p class="eyebrow">Spec 001 · Day 1, 1:00 · G1</p>
+  <p class="eyebrow">Spec 001 · Day 1, 1:50 · draft, compare, specify, clarify, G1</p>
   <h2>001 — Workshop Sign-in and Hotel Access</h2>
   <p class="lead">Let each person enter the tracker as themselves and see only their own hotel, standing in for Microsoft Entra ID during the workshop.</p>
   <p class="muted"><b>If you stop here:</b> People sign in and see only their own hotel. Isolation exists before any data does.</p>
-  <h3><span class="ph">1 · Specify</span></h3>
+  <h3><span class="ph">1 · Draft</span> yourself first · 15 min</h3>
+  <p>Write the whole block for this spec from <code>docs/feh-requirements.md</code>. Use the <button class="link" data-goto="spec101">spec template</button> and ask Copilot to review your draft. Don't run <code>/speckit-specify</code> yet.</p>
+  <h3><span class="ph">2 · Compare</span> with the answer key, as a room</h3>
+  <p>What did your draft have that ours doesn't? What did you miss? FEH confirms anything that is a business decision. The facilitator edits the agreed block on the big screen.</p>
+  <details><summary>Answer key: VISEO's specify block for 001</summary>
   <pre class="tall" data-label="Prompt · paste into Copilot Chat">
 /speckit-specify
 
@@ -1217,7 +1360,10 @@ Label every acceptance criterion AC-001-&lt;nn&gt;.
 Generate the specification following the GitHub Spec Kit format.
 Do not generate implementation details.
 Do not generate source code.</pre>
-  <h3><span class="ph">2 · Clarify</span> FEH answers</h3>
+  </details>
+  <h3><span class="ph">3 · Specify</span> run the room's agreed block</h3>
+  <p>Copy the answer-key block above (with any changes the room agreed) into Copilot Chat. Everyone runs the same block, so everyone builds the same thing.</p>
+  <h3><span class="ph">4 · Clarify</span> FEH answers</h3>
   <pre data-label="Prompt · paste into Copilot Chat">
 /speckit-clarify
 
@@ -1241,7 +1387,7 @@ When a question is about a business rule, wait for the answer FEH gives
 in the room. Do not invent business rules.
 
 Do not generate implementation. Do not generate source code.</pre>
-  <div class="note"><b>One answer for the whole room</b>When Copilot asks a business question, the FEH product owner answers it once, out loud. The facilitator types it on the big screen and everyone gives Copilot the same answer.</div>
+  <div class="note"><b>One answer for the whole room</b>When Copilot asks a business question, the FEH product owner answers it once, out loud. The facilitator types it on the big screen and everyone gives Copilot the same answer. Add your own edge cases to "Give particular attention to:" before you paste.</div>
   <h3><span class="ph gate">G1</span> FEH approves the spec</h3>
   <p>Save <code>specs/001-sign-in-hotel-access/gates/G1.md</code> from the <button class="link" data-goto="gates">gate template</button>, listing the business decisions made during clarify, then commit.</p>
   <div class="note"><b>Match the room before moving on</b>Compare your <code>spec.md</code> with the approved version on the big screen. Different, or fell behind? The facilitator posts the approved file in the Teams chat. Paste this into Copilot Chat, then paste the approved file underneath:</div>
@@ -1251,11 +1397,15 @@ version below, exactly as written. Do not change any other file.</pre>
 </section>
 
 <section class="slide" id="s002" data-group="Day 1 · Spec" data-title="Spec 002 · Weekly meetings">
-  <p class="eyebrow">Spec 002 · Day 1, 1:30 · G1</p>
+  <p class="eyebrow">Spec 002 · Day 1, 2:30 · draft, compare, specify, clarify, G1</p>
   <h2>002 — Weekly Meetings</h2>
   <p class="lead">Let a team member create the weekly performance meeting for their hotel and see all of their hotel&#x27;s meetings.</p>
   <p class="muted"><b>If you stop here:</b> Meetings can be created and listed. The weekly meeting exists in the tracker.</p>
-  <h3><span class="ph">1 · Specify</span></h3>
+  <h3><span class="ph">1 · Draft</span> yourself first · 5 min</h3>
+  <p>Write only the Business Goal and the functional requirements (FR-001…) for this spec. Use the <button class="link" data-goto="spec101">spec template</button> and ask Copilot to review your draft. Don't run <code>/speckit-specify</code> yet.</p>
+  <h3><span class="ph">2 · Compare</span> with the answer key, as a room</h3>
+  <p>What did your draft have that ours doesn't? What did you miss? FEH confirms anything that is a business decision. The facilitator edits the agreed block on the big screen.</p>
+  <details><summary>Answer key: VISEO's specify block for 002</summary>
   <pre class="tall" data-label="Prompt · paste into Copilot Chat">
 /speckit-specify
 
@@ -1321,7 +1471,10 @@ Label every acceptance criterion AC-002-&lt;nn&gt;.
 Generate the specification following the GitHub Spec Kit format.
 Do not generate implementation details.
 Do not generate source code.</pre>
-  <h3><span class="ph">2 · Clarify</span> FEH answers</h3>
+  </details>
+  <h3><span class="ph">3 · Specify</span> run the room's agreed block</h3>
+  <p>Copy the answer-key block above (with any changes the room agreed) into Copilot Chat. Everyone runs the same block, so everyone builds the same thing.</p>
+  <h3><span class="ph">4 · Clarify</span> FEH answers</h3>
   <pre data-label="Prompt · paste into Copilot Chat">
 /speckit-clarify
 
@@ -1345,7 +1498,7 @@ When a question is about a business rule, wait for the answer FEH gives
 in the room. Do not invent business rules.
 
 Do not generate implementation. Do not generate source code.</pre>
-  <div class="note"><b>One answer for the whole room</b>When Copilot asks a business question, the FEH product owner answers it once, out loud. The facilitator types it on the big screen and everyone gives Copilot the same answer.</div>
+  <div class="note"><b>One answer for the whole room</b>When Copilot asks a business question, the FEH product owner answers it once, out loud. The facilitator types it on the big screen and everyone gives Copilot the same answer. Add your own edge cases to "Give particular attention to:" before you paste.</div>
   <h3><span class="ph gate">G1</span> FEH approves the spec</h3>
   <p>Save <code>specs/002-weekly-meetings/gates/G1.md</code> from the <button class="link" data-goto="gates">gate template</button>, listing the business decisions made during clarify, then commit.</p>
   <div class="note"><b>Match the room before moving on</b>Compare your <code>spec.md</code> with the approved version on the big screen. Different, or fell behind? The facilitator posts the approved file in the Teams chat. Paste this into Copilot Chat, then paste the approved file underneath:</div>
@@ -1355,11 +1508,15 @@ version below, exactly as written. Do not change any other file.</pre>
 </section>
 
 <section class="slide" id="s003" data-group="Day 1 · Spec" data-title="Spec 003 · Action items">
-  <p class="eyebrow">Spec 003 · Day 1, 2:00 · G1</p>
+  <p class="eyebrow">Spec 003 · Day 1, 2:50 · draft, compare, specify, clarify, G1</p>
   <h2>003 — Action Items in a Meeting</h2>
   <p class="lead">Let a team member record each action agreed in the meeting, with its owner and due date, and change it later.</p>
   <p class="muted"><b>If you stop here:</b> Actions are recorded with an owner and a due date. The spreadsheet could be retired.</p>
-  <h3><span class="ph">1 · Specify</span></h3>
+  <h3><span class="ph">1 · Draft</span> yourself first · 15 min</h3>
+  <p>Write the whole block for this spec from <code>docs/feh-requirements.md</code>. Use the <button class="link" data-goto="spec101">spec template</button> and ask Copilot to review your draft. Don't run <code>/speckit-specify</code> yet.</p>
+  <h3><span class="ph">2 · Compare</span> with the answer key, as a room</h3>
+  <p>What did your draft have that ours doesn't? What did you miss? FEH confirms anything that is a business decision. The facilitator edits the agreed block on the big screen.</p>
+  <details><summary>Answer key: VISEO's specify block for 003</summary>
   <pre class="tall" data-label="Prompt · paste into Copilot Chat">
 /speckit-specify
 
@@ -1432,7 +1589,10 @@ Label every acceptance criterion AC-003-&lt;nn&gt;.
 Generate the specification following the GitHub Spec Kit format.
 Do not generate implementation details.
 Do not generate source code.</pre>
-  <h3><span class="ph">2 · Clarify</span> FEH answers</h3>
+  </details>
+  <h3><span class="ph">3 · Specify</span> run the room's agreed block</h3>
+  <p>Copy the answer-key block above (with any changes the room agreed) into Copilot Chat. Everyone runs the same block, so everyone builds the same thing.</p>
+  <h3><span class="ph">4 · Clarify</span> FEH answers</h3>
   <pre data-label="Prompt · paste into Copilot Chat">
 /speckit-clarify
 
@@ -1456,7 +1616,7 @@ When a question is about a business rule, wait for the answer FEH gives
 in the room. Do not invent business rules.
 
 Do not generate implementation. Do not generate source code.</pre>
-  <div class="note"><b>One answer for the whole room</b>When Copilot asks a business question, the FEH product owner answers it once, out loud. The facilitator types it on the big screen and everyone gives Copilot the same answer.</div>
+  <div class="note"><b>One answer for the whole room</b>When Copilot asks a business question, the FEH product owner answers it once, out loud. The facilitator types it on the big screen and everyone gives Copilot the same answer. Add your own edge cases to "Give particular attention to:" before you paste.</div>
   <h3><span class="ph gate">G1</span> FEH approves the spec</h3>
   <p>Save <code>specs/003-action-items/gates/G1.md</code> from the <button class="link" data-goto="gates">gate template</button>, listing the business decisions made during clarify, then commit.</p>
   <div class="note"><b>Match the room before moving on</b>Compare your <code>spec.md</code> with the approved version on the big screen. Different, or fell behind? The facilitator posts the approved file in the Teams chat. Paste this into Copilot Chat, then paste the approved file underneath:</div>
@@ -1466,11 +1626,15 @@ version below, exactly as written. Do not change any other file.</pre>
 </section>
 
 <section class="slide" id="s004" data-group="Day 1 · Spec" data-title="Spec 004 · Carry forward">
-  <p class="eyebrow">Spec 004 · Day 1, 2:30 · G1</p>
+  <p class="eyebrow">Spec 004 · Day 1, 3:15 · draft, compare, specify, clarify, G1</p>
   <h2>004 — Carry Forward Open Items</h2>
   <p class="lead">Make every unfinished action from earlier meetings appear in the next meeting automatically, so nothing is lost between weeks.</p>
   <p class="muted"><b>If you stop here:</b> Open items are never lost between weeks: FEH&#x27;s main pain is solved.</p>
-  <h3><span class="ph">1 · Specify</span></h3>
+  <h3><span class="ph">1 · Draft</span> yourself first · 5 min</h3>
+  <p>Write only the Business Goal and the functional requirements (FR-001…) for this spec. Use the <button class="link" data-goto="spec101">spec template</button> and ask Copilot to review your draft. Don't run <code>/speckit-specify</code> yet.</p>
+  <h3><span class="ph">2 · Compare</span> with the answer key, as a room</h3>
+  <p>What did your draft have that ours doesn't? What did you miss? FEH confirms anything that is a business decision. The facilitator edits the agreed block on the big screen.</p>
+  <details><summary>Answer key: VISEO's specify block for 004</summary>
   <pre class="tall" data-label="Prompt · paste into Copilot Chat">
 /speckit-specify
 
@@ -1534,7 +1698,10 @@ Label every acceptance criterion AC-004-&lt;nn&gt;.
 Generate the specification following the GitHub Spec Kit format.
 Do not generate implementation details.
 Do not generate source code.</pre>
-  <h3><span class="ph">2 · Clarify</span> FEH answers</h3>
+  </details>
+  <h3><span class="ph">3 · Specify</span> run the room's agreed block</h3>
+  <p>Copy the answer-key block above (with any changes the room agreed) into Copilot Chat. Everyone runs the same block, so everyone builds the same thing.</p>
+  <h3><span class="ph">4 · Clarify</span> FEH answers</h3>
   <pre data-label="Prompt · paste into Copilot Chat">
 /speckit-clarify
 
@@ -1559,7 +1726,7 @@ When a question is about a business rule, wait for the answer FEH gives
 in the room. Do not invent business rules.
 
 Do not generate implementation. Do not generate source code.</pre>
-  <div class="note"><b>One answer for the whole room</b>When Copilot asks a business question, the FEH product owner answers it once, out loud. The facilitator types it on the big screen and everyone gives Copilot the same answer.</div>
+  <div class="note"><b>One answer for the whole room</b>When Copilot asks a business question, the FEH product owner answers it once, out loud. The facilitator types it on the big screen and everyone gives Copilot the same answer. Add your own edge cases to "Give particular attention to:" before you paste.</div>
   <h3><span class="ph gate">G1</span> FEH approves the spec</h3>
   <p>Save <code>specs/004-carry-forward/gates/G1.md</code> from the <button class="link" data-goto="gates">gate template</button>, listing the business decisions made during clarify, then commit.</p>
   <div class="note"><b>Match the room before moving on</b>Compare your <code>spec.md</code> with the approved version on the big screen. Different, or fell behind? The facilitator posts the approved file in the Teams chat. Paste this into Copilot Chat, then paste the approved file underneath:</div>
@@ -1569,11 +1736,15 @@ version below, exactly as written. Do not change any other file.</pre>
 </section>
 
 <section class="slide" id="s005" data-group="Day 1 · Spec" data-title="Spec 005 · Overdue and counts">
-  <p class="eyebrow">Spec 005 · Day 1, 2:50 · G1</p>
+  <p class="eyebrow">Spec 005 · Day 1, 3:30 · draft, compare, specify, clarify, G1</p>
   <h2>005 — Overdue Flags and Meeting Counts</h2>
   <p class="lead">Make late actions impossible to miss, and give the meeting a one-glance summary.</p>
   <p class="muted"><b>If you stop here:</b> The meeting shows what is late at a glance. The MVP is complete.</p>
-  <h3><span class="ph">1 · Specify</span></h3>
+  <h3><span class="ph">1 · Draft</span> yourself first · 5 min</h3>
+  <p>Write only the Business Goal and the functional requirements (FR-001…) for this spec. Use the <button class="link" data-goto="spec101">spec template</button> and ask Copilot to review your draft. Don't run <code>/speckit-specify</code> yet.</p>
+  <h3><span class="ph">2 · Compare</span> with the answer key, as a room</h3>
+  <p>What did your draft have that ours doesn't? What did you miss? FEH confirms anything that is a business decision. The facilitator edits the agreed block on the big screen.</p>
+  <details><summary>Answer key: VISEO's specify block for 005</summary>
   <pre class="tall" data-label="Prompt · paste into Copilot Chat">
 /speckit-specify
 
@@ -1636,7 +1807,10 @@ Label every acceptance criterion AC-005-&lt;nn&gt;.
 Generate the specification following the GitHub Spec Kit format.
 Do not generate implementation details.
 Do not generate source code.</pre>
-  <h3><span class="ph">2 · Clarify</span> FEH answers</h3>
+  </details>
+  <h3><span class="ph">3 · Specify</span> run the room's agreed block</h3>
+  <p>Copy the answer-key block above (with any changes the room agreed) into Copilot Chat. Everyone runs the same block, so everyone builds the same thing.</p>
+  <h3><span class="ph">4 · Clarify</span> FEH answers</h3>
   <pre data-label="Prompt · paste into Copilot Chat">
 /speckit-clarify
 
@@ -1660,7 +1834,7 @@ When a question is about a business rule, wait for the answer FEH gives
 in the room. Do not invent business rules.
 
 Do not generate implementation. Do not generate source code.</pre>
-  <div class="note"><b>One answer for the whole room</b>When Copilot asks a business question, the FEH product owner answers it once, out loud. The facilitator types it on the big screen and everyone gives Copilot the same answer.</div>
+  <div class="note"><b>One answer for the whole room</b>When Copilot asks a business question, the FEH product owner answers it once, out loud. The facilitator types it on the big screen and everyone gives Copilot the same answer. Add your own edge cases to "Give particular attention to:" before you paste.</div>
   <h3><span class="ph gate">G1</span> FEH approves the spec</h3>
   <p>Save <code>specs/005-overdue-and-counts/gates/G1.md</code> from the <button class="link" data-goto="gates">gate template</button>, listing the business decisions made during clarify, then commit.</p>
   <div class="note"><b>Match the room before moving on</b>Compare your <code>spec.md</code> with the approved version on the big screen. Different, or fell behind? The facilitator posts the approved file in the Teams chat. Paste this into Copilot Chat, then paste the approved file underneath:</div>
@@ -1670,7 +1844,7 @@ version below, exactly as written. Do not change any other file.</pre>
 </section>
 
 <section class="slide" id="quality" data-group="Day 1 · Spec" data-title="Quality checks">
-  <p class="eyebrow">Day 1 · 3:10 · before G1</p>
+  <p class="eyebrow">Day 1 · 3:45 · before G1</p>
   <h2>Check the specs before FEH signs</h2>
   <p class="lead">Spec Kit has two skills that review documents instead of writing them. Use them so G1 approves a spec that is complete, not just one that reads well.</p>
   <table>
@@ -1764,7 +1938,7 @@ Give each item with its line and a suggested rewording.</pre>
 
 
 <section class="slide" id="plan101" data-group="Day 1 · Execute" data-title="How to execute a spec">
-  <p class="eyebrow">Day 1 · 3:30 · from here on we execute</p>
+  <p class="eyebrow">Day 1 · 4:00 · from here on we execute</p>
   <h2>How to execute a spec</h2>
   <p class="lead">Every approved spec goes through the same cycle, in the order of the run sheet. Same prompts for everyone, one spec at a time, one commit per spec.</p>
   <pre data-label="The cycle for every spec">
@@ -1788,7 +1962,7 @@ git commit                                                 one spec, one commit<
 </section>
 
 <section class="slide" id="x001" data-group="Day 1 · Execute" data-title="Execute 001 · Sign-in and hotel access">
-  <p class="eyebrow">Day 1 · 3:40 · execute</p>
+  <p class="eyebrow">Day 1 · 4:10 · execute (finish on Day 2 at 9:00 if needed)</p>
   <h2>Execute 001 — Workshop Sign-in and Hotel Access</h2>
   <p class="lead"><b>If you stop here:</b> People sign in and see only their own hotel. Isolation exists before any data does. </p>
   <div class="flow"><span>plan</span><span>tasks</span><span>analyze</span><span class="g">G2</span><span>implement</span><span>converge</span><span class="g">G3</span><span>commit</span></div>
@@ -1869,75 +2043,7 @@ git commit -m &quot;feat: 001-sign-in-hotel-access&quot;</pre>
 </section>
 
 
-<section class="slide" id="x002" data-group="Day 1 · Execute" data-title="Execute 002 · Weekly meetings">
-  <p class="eyebrow">Day 1 · 4:30 · execute, finish on Day 2 morning if needed</p>
-  <h2>Execute 002 — Weekly Meetings</h2>
-  <p class="lead"><b>If you stop here:</b> Meetings can be created and listed. The weekly meeting exists in the tracker. </p>
-  <div class="flow"><span>plan</span><span>tasks</span><span>analyze</span><span class="g">G2</span><span>implement</span><span>converge</span><span class="g">G3</span><span>commit</span></div>
-  <h3><span class="ph">Plan</span></h3>
-  <pre class="tall" data-label="Prompt · paste into Copilot Chat">
-/speckit-plan
 
-Plan Feature Specification 002-weekly-meetings, following the constitution&#x27;s
-Technology Standards exactly.
-
-Extend the project from 001; do not change its stack. Add the meeting
-with django-simple-history, scoped to the hotel through 001&#x27;s isolation.
-Meetings list and &quot;New meeting&quot; form with the exact labels in
-docs/reference.md; seed_demo also loads the seeded meetings.
-
-Map every acceptance criterion to at least one test whose name
-contains its ID. Write data-model.md and the page contract in
-contracts/ (each page and form: address, who may use it, what it
-shows) before any code.</pre>
-  <h3><span class="ph">Tasks</span></h3>
-  <pre data-label="Prompt · paste into Copilot Chat">
-/speckit-tasks
-
-Break the plan for 002-weekly-meetings into small tasks, one demonstrable capability
-each (Principle IX). In every task, write the tests first and see them
-fail (Principle VI). Name every test after the acceptance criterion it
-proves. Mark tasks that can run in parallel.</pre>
-  <h3><span class="ph">Analyze</span> before any code</h3>
-  <pre data-label="Prompt">/speckit-analyze</pre>
-  <h3><span class="ph gate">G2</span> VISEO approves plan and tasks</h3>
-  <ul class="checks">
-    <li>Every acceptance criterion maps to at least one test</li>
-    <li>The plan follows the constitution's Technology Standards and <code>docs/reference.md</code></li>
-    <li>Nothing is planned that no criterion asks for</li>
-    <li><code>/speckit-analyze</code> reports no critical issues</li>
-  </ul>
-  <div class="note"><b>Match the room before moving on</b>Compare your <code>plan.md</code> with the approved version on the big screen. Different, or fell behind? The facilitator posts the approved file in the Teams chat. Paste this into Copilot Chat, then paste the approved file underneath:</div>
-  <pre data-label="Prompt · catch up to the room's approved version">
-Replace the contents of specs/002-weekly-meetings/plan.md with the approved
-version below, exactly as written. Do not change any other file.</pre>
-  <h3><span class="ph">Implement</span> tests first</h3>
-  <pre data-label="Prompt · paste into Copilot Chat">
-/speckit-implement
-
-Implement 002-weekly-meetings task by task. After each task run the tests. When all
-tasks are done, run pytest and Playwright, then stop and report what was
-built, the test results, and any acceptance criterion you could not
-satisfy (Principle XIII). Do not start the next specification.</pre>
-  <pre data-label="Prompt · then compare with the spec">/speckit-converge</pre>
-  <h3><span class="ph">Run it</span></h3>
-  <pre data-label="Terminal">
-uv run python manage.py migrate
-uv run python manage.py seed_demo
-uv run python manage.py runserver</pre>
-  <p>Then <code>uv run pytest</code>, and <code>npx playwright test</code> in <code>e2e/</code>.</p>
-  <h3><span class="ph gate">G3</span> FEH and VISEO accept</h3>
-  <ul class="checks">
-    <li>On screen: Meetings shows the three seeded Hotel A meetings, newest first. &quot;New meeting&quot; creates today&#x27;s meeting, which then opens with its heading and attendee chips.</li>
-    <li>Every AC-002 criterion has a passing test whose name contains its ID</li>
-    <li>All earlier specs' tests still pass</li>
-    <li><code>/speckit-converge</code> reports no gaps</li>
-    <li><code>gates/G3.md</code> is signed by both</li>
-  </ul>
-  <pre data-label="Terminal · one spec, one commit">
-git add -A
-git commit -m &quot;feat: 002-weekly-meetings&quot;</pre>
-</section>
 
 <!-- ======================= WRAP ======================= -->
 
@@ -1945,11 +2051,11 @@ git commit -m &quot;feat: 002-weekly-meetings&quot;</pre>
 <section class="slide" id="day2locked" data-group="Day 2 · Build" data-title="Unlocks on Day 2">
   <p class="eyebrow">Day 2 · Build</p>
   <h2>See you on Day 2</h2>
-  <p class="lead">Day 2 continues the run sheet: 002 if needed, then 003, 004 and 005. Every decision FEH made today shows up in the app.</p>
+  <p class="lead">Day 2 continues the run sheet: finish 001, then 002 to 005. Every decision FEH made today shows up in the app.</p>
   <h3>Before you leave today</h3>
   <ul class="checks">
     <li>Specs 001–005 are approved at G1, with gate records committed</li>
-    <li>Spec 001 is built, accepted at G3 and committed (002 too, if you got there)</li>
+    <li>Spec 001 is under way: plan, tasks and analyze done, implement started</li>
     <li>Your specs match the approved versions on the big screen</li>
     <li>Your laptop is charged, and GitHub Copilot still signs in</li>
   </ul>
