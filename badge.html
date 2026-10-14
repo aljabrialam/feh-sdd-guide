@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261014105412">
+<meta name="build" content="20261014110047">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -134,6 +134,7 @@ a{color:var(--aqua)}
 .field label,.sec-t{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--muted);font-weight:700;text-transform:uppercase}
 .field input[type=text]{width:100%;min-width:0;background:#001D21;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:16px;outline:none}
 .field input[type=text]:focus{border-color:var(--aqua)}
+.cn{display:flex;gap:8px;min-width:0}.cn input{flex:1}.cn .btn{flex:none;font-size:18px;padding:0 12px}
 .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .tabs{display:flex;gap:6px;flex-wrap:wrap}
@@ -259,7 +260,7 @@ a{color:var(--aqua)}
       </div>
       <div class="two">
         <div class="field"><label for="iName">Name</label><input type="text" id="iName" maxlength="28" placeholder="Your name" autocomplete="name"></div>
-        <div class="field"><label for="iTeam">Pair / team</label><input type="text" id="iTeam" maxlength="24" placeholder="e.g. Suite 03"></div>
+        <div class="field"><label for="iTeam">Codename</label><div class="cn"><input type="text" id="iTeam" maxlength="24" placeholder="e.g. Midnight Falcon"><button type="button" class="btn sm" id="cnRoll" aria-label="Suggest a codename" title="Suggest a codename">🎲</button></div></div>
       </div>
 
       <div class="field">
@@ -516,7 +517,7 @@ a{color:var(--aqua)}
     if (id === 'make') renderMaker();
     if (id === 'done') renderDone();
   }
-  var DEMO = { name: 'You', team: 'Suite 01', photo: null, cord: 'aqua', pat: 'grid', border: 'none', idn: 'SDD-001', drawing: null,
+  var DEMO = { name: 'You', team: 'Agent Mango', photo: null, cord: 'aqua', pat: 'grid', border: 'none', idn: 'SDD-001', drawing: null,
     stickers: [{ u: 'a', d: 'role-1', x: 30, y: 52, r: -8 }, { u: 'b', d: 'sdd-0', x: 74, y: 44, r: 8 }, { u: 'c', d: 'stack-2', x: 32, y: 82, r: 4 }, { u: 'd', d: 'vibe-1', x: 74, y: 80, r: -6 }] };
   buildHang($('#demoHang'), { state: DEMO, swing: true });
   $('#go').addEventListener('click', function () { show('make'); });
@@ -537,6 +538,12 @@ a{color:var(--aqua)}
   function refresh() { paintBadge(badge, S, true); wireStickerSel(); renderSel(); save(); }
   $('#iName').addEventListener('input', function (e) { S.name = e.target.value; refresh(); });
   $('#iTeam').addEventListener('input', function (e) { S.team = e.target.value; refresh(); });
+  var CN_A = ['Midnight', 'Turbo', 'Cosmic', 'Neon', 'Quantum', 'Stealth', 'Atomic', 'Velvet', 'Lucky', 'Pixel', 'Golden', 'Rapid', 'Silent', 'Crimson', 'Sneaky'];
+  var CN_B = ['Falcon', 'Concierge', 'Bellhop', 'Otter', 'Comet', 'Ninja', 'Kraken', 'Phoenix', 'Mango', 'Lynx', 'Gecko', 'Rocket', 'Panda', 'Pilot', 'Spec'];
+  $('#cnRoll').addEventListener('click', function () {
+    var v; do { v = CN_A[Math.floor(Math.random() * CN_A.length)] + ' ' + CN_B[Math.floor(Math.random() * CN_B.length)]; } while (v === S.team);
+    S.team = v; $('#iTeam').value = v; refresh();
+  });
   function setPhotoFrom(src, mirror) {
     var img = new Image();
     img.onload = function () { // square-crop + shrink to 360px
