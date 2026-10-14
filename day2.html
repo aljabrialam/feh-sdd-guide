@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261014133754">
+<meta name="build" content="20261014054202">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -206,10 +206,15 @@ body:not(.standalone) .jump{display:none}
 <nav class="jump" aria-label="Day 2 sections"><a href="#x002">002</a><a href="#x003">003</a><a href="#x004">004</a><a href="#x005">005</a><a href="#x006">006 stretch</a><a href="#x007">007 stretch</a><a href="#change">Change</a><a href="#demo">Demo</a><a href="#gotchas">Gotchas</a><a href="guide.html">Full guide</a></nav>
 <main id="stage">
 <section class="slide" id="x002" data-group="Day 2 · Execute" data-title="Execute 002 · Weekly meetings">
-  <p class="eyebrow">Day 2 · 9:00 · execute (finish 001 first if needed)</p>
+  <p class="eyebrow">Day 2 · 9:00 · execute (finish 001 first if needed: steps 7–10 of Create the app)</p>
   <h2>Execute 002 — Weekly Meetings</h2>
   <p class="lead"><b>If you stop here:</b> Meetings can be created and listed. The weekly meeting exists in the tracker. </p>
   <div class="flow"><span>plan</span><span>tasks</span><span>analyze</span><span class="g">G2</span><span>implement</span><span>converge</span><span class="g">G3</span><span>commit</span></div>
+  <h3><span class="ph">Switch</span> to spec 002</h3>
+  <p>Spec Kit works on the spec whose branch you are on. The first line moves to this spec's branch; the second brings in everything built so far (the previous spec's branch).</p>
+  <pre data-label="Terminal or PowerShell">git checkout 002-weekly-meetings
+git merge 001-sign-in-hotel-access</pre>
+  <p>✓ You should see: "Switched to branch …", then "Fast-forward" or "Merge made". If the names differ, run <code>git branch</code> and use yours.</p>
   <h3><span class="ph">Plan</span></h3>
   <pre class="tall" data-label="Prompt · paste into Copilot Chat">
 /speckit-plan
@@ -280,6 +285,11 @@ git commit -m &quot;feat: 002-weekly-meetings&quot;</pre>
   <h2>Execute 003 — Action Items in a Meeting</h2>
   <p class="lead"><b>If you stop here:</b> Actions are recorded with an owner and a due date. The spreadsheet could be retired. </p>
   <div class="flow"><span>plan</span><span>tasks</span><span>analyze</span><span class="g">G2</span><span>implement</span><span>converge</span><span class="g">G3</span><span>commit</span></div>
+  <h3><span class="ph">Switch</span> to spec 003</h3>
+  <p>Spec Kit works on the spec whose branch you are on. The first line moves to this spec's branch; the second brings in everything built so far (the previous spec's branch).</p>
+  <pre data-label="Terminal or PowerShell">git checkout 003-action-items
+git merge 002-weekly-meetings</pre>
+  <p>✓ You should see: "Switched to branch …", then "Fast-forward" or "Merge made". If the names differ, run <code>git branch</code> and use yours.</p>
   <h3><span class="ph">Plan</span></h3>
   <pre class="tall" data-label="Prompt · paste into Copilot Chat">
 /speckit-plan
@@ -353,6 +363,11 @@ git commit -m &quot;feat: 003-action-items&quot;</pre>
   <h2>Execute 004 — Carry Forward Open Items</h2>
   <p class="lead"><b>If you stop here:</b> Open items are never lost between weeks: FEH&#x27;s main pain is solved. </p>
   <div class="flow"><span>plan</span><span>tasks</span><span>analyze</span><span class="g">G2</span><span>implement</span><span>converge</span><span class="g">G3</span><span>commit</span></div>
+  <h3><span class="ph">Switch</span> to spec 004</h3>
+  <p>Spec Kit works on the spec whose branch you are on. The first line moves to this spec's branch; the second brings in everything built so far (the previous spec's branch).</p>
+  <pre data-label="Terminal or PowerShell">git checkout 004-carry-forward
+git merge 003-action-items</pre>
+  <p>✓ You should see: "Switched to branch …", then "Fast-forward" or "Merge made". If the names differ, run <code>git branch</code> and use yours.</p>
   <h3><span class="ph">Plan</span></h3>
   <pre class="tall" data-label="Prompt · paste into Copilot Chat">
 /speckit-plan
@@ -424,6 +439,11 @@ git commit -m &quot;feat: 004-carry-forward&quot;</pre>
   <h2>Execute 005 — Overdue Flags and Meeting Counts</h2>
   <p class="lead"><b>If you stop here:</b> The meeting shows what is late at a glance. The MVP is complete. </p>
   <div class="flow"><span>plan</span><span>tasks</span><span>analyze</span><span class="g">G2</span><span>implement</span><span>converge</span><span class="g">G3</span><span>commit</span></div>
+  <h3><span class="ph">Switch</span> to spec 005</h3>
+  <p>Spec Kit works on the spec whose branch you are on. The first line moves to this spec's branch; the second brings in everything built so far (the previous spec's branch).</p>
+  <pre data-label="Terminal or PowerShell">git checkout 005-overdue-and-counts
+git merge 004-carry-forward</pre>
+  <p>✓ You should see: "Switched to branch …", then "Fast-forward" or "Merge made". If the names differ, run <code>git branch</code> and use yours.</p>
   <h3><span class="ph">Plan</span></h3>
   <pre class="tall" data-label="Prompt · paste into Copilot Chat">
 /speckit-plan

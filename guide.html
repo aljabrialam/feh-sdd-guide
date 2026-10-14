@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261014133754">
+<meta name="build" content="20261014054202">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -279,7 +279,7 @@ summary{cursor:pointer;font-weight:600}
     <tr><td>2:30</td><td></td><td>Stretch: 006, 007</td></tr>
     <tr><td>3:15</td><td></td><td>Live change request through the spec</td></tr>
     <tr><td>3:45</td><td>Quality checks · <b>G1: FEH approves 001–005</b></td><td>Final demo: trace every screen to its spec</td></tr>
-    <tr><td>4:00</td><td>How to execute a spec · <b>execute 001</b></td><td></td></tr>
+    <tr><td>4:00</td><td>How to execute a spec · <b>create the app: execute 001</b></td><td></td></tr>
   </table>
   <h3>Who's in the room</h3>
   <div class="cards">
@@ -375,10 +375,10 @@ npx playwright install chromium</pre>
   <div class="warnbox"><b>Company laptops</b>If installs are blocked by policy or a proxy, raise it with the facilitator before Day 1, not on the morning.</div>
 </section>
 
-<section class="slide" id="repo" data-group="Setup (before Day 1)" data-title="Step 1 · Create your project">
+<section class="slide" id="repo" data-group="Setup (before Day 1)" data-title="Step 1 · Set up your workspace">
   <p class="eyebrow">Step 1 · 15 minutes · do it before Day 1, or at 9:00 on Day 1</p>
-  <h2>Create your project</h2>
-  <p class="lead">Every participant creates the same empty project: Spec Kit set up for GitHub Copilot, plus the workshop documents. There is no app code yet; Copilot writes it later, from the specs we agree. Do the steps in order and check each one before the next.</p>
+  <h2>Set up your workspace</h2>
+  <p class="lead">Every participant creates the same empty project: Spec Kit set up for GitHub Copilot, plus the workshop documents. There is no app yet: Copilot creates the app at the end of Day 1, in <button class="link" data-goto="x001">Create the app: execute 001</button>, from the specs we agree. Do the steps in order and check each one before the next.</p>
 
   <h3>What you'll have at the end</h3>
   <pre data-label="Your project folder">
@@ -2015,6 +2015,7 @@ Give each item with its line and a suggested rewording.</pre>
   <h2>How to execute a spec</h2>
   <p class="lead">Every approved spec goes through the same cycle, in the order of the run sheet. Same prompts for everyone, one spec at a time, one commit per spec.</p>
   <pre data-label="The cycle for every spec">
+git checkout NNN-…  then  git merge &lt;previous branch&gt;   switch to the spec
 /speckit-plan → /speckit-tasks → /speckit-analyze          G2  VISEO approves
 /speckit-implement (tests first) → /speckit-converge       G3  FEH and VISEO accept
 git commit                                                 one spec, one commit</pre>
@@ -2034,14 +2035,50 @@ git commit                                                 one spec, one commit<
   <div class="note"><b>Falling behind is fine</b>Each spec's stop line is a working app. If time runs out, stop at the last accepted spec. The facilitator posts approved files in Teams so nobody is blocked.</div>
 </section>
 
-<section class="slide" id="x001" data-group="Day 1 · Execute" data-title="Execute 001 · Sign-in and hotel access">
-  <p class="eyebrow">Day 1 · 4:10 · execute (finish on Day 2 at 9:00 if needed)</p>
-  <h2>Execute 001 — Workshop Sign-in and Hotel Access</h2>
-  <p class="lead"><b>If you stop here:</b> People sign in and see only their own hotel. Isolation exists before any data does. </p>
-  <div class="flow"><span>plan</span><span>tasks</span><span>analyze</span><span class="g">G2</span><span>implement</span><span>converge</span><span class="g">G3</span><span>commit</span></div>
-  <h3><span class="ph">Plan</span></h3>
-  <pre class="tall" data-label="Prompt · paste into Copilot Chat">
-/speckit-plan
+<section class="slide" id="x001" data-group="Day 1 · Execute" data-title="Create the app · execute 001">
+  <p class="eyebrow">Day 1 · 4:05 – 5:00 · the last part of Day 1</p>
+  <h2>Create the app: execute spec 001</h2>
+  <p class="lead">Until now your project holds only documents: the constitution and five approved specs. This is where the app itself is created. Copilot plans spec 001, breaks it into tasks, and builds it: the Django project, sign-in, hotel isolation and the first tests. Do the steps in order and check each one before the next.</p>
+
+  <h3>What you'll have at the end</h3>
+  <pre data-label="Your project folder after spec 001 (exact names may differ slightly)">
+feh-app/
+├── docs/  .github/  .specify/        ← from Step 1, unchanged
+├── specs/001-sign-in-hotel-access/
+│   ├── spec.md  gates/G1.md          ← from this afternoon
+│   ├── plan.md  research.md  data-model.md  quickstart.md  contracts/   ← step 3
+│   ├── tasks.md                      ← step 4
+│   └── gates/G2.md  gates/G3.md      ← steps 6 and 10
+├── pyproject.toml  uv.lock           ← the Python project and its packages (step 7)
+├── manage.py                         ← Django's command for running the app
+├── tracker_site/                     ← Django settings and addresses
+├── tracker/                          ← the app: hotels, people, sign-in page, templates,
+│   ├── management/commands/seed_demo.py     the seed command
+│   └── tests/                        ← pytest tests, named after AC-001-nn
+└── e2e/                              ← Playwright tests (TypeScript)</pre>
+
+  <div class="step1">
+    <h3><span class="ph">1</span> Check you are ready · 2 min</h3>
+    <p>The constitution is adopted and specs 001–005 are approved at G1 and committed. In the terminal, inside <code>feh-app</code>:</p>
+    <pre data-label="Terminal or PowerShell">git status
+git branch</pre>
+    <p class="expect">✓ You should see: <code>git status</code> says "nothing to commit, working tree clean", and <code>git branch</code> lists one branch per spec: <code>001-sign-in-hotel-access</code> … <code>005-overdue-and-counts</code>, with a <code>*</code> next to the one you are on.</p>
+    <p class="muted"><b>If it fails:</b> "Changes not staged": run <code>git add -A</code> and <code>git commit -m "specs: G1 approved"</code>. Your branch names are different: that's fine, use your names in step 2.</p>
+  </div>
+
+  <div class="step1">
+    <h3><span class="ph">2</span> Switch to spec 001 · 1 min</h3>
+    <p>Spec Kit works on the spec whose branch you are on. Each <code>/speckit-specify</code> started a new branch from the one before, so the <b>005</b> branch has all five specs. The first line moves you to the 001 branch; the second brings all five approved specs onto it.</p>
+    <pre data-label="Terminal or PowerShell">git checkout 001-sign-in-hotel-access
+git merge 005-overdue-and-counts</pre>
+    <p class="expect">✓ You should see: "Switched to branch '001-sign-in-hotel-access'", then "Fast-forward" and a list of files. <code>ls specs</code> shows all five spec folders.</p>
+    <p class="muted"><b>If it fails:</b> "pathspec did not match": run <code>git branch</code> and type the names exactly as listed. <code>git branch</code> shows only <code>main</code>: your Spec Kit didn't create branches; skip this step, the prompts below name the spec anyway.</p>
+  </div>
+
+  <div class="step1">
+    <h3><span class="ph">3</span> Plan: decide how to build it · 10 min</h3>
+    <p>In Copilot Chat (Agent mode), paste the block. Copilot reads the spec and the constitution and writes <em>how</em> it will be built. When it asks to run a script, read it, then choose <b>Allow</b>.</p>
+    <pre data-label="Prompt · paste into Copilot Chat">/speckit-plan
 
 Plan Feature Specification 001-sign-in-hotel-access, following the constitution&#x27;s
 Technology Standards exactly.
@@ -2060,59 +2097,98 @@ Map every acceptance criterion to at least one test whose name
 contains its ID. Write data-model.md and the page contract in
 contracts/ (each page and form: address, who may use it, what it
 shows) before any code.</pre>
-  <h3><span class="ph">Tasks</span></h3>
-  <pre data-label="Prompt · paste into Copilot Chat">
-/speckit-tasks
+    <p class="expect">✓ You should see: <code>plan.md</code>, <code>research.md</code>, <code>data-model.md</code>, <code>quickstart.md</code> and <code>contracts/</code> in <code>specs/001-sign-in-hotel-access/</code>. In <code>plan.md</code>, the "Technical Context" says Python 3.12, Django 5, SQLite, pytest, Playwright, and the "Constitution Check" lists the principles with PASS.</p>
+    <p class="muted"><b>If it fails:</b> It names React, a REST API or PostgreSQL: reply "Follow the constitution's Technology Standards exactly" and let it redo the plan. It plans meetings or actions: reply "Only spec 001; meetings are spec 002".</p>
+  </div>
+
+  <div class="step1">
+    <h3><span class="ph">4</span> Tasks: break the plan into small steps · 5 min</h3>
+    <pre data-label="Prompt · paste into Copilot Chat">/speckit-tasks
 
 Break the plan for 001-sign-in-hotel-access into small tasks, one demonstrable capability
 each (Principle IX). In every task, write the tests first and see them
 fail (Principle VI). Name every test after the acceptance criterion it
 proves. Mark tasks that can run in parallel.</pre>
-  <h3><span class="ph">Analyze</span> before any code</h3>
-  <pre data-label="Prompt">/speckit-analyze</pre>
-  <h3><span class="ph gate">G2</span> VISEO approves plan and tasks</h3>
-  <ul class="checks">
-    <li>Every acceptance criterion maps to at least one test</li>
-    <li>The plan follows the constitution's Technology Standards and <code>docs/reference.md</code></li>
-    <li>Nothing is planned that no criterion asks for</li>
-    <li><code>/speckit-analyze</code> reports no critical issues</li>
-  </ul>
-  <div class="note"><b>Match the room before moving on</b>Compare your <code>plan.md</code> with the approved version on the big screen. Different, or fell behind? The facilitator posts the approved file in the Teams chat. Paste this into Copilot Chat, then paste the approved file underneath:</div>
-  <pre data-label="Prompt · catch up to the room's approved version">
-Replace the contents of specs/001-sign-in-hotel-access/plan.md with the approved
-version below, exactly as written. Do not change any other file.</pre>
-  <h3><span class="ph">Implement</span> tests first</h3>
-  <pre data-label="Prompt · paste into Copilot Chat">
-/speckit-implement
+    <p class="expect">✓ You should see: <code>tasks.md</code> with numbered tasks (T001, T002 …) in phases: Setup, Foundational, then one phase per user story. Test tasks come before the code they test; some are marked <code>[P]</code> (can run in parallel).</p>
+    <p class="muted"><b>If it fails:</b> No test tasks, or tests after the code: reply "Write the tests first in every task, per Principle VI" and let it redo <code>tasks.md</code>.</p>
+  </div>
+
+  <div class="step1">
+    <h3><span class="ph">5</span> Analyze: check before any code · 5 min</h3>
+    <p>Copilot reads the spec, plan and tasks together and reports gaps. It changes nothing.</p>
+    <pre data-label="Prompt · paste into Copilot Chat">/speckit-analyze</pre>
+    <p class="expect">✓ You should see: a table of findings with a severity each (CRITICAL, HIGH, MEDIUM, LOW) and a coverage summary showing every requirement has at least one task.</p>
+    <p class="muted"><b>If it fails:</b> A CRITICAL finding: reply "Fix the CRITICAL findings in plan.md and tasks.md", then run <code>/speckit-analyze</code> again until there are none.</p>
+  </div>
+
+  <div class="step1">
+    <h3><span class="ph gate">6 · G2</span> VISEO approves the plan and tasks · 5 min</h3>
+    <ul class="checks"><li>Every AC-001 criterion maps to at least one test</li><li>Hotel isolation is in one place (one manager, one view mixin)</li><li>Nothing is planned that the spec doesn't ask for: no meetings, no actions</li><li><code>/speckit-analyze</code> reports no CRITICAL findings</li></ul>
+    <p>Save <code>specs/001-sign-in-hotel-access/gates/G2.md</code> from the <button class="link" data-goto="gates">gate template</button>, then save a commit:</p>
+    <pre data-label="Terminal or PowerShell">git add -A
+git commit -m &quot;plan: 001-sign-in-hotel-access&quot;</pre>
+    <p class="expect">✓ You should see: one line like <code>[001-sign-in-hotel-access 1a2b3c4] plan: 001-sign-in-hotel-access</code>.</p>
+  </div>
+
+  <div class="step1">
+    <h3><span class="ph">7</span> Implement: Copilot creates the app · 25–30 min</h3>
+    <p>This is the step that creates the Django project. Copilot works through <code>tasks.md</code> in order: it creates <code>pyproject.toml</code> and adds Django with <code>uv</code>, creates <code>manage.py</code>, <code>tracker_site/</code> and <code>tracker/</code>, writes each test, runs it and sees it fail, then writes the code until it passes. It asks before every command: read it, then choose <b>Allow</b>. If it asks "continue?", say yes.</p>
+    <pre data-label="Prompt · paste into Copilot Chat">/speckit-implement
 
 Implement 001-sign-in-hotel-access task by task. After each task run the tests. When all
 tasks are done, run pytest and Playwright, then stop and report what was
 built, the test results, and any acceptance criterion you could not
 satisfy (Principle XIII). Do not start the next specification.</pre>
-  <pre data-label="Prompt · then compare with the spec">/speckit-converge</pre>
-  <h3><span class="ph">Run it</span></h3>
-  <pre data-label="Terminal 1 · the app">
-uv sync
-uv run python manage.py migrate
+    <p class="expect">✓ You should see: the files appear in the Explorer as it goes, and tasks are ticked <code>[X]</code> in <code>tasks.md</code>. At the end Copilot stops and reports: what it built, how many tests passed, and any criterion it couldn't satisfy.</p>
+    <p class="muted"><b>If it fails:</b> It stops halfway: reply "Continue with the remaining tasks in tasks.md". A test keeps failing: reply "Explain why T0nn fails, then fix it" (use the task number). Don't edit the code by hand (Principle X).</p>
+  </div>
+
+  <div class="step1">
+    <h3><span class="ph">8</span> Run the app · 5 min</h3>
+    <p>Open a terminal in VS Code (Terminal → New Terminal). The first line creates the database, the second loads the hotels and people from <code>docs/reference.md</code>, the third starts the app. Leave it running.</p>
+    <pre data-label="Terminal 1 · the app">uv run python manage.py migrate
 uv run python manage.py seed_demo
 uv run python manage.py runserver</pre>
-  <p>Open <code>http://localhost:8000</code> in Chrome.</p>
-  <pre data-label="Terminal 2 · the tests">
-uv run pytest
+    <p>Open <code>http://localhost:8000</code> in Chrome.</p>
+    <p class="expect">✓ You should see: the "Sign in" page with seven buttons: Mary Tan, John Lim, Alex Wong, Sam Ng, Priya Rao (Hotel A), Grace Teo, Lee Chen (Hotel B), and the note about Microsoft Entra ID. Choose Mary Tan: the top bar shows "Mary Tan · Hotel A" and "Sign out".</p>
+    <p class="muted"><b>If it fails:</b> "No such command seed_demo": ask Copilot "seed_demo is missing; it is in the plan, add it". "That port is already in use": stop the other server with Ctrl + C, or run <code>runserver 8001</code>.</p>
+  </div>
+
+  <div class="step1">
+    <h3><span class="ph">9</span> Run the tests · 5 min</h3>
+    <p>Open a second terminal (the + in the terminal panel). Keep the app running in the first one for the browser tests.</p>
+    <pre data-label="Terminal 2 · the tests">uv run pytest
 cd e2e
 npm install
-npx playwright test</pre>
-  <h3><span class="ph gate">G3</span> FEH and VISEO accept</h3>
-  <ul class="checks">
-    <li>On screen: The sign-in page with one button per person; after choosing Mary Tan, the top bar shows &quot;Mary Tan · Hotel A&quot; and &quot;Sign out&quot;.</li>
-    <li>Every AC-001 criterion has a passing test whose name contains its ID</li>
-    <li>All earlier specs' tests still pass</li>
-    <li><code>/speckit-converge</code> reports no gaps</li>
-    <li><code>gates/G3.md</code> is signed by both</li>
-  </ul>
-  <pre data-label="Terminal · one spec, one commit">
-git add -A
+npx playwright test
+cd ..</pre>
+    <p class="expect">✓ You should see: pytest ends with a green line like "12 passed", and the test names contain <code>AC_001</code> IDs. Playwright reports its tests passed.</p>
+    <p class="muted"><b>If it fails:</b> Playwright can't find a browser: run <code>npx playwright install chromium</code> once. A test fails: tell Copilot which one, and why you think it fails.</p>
+  </div>
+
+  <div class="step1">
+    <h3><span class="ph gate">10 · G3</span> Converge, accept and commit · 5 min</h3>
+    <p>Converge compares the code with the spec and adds anything missing as new tasks.</p>
+    <pre data-label="Prompt · paste into Copilot Chat">/speckit-converge</pre>
+    <ul class="checks"><li>On screen: The sign-in page with one button per person; after choosing Mary Tan, the top bar shows &quot;Mary Tan · Hotel A&quot; and &quot;Sign out&quot;.</li><li>Every AC-001 criterion has a passing test whose name contains its ID</li><li><code>/speckit-converge</code> reports no gaps</li><li>FEH and VISEO sign <code>gates/G3.md</code></li></ul>
+    <pre data-label="Terminal · one spec, one commit">git add -A
 git commit -m &quot;feat: 001-sign-in-hotel-access&quot;</pre>
+    <p class="expect">✓ You should see: <code>git log --oneline</code> shows "feat: 001-sign-in-hotel-access" at the top.</p>
+  </div>
+
+  <div class="step1">
+    <h3><span class="ph">★</span> Try it: hotel isolation</h3>
+    <p>Sign in as Grace Teo (Hotel B). The top bar says Hotel B. Nothing from Hotel A exists for her yet, because there is nothing in Hotel A yet: from spec 002 onwards, every new page is checked against her.</p>
+  </div>
+
+  <h3>Final check</h3>
+  <ul class="checks">
+    <li>The sign-in page lists the seven people; Mary Tan sees "Mary Tan · Hotel A" in the top bar</li>
+    <li><code>uv run pytest</code> passes, and every test name contains an AC-001 ID</li>
+    <li><code>npx playwright test</code> passes in <code>e2e/</code></li>
+    <li><code>git log --oneline</code> shows "feat: 001-sign-in-hotel-access" at the top</li>
+  </ul>
+  <div class="note"><b>Not finished by 5:00?</b>That's expected for some. Commit what you have (<code>git add -A</code>, then <code>git commit -m "wip: 001"</code>) and carry on at 9:00 on Day 2. If you're stuck, the facilitator posts the room's approved <code>plan.md</code> and <code>tasks.md</code> in Teams.</div>
 </section>
 
 
