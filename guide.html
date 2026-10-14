@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261014074929">
+<meta name="build" content="20261014080825">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -388,7 +388,7 @@ feh-sdd/
     ├── .specify/                ← Spec Kit's templates, scripts and the constitution slot
     └── docs/
         ├── feh-requirements.md  ← FEH's requirements (from Teams): what we build from
-        ├── mockup/              ← FEH's screens 01 and 03, and our MVP mockups mvp-1 to mvp-5 as HTML (from Teams)
+        ├── mockup/              ← FEH's screens 01 and 03, and our MVP mockups as HTML: mvp-app.html and mvp-1 to mvp-5 (from Teams)
         ├── reference.md         ← invented hotels, people, lists, labels and colours
         ├── constitution.md      ← answer key for the Day 1 constitution exercise
         ├── specs.md             ← answer key for the specs: the run sheet
@@ -821,8 +821,9 @@ A capability that cannot be shown in the final demo earns nothing.
 ### Visual Design
 
 The look follows FEH&#x27;s own screen mockups (docs/mockup/). Screens are
-built to VISEO&#x27;s HTML mockups of the MVP (docs/mockup/mvp-*.html), which
-use exactly these tokens. Palette is fixed; colour carries meaning, never
+built to VISEO&#x27;s HTML mockups of the MVP (docs/mockup/mvp-app.html, the
+whole MVP as one clickable app, and mvp-*.html), which use exactly these
+tokens. Palette is fixed; colour carries meaning, never
 decoration.
 
 | Token        | Hex     | Meaning                         |
@@ -2095,6 +2096,9 @@ the top bar like docs/mockup/mvp-1-sign-in.html, with the labels and look
 in docs/reference.md. Put hotel
 isolation in one place (a hotel-scoped manager and a view mixin) that
 every later feature will reuse.
+
+Check the result against docs/mockup/mvp-app.html, the whole MVP as a
+clickable mockup.
 
 Map every acceptance criterion to at least one test whose name
 contains its ID. Write data-model.md and the page contract in

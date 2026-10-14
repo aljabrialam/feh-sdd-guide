@@ -338,6 +338,9 @@ Technology Standards exactly.
 
 %s
 
+Check the result against docs/mockup/mvp-app.html, the whole MVP as a
+clickable mockup.
+
 Map every acceptance criterion to at least one test whose name
 contains its ID. Write data-model.md and the page contract in
 contracts/ (each page and form: address, who may use it, what it

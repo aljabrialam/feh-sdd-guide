@@ -198,6 +198,9 @@ in docs/reference.md. Put hotel
 isolation in one place (a hotel-scoped manager and a view mixin) that
 every later feature will reuse.
 
+Check the result against docs/mockup/mvp-app.html, the whole MVP as a
+clickable mockup.
+
 Map every acceptance criterion to at least one test whose name
 contains its ID. Write data-model.md and the page contract in
 contracts/ (each page and form: address, who may use it, what it
@@ -345,6 +348,9 @@ Extend the project from 001; do not change its stack. Add the meeting
 with django-simple-history, scoped to the hotel through 001's isolation.
 Meetings list and "New meeting" form like docs/mockup/mvp-2-meetings.html
 and mvp-3-new-meeting.html, with the exact labels in docs/reference.md; seed_demo also loads the seeded meetings.
+
+Check the result against docs/mockup/mvp-app.html, the whole MVP as a
+clickable mockup.
 
 Map every acceptance criterion to at least one test whose name
 contains its ID. Write data-model.md and the page contract in
@@ -502,6 +508,9 @@ scoped to the hotel through 001's isolation. "Add action" and "Edit"
 are ordinary Django forms on the meeting page, laid out like
 docs/mockup/mvp-4-meeting-screen.html and mvp-5-add-action.html. seed_demo also loads the seeded actions.
 
+Check the result against docs/mockup/mvp-app.html, the whole MVP as a
+clickable mockup.
+
 Map every acceptance criterion to at least one test whose name
 contains its ID. Write data-model.md and the page contract in
 contracts/ (each page and form: address, who may use it, what it
@@ -649,6 +658,9 @@ on the existing models through the hotel isolation from 001, not a
 copy of any data. Show the two groups with the headings and colours in
 docs/reference.md and the constitution.
 
+Check the result against docs/mockup/mvp-app.html, the whole MVP as a
+clickable mockup.
+
 Map every acceptance criterion to at least one test whose name
 contains its ID. Write data-model.md and the page contract in
 contracts/ (each page and form: address, who may use it, what it
@@ -794,6 +806,9 @@ today and the counts from the due date and today's date in the hotel's
 time zone; nothing is stored. Make "today" replaceable in tests so the
 tests do not depend on the real date.
 
+Check the result against docs/mockup/mvp-app.html, the whole MVP as a
+clickable mockup.
+
 Map every acceptance criterion to at least one test whose name
 contains its ID. Write data-model.md and the page contract in
 contracts/ (each page and form: address, who may use it, what it
@@ -934,6 +949,9 @@ Extend the project; do not change its stack. Use HTMX, served from
 static files, for this list only: each change posts one value and
 re-renders that row and the counts. Reuse the validation and the
 change record from 003.
+
+Check the result against docs/mockup/mvp-app.html, the whole MVP as a
+clickable mockup.
 
 Map every acceptance criterion to at least one test whose name
 contains its ID. Write data-model.md and the page contract in
@@ -1080,6 +1098,9 @@ Extend the project; do not change its stack. The action page is an
 ordinary Django page; comments and closing are ordinary form posts
 through 001's isolation. Update seed_demo with the update log in
 docs/reference.md.
+
+Check the result against docs/mockup/mvp-app.html, the whole MVP as a
+clickable mockup.
 
 Map every acceptance criterion to at least one test whose name
 contains its ID. Write data-model.md and the page contract in

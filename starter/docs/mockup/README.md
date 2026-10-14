@@ -13,6 +13,7 @@ VISEO's MVP versions of the screens (same Teams file), trimmed to what the
 workshop builds. HTML mockups, so Copilot can read the exact structure,
 labels and colours; each explains its behaviour in a comment at the top,
 and has a PNG picture next to it. Start at index.html.
+- mvp-app.html: the whole MVP as one clickable app (specs 001-005)
 - mvp-1-sign-in.html (spec 001)
 - mvp-2-meetings.html, mvp-3-new-meeting.html (spec 002)
 - mvp-4-meeting-screen.html (specs 003, 004, 005)

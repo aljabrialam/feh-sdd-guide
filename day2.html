@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261014074929">
+<meta name="build" content="20261014080825">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -227,6 +227,9 @@ with django-simple-history, scoped to the hotel through 001&#x27;s isolation.
 Meetings list and &quot;New meeting&quot; form like docs/mockup/mvp-2-meetings.html
 and mvp-3-new-meeting.html, with the exact labels in docs/reference.md; seed_demo also loads the seeded meetings.
 
+Check the result against docs/mockup/mvp-app.html, the whole MVP as a
+clickable mockup.
+
 Map every acceptance criterion to at least one test whose name
 contains its ID. Write data-model.md and the page contract in
 contracts/ (each page and form: address, who may use it, what it
@@ -302,6 +305,9 @@ django-simple-history, belonging to the meeting it was raised in and
 scoped to the hotel through 001&#x27;s isolation. &quot;Add action&quot; and &quot;Edit&quot;
 are ordinary Django forms on the meeting page, laid out like
 docs/mockup/mvp-4-meeting-screen.html and mvp-5-add-action.html. seed_demo also loads the seeded actions.
+
+Check the result against docs/mockup/mvp-app.html, the whole MVP as a
+clickable mockup.
 
 Map every acceptance criterion to at least one test whose name
 contains its ID. Write data-model.md and the page contract in
@@ -379,6 +385,9 @@ on the existing models through the hotel isolation from 001, not a
 copy of any data. Show the two groups with the headings and colours in
 docs/reference.md and the constitution.
 
+Check the result against docs/mockup/mvp-app.html, the whole MVP as a
+clickable mockup.
+
 Map every acceptance criterion to at least one test whose name
 contains its ID. Write data-model.md and the page contract in
 contracts/ (each page and form: address, who may use it, what it
@@ -454,6 +463,9 @@ Extend the project; do not change its stack. Work out overdue, due
 today and the counts from the due date and today&#x27;s date in the hotel&#x27;s
 time zone; nothing is stored. Make &quot;today&quot; replaceable in tests so the
 tests do not depend on the real date.
+
+Check the result against docs/mockup/mvp-app.html, the whole MVP as a
+clickable mockup.
 
 Map every acceptance criterion to at least one test whose name
 contains its ID. Write data-model.md and the page contract in
@@ -610,6 +622,9 @@ Extend the project; do not change its stack. Use HTMX, served from
 static files, for this list only: each change posts one value and
 re-renders that row and the counts. Reuse the validation and the
 change record from 003.
+
+Check the result against docs/mockup/mvp-app.html, the whole MVP as a
+clickable mockup.
 
 Map every acceptance criterion to at least one test whose name
 contains its ID. Write data-model.md and the page contract in
@@ -771,6 +786,9 @@ Extend the project; do not change its stack. The action page is an
 ordinary Django page; comments and closing are ordinary form posts
 through 001&#x27;s isolation. Update seed_demo with the update log in
 docs/reference.md.
+
+Check the result against docs/mockup/mvp-app.html, the whole MVP as a
+clickable mockup.
 
 Map every acceptance criterion to at least one test whose name
 contains its ID. Write data-model.md and the page contract in

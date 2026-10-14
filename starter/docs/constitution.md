@@ -164,8 +164,9 @@ A capability that cannot be shown in the final demo earns nothing.
 ### Visual Design
 
 The look follows FEH's own screen mockups (docs/mockup/). Screens are
-built to VISEO's HTML mockups of the MVP (docs/mockup/mvp-*.html), which
-use exactly these tokens. Palette is fixed; colour carries meaning, never
+built to VISEO's HTML mockups of the MVP (docs/mockup/mvp-app.html, the
+whole MVP as one clickable app, and mvp-*.html), which use exactly these
+tokens. Palette is fixed; colour carries meaning, never
 decoration.
 
 | Token        | Hex     | Meaning                         |
