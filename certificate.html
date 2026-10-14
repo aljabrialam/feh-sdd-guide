@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261014112404">
+<meta name="build" content="20261014114938">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -147,7 +147,7 @@ h1 em{font-style:normal;color:var(--aqua)}
             <option value="Contributor">Contributor</option>
           </select>
         </div>
-        <div class="field"><label for="iApp">What you built</label><input id="iApp" type="text" maxlength="40" placeholder="Guest Service Requests"></div>
+        <div class="field"><label for="iApp">What you built</label><input id="iApp" type="text" maxlength="40" placeholder="Meeting Action Tracker"></div>
         <div class="col">
           <button class="btn primary" id="dlPng" disabled>⬇ Download certificate (PNG)</button>
           <button class="btn" id="dlPdf" disabled>🖨 Save as PDF</button>
@@ -209,7 +209,7 @@ h1 em{font-style:normal;color:var(--aqua)}
   function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function certHTML() {
     var name = state.n.trim() || 'Your Name';
-    var app = state.a.trim() || 'Guest Service Requests';
+    var app = state.a.trim() || 'Meeting Action Tracker';
     return '<div class="cert">' +
       '<div class="band"><div class="bandtxt">SPEC FIRST ✦ BUILD SECOND</div></div>' +
       '<div class="seal"><b>G3 ✓</b><span>ACCEPTED</span></div>' +

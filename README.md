@@ -2,11 +2,18 @@
 
 A single-page, slide-style guide for the two-day Spec-Driven Development workshop with Far East Hospitality: Day 1 agrees and approves the specs, Day 2 builds a working slice from them. Every prompt and command has a Copy button, and each participant's progress is saved in their own browser.
 
+## The workshop app
+
+The main build is FEH's **Meeting Action Tracker** (requirements of 13 Oct 2026), MVP 1a slice in four specs: 001 meeting screen and inline action grid, 002 item detail with results, update log and change history, 003 My actions and changes by others, 004 group roll-up (stretch). Stack follows FEH's architecture: Django with server-rendered templates, HTMX only for the inline grid, SQLite locally. Entra ID sign-in, emails, export, MVP 1b (microphone and AI), Databricks and Teams are stubbed or left out.
+
+`starter/docs/` is the source of the docs pack participants download in Step 1 (`starter/feh-sdd-docs.zip`, rebuilt with `python3 tools/build_docs.py`): `docs/reference.md` for the tracker, and the backup idea (Guest Service Requests) under `docs/backup/`. FEH's own screen mockups are **not** published here: facilitators share `feh-action-tracker-mockups.zip` in the Teams chat, and Step 1 unzips it into `docs/mockup/`.
+
 | File | What it is | Published |
 |---|---|---|
 | `index.html` | Countdown (announcement page) | now |
 | `setup.html` + `check-setup.sh` / `.ps1` | Laptop setup and check scripts | now |
-| `mockup/` | Backup app's target screens | now |
+| `mockup/` | Backup idea's target screens (Guest Service Requests) | now |
+| `starter/` | Docs pack for Step 1 (`feh-sdd-docs.zip`) and its source | now |
 | `certificate.html` | Certificate of completion: name, role, PNG/PDF, LinkedIn. Unlocks 16 Oct 4:30 pm SGT (preview: `?preview=feh-sdd`) | now (locked) |
 | `badge.html` | Badge maker: name, stickers, doodle, lanyard, PNG and story download | now |
 | `guide.html` | Workshop guide (Day 1) | Day 1 morning |
