@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261014153915">
+<meta name="build" content="20261014155427">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -378,7 +378,7 @@ npx playwright install chromium</pre>
 </section>
 
 <section class="slide" id="repo" data-group="Setup (before Day 1)" data-title="Step 1 · Set up your workspace">
-  <p class="eyebrow">Step 1 · 15 minutes · do it before Day 1, or at 9:00 on Day 1</p>
+  <p class="eyebrow">Step 1 · 20 minutes · do it before Day 1, or at 9:00 on Day 1</p>
   <h2>Set up your workspace</h2>
   <p class="lead">Every participant creates the same empty project: Spec Kit set up for GitHub Copilot, plus the workshop documents. There is no app yet: Copilot creates the app at the end of Day 1, in <button class="link" data-goto="x001">Create the app: execute 001</button>, from the specs we agree. Do the steps in order and check each one before the next.</p>
 
@@ -454,18 +454,41 @@ git log --oneline</pre>
     <p class="muted"><b>If it fails:</b> "code: command not found": see step 3 of the laptop setup, or open VS Code and use File → Open Folder.</p>
   </div>
   <div class="step1">
-    <h3><span class="ph">8</span> Check Copilot can see Spec Kit</h3>
-    <p>Open Copilot Chat (Mac: Ctrl + Cmd + I · Windows: Ctrl + Alt + I, or the chat icon at the top of VS Code), choose <b>Agent</b> mode in the dropdown under the chat box, and type <code>/speckit</code>.</p>
-
+    <h3><span class="ph">8</span> Make sure GitHub Copilot is installed and signed in</h3>
+    <p>Copilot Chat is the VS Code extension that runs the Spec Kit commands. If you did step 10 of the <a href="setup.html">laptop setup</a> it's already there; check anyway.</p>
+    <ol>
+      <li>Click the <b>Extensions</b> icon in the left bar (four squares), or press <b>Cmd + Shift + X</b> on a Mac, <b>Ctrl + Shift + X</b> on Windows.</li>
+      <li>Type <code>GitHub Copilot Chat</code> in the search box. If it shows an <b>Install</b> button, click it. If it shows a gear icon, it's already installed.</li>
+      <li>Sign in: click the <b>Accounts</b> icon (the person, bottom left) and choose <b>Sign in with GitHub to use GitHub Copilot</b>. Use the GitHub account you sent us, and allow the browser to return to VS Code.</li>
+    </ol>
+    <p>Or install it from the terminal, then reload VS Code (Cmd/Ctrl + Shift + P → <b>Developer: Reload Window</b>):</p>
+    <pre data-label="Terminal or PowerShell">code --install-extension GitHub.copilot-chat</pre>
+    <p class="expect">✓ You should see: the Copilot icon in the status bar at the bottom of VS Code, without a warning or a line through it. Hover over it: it shows your GitHub account.</p>
+    <p class="muted"><b>If it fails:</b> "You don't have access to GitHub Copilot": check you signed in with the account you sent us and accepted the GitHub invitation email, then reload the window. Still nothing: tell the facilitator your GitHub username.</p>
+  </div>
+  <div class="step1">
+    <h3><span class="ph">9</span> Open Copilot Chat in Agent mode</h3>
+    <ol>
+      <li>Open the chat: press <b>Ctrl + Cmd + I</b> on a Mac or <b>Ctrl + Alt + I</b> on Windows. Or click the <b>chat icon</b> at the top of VS Code, next to the search box, or use the menu <b>View → Chat</b>. The chat opens as a panel on the right.</li>
+      <li>Under the box where you type, find the mode dropdown (it may say <b>Ask</b> or <b>Edit</b>). Choose <b>Agent</b>. Spec Kit only works in Agent mode, because Copilot has to create files and run scripts.</li>
+      <li>Next to it is the model picker. Choose a mid-range model, not the most expensive one; it keeps you well inside the workshop's AI credits.</li>
+    </ol>
+    <p class="expect">✓ You should see: the chat panel on the right, showing <b>Agent</b> under the text box.</p>
+    <p class="muted"><b>If it fails:</b> No chat icon or shortcut does nothing: Copilot Chat isn't installed or signed in, so redo step 8. No Agent option: update VS Code (Code → Check for Updates on a Mac, Help → Check for Updates on Windows) and reload.</p>
+  </div>
+  <div class="step1">
+    <h3><span class="ph">10</span> Check Copilot can see Spec Kit</h3>
+    <p>In the chat box, type <code>/speckit</code> and wait a moment. Don't press Enter.</p>
     <p class="expect">✓ You should see: a list including <code>/speckit-constitution</code>, <code>/speckit-specify</code> and <code>/speckit-plan</code>. Don't run any of them yet.</p>
-    <p class="muted"><b>If it fails:</b> Nothing appears: check the mode is Agent and VS Code is on <code>feh-app</code>, then run <b>Developer: Reload Window</b>.</p>
+    <p class="muted"><b>If it fails:</b> Nothing appears: check the mode is Agent and VS Code is on <code>feh-app</code> (its name is at the top of the Explorer), then run <b>Developer: Reload Window</b> (Cmd/Ctrl + Shift + P).</p>
   </div>
 
   <h3>Final check</h3>
   <ul class="checks">
     <li>VS Code is open on the <code>feh-app</code> folder itself (its name is at the top of the Explorer)</li>
     <li>The Explorer shows <code>.github</code>, <code>.specify</code> and <code>docs</code>, and <code>docs</code> has <code>feh-requirements.md</code>, <code>reference.md</code>, <code>constitution.md</code>, <code>specs.md</code> and <code>mockup</code> has <code>mvp-app.html</code> plus FEH's screens 01 and 03, and <code>sample</code> has the sample transcript</li>
-    <li>Copilot Chat is in <b>Agent</b> mode and typing <code>/speckit</code> lists the Spec Kit commands</li>
+    <li>GitHub Copilot Chat is installed and signed in (Copilot icon at the bottom, no warning)</li>
+    <li>Copilot Chat is open in <b>Agent</b> mode with a mid-range model, and typing <code>/speckit</code> lists the Spec Kit commands</li>
     <li><code>git log --oneline</code> shows one commit, "Start: Spec Kit and workshop docs"</li>
   </ul>
   <div class="warnbox"><b>Don't skip ahead</b><code>constitution.md</code> and <code>specs.md</code> are the answer keys for Day 1. You'll write your own first, then compare.</div>
