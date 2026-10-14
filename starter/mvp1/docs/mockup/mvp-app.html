@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Action Tracker · MVP 1 Voice capture (interactive mockup)</title>
+<!--
+  INTERACTIVE MOCKUP of workshop MVP 1 · Voice capture, in one file. Not production code.
+  It shows how the finished MVP (specs 001-006) looks and behaves, end to end, so Copilot and
+  participants can check every screen against it. Build the real app in Django as the
+  constitution says; copy the structure, labels, colours and behaviour from here.
+
+  Screens (hash routes)                          Spec
+  #/sign-in                Sign in as            001  Workshop Sign-in and Hotel Access
+  #/meetings               Meetings              002  Weekly Meetings
+  #/meetings/new           New meeting           002
+  #/meetings/<id>          Meeting screen        003 actions (+ Record button, 004; waiting banner, 006)
+  #/meetings/<id>/add      Add action            003 (with "Anticipated result")
+  #/actions/<id>/edit      Edit action           003
+  #/meetings/<id>/record   Record                004 record and transcribe · 005 extract
+  #/meetings/<id>/review   Review proposed items 006 review and confirm
+  #/proposals/<id>/edit    Edit proposed item    006 (same form and rules as 003)
+
+  Rules shown here (source of truth: docs/reference.md, docs/constitution.md and the approved specs):
+  - Each person belongs to one hotel and only ever sees that hotel's data (Grace Teo, Lee Chen: Hotel B).
+  - One meeting per hotel per date. Required action fields: segment, category, issue, action, owner, due.
+  - Recording is SIMULATED here: no microphone is used. The real app records with MediaRecorder.
+  - transcribe() and extract() return the sample data (AI_PROVIDER=sample): docs/sample/transcript.txt
+    and docs/sample/items.json. With Azure keys the real app calls Azure OpenAI instead (Principle XVI).
+  - AI proposes, a person confirms (Principle XV): extracted items are Proposed until the chair confirms;
+    confirmed items become Open actions marked "From recording". Removed items are kept, never deleted.
+  - Carry forward and overdue are stretch spec 007 and are not shown.
+  - "Today" is fixed to Fri 16 Oct 2026 (Day 2 of the workshop). Data lives in memory; reload resets it.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Design tokens: docs/reference.md "Look" and docs/constitution.md "Visual Design" */
+:root{
+  --page:#F3F5F7; --card:#FFFFFF; --border:#DDE3E8; --topbar:#0E2A33;
+  --ink:#14202B; --muted:#5B6670; --primary:#0F6B6B; --btn-border:#C9D2D9;
+  --overdue:#B42318; --group-carried:#EAF0F3; --group-raised:#E3F1F0; --avatar:#E3EAEE;
+  --prio-high-bg:#FDECEC; --prio-high:#B42318; --prio-medium-bg:#FDF3DC; --prio-medium:#8A5200;
+  --prio-low-bg:#EEF1F4; --prio-low:#34454F;
+  --status-open:#4A5A68; --status-in-progress:#1F4F99; --status-blocked:#8A5200;
+  --status-done:#0B7A55; --status-cancelled:#9AA3AB;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);font-family:Inter,system-ui,sans-serif;color:var(--ink);font-size:15px}
+.topbar{height:64px;background:var(--topbar);color:#fff;display:flex;align-items:center;padding:0 32px;gap:28px}
+.topbar .brand{font-size:20px;font-weight:700;margin-right:12px;color:#fff;text-decoration:none}
+.topbar nav a{color:#fff;text-decoration:none;padding:9px 14px;border-radius:8px;font-weight:500}
+.topbar nav a[aria-current="page"]{background:#1d4450}
+.topbar .user{margin-left:auto;display:flex;align-items:center;gap:12px;font-size:14px}
+.topbar .user small{display:block;opacity:.75;font-size:12.5px}
+.topbar .user button{background:none;color:#fff;border:1px solid #4b6670;height:40px;padding:0 12px;border-radius:8px;font:inherit;font-size:13px}
+main{padding:28px 32px}
+h1{font-size:30px;margin:4px 0 6px;font-weight:700}
+.breadcrumb{color:var(--muted);font-size:14px}
+.muted{color:var(--muted)}
+.btn{min-height:42px;padding:0 18px;border-radius:8px;border:1px solid var(--btn-border);background:#fff;font:inherit;font-weight:600;color:var(--ink);display:inline-flex;align-items:center;text-decoration:none;cursor:pointer}
+.btn-primary{background:var(--primary);border-color:var(--primary);color:#fff}
+.card{background:var(--card);border:1px solid var(--border);border-radius:8px}
+.avatar{width:30px;height:30px;border-radius:50%;background:var(--avatar);display:inline-grid;place-items:center;font-size:11.5px;font-weight:700;color:#34454F;margin-right:8px;vertical-align:middle}
+.priority{display:inline-block;padding:3px 10px;border-radius:999px;font-size:13px;font-weight:500}
+.priority-high{background:var(--prio-high-bg);color:var(--prio-high)}
+.priority-medium{background:var(--prio-medium-bg);color:var(--prio-medium)}
+.priority-low{background:var(--prio-low-bg);color:var(--prio-low)}
+.status::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px;vertical-align:1px;background:currentColor}
+.status-open::before{background:var(--status-open)} .status-in-progress::before{background:var(--status-in-progress)}
+.status-blocked::before{background:var(--status-blocked)} .status-done::before{background:var(--status-done)}
+.status-cancelled::before{background:var(--status-cancelled)}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font-size:13px;color:var(--muted);font-weight:600;padding:13px 14px;border-bottom:1px solid var(--border)}
+td{padding:14px;border-bottom:1px solid var(--border);vertical-align:top;font-size:14.5px}
+td .sub{display:block;color:var(--muted);font-size:12.5px;margin-top:3px}
+.overdue{color:var(--overdue);font-weight:600}
+tr.group th{font-size:13px;font-weight:600;padding:9px 14px;color:var(--ink)}
+tr.group-carried th{background:var(--group-carried)} tr.group-raised th{background:var(--group-raised)}
+a.link{color:var(--primary);font-weight:600;text-decoration:none}
+.counters{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:22px 0}
+.counters .card{padding:16px 20px}.counters dt{color:var(--muted);font-size:13.5px}.counters dd{margin:4px 0 0;font-size:30px;font-weight:700}
+.chips{list-style:none;padding:0;margin:12px 0 0;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.chips li{background:var(--group-raised);color:#0b4f4f;border-radius:999px;padding:4px 12px;font-size:13px}
+form .field{margin-bottom:16px}
+form label{display:block;font-size:13.5px;font-weight:600;margin-bottom:6px}
+form input,form select{width:100%;height:42px;border:1px solid var(--btn-border);border-radius:8px;background:#fff;padding:0 12px;font:inherit;color:var(--ink)}
+form select[multiple]{height:auto;padding:6px}
+form [aria-invalid="true"]{border-color:var(--overdue)}
+.error{color:var(--overdue);font-size:13px;margin-top:5px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:0 20px}
+.actions{display:flex;gap:10px;margin-top:8px}
+
+.mock-banner{background:#FFF4CC;color:#4a3b00;border-bottom:1px solid #E8D48A;padding:10px 32px;font-size:14px;line-height:1.5}
+.mock-banner b{font-weight:700}
+.mock-banner > b:first-child{margin-right:6px}
+.mock-note{position:fixed;right:12px;bottom:10px;background:#22333d;color:#fff;font-size:12px;padding:6px 10px;border-radius:6px;opacity:.85}
+.mock-note a{color:#9fe3d6}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.check-list{display:flex;flex-wrap:wrap;gap:8px 18px;border:1px solid var(--btn-border);border-radius:8px;background:#fff;padding:10px 12px}
+.check-list label{display:flex;align-items:center;gap:6px;font-weight:500;margin:0}
+.check-list input{width:auto;height:auto}
+.flash{background:var(--group-raised);color:#0b4f4f;border-radius:8px;padding:10px 14px;margin:14px 0 0;font-size:14px}
+.empty{padding:28px;text-align:center;color:var(--muted)}
+.tag{display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:600;margin-top:4px}
+.tag-proposed{background:#EDE7FB;color:#4B2A9A}.tag-rec{background:var(--group-raised);color:#0b4f4f}
+.waiting{display:flex;align-items:center;gap:12px;background:#EDE7FB;color:#3a2380;border-radius:8px;padding:10px 14px;margin:14px 0 0;font-size:14px}
+.rec-card{padding:28px;margin-top:18px;max-width:860px}
+.rec-btn{display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 22px;border-radius:999px;border:0;font:inherit;font-weight:700;font-size:16px;cursor:pointer;color:#fff;background:#B42318}
+.rec-btn.stop{background:var(--topbar)}
+.rec-dot{width:14px;height:14px;border-radius:50%;background:#fff}
+.rec-btn.stop .rec-dot{border-radius:3px}
+.timer{font-variant-numeric:tabular-nums;font-size:28px;font-weight:700;margin-left:16px;vertical-align:middle}
+.live{color:#B42318;font-weight:600;margin-left:12px}
+.live::before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;background:#B42318;margin-right:6px;animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.2}}
+.working{display:flex;align-items:center;gap:10px;color:var(--muted);margin-top:18px;font-weight:600}
+.spin{width:18px;height:18px;border:3px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:sp 0.8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.transcript{white-space:pre-wrap;background:#F8FAFB;border:1px solid var(--border);border-radius:8px;padding:14px 16px;font-size:14px;line-height:1.55;margin-top:8px}
+details.tx summary{cursor:pointer;font-weight:600;margin:14px 0 4px}
+.ai-note{background:#EDE7FB;color:#3a2380;border-radius:8px;padding:10px 14px;margin:14px 0;font-size:14px}
+.missing{color:var(--overdue);font-weight:600;font-size:13px}
+tr.removed td{opacity:.45;text-decoration:line-through}
+</style>
+</head>
+<body>
+<!-- The banner below is part of the mockup only. Do not build it into the real app. -->
+<div class="mock-banner" role="note"><b>Interactive mockup</b> This is not the real app. It shows what workshop <b>MVP 1 · Voice capture</b> looks like and how it behaves. Recording is simulated and uses a sample transcript. During the FEH × VISEO workshop we build the production MVP from it, spec by spec, with GitHub Spec Kit and GitHub Copilot. Data is invented and resets on reload.</div>
+<div id="app"></div>
+<div class="mock-note">Mockup · today is Fri 16 Oct 2026 · <a href="#" id="reset">reset data</a></div>
+<script>
+(function(){
+'use strict';
+var TODAY = '2026-10-16';
+var HOTELS = {HTA:'Hotel A', HTB:'Hotel B'};
+var PEOPLE = [
+  {id:'mary', name:'Mary Tan', hotel:'HTA'}, {id:'john', name:'John Lim', hotel:'HTA'},
+  {id:'alex', name:'Alex Wong', hotel:'HTA'}, {id:'sam', name:'Sam Ng', hotel:'HTA'},
+  {id:'priya', name:'Priya Rao', hotel:'HTA'}, {id:'grace', name:'Grace Teo', hotel:'HTB'},
+  {id:'lee', name:'Lee Chen', hotel:'HTB'}];
+var SEGMENTS = ['Corporate','MICE / Groups','Leisure / Transient','OTA','Wholesale','Government','Airline','Direct'];
+var CATEGORIES = ['Pace / pickup','Rate / ADR','Mix','Cancellations / wash','Competitor','Event / compression','Distribution','Service'];
+var PRIORITIES = ['High','Medium','Low'];
+var STATUSES = ['Open','In progress','Blocked','Done','Cancelled'];
+var OPEN = {'Open':1,'In progress':1,'Blocked':1};
+
+function seed(){
+  var A = ['mary','john','alex','sam','priya'];
+  return {
+    meetings: [
+      {id:1, hotel:'HTA', date:'2026-09-29', time:'10:00', title:'Weekly performance meeting', chair:'john', attendees:A, teams:''},
+      {id:2, hotel:'HTA', date:'2026-10-06', time:'10:00', title:'Weekly performance meeting', chair:'john', attendees:A, teams:''},
+      {id:3, hotel:'HTA', date:'2026-10-13', time:'10:00', title:'Weekly performance meeting', chair:'john', attendees:A, teams:''},
+      {id:4, hotel:'HTB', date:'2026-10-07', time:'09:30', title:'Weekly performance meeting', chair:'grace', attendees:['grace','lee'], teams:''}],
+    actions: [
+      {id:1, meeting:1, segment:'MICE / Groups', category:'Cancellations / wash', issue:'Group wash risk for Company ABC', action:'Contact company organizer for rooming list update', owner:'mary', priority:'Medium', due:'2026-10-16', status:'Blocked'},
+      {id:2, meeting:1, segment:'OTA', category:'Rate / ADR', issue:'Parity gap on weekend rates', action:'Adjust weekend rates on OTA channels', owner:'alex', priority:'Medium', due:'2026-10-11', status:'In progress'},
+      {id:3, meeting:1, segment:'MICE / Groups', category:'Service', issue:'Breakfast queue complaints from group', action:'Open second breakfast station for groups over 40', owner:'sam', priority:'Medium', due:'2026-10-06', status:'Done'},
+      {id:4, meeting:2, segment:'Corporate', category:'Pace / pickup', issue:'Corporate segment below forecast', action:'Review upcoming opportunities for sales', owner:'john', priority:'High', due:'2026-10-10', status:'In progress'},
+      {id:5, meeting:2, segment:'Government', category:'Pace / pickup', issue:'Forecast not submitted', action:'Send Q4 forecast to regional office', owner:'mary', priority:'Medium', due:'2026-10-09', status:'In progress'},
+      {id:6, meeting:3, segment:'Leisure / Transient', category:'Event / compression', issue:'Concert on 14 Nov compresses demand', action:'Set minimum stay for 13 to 15 Nov', owner:'sam', priority:'High', due:'2026-10-20', status:'Open'},
+      {id:7, meeting:3, segment:'Airline', category:'Distribution', issue:'Crew block release date not confirmed', action:'Confirm release date with airline contact', owner:'priya', priority:'Low', due:'2026-10-23', status:'Open'},
+      {id:8, meeting:3, segment:'Wholesale', category:'Pace / pickup', issue:'Wholesale pickup behind forecast', action:'Call top three wholesale partners', owner:'mary', priority:'Medium', due:'2026-10-20', status:'Open'},
+      {id:9, meeting:4, segment:'Corporate', category:'Pace / pickup', issue:'Two key accounts slowing', action:"Meet both accounts' travel managers", owner:'grace', priority:'High', due:'2026-10-12', status:'In progress'},
+      {id:10, meeting:4, segment:'Leisure / Transient', category:'Competitor', issue:'New hotel opening nearby', action:'Prepare rate response plan', owner:'lee', priority:'Medium', due:'2026-10-21', status:'Open'}],
+    proposals: [], transcripts: {}
+  };
+}
+var SAMPLE_TRANSCRIPT = "John Lim: Next item. Alex, where are we on December corporate?\nAlex Wong: Behind last year. Corporate pace for December is about fifteen percent down, mostly two accounts that haven't booked their year-end events.\nJohn Lim: Can you go through the December pipeline with sales and come back with a recovery plan? Let's say by the twenty-third.\nAlex Wong: Yes, by the twenty-third. I'd like December pickup back to last year's pace.\nJohn Lim: Good. Priya, the OTA weekend rates?\nPriya Rao: The new hotel down the road is undercutting us on weekends on the OTAs, by about twenty dollars.\nJohn Lim: Match them for the twenty-fourth and twenty-fifth only, and watch the pickup. High priority, please do it by the twentieth.\nPriya Rao: Okay. The aim is weekend occupancy above eighty-five percent.\nJohn Lim: Last one. Mary, the Company ABC rooming list?\nMary Tan: Still nothing from the organiser, even after two emails.\nJohn Lim: Escalate to their travel manager then. By Monday, the nineteenth.\nMary Tan: Will do. We need the list in and the wash under ten percent.";
+var SAMPLE_ITEMS = [{"segment": "Corporate", "category": "Pace / pickup", "issue": "December corporate pace behind last year", "action": "Review December corporate pipeline with sales and propose a recovery plan", "owner": "Alex Wong", "priority": "Medium", "due": "2026-10-23", "anticipated_result": "December corporate pickup back to last year's pace"}, {"segment": "OTA", "category": "Rate / ADR", "issue": "New competitor undercutting weekend rates on OTAs", "action": "Match competitor weekend rates for 24 and 25 Oct and monitor pickup", "owner": "Priya Rao", "priority": "High", "due": "2026-10-20", "anticipated_result": "Weekend occupancy above 85%"}, {"segment": "MICE / Groups", "category": "Cancellations / wash", "issue": "Company ABC rooming list still missing", "action": "Escalate to Company ABC's travel manager", "owner": "Mary Tan", "priority": "Medium", "due": "2026-10-19", "anticipated_result": "Rooming list received and wash under 10%"}];   /* docs/sample/items.json */
+function byName(n){ for (var i=0;i<PEOPLE.length;i++) if (PEOPLE[i].name===n) return PEOPLE[i].id; return ''; }
+var db = seed(), me = null, flash = '';
+
+/* ---------- helpers ---------- */
+function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+function person(id){ for (var i=0;i<PEOPLE.length;i++) if (PEOPLE[i].id===id) return PEOPLE[i]; return null; }
+function initials(n){ return n.split(' ').map(function(w){return w[0];}).join(''); }
+function avatar(id){ var p = person(id); return '<span class="avatar">'+initials(p.name)+'</span>'+esc(p.name); }
+var MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+var DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+function d(s){ var p = s.split('-'); return new Date(Date.UTC(+p[0], +p[1]-1, +p[2])); }
+function fmt(s, withDay, withYear){ var x = d(s); return (withDay ? DOW[x.getUTCDay()]+' ' : '') + x.getUTCDate()+' '+MON[x.getUTCMonth()] + (withYear===false ? '' : ' '+x.getUTCFullYear()); }
+function days(a, b){ return Math.round((d(a)-d(b))/86400000); }
+function hotelMeetings(){ return db.meetings.filter(function(m){ return m.hotel===me.hotel; }); }   /* isolation in one place */
+function meeting(id){ var m = db.meetings.filter(function(x){ return x.id===+id; })[0]; return m && m.hotel===me.hotel ? m : null; }
+function action(id){ var a = db.actions.filter(function(x){ return x.id===+id; })[0]; return a && meeting(a.meeting) ? a : null; }
+function isOverdue(a){ return OPEN[a.status] && a.due < TODAY; }
+function dueText(a){
+  if (isOverdue(a)) return '<span class="sub overdue">Overdue by '+days(TODAY, a.due)+' day'+(days(TODAY,a.due)===1?'':'s')+'</span>';
+  if (a.due===TODAY) return '<span class="sub">Due today</span>';
+  if (a.due > TODAY) return '<span class="sub">Due in '+days(a.due, TODAY)+' day'+(days(a.due,TODAY)===1?'':'s')+'</span>';
+  return '';
+}
+function go(h){ location.hash = h; }
+
+/* ---------- layout ---------- */
+function topbar(){
+  if (!me) return '<header class="topbar"><span class="brand">Action Tracker</span></header>';
+  return '<header class="topbar"><a class="brand" href="#/meetings">Action Tracker</a>'+
+    '<nav aria-label="Main"><a href="#/meetings" aria-current="page">Meetings</a></nav>'+
+    '<div class="user"><span class="avatar" style="margin:0">'+initials(me.name)+'</span><div>'+esc(me.name)+'<small>'+HOTELS[me.hotel]+'</small></div>'+
+    '<button type="button" id="signout">Sign out</button></div></header>';
+}
+function render(html){
+  document.getElementById('app').innerHTML = topbar() + html;
+  var so = document.getElementById('signout');
+  if (so) so.onclick = function(){ me = null; go('#/sign-in'); };
+  window.scrollTo(0, 0);
+}
+
+/* ---------- 001 sign in ---------- */
+function signIn(){
+  render('<main style="display:grid;place-items:center;padding-top:60px"><section class="card" style="width:560px;padding:32px">'+
+    '<h1 style="margin-top:0">Sign in</h1><p class="muted" style="margin:0 0 20px">Workshop sign-in. Microsoft Entra ID replaces this page in the real product.</p>'+
+    '<ul style="list-style:none;padding:0;margin:0;display:grid;gap:10px">'+
+    PEOPLE.map(function(p){ return '<li><button class="btn" data-person="'+p.id+'" style="width:100%;height:52px;justify-content:flex-start"><span class="avatar">'+initials(p.name)+'</span>'+esc(p.name)+'<span class="muted" style="margin-left:auto">'+HOTELS[p.hotel]+'</span></button></li>'; }).join('')+
+    '</ul></section></main>');
+  [].forEach.call(document.querySelectorAll('[data-person]'), function(b){ b.onclick = function(){ me = person(b.getAttribute('data-person')); go('#/meetings'); }; });
+}
+
+/* ---------- 002 meetings ---------- */
+function meetingsList(){
+  var ms = hotelMeetings().sort(function(a,b){ return (b.date+b.time).localeCompare(a.date+a.time); });
+  render('<main><div style="display:flex;align-items:end"><div><div class="breadcrumb">'+HOTELS[me.hotel]+'</div><h1>Meetings</h1></div>'+
+    '<a class="btn btn-primary" href="#/meetings/new" style="margin-left:auto">New meeting</a></div>'+
+    '<div class="card" style="margin-top:20px"><table><thead><tr><th style="width:240px">Date</th><th>Title</th><th>Chair</th></tr></thead><tbody>'+
+    (ms.length ? ms.map(function(m){ return '<tr><td><a class="link" href="#/meetings/'+m.id+'">'+fmt(m.date,true)+'</a><span class="sub">'+m.time+'</span></td><td>'+esc(m.title)+'</td><td>'+avatar(m.chair)+'</td></tr>'; }).join('')
+      : '<tr><td colspan="3" class="empty">No meetings yet.</td></tr>')+
+    '</tbody></table></div></main>');
+}
+function newMeeting(errors, v){
+  var last = hotelMeetings().sort(function(a,b){ return b.date.localeCompare(a.date); })[0];
+  v = v || {date:TODAY, time: last ? last.time : '10:00', title:'Weekly performance meeting', chair: last ? last.chair : me.id,
+            attendees: last ? last.attendees.slice() : null, teams:''};   /* defaults: copied from the hotel's latest meeting */
+  errors = errors || {};
+  var ppl = PEOPLE.filter(function(p){ return p.hotel===me.hotel; });
+  function err(k){ return errors[k] ? '<div class="error" id="'+k+'-error">'+errors[k]+'</div>' : ''; }
+  function inv(k){ return errors[k] ? ' aria-invalid="true" aria-describedby="'+k+'-error"' : ''; }
+  render('<main><div class="breadcrumb"><a class="link" href="#/meetings">Meetings</a> / New meeting</div><h1>New meeting</h1>'+
+    '<form class="card" id="f" novalidate style="width:760px;padding:28px;margin-top:18px">'+
+    '<div class="two-col"><div class="field"><label for="date">Date</label><input id="date" type="date" value="'+v.date+'"'+inv('date')+'>'+err('date')+'</div>'+
+    '<div class="field"><label for="time">Time</label><input id="time" type="time" value="'+v.time+'"'+inv('time')+'>'+err('time')+'</div></div>'+
+    '<div class="field"><label for="title">Title</label><input id="title" value="'+esc(v.title)+'"'+inv('title')+'>'+err('title')+'</div>'+
+    '<div class="field"><label for="chair">Chair</label><select id="chair"'+inv('chair')+'><option value="">Select</option>'+
+      ppl.map(function(p){ return '<option value="'+p.id+'"'+(v.chair===p.id?' selected':'')+'>'+esc(p.name)+'</option>'; }).join('')+'</select>'+err('chair')+'</div>'+
+    '<fieldset class="field" style="border:0;padding:0;margin:0 0 16px"><legend style="font-size:13.5px;font-weight:600;margin-bottom:6px">Attendees</legend><div class="check-list">'+
+      ppl.map(function(p){ var on = v.attendees ? v.attendees.indexOf(p.id)>-1 : true; return '<label><input type="checkbox" name="att" value="'+p.id+'"'+(on?' checked':'')+'>'+esc(p.name)+'</label>'; }).join('')+'</div></fieldset>'+
+    '<div class="field"><label for="teams">Teams meeting link <span class="muted" style="font-weight:400">(optional)</span></label><input id="teams" type="url" placeholder="https://teams.microsoft.com/..." value="'+esc(v.teams)+'"'+inv('teams')+'>'+err('teams')+'</div>'+
+    '<div class="actions"><button class="btn btn-primary" type="submit">Create meeting</button><a class="btn" href="#/meetings">Cancel</a></div></form></main>');
+  document.getElementById('f').onsubmit = function(e){
+    e.preventDefault();
+    var val = {date:$('date'), time:$('time'), title:$('title').trim(), chair:$('chair'), teams:$('teams').trim(),
+      attendees:[].map.call(document.querySelectorAll('[name=att]:checked'), function(x){ return x.value; })};
+    var er = {};
+    if (!val.date) er.date = 'Enter a date.';
+    else if (hotelMeetings().some(function(m){ return m.date===val.date; })) er.date = 'There is already a meeting on this date.';
+    if (!val.time) er.time = 'Enter a time.';
+    if (!val.title) er.title = 'Enter a title.';
+    if (!val.chair) er.chair = 'Choose a chair.';
+    if (val.teams && !/^https?:\/\//.test(val.teams)) er.teams = 'Enter a web address starting with https://';
+    if (Object.keys(er).length) return newMeeting(er, val);
+    var id = Math.max.apply(null, db.meetings.map(function(m){ return m.id; })) + 1;
+    db.meetings.push({id:id, hotel:me.hotel, date:val.date, time:val.time, title:val.title, chair:val.chair, attendees:val.attendees, teams:val.teams});
+    flash = 'Meeting created.'; go('#/meetings/'+id);
+  };
+}
+function $(id){ return document.getElementById(id).value; }
+
+/* ---------- 003 meeting screen (+004 Record button, 006 waiting banner) ---------- */
+function rowHtml(a){
+  return '<tr><td>'+esc(a.segment)+'</td><td>'+esc(a.category)+'</td>'+
+    '<td>'+esc(a.issue)+(a.source==='recording'?'<br><span class="tag tag-rec">From recording</span>':'')+'</td>'+
+    '<td>'+esc(a.action)+(a.anticipated?'<span class="sub">Expected: '+esc(a.anticipated)+'</span>':'')+'</td>'+
+    '<td>'+avatar(a.owner)+'</td><td><span class="priority priority-'+a.priority.toLowerCase()+'">'+a.priority+'</span></td>'+
+    '<td>'+fmt(a.due,false,false)+'</td>'+
+    '<td><span class="status status-'+a.status.toLowerCase().replace(' ','-')+'">'+a.status+'</span></td>'+
+    '<td><a class="link" href="#/actions/'+a.id+'/edit">Edit</a></td></tr>';
+}
+function waiting(m){ return db.proposals.filter(function(p){ return p.meeting===m.id && p.state==='Proposed'; }); }
+function meetingScreen(id){
+  var m = meeting(id); if (!m) return notFound();
+  var acts = db.actions.filter(function(a){ return a.meeting===m.id; });
+  var w = waiting(m);
+  var f = flash; flash = '';
+  render('<main><div style="display:flex;align-items:end;gap:10px"><div>'+
+    '<div class="breadcrumb"><a class="link" href="#/meetings">Meetings</a> / '+fmt(m.date)+'</div><h1>'+esc(m.title)+'</h1>'+
+    '<div class="muted" style="font-size:14px">'+fmt(m.date,true)+', '+m.time+' · Chair: '+esc(person(m.chair).name)+(m.teams?' · <a class="link" href="'+esc(m.teams)+'">Teams meeting link</a>':'')+'</div></div>'+
+    '<a class="btn" href="#/meetings/'+m.id+'/record" style="margin-left:auto"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#B42318;margin-right:8px"></span>Record</a>'+
+    '<a class="btn btn-primary" href="#/meetings/'+m.id+'/add">Add action</a></div>'+
+    (f ? '<div class="flash" role="status">'+f+'</div>' : '')+
+    (w.length ? '<div class="waiting" role="status"><b>'+w.length+' proposed item'+(w.length===1?'':'s')+' waiting for review</b><a class="link" href="#/meetings/'+m.id+'/review">Review</a></div>' : '')+
+    '<ul class="chips" aria-label="Attendees"><li style="background:none;color:var(--muted);padding-left:0">Attendees ('+m.attendees.length+')</li>'+
+      m.attendees.map(function(p){ return '<li>'+esc(person(p).name)+'</li>'; }).join('')+'</ul>'+
+    '<div class="card" style="margin-top:22px"><table><thead><tr><th style="width:130px">Market segment</th><th style="width:140px">Issue category</th><th>Issue</th><th>Action required</th><th style="width:150px">Owner</th><th style="width:100px">Priority</th><th style="width:90px">Due</th><th style="width:130px">Status</th><th style="width:60px"><span class="sr">Edit</span></th></tr></thead>'+
+    '<tbody><tr class="group group-raised"><th colspan="9" scope="rowgroup">Actions in this meeting ('+acts.length+')</th></tr>'+
+      (acts.length ? acts.map(rowHtml).join('') : '<tr><td colspan="9" class="empty">No actions yet. Use "Record" or "Add action".</td></tr>')+'</tbody>'+
+    '</table></div>'+
+    '<p class="muted" style="font-size:13px">Carry forward and overdue are stretch spec 007 and are not shown in this mockup.</p></main>');
+}
+
+/* ---------- 004 + 005 record, transcribe, extract (simulated) ---------- */
+var recTimer = null;
+function recordPage(id){
+  var m = meeting(id); if (!m) return notFound();
+  clearInterval(recTimer);
+  render('<main><div class="breadcrumb"><a class="link" href="#/meetings">Meetings</a> / <a class="link" href="#/meetings/'+m.id+'">'+fmt(m.date)+'</a> / Record</div><h1>Record</h1>'+
+    '<section class="card rec-card"><p style="margin-top:0">Record the discussion. When you stop, the app transcribes it and proposes action items for you to review.</p>'+
+    '<div><button class="rec-btn" id="rec"><span class="rec-dot"></span><span id="rec-label">Start recording</span></button>'+
+    '<span class="timer" id="timer" hidden>00:00</span><span class="live" id="live" hidden>Recording…</span></div>'+
+    '<div id="stage"></div></section>'+
+    '<p class="muted" style="font-size:13px">Mockup: recording is simulated (no microphone), and the transcript and items are the sample data (AI_PROVIDER=sample).</p></main>');
+  var btn = document.getElementById('rec'), on = false, secs = 0;
+  btn.onclick = function(){
+    if (!on){
+      on = true; btn.className = 'rec-btn stop'; document.getElementById('rec-label').textContent = 'Stop recording';
+      document.getElementById('timer').hidden = false; document.getElementById('live').hidden = false;
+      recTimer = setInterval(function(){ secs++; var t = document.getElementById('timer'); if (!t) return clearInterval(recTimer);
+        t.textContent = ('0'+Math.floor(secs/60)).slice(-2)+':'+('0'+secs%60).slice(-2); }, 1000);
+      return;
+    }
+    clearInterval(recTimer); btn.disabled = true; btn.style.opacity = .5;
+    document.getElementById('live').hidden = true;
+    var st = document.getElementById('stage');
+    st.innerHTML = '<div class="working" role="status"><span class="spin"></span>Transcribing…</div>';
+    setTimeout(function(){
+      db.transcripts[m.id] = SAMPLE_TRANSCRIPT;
+      st.innerHTML = '<h2 style="font-size:18px;margin:22px 0 0">Transcript</h2><div class="transcript">'+esc(SAMPLE_TRANSCRIPT)+'</div>'+
+        '<div class="working" role="status"><span class="spin"></span>Extracting action items…</div>';
+      setTimeout(function(){
+        var next = db.proposals.length ? Math.max.apply(null, db.proposals.map(function(p){ return p.id; })) + 1 : 1;
+        SAMPLE_ITEMS.forEach(function(it){
+          var owner = byName(it.owner); if (owner && person(owner).hotel !== m.hotel) owner = '';   /* only the hotel's people */
+          db.proposals.push({id:next++, meeting:m.id, state:'Proposed', segment:SEGMENTS.indexOf(it.segment)>-1?it.segment:'',
+            category:CATEGORIES.indexOf(it.category)>-1?it.category:'', issue:it.issue, action:it.action, owner:owner,
+            priority:PRIORITIES.indexOf(it.priority)>-1?it.priority:'Medium', due:it.due||'', anticipated:it.anticipated_result||''});
+        });
+        go('#/meetings/'+m.id+'/review');
+      }, 1300);
+    }, 1300);
+  };
+}
+
+/* ---------- 006 review and confirm ---------- */
+var REQUIRED = {segment:'Market segment', category:'Issue category', issue:'Issue', action:'Action required', owner:'Owner', due:'Due'};
+function missing(p){ return Object.keys(REQUIRED).filter(function(k){ return !p[k]; }).map(function(k){ return REQUIRED[k]+' missing'; }); }
+function reviewPage(id){
+  var m = meeting(id); if (!m) return notFound();
+  var ps = db.proposals.filter(function(p){ return p.meeting===m.id && p.state==='Proposed'; });
+  var f = flash; flash = '';
+  var tx = db.transcripts[m.id];
+  render('<main><div class="breadcrumb"><a class="link" href="#/meetings">Meetings</a> / <a class="link" href="#/meetings/'+m.id+'">'+fmt(m.date)+'</a> / Review</div><h1>Review proposed items</h1>'+
+    (f ? '<div class="flash" role="status">'+f+'</div>' : '')+
+    '<div class="ai-note">Proposed by AI. Nothing is added to the meeting until you confirm.</div>'+
+    (tx ? '<details class="tx"><summary>Transcript</summary><div class="transcript">'+esc(tx)+'</div></details>' : '')+
+    '<form id="f"><div class="card"><table><thead><tr><th style="width:40px"><span class="sr">Select</span></th><th style="width:120px">Market segment</th><th style="width:130px">Issue category</th><th>Issue</th><th>Action required</th><th style="width:140px">Owner</th><th style="width:90px">Priority</th><th style="width:80px">Due</th><th style="width:110px"><span class="sr">Edit or remove</span></th></tr></thead><tbody>'+
+    (ps.length ? ps.map(function(p){
+      var miss = missing(p);
+      return '<tr><td><input type="checkbox" name="sel" value="'+p.id+'" checked aria-label="Select '+esc(p.issue)+'"></td>'+
+        '<td>'+(p.segment?esc(p.segment):'—')+'</td><td>'+(p.category?esc(p.category):'—')+'</td>'+
+        '<td>'+esc(p.issue)+'<br><span class="tag tag-proposed">Proposed</span>'+(miss.length?'<span class="sub missing">'+miss.join(' · ')+'</span>':'')+'</td>'+
+        '<td>'+esc(p.action)+(p.anticipated?'<span class="sub">Expected: '+esc(p.anticipated)+'</span>':'')+'</td>'+
+        '<td>'+(p.owner?avatar(p.owner):'<span class="missing">—</span>')+'</td>'+
+        '<td><span class="priority priority-'+p.priority.toLowerCase()+'">'+p.priority+'</span></td>'+
+        '<td>'+(p.due?fmt(p.due,false,false):'—')+'</td>'+
+        '<td><a class="link" href="#/proposals/'+p.id+'/edit">Edit</a> · <a class="link" href="#" data-remove="'+p.id+'">Remove</a></td></tr>';
+    }).join('') : '<tr><td colspan="9" class="empty">No proposed items waiting. Use "Record" on the meeting.</td></tr>')+
+    '</tbody></table></div>'+
+    '<div class="actions" style="margin-top:16px"><button class="btn btn-primary" type="submit" id="go"'+(ps.length?'':' disabled')+'>Confirm selected ('+ps.length+')</button><a class="btn" href="#/meetings/'+m.id+'">Cancel</a></div>'+
+    '<div class="error" id="err" role="alert"></div></form></main>');
+  function count(){ var n = document.querySelectorAll('[name=sel]:checked').length; document.getElementById('go').textContent = 'Confirm selected ('+n+')'; }
+  [].forEach.call(document.querySelectorAll('[name=sel]'), function(c){ c.onchange = count; });
+  [].forEach.call(document.querySelectorAll('[data-remove]'), function(a){ a.onclick = function(e){ e.preventDefault();
+    var p = db.proposals.filter(function(x){ return x.id===+a.getAttribute('data-remove'); })[0]; p.state = 'Removed'; flash = 'Item removed.'; reviewPage(id); }; });
+  document.getElementById('f').onsubmit = function(e){
+    e.preventDefault();
+    var ids = [].map.call(document.querySelectorAll('[name=sel]:checked'), function(c){ return +c.value; });
+    var sel = db.proposals.filter(function(p){ return ids.indexOf(p.id)>-1; });
+    if (!sel.length) { document.getElementById('err').textContent = 'Select at least one item.'; return; }
+    var bad = sel.filter(function(p){ return missing(p).length; });
+    if (bad.length) { document.getElementById('err').textContent = 'Edit the items with missing fields first: ' + bad.map(function(p){ return p.issue; }).join(', ') + '.'; return; }
+    var next = Math.max.apply(null, db.actions.map(function(x){ return x.id; })) + 1;
+    sel.forEach(function(p){   /* all or nothing for the selected items */
+      db.actions.push({id:next++, meeting:m.id, segment:p.segment, category:p.category, issue:p.issue, action:p.action, owner:p.owner,
+        priority:p.priority, due:p.due, status:'Open', anticipated:p.anticipated, source:'recording'});
+      p.state = 'Confirmed';
+    });
+    flash = sel.length + ' action' + (sel.length===1?'':'s') + ' confirmed.';
+    go('#/meetings/'+m.id);
+  };
+}
+
+/* ---------- 003 add / edit action ---------- */
+function actionForm(meetingId, actionId, errors, v, proposalId){
+  var prop = proposalId ? db.proposals.filter(function(x){ return x.id===+proposalId && x.state==='Proposed'; })[0] : null;
+  if (proposalId && (!prop || !meeting(prop.meeting))) return notFound();
+  var a = actionId ? action(actionId) : (prop || null);
+  if (actionId && !a) return notFound();
+  var m = meeting(a ? a.meeting : meetingId); if (!m) return notFound();
+  var back = prop ? '#/meetings/'+m.id+'/review' : '#/meetings/' + (a ? currentMeeting || m.id : m.id);
+  v = v || (a ? Object.assign({}, a) : {segment:'', category:'', issue:'', action:'', owner:'', priority:'Medium', due:'', status:'Open', anticipated:''});
+  errors = errors || {};
+  var ppl = PEOPLE.filter(function(p){ return p.hotel===me.hotel; });
+  function sel(k, list, labels){ return '<select id="'+k+'"'+inv(k)+'>'+(k==='priority'||k==='status'?'':'<option value="">Select</option>')+
+    list.map(function(x,i){ return '<option value="'+esc(x)+'"'+(v[k]===x?' selected':'')+'>'+esc(labels?labels[i]:x)+'</option>'; }).join('')+'</select>'+err(k); }
+  function err(k){ return errors[k] ? '<div class="error" id="'+k+'-error">'+errors[k]+'</div>' : ''; }
+  function inv(k){ return errors[k] ? ' aria-invalid="true" aria-describedby="'+k+'-error"' : ''; }
+  var title = prop ? 'Edit proposed item' : a ? 'Edit action' : 'Add action';
+  render('<main><div class="breadcrumb"><a class="link" href="#/meetings">Meetings</a> / <a class="link" href="'+back+'">'+fmt(m.date)+'</a> / '+title+'</div><h1>'+title+'</h1>'+
+    '<form class="card" id="f" novalidate style="width:860px;padding:28px;margin-top:18px">'+
+    '<div class="two-col"><div class="field"><label for="segment">Market segment</label>'+sel('segment', SEGMENTS)+'</div>'+
+    '<div class="field"><label for="category">Issue category</label>'+sel('category', CATEGORIES)+'</div></div>'+
+    '<div class="field"><label for="issue">Issue</label><input id="issue" maxlength="300" value="'+esc(v.issue)+'"'+inv('issue')+'>'+err('issue')+'</div>'+
+    '<div class="field"><label for="action">Action required</label><input id="action" maxlength="300" value="'+esc(v.action)+'"'+inv('action')+'>'+err('action')+'</div>'+
+    '<div class="field"><label for="anticipated">Anticipated result <span class="muted" style="font-weight:400">(optional)</span></label><input id="anticipated" maxlength="300" value="'+esc(v.anticipated||'')+'"'+inv('anticipated')+'>'+err('anticipated')+'</div>'+
+    '<div class="two-col"><div class="field"><label for="owner">Owner</label>'+sel('owner', ppl.map(function(p){return p.id;}), ppl.map(function(p){return p.name;}))+'</div>'+
+    '<div class="field"><label for="priority">Priority</label>'+sel('priority', PRIORITIES)+'</div>'+
+    '<div class="field"><label for="due">Due</label><input id="due" type="date" value="'+v.due+'"'+inv('due')+'>'+err('due')+'</div>'+
+    (prop ? '' : '<div class="field"><label for="status">Status</label>'+sel('status', STATUSES)+'</div>')+'</div>'+
+    '<div class="actions"><button class="btn btn-primary" type="submit">'+(prop?'Save item':'Save action')+'</button><a class="btn" href="'+back+'">Cancel</a></div></form></main>');
+  document.getElementById('f').onsubmit = function(e){
+    e.preventDefault();
+    var val = {segment:$('segment'), category:$('category'), issue:$('issue').trim(), action:$('action').trim(), anticipated:$('anticipated').trim(), owner:$('owner'), priority:$('priority'), due:$('due')};
+    if (!prop) val.status = $('status');
+    var er = {};
+    if (!val.segment) er.segment = 'Choose a market segment.';
+    if (!val.category) er.category = 'Choose an issue category.';
+    if (!val.issue) er.issue = 'Enter the issue.'; else if (val.issue.length > 300) er.issue = 'Use 300 characters or fewer.';
+    if (!val.action) er.action = 'Enter the action required.'; else if (val.action.length > 300) er.action = 'Use 300 characters or fewer.';
+    if (!val.owner) er.owner = 'Choose an owner.';
+    if (!val.due) er.due = 'Enter a due date.';
+    if (val.anticipated.length > 300) er.anticipated = 'Use 300 characters or fewer.';
+    if (Object.keys(er).length) return actionForm(meetingId, actionId, er, val, proposalId);
+    if (prop) { Object.assign(prop, val); flash = 'Item saved.'; }
+    else if (a) { Object.assign(a, val); flash = 'Action saved.'; }
+    else { val.id = Math.max.apply(null, db.actions.map(function(x){ return x.id; })) + 1; val.meeting = m.id; db.actions.push(val); flash = 'Action added.'; }
+    go(back);
+  };
+}
+function notFound(){ render('<main><h1>Page not found</h1><p class="muted">It doesn\'t exist, or it belongs to another hotel.</p><a class="link" href="#/meetings">Back to Meetings</a></main>'); }
+
+/* ---------- router ---------- */
+var currentMeeting = null;
+function route(){
+  clearInterval(recTimer);
+  var h = location.hash || '#/sign-in', p;
+  if (!me && h !== '#/sign-in') return go('#/sign-in');
+  if (h === '#/sign-in') return signIn();
+  if (h === '#/meetings') return meetingsList();
+  if (h === '#/meetings/new') return newMeeting();
+  if ((p = h.match(/^#\/meetings\/(\d+)$/))) { currentMeeting = +p[1]; return meetingScreen(p[1]); }
+  if ((p = h.match(/^#\/meetings\/(\d+)\/add$/))) return actionForm(+p[1], null);
+  if ((p = h.match(/^#\/actions\/(\d+)\/edit$/))) return actionForm(null, +p[1]);
+  if ((p = h.match(/^#\/meetings\/(\d+)\/record$/))) return recordPage(+p[1]);
+  if ((p = h.match(/^#\/meetings\/(\d+)\/review$/))) return reviewPage(+p[1]);
+  if ((p = h.match(/^#\/proposals\/(\d+)\/edit$/))) return actionForm(null, null, null, null, +p[1]);
+  notFound();
+}
+document.getElementById('reset').onclick = function(e){ e.preventDefault(); db = seed(); flash = 'Data reset to the seed.'; route(); };
+window.addEventListener('hashchange', route);
+route();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+sequenceDiagram
+    autonumber
+    actor Chair
+    participant UI as Browser (Record page)
+    participant App as Django app
+    participant STT as Azure AI Speech
+    participant LLM as Azure OpenAI
+    participant DB as Database
+
+    Note over Chair,DB: Proof of concept: voice in, populated action items out
+
+    Chair->>UI: Press Record
+    UI->>UI: Capture microphone audio
+    Note over Chair,UI: Team discusses issue and agrees action
+    Chair->>UI: Press Stop
+    UI->>App: Upload audio
+
+    App->>STT: Transcribe audio
+    STT-->>App: Transcript text
+
+    App->>LLM: Transcript + action-item schema
+    Note right of LLM: Extract segment, issue, action,<br/>owner, due date, anticipated result
+    LLM-->>App: Structured action items (JSON)
+
+    App->>DB: Save items as Proposed
+    App-->>UI: Show populated to-do table
+
+    Chair->>UI: Review and accept items
+    UI->>App: Confirm
+    App->>DB: Mark items Confirmed
+    App-->>UI: Items saved

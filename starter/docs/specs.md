@@ -24,7 +24,7 @@ Then open Copilot Chat in **Agent** mode and paste the constitution:
 /speckit-constitution
 
 Adopt docs/constitution.md as this project's constitution, exactly as
-written: all fourteen principles, the Technology Standards, the
+written: every principle, the Technology Standards, the
 Development Workflow, the Definition of Done and Governance.
 ```
 

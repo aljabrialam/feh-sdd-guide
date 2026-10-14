@@ -1,0 +1,34 @@
+{
+  "items": [
+    {
+      "segment": "Corporate",
+      "category": "Pace / pickup",
+      "issue": "December corporate pace behind last year",
+      "action": "Review December corporate pipeline with sales and propose a recovery plan",
+      "owner": "Alex Wong",
+      "priority": "Medium",
+      "due": "2026-10-23",
+      "anticipated_result": "December corporate pickup back to last year's pace"
+    },
+    {
+      "segment": "OTA",
+      "category": "Rate / ADR",
+      "issue": "New competitor undercutting weekend rates on OTAs",
+      "action": "Match competitor weekend rates for 24 and 25 Oct and monitor pickup",
+      "owner": "Priya Rao",
+      "priority": "High",
+      "due": "2026-10-20",
+      "anticipated_result": "Weekend occupancy above 85%"
+    },
+    {
+      "segment": "MICE / Groups",
+      "category": "Cancellations / wash",
+      "issue": "Company ABC rooming list still missing",
+      "action": "Escalate to Company ABC's travel manager",
+      "owner": "Mary Tan",
+      "priority": "Medium",
+      "due": "2026-10-19",
+      "anticipated_result": "Rooming list received and wash under 10%"
+    }
+  ]
+}

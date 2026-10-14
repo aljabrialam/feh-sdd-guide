@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261014082626">
+<meta name="build" content="20261014092542">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -902,7 +902,7 @@ as a table. Do not change anything.</pre>
   <h2>Gotchas</h2>
   <table>
     <tr><th>What happens</th><th>What to do</th></tr>
-    <tr><td><b>The agent builds more than asked</b></td><td>It adds features "while it's there". Cite Principle 6 and ask it to remove anything no criterion asks for.</td></tr>
+    <tr><td><b>The agent builds more than asked</b></td><td>It adds features "while it's there". Cite Principle XI (Keep It Small) and ask it to remove anything no criterion asks for.</td></tr>
     <tr><td><b>The spec turns into a design</b></td><td>Screens, buttons and databases creep into specify. Move them to the plan; the spec says only what users can do and see.</td></tr>
     <tr><td><b>Clarify questions get guessed</b></td><td>The developer answers instead of FEH. Stop and ask the product owner; a guess becomes a wrong feature.</td></tr>
     <tr><td><b>Someone edits code by hand</b></td><td>The code and the spec drift apart. Amend the spec first, then let the agent change the code.</td></tr>
@@ -915,12 +915,12 @@ as a table. Do not change anything.</pre>
   </table>
   <p>Two prompts worth keeping on hand:</p>
   <pre data-label="Prompt · when the agent goes beyond the spec">
-Stop. Constitution Principle 6, Keep It Simple: nothing is built that
+Stop. Constitution Principle XI, Keep It Small: nothing is built that
 an approved acceptance criterion doesn't ask for. List anything you
 added beyond the spec, remove it, confirm all tests still pass, then
 stop and report.</pre>
   <pre data-label="Prompt · when a change request arrives mid-build">
-Stop. Constitution Principle 7, Change Through the Spec: do not change
+Stop. Constitution Principle XII, Change Through the Spec: do not change
 the code for this yet. Amend the specification with new acceptance
 criteria for the change, show me the changed criteria, and wait for G1
 re-approval.</pre>

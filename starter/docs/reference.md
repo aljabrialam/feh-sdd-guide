@@ -5,28 +5,39 @@ screen mockups in docs/mockup/. This file fixes the data, labels and look
 for the two-day workshop. All hotels, people and text below are invented.
 Use exactly these.
 
-## Workshop scope
-The MVP, built spec by spec from docs/specs.md (governed by
-docs/constitution.md):
+## Workshop tracks
+One constitution and this one reference for both tracks. Each track has
+its own run sheet: docs/specs.md in that track's docs pack.
+
+MVP 1 · Voice capture (FEH's happy-path sequence):
+- 001 Sign-in and hotel access
+- 002 Weekly meetings
+- 003 Action items in a meeting, with an anticipated result
+- 004 Record and transcribe
+- 005 Extract proposed action items
+- 006 Review and confirm proposed items
+Stretch: 007 Carry forward and overdue.
+
+MVP 2 · Meeting action tracker:
 - 001 Sign-in and hotel access
 - 002 Weekly meetings
 - 003 Action items in a meeting
 - 004 Carry forward open items
 - 005 Overdue flags and meeting counts
-Stretch, only after 005 is accepted:
-- 006 Spreadsheet-style editing (FEH's inline grid)
-- 007 Comments and "Mark as done"
+Stretch: 006 Spreadsheet-style editing (FEH's inline grid), 007 Comments
+and "Mark as done".
 
 Kept deliberately simple for the workshop:
 - Each person belongs to one hotel and can do everything there. No roles,
   no read-only users, no group view.
 - Sign-in: a "Sign in as" page lists the people below (stand-in for
   Microsoft Entra ID). No passwords.
-- One owner per item. No supporting owners, stay periods, results or
-  targets.
-Not built in the workshop: results and outcome ratings, change history
-screen, My actions, email reminders, export, group roll-up, microphone
-and AI (MVP 1b), Teams transcripts, Databricks, Azure hosting.
+- One owner per item. No supporting owners, stay periods, actual results
+  or targets. MVP 1 adds one optional text field, "Anticipated result".
+Not built in the workshop: actual results and outcome ratings, change
+history screen, My actions, email reminders, export, group roll-up, Teams
+transcripts, Databricks, Azure hosting. AI is used only in MVP 1's voice
+capture.
 
 ## Hotels
 | Name    | Code | Time zone      |
@@ -147,6 +158,47 @@ and hotel · "Sign out".
   simplified to the action's details, "Update log" (field "Add a
   comment", button "Post comment") and buttons "Cancel item" and "Mark
   as done".
+
+## MVP 1 · Voice capture (MVP 1 only)
+Picture: docs/mockup/mvp-app.html in the MVP 1 docs pack (Record and
+Review screens). FEH's sequence: docs/voice-capture-sequence.mmd.
+
+Action items gain "Anticipated result" (optional, at most 300
+characters): in the add/edit form below "Action required", and on the
+meeting screen as "Expected: <text>" under the action required.
+
+Meeting screen: button "Record" next to "Add action". When the meeting
+has proposed items waiting, a banner: "<n> proposed items waiting for
+review" with a link "Review".
+
+Record page (spec 004): heading "Record"; text "Record the discussion.
+When you stop, the app transcribes it and proposes action items for you
+to review."; button "Start recording", then "Stop recording" with a
+timer mm:ss and "Recording…". After stopping: "Transcribing…", then the
+transcript under the heading "Transcript".
+
+Extraction (spec 005): after the transcript, "Extracting action items…",
+then the Review page. Each proposed item has the action-item fields:
+market segment, issue category, issue, action required, owner (a person
+of the hotel), priority (default Medium), due date, anticipated result.
+A field the transcript does not give is left empty for the chair.
+
+Review page (spec 006): heading "Review proposed items"; note "Proposed
+by AI. Nothing is added to the meeting until you confirm."; the
+transcript in a collapsible "Transcript" section; a table with a
+checkbox per row (checked by default), the fields above, a "Proposed"
+chip, and per row "Edit" and "Remove"; buttons "Confirm selected (<n>)"
+and "Cancel". An item with a missing required field cannot be confirmed
+until it is edited ("Owner missing" etc. in red). Confirming adds the
+items to "Raised in this meeting" with status Open and the label "From
+recording", and shows "<n> actions confirmed.".
+
+States: Proposed → Confirmed (becomes an action item) or Removed. Proposed
+and removed items are kept, never deleted (Principle III).
+
+Sample data (AI_PROVIDER=sample): docs/sample/transcript.txt is what
+transcribe() returns, and docs/sample/items.json is what extract()
+returns. Meeting: Hotel A, today.
 
 ## Look (sampled from FEH's mockups)
 Font: Inter (Google Fonts). Page background #F3F5F7, cards #FFFFFF with

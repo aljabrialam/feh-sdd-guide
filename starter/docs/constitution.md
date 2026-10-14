@@ -1,7 +1,10 @@
 # Meeting Action Tracker Constitution
 
 Workshop MVP for Far East Hospitality (FEH), built with Spec-Driven
-Development during the two-day session, 15–16 October 2026.
+Development during the two-day session, 15–16 October 2026. One
+constitution for both workshop tracks: MVP 1 (voice capture) and MVP 2
+(meeting action tracker). What each track builds is in its run sheet,
+docs/specs.md.
 Source requirements: FEH "Meeting Action Tracker: Requirements",
 13 Oct 2026. Data, labels and look: docs/reference.md.
 
@@ -107,12 +110,12 @@ the specification was unclear.
 
 ### XI. Keep It Small
 
-Only what an approved acceptance criterion asks for MUST be built.
-Microsoft Entra ID, emails, export, Teams transcripts, microphone and AI
-extraction (MVP 1b), Databricks and Azure hosting are out of scope for
-the workshop and MUST NOT be started.
+Only what an approved acceptance criterion asks for MUST be built. The
+scope of each track is the approved specifications in its run sheet.
+Microsoft Entra ID, emails, export, Teams transcripts, Databricks and
+Azure hosting are out of scope for both tracks and MUST NOT be started.
 
-**Rationale**: FEH's full requirements do not fit in two days. The MVP
+**Rationale**: FEH's full requirements do not fit in two days. Each MVP
 is chosen so it can be finished.
 
 ### XII. Change Through the Spec
@@ -140,15 +143,47 @@ A capability that cannot be shown in the final demo earns nothing.
 
 **Rationale**: FEH judges the workshop by what it sees working.
 
+### XV. AI Proposes, a Person Confirms
+
+Anything an AI service produces in the app (a transcript, an extracted
+action item) MUST be saved as Proposed and shown to a person.
+Only a person MUST be able to confirm it; nothing becomes Confirmed
+without that action.
+The app MUST say which items came from AI until they are confirmed.
+
+**Rationale**: AI extraction is fast and usually right, and sometimes
+confidently wrong. The chair stays accountable for every action the
+meeting records. Applies wherever the app calls an AI service.
+
+### XVI. Secrets Stay Out of the Code
+
+Keys and endpoints MUST only be read from environment variables (a
+.env file that is listed in .gitignore).
+Keys MUST NOT be committed, written in a spec, pasted in a chat, or
+shown on screen.
+The app MUST run, and every test MUST pass, with no keys at all.
+
+**Rationale**: A leaked key is a security incident and a bill. A
+workshop app that only runs with keys cannot be demonstrated when the
+network or the key fails.
+
 ## Technology Standards
 
 ### Application
 
 - **Framework**: Python 3.12+ with Django 5. Server-rendered Django
   templates and plain CSS. No React, no separate frontend, no REST API.
-- **Interactivity**: HTMX only for spreadsheet-style editing (spec 006),
-  following FEH's architecture. Served from the project's static files,
-  never a CDN.
+- **Interactivity**: HTMX only for spreadsheet-style editing (MVP 2,
+  spec 006), following FEH's architecture. Served from the project's
+  static files, never a CDN. Recording in MVP 1 uses the browser's own
+  MediaRecorder in a small script on the Record page.
+- **AI services (MVP 1)**: Azure OpenAI, called only behind two
+  adapters: transcribe(audio) returns text, and extract(transcript)
+  returns action items as JSON. AI_PROVIDER selects the implementation:
+  "sample" (default; returns docs/sample/transcript.txt and
+  docs/sample/items.json) or "azure" (uses AZURE_OPENAI_ENDPOINT,
+  AZURE_OPENAI_KEY, AZURE_OPENAI_TRANSCRIBE_DEPLOYMENT and
+  AZURE_OPENAI_CHAT_DEPLOYMENT). Tests always use "sample".
 - **Database**: SQLite (stands in for Azure Database for PostgreSQL).
 - **Dependencies**: managed with uv.
 - **Change record**: django-simple-history on every tracked model.
@@ -229,4 +264,4 @@ All specifications, plans, tasks and code are subject to this
 constitution. Non-compliance found during review MUST be raised before
 the artefact is committed.
 
-**Version**: 1.0.0 | **Ratified**: 2026-10-15 | **Last Amended**: 2026-10-15
+**Version**: 1.1.0 | **Ratified**: 2026-10-15 | **Last Amended**: 2026-10-15

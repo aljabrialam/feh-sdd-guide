@@ -367,13 +367,19 @@ satisfy (Principle XIII). Do not start the next specification.''' % s['id']
 def commit_block(s):
     return 'git add -A\ngit commit -m "feat: %s"' % s['id']
 
-def markdown():
-    out = ['''# Meeting Action Tracker — All Specs (workshop MVP)
+def markdown(specs=None, title='Meeting Action Tracker — All Specs (workshop MVP)', schedule=None, minimum=None, extra_docs=''):
+    specs = specs or SPECS
+    schedule = schedule or '''Day 1 afternoon: draft, compare, specify and clarify 001–005; G1 for
+all five. Late Day 1: execute 001. Day 2: execute 002–005 in order;
+006 and 007 only if time allows.'''
+    minimum = minimum or '''**Minimum viable demonstration: through 005.** 006 and 007 are stretch
+goals, only after 005 is accepted.'''
+    out = ['''# %s
 
 Complete set, in execution order. Every block is paste-ready.
 FEH requirements: "Meeting Action Tracker: Requirements", 13 Oct 2026.
 Governing rules: docs/constitution.md. Data, labels and look:
-docs/reference.md. Target screens: docs/mockup/.
+docs/reference.md. Target screens: docs/mockup/.%s
 
 ---
 
@@ -394,7 +400,7 @@ Then open Copilot Chat in **Agent** mode and paste the constitution:
 /speckit-constitution
 
 Adopt docs/constitution.md as this project's constitution, exactly as
-written: all fourteen principles, the Technology Standards, the
+written: every principle, the Technology Standards, the
 Development Workflow, the Definition of Done and Governance.
 ```
 
@@ -427,9 +433,7 @@ capability.
 git commit
 ```
 
-Day 1 afternoon: draft, compare, specify and clarify 001–005; G1 for
-all five. Late Day 1: execute 001. Day 2: execute 002–005 in order;
-006 and 007 only if time allows.
+%s
 
 ---
 
@@ -438,14 +442,11 @@ all five. Late Day 1: execute 001. Day 2: execute 002–005 in order;
 Build in this order. Each line marks what you have if you stop there.
 
 | Order | Spec | When | If you stop here |
-|---|---|---|---|''']
-    for i, s in enumerate(SPECS):
+|---|---|---|---|''' % (title, extra_docs, schedule)]
+    for i, s in enumerate(specs):
         out.append('| %d | %s %s%s | %s | %s |' % (i + 1, s['n'], s['name'], ' (stretch)' if s.get('stretch') else '', s['when'], s['stop']))
-    out.append('''
-**Minimum viable demonstration: through 005.** 006 and 007 are stretch
-goals, only after 005 is accepted.
-''')
-    for s in SPECS:
+    out.append('\n' + minimum + '\n')
+    for s in specs:
         out.append('---\n\n# %s — %s%s\n' % (s['n'], s['name'], ' (stretch)' if s.get('stretch') else ''))
         out.append('## Specify and clarify (G1)\n')
         out.append('```\n' + specify_block(s) + '\n```\n')
