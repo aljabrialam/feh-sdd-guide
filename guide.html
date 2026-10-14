@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261014132630">
+<meta name="build" content="20261014133754">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -197,6 +197,9 @@ summary{cursor:pointer;font-weight:600}
   #next{display:none}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+.step1{border:1px solid var(--line);border-radius:12px;padding:4px 18px 10px;margin:14px 0;background:var(--panel)}
+.step1 h3{margin-top:12px}
+.step1 .expect{color:var(--aqua);font-weight:600}
 </style>
 </head>
 <body>
@@ -373,32 +376,102 @@ npx playwright install chromium</pre>
 </section>
 
 <section class="slide" id="repo" data-group="Setup (before Day 1)" data-title="Step 1 · Create your project">
-  <p class="eyebrow">Step 1 · do this before Day 1</p>
+  <p class="eyebrow">Step 1 · 15 minutes · do it before Day 1, or at 9:00 on Day 1</p>
   <h2>Create your project</h2>
-  <p class="lead">Everyone creates the project the same way, so everyone starts from the same place. First save <b>feh-workshop-files.zip</b> from the Teams chat into your Downloads folder. Then copy the block for your computer and paste it into a terminal, one line at a time.</p>
-  <pre data-label="Mac · Terminal">
-mkdir -p ~/feh-sdd &amp;&amp; cd ~/feh-sdd
-specify init feh-app --integration copilot
-cd feh-app
-curl -fsSL https://aljabrialam.github.io/feh-sdd-guide/starter/feh-sdd-docs.zip -o docs.zip &amp;&amp; unzip -oq docs.zip &amp;&amp; rm docs.zip
+  <p class="lead">Every participant creates the same empty project: Spec Kit set up for GitHub Copilot, plus the workshop documents. There is no app code yet; Copilot writes it later, from the specs we agree. Do the steps in order and check each one before the next.</p>
+
+  <h3>What you'll have at the end</h3>
+  <pre data-label="Your project folder">
+feh-sdd/
+└── feh-app/                     ← the project; VS Code opens this folder
+    ├── .github/skills/          ← the Spec Kit commands for Copilot (/speckit-specify, …)
+    ├── .specify/                ← Spec Kit's templates, scripts and the constitution slot
+    └── docs/
+        ├── feh-requirements.md  ← FEH's requirements (from Teams): what we build from
+        ├── mockup/              ← FEH's screens 01 and 03 (from Teams)
+        ├── reference.md         ← invented hotels, people, lists, labels and colours
+        ├── constitution.md      ← answer key for the Day 1 constitution exercise
+        ├── specs.md             ← answer key for the specs: the run sheet
+        └── backup/              ← the backup idea, only if the room switches</pre>
+
+  <div class="step1">
+    <h3><span class="ph">1</span> Save the Teams file</h3>
+    <p>The facilitator posts <b>feh-workshop-files.zip</b> in the Teams chat. It holds FEH's requirements and two screen mockups, which aren't published on this site. Save it to your <b>Downloads</b> folder and leave it zipped.</p>
+
+    <p class="expect">✓ You should see: <code>feh-workshop-files.zip</code> in Downloads.</p>
+    <p class="muted"><b>If it fails:</b> If Teams saves it somewhere else, move it to Downloads, or change the path in step 6.</p>
+  </div>
+  <div class="step1">
+    <h3><span class="ph">2</span> Open a new terminal</h3>
+    <p>Open <b>Terminal</b> on a Mac, or <b>PowerShell</b> on Windows. Use a new window so it picks up everything you installed in the laptop setup.</p>
+
+    <p class="expect">✓ You should see: A prompt waiting for a command.</p>
+  </div>
+  <div class="step1">
+    <h3><span class="ph">3</span> Make a workshop folder and go into it</h3>
+    <p>Creates a folder called <code>feh-sdd</code> in your home folder, so the project is easy to find, and moves the terminal into it.</p>
+    <pre data-label="Mac · Terminal">mkdir -p ~/feh-sdd &amp;&amp; cd ~/feh-sdd</pre>
+    <pre data-label="Windows · PowerShell">New-Item -ItemType Directory -Force $HOME\feh-sdd | Out-Null; cd $HOME\feh-sdd</pre>
+    <p class="expect">✓ You should see: the prompt now ends in <code>feh-sdd</code>. Nothing else is printed.</p>
+  </div>
+  <div class="step1">
+    <h3><span class="ph">4</span> Create the Spec Kit project</h3>
+    <p><code>specify</code> is the Spec Kit tool you installed in the laptop setup. <code>init feh-app</code> creates a new folder <code>feh-app</code>, and <code>--integration copilot</code> installs the Spec Kit commands for GitHub Copilot into it: the <code>/speckit-*</code> skills in <code>.github/skills/</code>, and the templates and scripts in <code>.specify/</code>. It doesn't write any app code.</p>
+    <pre data-label="Terminal or PowerShell">specify init feh-app --integration copilot</pre>
+    <p class="expect">✓ You should see: the Spec Kit banner, then a "Next steps" box listing <code>/speckit-constitution</code>, <code>/speckit-specify</code>, <code>/speckit-plan</code>, <code>/speckit-tasks</code> and <code>/speckit-implement</code>.</p>
+    <p class="muted"><b>If it fails:</b> "specify: command not found": open a new terminal, or run <code>uv tool update-shell</code> and open a new one. A certificate error: run the company network fix on the <a href="setup.html#company-network">setup page</a>.</p>
+  </div>
+  <div class="step1">
+    <h3><span class="ph">5</span> Go into the project</h3>
+    <p>All the following commands run inside the project folder.</p>
+    <pre data-label="Terminal or PowerShell">cd feh-app</pre>
+    <p class="expect">✓ You should see: the prompt now ends in <code>feh-app</code>.</p>
+  </div>
+  <div class="step1">
+    <h3><span class="ph">6</span> Add the workshop documents</h3>
+    <p>The first line downloads the workshop docs pack from this site and unpacks it into <code>docs/</code>: <code>reference.md</code> (the invented hotels, people, lists, labels and colours everyone builds with), <code>constitution.md</code> and <code>specs.md</code> (the Day 1 answer keys) and <code>backup/</code>. The second line unpacks the Teams file into <code>docs/</code>: <code>feh-requirements.md</code> and the screens in <code>mockup/</code>.</p>
+    <pre data-label="Mac · Terminal">curl -fsSL https://aljabrialam.github.io/feh-sdd-guide/starter/feh-sdd-docs.zip -o docs.zip &amp;&amp; unzip -oq docs.zip &amp;&amp; rm docs.zip
 unzip -oq ~/Downloads/feh-workshop-files.zip
-git init -b main &amp;&amp; git add -A &amp;&amp; git commit -qm "Start: Spec Kit and workshop docs"
-code .</pre>
-  <pre data-label="Windows · PowerShell">
-New-Item -ItemType Directory -Force $HOME\feh-sdd | Out-Null; cd $HOME\feh-sdd
-specify init feh-app --integration copilot
-cd feh-app
-irm https://aljabrialam.github.io/feh-sdd-guide/starter/feh-sdd-docs.zip -OutFile docs.zip; Expand-Archive docs.zip -DestinationPath . -Force; Remove-Item docs.zip
+ls docs</pre>
+    <pre data-label="Windows · PowerShell">irm https://aljabrialam.github.io/feh-sdd-guide/starter/feh-sdd-docs.zip -OutFile docs.zip; Expand-Archive docs.zip -DestinationPath . -Force; Remove-Item docs.zip
 Expand-Archive $HOME\Downloads\feh-workshop-files.zip -DestinationPath . -Force
-git init -b main; git add -A; git commit -qm "Start: Spec Kit and workshop docs"
-code .</pre>
-  <p>What each line does: makes a workshop folder, sets up Spec Kit for GitHub Copilot in <code>feh-app</code>, downloads the workshop docs (<code>docs/constitution.md</code>, <code>docs/specs.md</code> the run sheet, <code>docs/reference.md</code>: the seed data, screen labels and colours for the Meeting Action Tracker, plus the backup idea in <code>docs/backup/</code>), adds FEH's requirements (<code>docs/feh-requirements.md</code>) and screens (<code>docs/mockup/</code>) from the Teams file, saves a starting point in Git, and opens the project in VS Code. The app code is created on Day 2 from the approved plan.</p>
-  <div class="warnbox"><b>Open the right folder</b>VS Code must be open on <code>feh-app</code> itself. Open Copilot Chat and pick <b>Agent</b> mode. If the <code>/speckit-*</code> skills don't appear, run <b>Developer: Reload Window</b> or restart VS Code fully.</div>
+ls docs</pre>
+    <p class="expect">✓ You should see: <code>ls docs</code> lists <code>backup</code>, <code>constitution.md</code>, <code>feh-requirements.md</code>, <code>mockup</code>, <code>reference.md</code> and <code>specs.md</code>.</p>
+    <p class="muted"><b>If it fails:</b> No <code>feh-requirements.md</code>: the Teams file isn't in Downloads (step 1). A certificate or download error: run the company network fix on the setup page, or download the docs pack in your browser and unzip it into <code>feh-app</code>.</p>
+  </div>
+  <div class="step1">
+    <h3><span class="ph">7</span> Save a starting point in Git</h3>
+    <p>Turns the folder into a Git repository and saves everything so far as the first commit. Spec Kit creates a Git branch for every spec, and the commit gives you a clean point to go back to.</p>
+    <pre data-label="Terminal or PowerShell">git init -b main
+git add -A
+git commit -m "Start: Spec Kit and workshop docs"
+git log --oneline</pre>
+    <p class="expect">✓ You should see: one line, like <code>a1b2c3d Start: Spec Kit and workshop docs</code>.</p>
+    <p class="muted"><b>If it fails:</b> "Please tell me who you are": set your Git name and email (step 2 of the laptop setup), then run the commit again.</p>
+  </div>
+  <div class="step1">
+    <h3><span class="ph">8</span> Open the project in VS Code</h3>
+    <p>Opens VS Code on the <code>feh-app</code> folder. It must be this folder, not <code>feh-sdd</code>, or Copilot won't find the Spec Kit commands.</p>
+    <pre data-label="Terminal or PowerShell">code .</pre>
+    <p class="expect">✓ You should see: VS Code opens, with <code>FEH-APP</code> at the top of the Explorer.</p>
+    <p class="muted"><b>If it fails:</b> "code: command not found": see step 3 of the laptop setup, or open VS Code and use File → Open Folder.</p>
+  </div>
+  <div class="step1">
+    <h3><span class="ph">9</span> Check Copilot can see Spec Kit</h3>
+    <p>Open Copilot Chat (Mac: Ctrl + Cmd + I · Windows: Ctrl + Alt + I, or the chat icon at the top of VS Code), choose <b>Agent</b> mode in the dropdown under the chat box, and type <code>/speckit</code>.</p>
+
+    <p class="expect">✓ You should see: a list including <code>/speckit-constitution</code>, <code>/speckit-specify</code> and <code>/speckit-plan</code>. Don't run any of them yet.</p>
+    <p class="muted"><b>If it fails:</b> Nothing appears: check the mode is Agent and VS Code is on <code>feh-app</code>, then run <b>Developer: Reload Window</b>.</p>
+  </div>
+
+  <h3>Final check</h3>
   <ul class="checks">
-    <li>VS Code is open on <code>feh-app/</code> with Copilot Chat in <b>Agent</b> mode</li>
-    <li>Typing <code>/speckit</code> in Copilot Chat lists the Spec Kit skills</li>
-    <li><code>docs/constitution.md</code>, <code>docs/specs.md</code> and <code>docs/reference.md</code> exist, and <code>docs/mockup/</code> has FEH's screens (01 and 03), and <code>docs/feh-requirements.md</code> is there</li>
+    <li>VS Code is open on the <code>feh-app</code> folder itself (its name is at the top of the Explorer)</li>
+    <li>The Explorer shows <code>.github</code>, <code>.specify</code> and <code>docs</code>, and <code>docs</code> has <code>feh-requirements.md</code>, <code>reference.md</code>, <code>constitution.md</code>, <code>specs.md</code> and two screens in <code>mockup</code></li>
+    <li>Copilot Chat is in <b>Agent</b> mode and typing <code>/speckit</code> lists the Spec Kit commands</li>
+    <li><code>git log --oneline</code> shows one commit, "Start: Spec Kit and workshop docs"</li>
   </ul>
+  <div class="warnbox"><b>Don't skip ahead</b><code>constitution.md</code> and <code>specs.md</code> are the answer keys for Day 1. You'll write your own first, then compare.</div>
 </section>
 
 <!-- ======================= DAY 1 ======================= -->
