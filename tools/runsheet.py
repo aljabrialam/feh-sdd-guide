@@ -20,6 +20,7 @@ Do not generate source code.'''
 
 SPECS = [
  dict(n='001', id='001-sign-in-hotel-access', name='Workshop Sign-in and Hotel Access', short='Sign-in and hotel access',
+  builds='Nothing: this is the foundation. It sets up the project, sign-in and\nhotel isolation that every later spec reuses.',
   when='Late Day 1', stop='People sign in and see only their own hotel. Isolation exists before any data does.',
   goal='''Let each person enter the tracker as themselves and see only their
 own hotel, standing in for Microsoft Entra ID during the workshop.''',
@@ -62,6 +63,7 @@ isolation in one place (a hotel-scoped manager and a view mixin) that
 every later feature will reuse.''',
   ),
  dict(n='002', id='002-weekly-meetings', name='Weekly Meetings', short='Weekly meetings',
+  builds="001: people sign in and see only their own hotel. Every meeting\nbelongs to the signed-in person's hotel through 001's isolation.",
   when='Day 2, 9:00', stop='Meetings can be created and listed. The weekly meeting exists in the tracker.',
   goal='''Let a team member create the weekly performance meeting for their
 hotel and see all of their hotel's meetings.''',
@@ -97,6 +99,7 @@ Meetings list and "New meeting" form like docs/mockup/mvp-2-meetings.html
 and mvp-3-new-meeting.html, with the exact labels in docs/reference.md; seed_demo also loads the seeded meetings.''',
   ),
  dict(n='003', id='003-action-items', name='Action Items in a Meeting', short='Action items',
+  builds='002: actions are added to a meeting. 001: owners are people of the\nsame hotel.',
   when='Day 2, 10:00', stop='Actions are recorded with an owner and a due date. The spreadsheet could be retired.',
   goal='''Let a team member record each action agreed in the meeting, with its
 owner and due date, and change it later.''',
@@ -139,6 +142,7 @@ are ordinary Django forms on the meeting page, laid out like
 docs/mockup/mvp-4-meeting-screen.html and mvp-5-add-action.html. seed_demo also loads the seeded actions.''',
   ),
  dict(n='004', id='004-carry-forward', name='Carry Forward Open Items', short='Carry forward',
+  builds='003: the meeting\'s actions and their statuses. 002: the meeting dates\nthat decide what is "earlier".',
   when='Day 2, 11:30', stop='Open items are never lost between weeks: FEH\'s main pain is solved.',
   goal='''Make every unfinished action from earlier meetings appear in the next
 meeting automatically, so nothing is lost between weeks.''',
@@ -173,6 +177,7 @@ copy of any data. Show the two groups with the headings and colours in
 docs/reference.md and the constitution.''',
   ),
  dict(n='005', id='005-overdue-and-counts', name='Overdue Flags and Meeting Counts', short='Overdue and counts',
+  builds="004: the meeting screen and its two groups. 003: each action's due\ndate and status.",
   when='Day 2, 1:30', stop='The meeting shows what is late at a glance. The MVP is complete.',
   goal='''Make late actions impossible to miss, and give the meeting a
 one-glance summary.''',
@@ -206,6 +211,7 @@ time zone; nothing is stored. Make "today" replaceable in tests so the
 tests do not depend on the real date.''',
   ),
  dict(n='006', id='006-spreadsheet-style-editing', name='Spreadsheet-style Editing', short='Spreadsheet-style editing', stretch=True,
+  builds='003 to 005: the action list, its validation, and the counts that\nmust update after each change.',
   when='Day 2 stretch', stop='The action list feels like FEH\'s spreadsheet.',
   goal='''Let a team member change any value directly in the meeting's action
 list, saved straight away, like the spreadsheet they use today.''',
@@ -235,6 +241,7 @@ re-renders that row and the counts. Reuse the validation and the
 change record from 003.''',
   ),
  dict(n='007', id='007-comments-and-done', name='Comments and Mark as Done', short='Comments and done', stretch=True,
+  builds='003: the actions, their statuses and their validation. 001: hotel\nisolation for every form post.',
   when='Day 2 stretch', stop='Follow-up between meetings is recorded, and actions can be closed properly.',
   goal='''Let a team member follow an action up between meetings and close it
 properly.''',
@@ -298,6 +305,9 @@ Business Capability
 Reference
 %s
 
+Builds On
+%s
+
 Functional Requirements
 
 %s
@@ -312,7 +322,7 @@ What It Looks Like On Screen
 Out of Scope
 %s
 
-%s''' % (s['id'], s['name'], s['goal'], s['value'], actors, s['cap'], s['ref'], fr, nfr,
+%s''' % (s['id'], s['name'], s['goal'], s['value'], actors, s['cap'], s['ref'], s['builds'], fr, nfr,
          s['screen'], s['out'], SPECIFY_TAIL.format(n=s['n']))
 
 def clarify_block(s):
@@ -336,6 +346,10 @@ def plan_block(s):
 Plan Feature Specification %s, following the constitution's
 Technology Standards exactly.
 
+This spec is an increment (Principle IX). It builds on: %s
+Reuse what is there; do not rebuild or restructure it. Every earlier
+spec's tests must still pass.
+
 %s
 
 Check the result against docs/mockup/mvp-app.html, the whole MVP as a
@@ -344,7 +358,7 @@ clickable mockup.
 Map every acceptance criterion to at least one test whose name
 contains its ID. Write data-model.md and the page contract in
 contracts/ (each page and form: address, who may use it, what it
-shows) before any code.''' % (s['id'], s['plan'])
+shows) before any code.''' % (s['id'], ' '.join(s['builds'].split()), s['plan'])
 
 def tasks_block(s):
     return '''/speckit-tasks
@@ -439,12 +453,14 @@ git commit
 
 ## Delivery order and stop lines
 
-Build in this order. Each line marks what you have if you stop there.
+Build in this order. Each spec is an increment: it builds on the specs
+before it and leaves the app working. Each line marks what you have if
+you stop there.
 
-| Order | Spec | When | If you stop here |
-|---|---|---|---|''' % (title, extra_docs, schedule)]
+| Order | Spec | Builds on | When | If you stop here |
+|---|---|---|---|---|''' % (title, extra_docs, schedule)]
     for i, s in enumerate(specs):
-        out.append('| %d | %s %s%s | %s | %s |' % (i + 1, s['n'], s['name'], ' (stretch)' if s.get('stretch') else '', s['when'], s['stop']))
+        out.append('| %d | %s %s%s | %s | %s | %s |' % (i + 1, s['n'], s['name'], ' (stretch)' if s.get('stretch') else '', s['builds'].split(':')[0], s['when'], s['stop']))
     out.append('\n' + minimum + '\n')
     for s in specs:
         out.append('---\n\n# %s — %s%s\n' % (s['n'], s['name'], ' (stretch)' if s.get('stretch') else ''))

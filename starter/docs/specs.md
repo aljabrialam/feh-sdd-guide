@@ -66,17 +66,19 @@ all five. Late Day 1: execute 001. Day 2: execute 002–005 in order;
 
 ## Delivery order and stop lines
 
-Build in this order. Each line marks what you have if you stop there.
+Build in this order. Each spec is an increment: it builds on the specs
+before it and leaves the app working. Each line marks what you have if
+you stop there.
 
-| Order | Spec | When | If you stop here |
-|---|---|---|---|
-| 1 | 001 Workshop Sign-in and Hotel Access | Late Day 1 | People sign in and see only their own hotel. Isolation exists before any data does. |
-| 2 | 002 Weekly Meetings | Day 2, 9:00 | Meetings can be created and listed. The weekly meeting exists in the tracker. |
-| 3 | 003 Action Items in a Meeting | Day 2, 10:00 | Actions are recorded with an owner and a due date. The spreadsheet could be retired. |
-| 4 | 004 Carry Forward Open Items | Day 2, 11:30 | Open items are never lost between weeks: FEH's main pain is solved. |
-| 5 | 005 Overdue Flags and Meeting Counts | Day 2, 1:30 | The meeting shows what is late at a glance. The MVP is complete. |
-| 6 | 006 Spreadsheet-style Editing (stretch) | Day 2 stretch | The action list feels like FEH's spreadsheet. |
-| 7 | 007 Comments and Mark as Done (stretch) | Day 2 stretch | Follow-up between meetings is recorded, and actions can be closed properly. |
+| Order | Spec | Builds on | When | If you stop here |
+|---|---|---|---|---|
+| 1 | 001 Workshop Sign-in and Hotel Access | Nothing | Late Day 1 | People sign in and see only their own hotel. Isolation exists before any data does. |
+| 2 | 002 Weekly Meetings | 001 | Day 2, 9:00 | Meetings can be created and listed. The weekly meeting exists in the tracker. |
+| 3 | 003 Action Items in a Meeting | 002 | Day 2, 10:00 | Actions are recorded with an owner and a due date. The spreadsheet could be retired. |
+| 4 | 004 Carry Forward Open Items | 003 | Day 2, 11:30 | Open items are never lost between weeks: FEH's main pain is solved. |
+| 5 | 005 Overdue Flags and Meeting Counts | 004 | Day 2, 1:30 | The meeting shows what is late at a glance. The MVP is complete. |
+| 6 | 006 Spreadsheet-style Editing (stretch) | 003 to 005 | Day 2 stretch | The action list feels like FEH's spreadsheet. |
+| 7 | 007 Comments and Mark as Done (stretch) | 003 | Day 2 stretch | Follow-up between meetings is recorded, and actions can be closed properly. |
 
 **Minimum viable demonstration: through 005.** 006 and 007 are stretch
 goals, only after 005 is accepted.
@@ -117,6 +119,10 @@ Access and Hotel Isolation
 Reference
 docs/reference.md "Hotels" and "People". FEH requirements FR-003
 (Entra ID, stubbed for the workshop), FR-013, NFR-001.
+
+Builds On
+Nothing: this is the foundation. It sets up the project, sign-in and
+hotel isolation that every later spec reuses.
 
 Functional Requirements
 
@@ -186,6 +192,10 @@ Do not generate implementation. Do not generate source code.
 
 Plan Feature Specification 001-sign-in-hotel-access, following the constitution's
 Technology Standards exactly.
+
+This spec is an increment (Principle IX). It builds on: Nothing: this is the foundation. It sets up the project, sign-in and hotel isolation that every later spec reuses.
+Reuse what is there; do not rebuild or restructure it. Every earlier
+spec's tests must still pass.
 
 This is the first feature, so it includes the project set-up from the
 constitution's Technology Standards: manage.py at the repository root,
@@ -274,6 +284,10 @@ Reference
 docs/reference.md "Meetings in the seed" and "Screens and exact
 labels". FEH requirements FR-004, FR-021.
 
+Builds On
+001: people sign in and see only their own hotel. Every meeting
+belongs to the signed-in person's hotel through 001's isolation.
+
 Functional Requirements
 
 FR-001 The system shall let a person create a meeting for their hotel with a
@@ -343,6 +357,10 @@ Do not generate implementation. Do not generate source code.
 
 Plan Feature Specification 002-weekly-meetings, following the constitution's
 Technology Standards exactly.
+
+This spec is an increment (Principle IX). It builds on: 001: people sign in and see only their own hotel. Every meeting belongs to the signed-in person's hotel through 001's isolation.
+Reuse what is there; do not rebuild or restructure it. Every earlier
+spec's tests must still pass.
 
 Extend the project from 001; do not change its stack. Add the meeting
 with django-simple-history, scoped to the hotel through 001's isolation.
@@ -428,6 +446,10 @@ docs/reference.md "Lists" and "Action items in the seed";
 docs/mockup/mvp-4-meeting-screen.html and mvp-5-add-action.html. FEH requirements FR-007, FR-008,
 FR-009, FR-013, FR-014.
 
+Builds On
+002: actions are added to a meeting. 001: owners are people of the
+same hotel.
+
 Functional Requirements
 
 FR-001 The system shall let a person add an action to a meeting with a market
@@ -501,6 +523,10 @@ Do not generate implementation. Do not generate source code.
 
 Plan Feature Specification 003-action-items, following the constitution's
 Technology Standards exactly.
+
+This spec is an increment (Principle IX). It builds on: 002: actions are added to a meeting. 001: owners are people of the same hotel.
+Reuse what is there; do not rebuild or restructure it. Every earlier
+spec's tests must still pass.
 
 Extend the project; do not change its stack. Add the action item with
 django-simple-history, belonging to the meeting it was raised in and
@@ -584,6 +610,10 @@ Reference
 FEH requirement FR-006; docs/mockup/mvp-4-meeting-screen.html group
 headings.
 
+Builds On
+003: the meeting's actions and their statuses. 002: the meeting dates
+that decide what is "earlier".
+
 Functional Requirements
 
 FR-001 The system shall show, in every meeting, the hotel's actions from
@@ -652,6 +682,10 @@ Do not generate implementation. Do not generate source code.
 
 Plan Feature Specification 004-carry-forward, following the constitution's
 Technology Standards exactly.
+
+This spec is an increment (Principle IX). It builds on: 003: the meeting's actions and their statuses. 002: the meeting dates that decide what is "earlier".
+Reuse what is there; do not rebuild or restructure it. Every earlier
+spec's tests must still pass.
 
 Extend the project; do not change its stack. Carry-forward is a query
 on the existing models through the hotel isolation from 001, not a
@@ -735,6 +769,10 @@ Reference
 FEH requirement FR-009 (overdue is calculated, not a status);
 docs/mockup/mvp-4-meeting-screen.html counters and due-date cell.
 
+Builds On
+004: the meeting screen and its two groups. 003: each action's due
+date and status.
+
 Functional Requirements
 
 FR-001 The system shall show an action as overdue when its due date is
@@ -800,6 +838,10 @@ Do not generate implementation. Do not generate source code.
 
 Plan Feature Specification 005-overdue-and-counts, following the constitution's
 Technology Standards exactly.
+
+This spec is an increment (Principle IX). It builds on: 004: the meeting screen and its two groups. 003: each action's due date and status.
+Reuse what is there; do not rebuild or restructure it. Every earlier
+spec's tests must still pass.
 
 Extend the project; do not change its stack. Work out overdue, due
 today and the counts from the due date and today's date in the hotel's
@@ -881,6 +923,10 @@ Reference
 FEH requirement FR-005; docs/mockup/01-meeting-screen.png; the
 constitution's Technology Standards (HTMX for this spec only).
 
+Builds On
+003 to 005: the action list, its validation, and the counts that
+must update after each change.
+
 Functional Requirements
 
 FR-001 The system shall let a person change any value of an action directly in
@@ -944,6 +990,10 @@ Do not generate implementation. Do not generate source code.
 
 Plan Feature Specification 006-spreadsheet-style-editing, following the constitution's
 Technology Standards exactly.
+
+This spec is an increment (Principle IX). It builds on: 003 to 005: the action list, its validation, and the counts that must update after each change.
+Reuse what is there; do not rebuild or restructure it. Every earlier
+spec's tests must still pass.
 
 Extend the project; do not change its stack. Use HTMX, served from
 static files, for this list only: each change posts one value and
@@ -1025,6 +1075,10 @@ Action Follow-up
 Reference
 docs/mockup/03-item-detail.png (simplified as in docs/reference.md).
 
+Builds On
+003: the actions, their statuses and their validation. 001: hotel
+isolation for every form post.
+
 Functional Requirements
 
 FR-001 The system shall give each action its own page showing its details and
@@ -1093,6 +1147,10 @@ Do not generate implementation. Do not generate source code.
 
 Plan Feature Specification 007-comments-and-done, following the constitution's
 Technology Standards exactly.
+
+This spec is an increment (Principle IX). It builds on: 003: the actions, their statuses and their validation. 001: hotel isolation for every form post.
+Reuse what is there; do not rebuild or restructure it. Every earlier
+spec's tests must still pass.
 
 Extend the project; do not change its stack. The action page is an
 ordinary Django page; comments and closing are ordinary form posts

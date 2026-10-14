@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261014094800">
+<meta name="build" content="20261014095109">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -208,11 +208,12 @@ body:not(.standalone) .jump{display:none}
 <section class="slide" id="x002" data-group="Day 2 · Execute" data-title="Execute 002 · Weekly meetings">
   <p class="eyebrow">Day 2 · 9:00 · execute (finish 001 first if needed: steps 7–10 of Create the app)</p>
   <h2>Execute 002 — Weekly Meetings</h2>
-  <p class="lead"><b>If you stop here:</b> Meetings can be created and listed. The weekly meeting exists in the tracker. </p>
+  <p class="lead"><b>Builds on:</b> 001: people sign in and see only their own hotel. Every meeting belongs to the signed-in person&#x27;s hotel through 001&#x27;s isolation.<br><b>If you stop here:</b> Meetings can be created and listed. The weekly meeting exists in the tracker.</p>
   <div class="flow"><span>plan</span><span>tasks</span><span>analyze</span><span class="g">G2</span><span>implement</span><span>converge</span><span class="g">G3</span><span>commit</span></div>
   <h3><span class="ph">Switch</span> to spec 002</h3>
   <p>Spec Kit works on the spec whose branch you are on. The first line moves to this spec's branch; the second brings in everything built so far (the previous spec's branch).</p>
-  <pre data-label="Terminal or PowerShell">git checkout 002-weekly-meetings
+  <pre data-label="Terminal or PowerShell">
+git checkout 002-weekly-meetings
 git merge 001-sign-in-hotel-access</pre>
   <p>✓ You should see: "Switched to branch …", then "Fast-forward" or "Merge made". If the names differ, run <code>git branch</code> and use yours.</p>
   <h3><span class="ph">Plan</span></h3>
@@ -221,6 +222,10 @@ git merge 001-sign-in-hotel-access</pre>
 
 Plan Feature Specification 002-weekly-meetings, following the constitution&#x27;s
 Technology Standards exactly.
+
+This spec is an increment (Principle IX). It builds on: 001: people sign in and see only their own hotel. Every meeting belongs to the signed-in person&#x27;s hotel through 001&#x27;s isolation.
+Reuse what is there; do not rebuild or restructure it. Every earlier
+spec&#x27;s tests must still pass.
 
 Extend the project from 001; do not change its stack. Add the meeting
 with django-simple-history, scoped to the hotel through 001&#x27;s isolation.
@@ -265,11 +270,17 @@ built, the test results, and any acceptance criterion you could not
 satisfy (Principle XIII). Do not start the next specification.</pre>
   <pre data-label="Prompt · then compare with the spec">/speckit-converge</pre>
   <h3><span class="ph">Run it</span></h3>
-  <pre data-label="Terminal">
+  <pre data-label="Terminal 1 · the app">
+uv sync
 uv run python manage.py migrate
 uv run python manage.py seed_demo
 uv run python manage.py runserver</pre>
-  <p>Then <code>uv run pytest</code>, and <code>npx playwright test</code> in <code>e2e/</code>.</p>
+  <p>Open <code>http://localhost:8000</code> in Chrome.</p>
+  <pre data-label="Terminal 2 · the tests">
+uv run pytest
+cd e2e
+npm install
+npx playwright test</pre>
   <h3><span class="ph gate">G3</span> FEH and VISEO accept</h3>
   <ul class="checks">
     <li>On screen: Meetings shows the three seeded Hotel A meetings, newest first. &quot;New meeting&quot; creates today&#x27;s meeting, which then opens with its heading and attendee chips.</li>
@@ -287,11 +298,12 @@ git commit -m &quot;feat: 002-weekly-meetings&quot;</pre>
 <section class="slide" id="x003" data-group="Day 2 · Execute" data-title="Execute 003 · Action items">
   <p class="eyebrow">Day 2 · 10:00 · execute</p>
   <h2>Execute 003 — Action Items in a Meeting</h2>
-  <p class="lead"><b>If you stop here:</b> Actions are recorded with an owner and a due date. The spreadsheet could be retired. </p>
+  <p class="lead"><b>Builds on:</b> 002: actions are added to a meeting. 001: owners are people of the same hotel.<br><b>If you stop here:</b> Actions are recorded with an owner and a due date. The spreadsheet could be retired.</p>
   <div class="flow"><span>plan</span><span>tasks</span><span>analyze</span><span class="g">G2</span><span>implement</span><span>converge</span><span class="g">G3</span><span>commit</span></div>
   <h3><span class="ph">Switch</span> to spec 003</h3>
   <p>Spec Kit works on the spec whose branch you are on. The first line moves to this spec's branch; the second brings in everything built so far (the previous spec's branch).</p>
-  <pre data-label="Terminal or PowerShell">git checkout 003-action-items
+  <pre data-label="Terminal or PowerShell">
+git checkout 003-action-items
 git merge 002-weekly-meetings</pre>
   <p>✓ You should see: "Switched to branch …", then "Fast-forward" or "Merge made". If the names differ, run <code>git branch</code> and use yours.</p>
   <h3><span class="ph">Plan</span></h3>
@@ -300,6 +312,10 @@ git merge 002-weekly-meetings</pre>
 
 Plan Feature Specification 003-action-items, following the constitution&#x27;s
 Technology Standards exactly.
+
+This spec is an increment (Principle IX). It builds on: 002: actions are added to a meeting. 001: owners are people of the same hotel.
+Reuse what is there; do not rebuild or restructure it. Every earlier
+spec&#x27;s tests must still pass.
 
 Extend the project; do not change its stack. Add the action item with
 django-simple-history, belonging to the meeting it was raised in and
@@ -364,15 +380,15 @@ git add -A
 git commit -m &quot;feat: 003-action-items&quot;</pre>
 </section>
 
-
 <section class="slide" id="x004" data-group="Day 2 · Execute" data-title="Execute 004 · Carry forward">
   <p class="eyebrow">Day 2 · 11:30 · execute</p>
   <h2>Execute 004 — Carry Forward Open Items</h2>
-  <p class="lead"><b>If you stop here:</b> Open items are never lost between weeks: FEH&#x27;s main pain is solved. </p>
+  <p class="lead"><b>Builds on:</b> 003: the meeting&#x27;s actions and their statuses. 002: the meeting dates that decide what is &quot;earlier&quot;.<br><b>If you stop here:</b> Open items are never lost between weeks: FEH&#x27;s main pain is solved.</p>
   <div class="flow"><span>plan</span><span>tasks</span><span>analyze</span><span class="g">G2</span><span>implement</span><span>converge</span><span class="g">G3</span><span>commit</span></div>
   <h3><span class="ph">Switch</span> to spec 004</h3>
   <p>Spec Kit works on the spec whose branch you are on. The first line moves to this spec's branch; the second brings in everything built so far (the previous spec's branch).</p>
-  <pre data-label="Terminal or PowerShell">git checkout 004-carry-forward
+  <pre data-label="Terminal or PowerShell">
+git checkout 004-carry-forward
 git merge 003-action-items</pre>
   <p>✓ You should see: "Switched to branch …", then "Fast-forward" or "Merge made". If the names differ, run <code>git branch</code> and use yours.</p>
   <h3><span class="ph">Plan</span></h3>
@@ -381,6 +397,10 @@ git merge 003-action-items</pre>
 
 Plan Feature Specification 004-carry-forward, following the constitution&#x27;s
 Technology Standards exactly.
+
+This spec is an increment (Principle IX). It builds on: 003: the meeting&#x27;s actions and their statuses. 002: the meeting dates that decide what is &quot;earlier&quot;.
+Reuse what is there; do not rebuild or restructure it. Every earlier
+spec&#x27;s tests must still pass.
 
 Extend the project; do not change its stack. Carry-forward is a query
 on the existing models through the hotel isolation from 001, not a
@@ -444,15 +464,15 @@ git add -A
 git commit -m &quot;feat: 004-carry-forward&quot;</pre>
 </section>
 
-
 <section class="slide" id="x005" data-group="Day 2 · Execute" data-title="Execute 005 · Overdue and counts">
   <p class="eyebrow">Day 2 · 1:30 · execute · completes the MVP</p>
   <h2>Execute 005 — Overdue Flags and Meeting Counts</h2>
-  <p class="lead"><b>If you stop here:</b> The meeting shows what is late at a glance. The MVP is complete. </p>
+  <p class="lead"><b>Builds on:</b> 004: the meeting screen and its two groups. 003: each action&#x27;s due date and status.<br><b>If you stop here:</b> The meeting shows what is late at a glance. The MVP is complete.</p>
   <div class="flow"><span>plan</span><span>tasks</span><span>analyze</span><span class="g">G2</span><span>implement</span><span>converge</span><span class="g">G3</span><span>commit</span></div>
   <h3><span class="ph">Switch</span> to spec 005</h3>
   <p>Spec Kit works on the spec whose branch you are on. The first line moves to this spec's branch; the second brings in everything built so far (the previous spec's branch).</p>
-  <pre data-label="Terminal or PowerShell">git checkout 005-overdue-and-counts
+  <pre data-label="Terminal or PowerShell">
+git checkout 005-overdue-and-counts
 git merge 004-carry-forward</pre>
   <p>✓ You should see: "Switched to branch …", then "Fast-forward" or "Merge made". If the names differ, run <code>git branch</code> and use yours.</p>
   <h3><span class="ph">Plan</span></h3>
@@ -461,6 +481,10 @@ git merge 004-carry-forward</pre>
 
 Plan Feature Specification 005-overdue-and-counts, following the constitution&#x27;s
 Technology Standards exactly.
+
+This spec is an increment (Principle IX). It builds on: 004: the meeting screen and its two groups. 003: each action&#x27;s due date and status.
+Reuse what is there; do not rebuild or restructure it. Every earlier
+spec&#x27;s tests must still pass.
 
 Extend the project; do not change its stack. Work out overdue, due
 today and the counts from the due date and today&#x27;s date in the hotel&#x27;s
@@ -524,11 +548,10 @@ git add -A
 git commit -m &quot;feat: 005-overdue-and-counts&quot;</pre>
 </section>
 
-
 <section class="slide" id="x006" data-group="Day 2 · Stretch" data-title="Execute 006 · Spreadsheet-style editing">
   <p class="eyebrow">Day 2 · 2:30 · stretch, only after 005 is accepted</p>
   <h2>Execute 006 — Spreadsheet-style Editing</h2>
-  <p class="lead"><b>If you stop here:</b> The action list feels like FEH&#x27;s spreadsheet. </p>
+  <p class="lead"><b>Builds on:</b> 003 to 005: the action list, its validation, and the counts that must update after each change.<br><b>If you stop here:</b> The action list feels like FEH&#x27;s spreadsheet.</p>
   <h3><span class="ph">1 · Specify</span></h3>
   <pre class="tall" data-label="Prompt · paste into Copilot Chat">
 /speckit-specify
@@ -558,6 +581,10 @@ Fast Data Entry
 Reference
 FEH requirement FR-005; docs/mockup/01-meeting-screen.png; the
 constitution&#x27;s Technology Standards (HTMX for this spec only).
+
+Builds On
+003 to 005: the action list, its validation, and the counts that
+must update after each change.
 
 Functional Requirements
 
@@ -622,6 +649,10 @@ Do not generate implementation. Do not generate source code.</pre>
 Plan Feature Specification 006-spreadsheet-style-editing, following the constitution&#x27;s
 Technology Standards exactly.
 
+This spec is an increment (Principle IX). It builds on: 003 to 005: the action list, its validation, and the counts that must update after each change.
+Reuse what is there; do not rebuild or restructure it. Every earlier
+spec&#x27;s tests must still pass.
+
 Extend the project; do not change its stack. Use HTMX, served from
 static files, for this list only: each change posts one value and
 re-renders that row and the counts. Reuse the validation and the
@@ -684,11 +715,10 @@ git add -A
 git commit -m &quot;feat: 006-spreadsheet-style-editing&quot;</pre>
 </section>
 
-
 <section class="slide" id="x007" data-group="Day 2 · Stretch" data-title="Execute 007 · Comments and done">
   <p class="eyebrow">Day 2 · stretch, after 006 or instead of it</p>
   <h2>Execute 007 — Comments and Mark as Done</h2>
-  <p class="lead"><b>If you stop here:</b> Follow-up between meetings is recorded, and actions can be closed properly. </p>
+  <p class="lead"><b>Builds on:</b> 003: the actions, their statuses and their validation. 001: hotel isolation for every form post.<br><b>If you stop here:</b> Follow-up between meetings is recorded, and actions can be closed properly.</p>
   <h3><span class="ph">1 · Specify</span></h3>
   <pre class="tall" data-label="Prompt · paste into Copilot Chat">
 /speckit-specify
@@ -718,6 +748,10 @@ Action Follow-up
 
 Reference
 docs/mockup/03-item-detail.png (simplified as in docs/reference.md).
+
+Builds On
+003: the actions, their statuses and their validation. 001: hotel
+isolation for every form post.
 
 Functional Requirements
 
@@ -786,6 +820,10 @@ Do not generate implementation. Do not generate source code.</pre>
 
 Plan Feature Specification 007-comments-and-done, following the constitution&#x27;s
 Technology Standards exactly.
+
+This spec is an increment (Principle IX). It builds on: 003: the actions, their statuses and their validation. 001: hotel isolation for every form post.
+Reuse what is there; do not rebuild or restructure it. Every earlier
+spec&#x27;s tests must still pass.
 
 Extend the project; do not change its stack. The action page is an
 ordinary Django page; comments and closing are ordinary form posts

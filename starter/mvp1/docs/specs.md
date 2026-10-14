@@ -68,17 +68,19 @@ every test passes with AI_PROVIDER=sample (Principle XVI).
 
 ## Delivery order and stop lines
 
-Build in this order. Each line marks what you have if you stop there.
+Build in this order. Each spec is an increment: it builds on the specs
+before it and leaves the app working. Each line marks what you have if
+you stop there.
 
-| Order | Spec | When | If you stop here |
-|---|---|---|---|
-| 1 | 001 Workshop Sign-in and Hotel Access | Late Day 1 | People sign in and see only their own hotel. Isolation exists before any data does. |
-| 2 | 002 Weekly Meetings | Day 2, 9:00 | Meetings can be created and listed. The weekly meeting exists in the tracker. |
-| 3 | 003 Action Items in a Meeting | Day 2, 9:45 | Actions are recorded with an owner and a due date. The spreadsheet could be retired. |
-| 4 | 004 Record and Transcribe | Day 2, 10:30 | The meeting can be recorded and turned into text on screen. |
-| 5 | 005 Extract Proposed Action Items | Day 2, 11:30 | The transcript becomes proposed action items, ready for the chair. |
-| 6 | 006 Review and Confirm Proposed Items | Day 2, 1:30 | Speak, review, confirm: the voice-capture MVP is complete. |
-| 7 | 007 Carry Forward and Overdue (stretch) | Day 2 stretch | Open items carry forward and late ones stand out. |
+| Order | Spec | Builds on | When | If you stop here |
+|---|---|---|---|---|
+| 1 | 001 Workshop Sign-in and Hotel Access | Nothing | Late Day 1 | People sign in and see only their own hotel. Isolation exists before any data does. |
+| 2 | 002 Weekly Meetings | 001 | Day 2, 9:00 | Meetings can be created and listed. The weekly meeting exists in the tracker. |
+| 3 | 003 Action Items in a Meeting | 002 | Day 2, 9:45 | Actions are recorded with an owner and a due date. The spreadsheet could be retired. |
+| 4 | 004 Record and Transcribe | 003 | Day 2, 10:30 | The meeting can be recorded and turned into text on screen. |
+| 5 | 005 Extract Proposed Action Items | 004 | Day 2, 11:30 | The transcript becomes proposed action items, ready for the chair. |
+| 6 | 006 Review and Confirm Proposed Items | 005 | Day 2, 1:30 | Speak, review, confirm: the voice-capture MVP is complete. |
+| 7 | 007 Carry Forward and Overdue (stretch) | 003 | Day 2 stretch | Open items carry forward and late ones stand out. |
 
 **Minimum viable demonstration: through 006** (speak, review, confirm).
 007 is a stretch goal, only after 006 is accepted.
@@ -136,6 +138,10 @@ Access and Hotel Isolation
 Reference
 docs/reference.md "Hotels" and "People". FEH requirements FR-003
 (Entra ID, stubbed for the workshop), FR-013, NFR-001.
+
+Builds On
+Nothing: this is the foundation. It sets up the project, sign-in and
+hotel isolation that every later spec reuses.
 
 Functional Requirements
 
@@ -205,6 +211,10 @@ Do not generate implementation. Do not generate source code.
 
 Plan Feature Specification 001-sign-in-hotel-access, following the constitution's
 Technology Standards exactly.
+
+This spec is an increment (Principle IX). It builds on: Nothing: this is the foundation. It sets up the project, sign-in and hotel isolation that every later spec reuses.
+Reuse what is there; do not rebuild or restructure it. Every earlier
+spec's tests must still pass.
 
 This is the first feature, so it includes the project set-up from the
 constitution's Technology Standards: manage.py at the repository root,
@@ -293,6 +303,10 @@ Reference
 docs/reference.md "Meetings in the seed" and "Screens and exact
 labels". FEH requirements FR-004, FR-021.
 
+Builds On
+001: people sign in and see only their own hotel. Every meeting
+belongs to the signed-in person's hotel through 001's isolation.
+
 Functional Requirements
 
 FR-001 The system shall let a person create a meeting for their hotel with a
@@ -362,6 +376,10 @@ Do not generate implementation. Do not generate source code.
 
 Plan Feature Specification 002-weekly-meetings, following the constitution's
 Technology Standards exactly.
+
+This spec is an increment (Principle IX). It builds on: 001: people sign in and see only their own hotel. Every meeting belongs to the signed-in person's hotel through 001's isolation.
+Reuse what is there; do not rebuild or restructure it. Every earlier
+spec's tests must still pass.
 
 Extend the project from 001; do not change its stack. Add the meeting
 with django-simple-history, scoped to the hotel through 001's isolation.
@@ -448,6 +466,10 @@ the meeting screen and Add action form of
 docs/mockup/mvp-app.html. FEH requirements FR-007, FR-008,
 FR-009, FR-013, FR-014.
 
+Builds On
+002: actions are added to a meeting. 001: owners are people of the
+same hotel.
+
 Functional Requirements
 
 FR-001 The system shall let a person add an action to a meeting with a market
@@ -523,6 +545,10 @@ Do not generate implementation. Do not generate source code.
 
 Plan Feature Specification 003-action-items, following the constitution's
 Technology Standards exactly.
+
+This spec is an increment (Principle IX). It builds on: 002: actions are added to a meeting. 001: owners are people of the same hotel.
+Reuse what is there; do not rebuild or restructure it. Every earlier
+spec's tests must still pass.
 
 Extend the project; do not change its stack. Add the action item with
 django-simple-history, belonging to the meeting it was raised in and
@@ -609,6 +635,10 @@ docs/voice-capture-sequence.mmd steps 1 to 5; docs/reference.md
 "MVP 1 · Voice capture"; docs/mockup/mvp-app.html Record page;
 docs/sample/transcript.txt.
 
+Builds On
+003: the meeting screen gains a Record button. 002: the transcript
+belongs to the meeting.
+
 Functional Requirements
 
 FR-001 The system shall offer a "Record" button on the meeting screen that
@@ -685,6 +715,10 @@ Do not generate implementation. Do not generate source code.
 
 Plan Feature Specification 004-record-and-transcribe, following the constitution's
 Technology Standards exactly.
+
+This spec is an increment (Principle IX). It builds on: 003: the meeting screen gains a Record button. 002: the transcript belongs to the meeting.
+Reuse what is there; do not rebuild or restructure it. Every earlier
+spec's tests must still pass.
 
 Extend the project; do not change its stack. The Record page is an
 ordinary Django page with a small script that uses the browser's
@@ -772,6 +806,10 @@ Reference
 docs/voice-capture-sequence.mmd steps 6 to 9; docs/reference.md
 "MVP 1 · Voice capture" and "Lists"; docs/sample/items.json.
 
+Builds On
+004: the transcript of the meeting. 003: the action fields, lists and
+validation that every proposed item must satisfy.
+
 Functional Requirements
 
 FR-001 The system shall, after a transcript is ready, send it to the
@@ -849,6 +887,10 @@ Do not generate implementation. Do not generate source code.
 
 Plan Feature Specification 005-extract-proposed-items, following the constitution's
 Technology Standards exactly.
+
+This spec is an increment (Principle IX). It builds on: 004: the transcript of the meeting. 003: the action fields, lists and validation that every proposed item must satisfy.
+Reuse what is there; do not rebuild or restructure it. Every earlier
+spec's tests must still pass.
 
 Extend the project; do not change its stack. Add a Proposed item model
 (with django-simple-history) belonging to the meeting, with the action
@@ -937,6 +979,10 @@ Reference
 docs/voice-capture-sequence.mmd steps 10 to 13; docs/reference.md
 "MVP 1 · Voice capture"; docs/mockup/mvp-app.html Review page.
 
+Builds On
+005: the proposed items. 003: the action form and its validation,
+reused to edit proposed items and to create the confirmed actions.
+
 Functional Requirements
 
 FR-001 The system shall show the meeting's proposed items on a Review page,
@@ -1013,6 +1059,10 @@ Do not generate implementation. Do not generate source code.
 
 Plan Feature Specification 006-review-and-confirm, following the constitution's
 Technology Standards exactly.
+
+This spec is an increment (Principle IX). It builds on: 005: the proposed items. 003: the action form and its validation, reused to edit proposed items and to create the confirmed actions.
+Reuse what is there; do not rebuild or restructure it. Every earlier
+spec's tests must still pass.
 
 Extend the project; do not change its stack. The Review page is an
 ordinary Django page with one form for the selected items; Edit reuses
@@ -1097,6 +1147,10 @@ Reference
 FEH requirements FR-006 and FR-009; docs/mockup/mvp-app.html meeting
 screen.
 
+Builds On
+003: the actions and their statuses (including those confirmed in
+006). 002: the meeting dates that decide what is "earlier".
+
 Functional Requirements
 
 FR-001 The system shall show, in every meeting, the hotel's actions from
@@ -1160,6 +1214,10 @@ Do not generate implementation. Do not generate source code.
 
 Plan Feature Specification 007-carry-forward-and-overdue, following the constitution's
 Technology Standards exactly.
+
+This spec is an increment (Principle IX). It builds on: 003: the actions and their statuses (including those confirmed in 006). 002: the meeting dates that decide what is "earlier".
+Reuse what is there; do not rebuild or restructure it. Every earlier
+spec's tests must still pass.
 
 Extend the project; do not change its stack. Carry-forward and overdue
 are queries on the existing models through 001's isolation; nothing is

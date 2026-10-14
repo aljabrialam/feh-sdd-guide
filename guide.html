@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261014094800">
+<meta name="build" content="20261014095109">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -750,10 +750,15 @@ Review is where the participant adds value.
 Each specification, task and commit MUST deliver exactly one
 demonstrable capability.
 One spec = one commit = one capability on screen.
+Each specification MUST be an increment on the ones before it in the
+delivery order: it MUST state what it builds on, extend the working app
+without rebuilding or restructuring what earlier specs delivered, and
+leave every earlier acceptance test passing.
 
 **Rationale**: Small capabilities can be approved, built, demonstrated
 and rolled back one at a time, which is what lets the workshop stop at
-any spec and still have something working.
+any spec and still have something working. Building each spec on the
+last means the app works after every spec, never only at the end.
 
 ### X. Built Through Spec Kit and GitHub Copilot
 
@@ -903,6 +908,7 @@ A specification is complete only when all of the following are true:
 - [ ] Specification approved at G1 by the FEH product owner
 - [ ] Plan and tasks approved at G2 by the VISEO technical lead
 - [ ] All tasks completed
+- [ ] Every earlier specification&#x27;s tests still pass
 - [ ] pytest passes
 - [ ] Playwright passes for any journey the spec touches
 - [ ] Every acceptance criterion has a test whose name contains its ID
@@ -921,7 +927,7 @@ All specifications, plans, tasks and code are subject to this
 constitution. Non-compliance found during review MUST be raised before
 the artefact is committed.
 
-**Version**: 1.1.0 | **Ratified**: 2026-10-15 | **Last Amended**: 2026-10-15</pre></details>
+**Version**: 1.2.0 | **Ratified**: 2026-10-15 | **Last Amended**: 2026-10-15</pre></details>
   <h3><span class="ph">4</span> Adopt the room's version · 5 min</h3>
   <p>The facilitator updates <code>docs/constitution.md</code> on the big screen with anything the room agreed and posts it in Teams. Everyone saves it over their own copy, then:</p>
   <pre data-label="Prompt · paste into Copilot Chat">
@@ -954,6 +960,7 @@ version below, exactly as written. Do not change any other file.</pre>
   <h3><span class="ph">1</span> How we split work into specs</h3>
   <ul class="checks">
     <li><b>One capability per spec.</b> Something a person can do and FEH can see, built and accepted on its own (Principle IX).</li>
+    <li><b>Each spec is an increment.</b> It builds on the specs before it, extends the working app without rebuilding it, and keeps every earlier test passing (Principle IX). The app works after every spec, not only at the end.</li>
     <li><b>Foundation first.</b> Whatever every later spec depends on (here: who you are and which hotel) comes first.</li>
     <li><b>A stop line per spec.</b> Each line in the delivery order says what the client has if we stop there.</li>
     <li><b>A minimum viable demonstration.</b> The line we commit to finishing; everything after it is stretch.</li>
@@ -973,14 +980,14 @@ requirements you left out and why.</pre>
   <details><summary>Answer key: VISEO's delivery order and stop lines (the run sheet in <code>docs/specs.md</code>)</summary>
   <p style="margin-top:10px"><b>Minimum viable demonstration: through 005.</b></p>
   <table>
-    <tr><th>Order</th><th>Spec</th><th>When</th><th>If you stop here</th></tr>
-    <tr><td>1</td><td><b>001</b> Workshop Sign-in and Hotel Access</td><td>Late Day 1</td><td>People sign in and see only their own hotel. Isolation exists before any data does.</td></tr>
-    <tr><td>2</td><td><b>002</b> Weekly Meetings</td><td>Day 2, 9:00</td><td>Meetings can be created and listed. The weekly meeting exists in the tracker.</td></tr>
-    <tr><td>3</td><td><b>003</b> Action Items in a Meeting</td><td>Day 2, 10:00</td><td>Actions are recorded with an owner and a due date. The spreadsheet could be retired.</td></tr>
-    <tr><td>4</td><td><b>004</b> Carry Forward Open Items</td><td>Day 2, 11:30</td><td>Open items are never lost between weeks: FEH&#x27;s main pain is solved.</td></tr>
-    <tr><td>5</td><td><b>005</b> Overdue Flags and Meeting Counts</td><td>Day 2, 1:30</td><td>The meeting shows what is late at a glance. The MVP is complete.</td></tr>
-    <tr><td>6</td><td><b>006</b> Spreadsheet-style Editing <span class="muted">stretch</span></td><td>Day 2 stretch</td><td>The action list feels like FEH&#x27;s spreadsheet.</td></tr>
-    <tr><td>7</td><td><b>007</b> Comments and Mark as Done <span class="muted">stretch</span></td><td>Day 2 stretch</td><td>Follow-up between meetings is recorded, and actions can be closed properly.</td></tr>
+    <tr><th>Order</th><th>Spec</th><th>Builds on</th><th>When</th><th>If you stop here</th></tr>
+    <tr><td>1</td><td><b>001</b> Workshop Sign-in and Hotel Access</td><td>Nothing</td><td>Late Day 1</td><td>People sign in and see only their own hotel. Isolation exists before any data does.</td></tr>
+    <tr><td>2</td><td><b>002</b> Weekly Meetings</td><td>001</td><td>Day 2, 9:00</td><td>Meetings can be created and listed. The weekly meeting exists in the tracker.</td></tr>
+    <tr><td>3</td><td><b>003</b> Action Items in a Meeting</td><td>002</td><td>Day 2, 10:00</td><td>Actions are recorded with an owner and a due date. The spreadsheet could be retired.</td></tr>
+    <tr><td>4</td><td><b>004</b> Carry Forward Open Items</td><td>003</td><td>Day 2, 11:30</td><td>Open items are never lost between weeks: FEH&#x27;s main pain is solved.</td></tr>
+    <tr><td>5</td><td><b>005</b> Overdue Flags and Meeting Counts</td><td>004</td><td>Day 2, 1:30</td><td>The meeting shows what is late at a glance. The MVP is complete.</td></tr>
+    <tr><td>6</td><td><b>006</b> Spreadsheet-style Editing <span class="muted">stretch</span></td><td>003 to 005</td><td>Day 2 stretch</td><td>The action list feels like FEH&#x27;s spreadsheet.</td></tr>
+    <tr><td>7</td><td><b>007</b> Comments and Mark as Done <span class="muted">stretch</span></td><td>003</td><td>Day 2 stretch</td><td>Follow-up between meetings is recorded, and actions can be closed properly.</td></tr>
   </table>
   </details>
   <h3><span class="ph">4</span> What we stub or leave out</h3>
@@ -1467,9 +1474,9 @@ Buttons and inputs at least 40px tall.</pre>
   <p class="eyebrow">Spec 001 · Day 1, 1:50 · draft, compare, specify, clarify, G1</p>
   <h2>001 — Workshop Sign-in and Hotel Access</h2>
   <p class="lead">Let each person enter the tracker as themselves and see only their own hotel, standing in for Microsoft Entra ID during the workshop.</p>
-  <p class="muted"><b>If you stop here:</b> People sign in and see only their own hotel. Isolation exists before any data does.</p>
+  <p class="muted"><b>Builds on:</b> Nothing: this is the foundation. It sets up the project, sign-in and hotel isolation that every later spec reuses.<br><b>If you stop here:</b> People sign in and see only their own hotel. Isolation exists before any data does.</p>
   <h3><span class="ph">1 · Draft</span> yourself first · 15 min</h3>
-  <p>Write the whole block for this spec from <code>docs/feh-requirements.md</code>. Use the <button class="link" data-goto="spec101">spec template</button> and ask Copilot to review your draft. Don't run <code>/speckit-specify</code> yet.</p>
+  <p>Write the whole block for this spec from <code>docs/feh-requirements.md</code>, including what it builds on. Use the <button class="link" data-goto="spec101">spec template</button> and ask Copilot to review your draft. Don't run <code>/speckit-specify</code> yet.</p>
   <h3><span class="ph">2 · Compare</span> with the answer key, as a room</h3>
   <p>What did your draft have that ours doesn't? What did you miss? FEH confirms anything that is a business decision. The facilitator edits the agreed block on the big screen.</p>
   <details><summary>Answer key: VISEO's specify block for 001</summary>
@@ -1503,6 +1510,10 @@ Access and Hotel Isolation
 Reference
 docs/reference.md &quot;Hotels&quot; and &quot;People&quot;. FEH requirements FR-003
 (Entra ID, stubbed for the workshop), FR-013, NFR-001.
+
+Builds On
+Nothing: this is the foundation. It sets up the project, sign-in and
+hotel isolation that every later spec reuses.
 
 Functional Requirements
 
@@ -1578,7 +1589,7 @@ version below, exactly as written. Do not change any other file.</pre>
   <p class="eyebrow">Spec 002 · Day 1, 2:30 · draft, compare, specify, clarify, G1</p>
   <h2>002 — Weekly Meetings</h2>
   <p class="lead">Let a team member create the weekly performance meeting for their hotel and see all of their hotel&#x27;s meetings.</p>
-  <p class="muted"><b>If you stop here:</b> Meetings can be created and listed. The weekly meeting exists in the tracker.</p>
+  <p class="muted"><b>Builds on:</b> 001: people sign in and see only their own hotel. Every meeting belongs to the signed-in person&#x27;s hotel through 001&#x27;s isolation.<br><b>If you stop here:</b> Meetings can be created and listed. The weekly meeting exists in the tracker.</p>
   <h3><span class="ph">1 · Draft</span> yourself first · 5 min</h3>
   <p>Write only the Business Goal and the functional requirements (FR-001…) for this spec. Use the <button class="link" data-goto="spec101">spec template</button> and ask Copilot to review your draft. Don't run <code>/speckit-specify</code> yet.</p>
   <h3><span class="ph">2 · Compare</span> with the answer key, as a room</h3>
@@ -1613,6 +1624,10 @@ Meeting Management
 Reference
 docs/reference.md &quot;Meetings in the seed&quot; and &quot;Screens and exact
 labels&quot;. FEH requirements FR-004, FR-021.
+
+Builds On
+001: people sign in and see only their own hotel. Every meeting
+belongs to the signed-in person&#x27;s hotel through 001&#x27;s isolation.
 
 Functional Requirements
 
@@ -1689,9 +1704,9 @@ version below, exactly as written. Do not change any other file.</pre>
   <p class="eyebrow">Spec 003 · Day 1, 2:50 · draft, compare, specify, clarify, G1</p>
   <h2>003 — Action Items in a Meeting</h2>
   <p class="lead">Let a team member record each action agreed in the meeting, with its owner and due date, and change it later.</p>
-  <p class="muted"><b>If you stop here:</b> Actions are recorded with an owner and a due date. The spreadsheet could be retired.</p>
+  <p class="muted"><b>Builds on:</b> 002: actions are added to a meeting. 001: owners are people of the same hotel.<br><b>If you stop here:</b> Actions are recorded with an owner and a due date. The spreadsheet could be retired.</p>
   <h3><span class="ph">1 · Draft</span> yourself first · 15 min</h3>
-  <p>Write the whole block for this spec from <code>docs/feh-requirements.md</code>. Use the <button class="link" data-goto="spec101">spec template</button> and ask Copilot to review your draft. Don't run <code>/speckit-specify</code> yet.</p>
+  <p>Write the whole block for this spec from <code>docs/feh-requirements.md</code>, including what it builds on. Use the <button class="link" data-goto="spec101">spec template</button> and ask Copilot to review your draft. Don't run <code>/speckit-specify</code> yet.</p>
   <h3><span class="ph">2 · Compare</span> with the answer key, as a room</h3>
   <p>What did your draft have that ours doesn't? What did you miss? FEH confirms anything that is a business decision. The facilitator edits the agreed block on the big screen.</p>
   <details><summary>Answer key: VISEO's specify block for 003</summary>
@@ -1727,6 +1742,10 @@ Reference
 docs/reference.md &quot;Lists&quot; and &quot;Action items in the seed&quot;;
 docs/mockup/mvp-4-meeting-screen.html and mvp-5-add-action.html. FEH requirements FR-007, FR-008,
 FR-009, FR-013, FR-014.
+
+Builds On
+002: actions are added to a meeting. 001: owners are people of the
+same hotel.
 
 Functional Requirements
 
@@ -1807,7 +1826,7 @@ version below, exactly as written. Do not change any other file.</pre>
   <p class="eyebrow">Spec 004 · Day 1, 3:15 · draft, compare, specify, clarify, G1</p>
   <h2>004 — Carry Forward Open Items</h2>
   <p class="lead">Make every unfinished action from earlier meetings appear in the next meeting automatically, so nothing is lost between weeks.</p>
-  <p class="muted"><b>If you stop here:</b> Open items are never lost between weeks: FEH&#x27;s main pain is solved.</p>
+  <p class="muted"><b>Builds on:</b> 003: the meeting&#x27;s actions and their statuses. 002: the meeting dates that decide what is &quot;earlier&quot;.<br><b>If you stop here:</b> Open items are never lost between weeks: FEH&#x27;s main pain is solved.</p>
   <h3><span class="ph">1 · Draft</span> yourself first · 5 min</h3>
   <p>Write only the Business Goal and the functional requirements (FR-001…) for this spec. Use the <button class="link" data-goto="spec101">spec template</button> and ask Copilot to review your draft. Don't run <code>/speckit-specify</code> yet.</p>
   <h3><span class="ph">2 · Compare</span> with the answer key, as a room</h3>
@@ -1842,6 +1861,10 @@ Meeting Continuity
 Reference
 FEH requirement FR-006; docs/mockup/mvp-4-meeting-screen.html group
 headings.
+
+Builds On
+003: the meeting&#x27;s actions and their statuses. 002: the meeting dates
+that decide what is &quot;earlier&quot;.
 
 Functional Requirements
 
@@ -1917,7 +1940,7 @@ version below, exactly as written. Do not change any other file.</pre>
   <p class="eyebrow">Spec 005 · Day 1, 3:30 · draft, compare, specify, clarify, G1</p>
   <h2>005 — Overdue Flags and Meeting Counts</h2>
   <p class="lead">Make late actions impossible to miss, and give the meeting a one-glance summary.</p>
-  <p class="muted"><b>If you stop here:</b> The meeting shows what is late at a glance. The MVP is complete.</p>
+  <p class="muted"><b>Builds on:</b> 004: the meeting screen and its two groups. 003: each action&#x27;s due date and status.<br><b>If you stop here:</b> The meeting shows what is late at a glance. The MVP is complete.</p>
   <h3><span class="ph">1 · Draft</span> yourself first · 5 min</h3>
   <p>Write only the Business Goal and the functional requirements (FR-001…) for this spec. Use the <button class="link" data-goto="spec101">spec template</button> and ask Copilot to review your draft. Don't run <code>/speckit-specify</code> yet.</p>
   <h3><span class="ph">2 · Compare</span> with the answer key, as a room</h3>
@@ -1953,6 +1976,10 @@ Follow-up Visibility
 Reference
 FEH requirement FR-009 (overdue is calculated, not a status);
 docs/mockup/mvp-4-meeting-screen.html counters and due-date cell.
+
+Builds On
+004: the meeting screen and its two groups. 003: each action&#x27;s due
+date and status.
 
 Functional Requirements
 
@@ -2131,6 +2158,7 @@ git commit                                                 one spec, one commit<
   </div>
   <h3>Working rules</h3>
   <ul class="checks">
+    <li>Each spec extends the app from the one before: never start a spec on a branch that doesn't have the previous spec's work, and check every earlier test still passes before G3</li>
     <li>Paste the blocks in order; read what Copilot reports before the next one</li>
     <li>After each spec, put your app next to the <a href="mvp/" target="_blank" rel="noopener">interactive mockup</a>: same labels, same numbers, same behaviour</li>
     <li>When Copilot asks to run a command or edit a file, read it, then choose <b>Allow</b></li>

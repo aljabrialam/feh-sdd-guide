@@ -48,10 +48,10 @@ def embed(s, label, text):
     b = s.index('</pre>', a)
     return s[:a] + '\n' + E(text.rstrip()) + s[b:]
 def order_table(specs):
-    rows = '\n'.join('    <tr><td>%d</td><td><b>%s</b> %s%s</td><td>%s</td><td>%s</td></tr>' % (
-        i + 1, s['n'], E(s['name']), ' <span class="muted">stretch</span>' if s.get('stretch') else '', E(s['when']), E(s['stop']))
+    rows = '\n'.join('    <tr><td>%d</td><td><b>%s</b> %s%s</td><td>%s</td><td>%s</td><td>%s</td></tr>' % (
+        i + 1, s['n'], E(s['name']), ' <span class="muted">stretch</span>' if s.get('stretch') else '', E(s['builds'].split(':')[0]), E(s['when']), E(s['stop']))
         for i, s in enumerate(specs))
-    return '<table>\n    <tr><th>Order</th><th>Spec</th><th>When</th><th>If you stop here</th></tr>\n%s\n  </table>' % rows
+    return '<table>\n    <tr><th>Order</th><th>Spec</th><th>Builds on</th><th>When</th><th>If you stop here</th></tr>\n%s\n  </table>' % rows
 def set_order_table(s, specs):
     i = s.index('<section class="slide" id="idea"')
     a = s.index('<table>', s.index('Answer key: VISEO', i)); b = s.index('</table>', a) + len('</table>')
@@ -59,18 +59,18 @@ def set_order_table(s, specs):
 
 
 # ---------------------------------------------------------------- slide builders
-def spec_slide(s, time, full):
+def spec_slide(s, time, full, sources='<code>docs/feh-requirements.md</code> and <code>docs/voice-capture-sequence.mmd</code>'):
     draft = ('  <h3><span class="ph">1 · Draft</span> yourself first · %s</h3>\n'
              '  <p>%s Use the <button class="link" data-goto="spec101">spec template</button> and ask Copilot to review your draft. Don\'t run <code>/speckit-specify</code> yet.</p>\n') % (
         '15 min' if full else '5 min',
-        'Write the whole block for this spec from <code>docs/feh-requirements.md</code> and <code>docs/voice-capture-sequence.mmd</code>.' if full else
+        'Write the whole block for this spec from %s, including what it builds on.' % sources if full else
         'Write only the Business Goal and the functional requirements (FR-001…) for this spec.')
     return '''
 <section class="slide" id="s%(n)s" data-group="Day 1 · Spec" data-title="Spec %(n)s · %(short)s">
   <p class="eyebrow">Spec %(n)s · Day 1, %(t)s · draft, compare, specify, clarify, G1</p>
   <h2>%(n)s — %(name)s</h2>
   <p class="lead">%(goal)s</p>
-  <p class="muted"><b>If you stop here:</b> %(stop)s</p>
+  <p class="muted"><b>Builds on:</b> %(builds)s<br><b>If you stop here:</b> %(stop)s</p>
 %(draft)s  <h3><span class="ph">2 · Compare</span> with the answer key, as a room</h3>
   <p>What did your draft have that ours doesn't? What did you miss? FEH confirms anything that is a business decision. The facilitator edits the agreed block on the big screen.</p>
   <details><summary>Answer key: VISEO's specify block for %(n)s</summary>
@@ -85,7 +85,7 @@ def spec_slide(s, time, full):
   <p>Save <code>specs/%(id)s/gates/G1.md</code> from the <button class="link" data-goto="gates">gate template</button>, listing the business decisions made during clarify, then commit.</p>
   %(catch)s
 </section>''' % dict(n=s['n'], short=E(s['short']), t=time, name=E(s['name']), goal=E(' '.join(s['goal'].split())),
-                     stop=E(s['stop']), draft=draft, spec=pre('Prompt · paste into Copilot Chat', R2.specify_block(s), True),
+                     stop=E(s['stop']), builds=E(' '.join(s['builds'].split())), draft=draft, spec=pre('Prompt · paste into Copilot Chat', R2.specify_block(s), True),
                      clar=pre('Prompt · paste into Copilot Chat', R2.clarify_block(s)), id=s['id'],
                      catch=catch('specs/%s/spec.md' % s['id'], '<code>spec.md</code>'))
 
@@ -128,7 +128,7 @@ def exec_slide(s, group, eyebrow, prev=None, with_specify=False, full_run=False,
 <section class="slide" id="x%(n)s" data-group="%(group)s" data-title="Execute %(n)s · %(short)s">
   <p class="eyebrow">%(eb)s</p>
   <h2>Execute %(n)s — %(name)s</h2>
-  <p class="lead"><b>If you stop here:</b> %(stop)s</p>
+  <p class="lead"><b>Builds on:</b> %(builds)s<br><b>If you stop here:</b> %(stop)s</p>
 %(ai)s%(top)s  <div class="flow"><span>plan</span><span>tasks</span><span>analyze</span><span class="g">G2</span><span>implement</span><span>converge</span><span class="g">G3</span><span>commit</span></div>
 %(switch)s  <h3><span class="ph">Plan</span></h3>
   %(plan)s
@@ -158,7 +158,7 @@ def exec_slide(s, group, eyebrow, prev=None, with_specify=False, full_run=False,
     <li><code>gates/G3.md</code> is signed by both</li>
   </ul>
   %(commit)s
-</section>''' % dict(n=s['n'], group=group, short=E(s['short']), eb=eyebrow, name=E(s['name']), stop=E(s['stop']),
+</section>''' % dict(n=s['n'], group=group, short=E(s['short']), eb=eyebrow, name=E(s['name']), stop=E(s['stop']), builds=E(' '.join(s['builds'].split())),
                      ai=AI_NOTE if ai else '', top=top, switch=switch, mock=mock,
                      plan=pre('Prompt · paste into Copilot Chat', R2.plan_block(s), True),
                      tasks=pre('Prompt · paste into Copilot Chat', R2.tasks_block(s)),
@@ -177,8 +177,21 @@ g2 = embed(g2, 'File · docs/reference.md', REF)
 g2 = set_order_table(g2, R2.SPECS)
 g2 = g2.replace('<div><b>MVP 1b</b>Listen to the meeting and propose actions. Needs Azure AI: not in the workshop.</div>',
                 '<div><b>MVP 1b</b>Listen to the meeting and propose actions. Built in the other track, <a href="guide-mvp1.html">MVP 1 · Voice capture</a>.</div>')
+S2 = {s['n']: s for s in R2.SPECS}
+T2 = {'001': ('1:50', True), '002': ('2:30', False), '003': ('2:50', True), '004': ('3:15', False), '005': ('3:30', False)}
+i, _ = bounds(g2, 's001'); _, j = bounds(g2, 's005')
+g2 = g2[:i] + '\n\n'.join(spec_slide(S2[n], *T2[n], sources='<code>docs/feh-requirements.md</code>').strip() for n in ['001', '002', '003', '004', '005']) + g2[j:]
 wr('guide.html', g2)
 d2 = rd('day2.html')
+X2 = [exec_slide(S2['002'], 'Day 2 · Execute', 'Day 2 · 9:00 · execute (finish 001 first if needed: steps 7–10 of Create the app)', prev='001-sign-in-hotel-access', full_run=True, mock='mvp/'),
+      exec_slide(S2['003'], 'Day 2 · Execute', 'Day 2 · 10:00 · execute', prev='002-weekly-meetings', mock='mvp/'),
+      exec_slide(S2['004'], 'Day 2 · Execute', 'Day 2 · 11:30 · execute', prev='003-action-items', mock='mvp/'),
+      exec_slide(S2['005'], 'Day 2 · Execute', 'Day 2 · 1:30 · execute · completes the MVP', prev='004-carry-forward', mock='mvp/'),
+      exec_slide(S2['006'], 'Day 2 · Stretch', 'Day 2 · 2:30 · stretch, only after 005 is accepted', with_specify=True, mock='mvp/'),
+      exec_slide(S2['007'], 'Day 2 · Stretch', 'Day 2 · stretch, after 006 or instead of it', with_specify=True, mock='mvp/')]
+i, _ = bounds(d2, 'x002'); _, j = bounds(d2, 'x007')
+d2 = d2[:i] + '\n\n'.join(x.strip() for x in X2) + d2[j:]
+wr('day2.html', d2)
 
 # ---------------------------------------------------------------- 2. MVP 1 guide
 S1 = {s['n']: s for s in R1.SPECS}

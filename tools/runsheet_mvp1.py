@@ -51,6 +51,7 @@ seed_demo also loads the seeded actions.''',
 )
 
 S004 = dict(n='004', id='004-record-and-transcribe', name='Record and Transcribe', short='Record and transcribe',
+  builds='003: the meeting screen gains a Record button. 002: the transcript\nbelongs to the meeting.',
   when='Day 2, 10:30', stop='The meeting can be recorded and turned into text on screen.',
   goal='''Let the chair record the discussion in the meeting and get a written
 transcript of it, without anyone typing.''',
@@ -99,6 +100,7 @@ AZURE_OPENAI_TRANSCRIBE_DEPLOYMENT read from the environment (.env, in
 )
 
 S005 = dict(n='005', id='005-extract-proposed-items', name='Extract Proposed Action Items', short='Extract proposed items',
+  builds='004: the transcript of the meeting. 003: the action fields, lists and\nvalidation that every proposed item must satisfy.',
   when='Day 2, 11:30', stop='The transcript becomes proposed action items, ready for the chair.',
   goal='''Turn the transcript into proposed action items with the same fields as
 the action list, so nobody types them up.''',
@@ -148,6 +150,7 @@ sample.''',
 )
 
 S006 = dict(n='006', id='006-review-and-confirm', name='Review and Confirm Proposed Items', short='Review and confirm',
+  builds='005: the proposed items. 003: the action form and its validation,\nreused to edit proposed items and to create the confirmed actions.',
   when='Day 2, 1:30', stop='Speak, review, confirm: the voice-capture MVP is complete.',
   goal='''Let the chair check the proposed items, correct or remove them, and
 confirm the right ones into the meeting's action list.''',
@@ -192,6 +195,7 @@ docs/mockup/mvp-app.html.''',
 )
 
 S007 = dict(n='007', id='007-carry-forward-and-overdue', name='Carry Forward and Overdue', short='Carry forward and overdue', stretch=True,
+  builds='003: the actions and their statuses (including those confirmed in\n006). 002: the meeting dates that decide what is "earlier".',
   when='Day 2 stretch', stop='Open items carry forward and late ones stand out.',
   goal='''Make unfinished actions from earlier meetings appear in the next
 meeting automatically, and make late actions impossible to miss.''',

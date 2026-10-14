@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261014094800">
+<meta name="build" content="20261014095109">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -208,7 +208,7 @@ body:not(.standalone) .jump{display:none}
 <section class="slide" id="x002" data-group="Day 2 · Execute" data-title="Execute 002 · Weekly meetings">
   <p class="eyebrow">Day 2 · 9:00 · execute (finish 001 first if needed: steps 7–10 of Create the app)</p>
   <h2>Execute 002 — Weekly Meetings</h2>
-  <p class="lead"><b>If you stop here:</b> Meetings can be created and listed. The weekly meeting exists in the tracker.</p>
+  <p class="lead"><b>Builds on:</b> 001: people sign in and see only their own hotel. Every meeting belongs to the signed-in person&#x27;s hotel through 001&#x27;s isolation.<br><b>If you stop here:</b> Meetings can be created and listed. The weekly meeting exists in the tracker.</p>
   <div class="flow"><span>plan</span><span>tasks</span><span>analyze</span><span class="g">G2</span><span>implement</span><span>converge</span><span class="g">G3</span><span>commit</span></div>
   <h3><span class="ph">Switch</span> to spec 002</h3>
   <p>Spec Kit works on the spec whose branch you are on. The first line moves to this spec's branch; the second brings in everything built so far (the previous spec's branch).</p>
@@ -222,6 +222,10 @@ git merge 001-sign-in-hotel-access</pre>
 
 Plan Feature Specification 002-weekly-meetings, following the constitution&#x27;s
 Technology Standards exactly.
+
+This spec is an increment (Principle IX). It builds on: 001: people sign in and see only their own hotel. Every meeting belongs to the signed-in person&#x27;s hotel through 001&#x27;s isolation.
+Reuse what is there; do not rebuild or restructure it. Every earlier
+spec&#x27;s tests must still pass.
 
 Extend the project from 001; do not change its stack. Add the meeting
 with django-simple-history, scoped to the hotel through 001&#x27;s isolation.
@@ -294,7 +298,7 @@ git commit -m &quot;feat: 002-weekly-meetings&quot;</pre>
 <section class="slide" id="x003" data-group="Day 2 · Execute" data-title="Execute 003 · Action items">
   <p class="eyebrow">Day 2 · 9:45 · execute</p>
   <h2>Execute 003 — Action Items in a Meeting</h2>
-  <p class="lead"><b>If you stop here:</b> Actions are recorded with an owner and a due date. The spreadsheet could be retired.</p>
+  <p class="lead"><b>Builds on:</b> 002: actions are added to a meeting. 001: owners are people of the same hotel.<br><b>If you stop here:</b> Actions are recorded with an owner and a due date. The spreadsheet could be retired.</p>
   <div class="flow"><span>plan</span><span>tasks</span><span>analyze</span><span class="g">G2</span><span>implement</span><span>converge</span><span class="g">G3</span><span>commit</span></div>
   <h3><span class="ph">Switch</span> to spec 003</h3>
   <p>Spec Kit works on the spec whose branch you are on. The first line moves to this spec's branch; the second brings in everything built so far (the previous spec's branch).</p>
@@ -308,6 +312,10 @@ git merge 002-weekly-meetings</pre>
 
 Plan Feature Specification 003-action-items, following the constitution&#x27;s
 Technology Standards exactly.
+
+This spec is an increment (Principle IX). It builds on: 002: actions are added to a meeting. 001: owners are people of the same hotel.
+Reuse what is there; do not rebuild or restructure it. Every earlier
+spec&#x27;s tests must still pass.
 
 Extend the project; do not change its stack. Add the action item with
 django-simple-history, belonging to the meeting it was raised in and
@@ -377,7 +385,7 @@ git commit -m &quot;feat: 003-action-items&quot;</pre>
 <section class="slide" id="x004" data-group="Day 2 · Execute" data-title="Execute 004 · Record and transcribe">
   <p class="eyebrow">Day 2 · 10:30 · execute</p>
   <h2>Execute 004 — Record and Transcribe</h2>
-  <p class="lead"><b>If you stop here:</b> The meeting can be recorded and turned into text on screen.</p>
+  <p class="lead"><b>Builds on:</b> 003: the meeting screen gains a Record button. 002: the transcript belongs to the meeting.<br><b>If you stop here:</b> The meeting can be recorded and turned into text on screen.</p>
   <div class="note"><b>No keys needed</b>This spec runs with <code>AI_PROVIDER=sample</code>: the app uses <code>docs/sample/</code> instead of Azure OpenAI, and every test uses the sample too (Principle XVI). Connect Azure later, on the <button class="link" data-goto="azure">Connect Azure OpenAI</button> slide.</div>
   <div class="flow"><span>plan</span><span>tasks</span><span>analyze</span><span class="g">G2</span><span>implement</span><span>converge</span><span class="g">G3</span><span>commit</span></div>
   <h3><span class="ph">Switch</span> to spec 004</h3>
@@ -392,6 +400,10 @@ git merge 003-action-items</pre>
 
 Plan Feature Specification 004-record-and-transcribe, following the constitution&#x27;s
 Technology Standards exactly.
+
+This spec is an increment (Principle IX). It builds on: 003: the meeting screen gains a Record button. 002: the transcript belongs to the meeting.
+Reuse what is there; do not rebuild or restructure it. Every earlier
+spec&#x27;s tests must still pass.
 
 Extend the project; do not change its stack. The Record page is an
 ordinary Django page with a small script that uses the browser&#x27;s
@@ -463,7 +475,7 @@ git commit -m &quot;feat: 004-record-and-transcribe&quot;</pre>
 <section class="slide" id="x005" data-group="Day 2 · Execute" data-title="Execute 005 · Extract proposed items">
   <p class="eyebrow">Day 2 · 11:30 · execute</p>
   <h2>Execute 005 — Extract Proposed Action Items</h2>
-  <p class="lead"><b>If you stop here:</b> The transcript becomes proposed action items, ready for the chair.</p>
+  <p class="lead"><b>Builds on:</b> 004: the transcript of the meeting. 003: the action fields, lists and validation that every proposed item must satisfy.<br><b>If you stop here:</b> The transcript becomes proposed action items, ready for the chair.</p>
   <div class="note"><b>No keys needed</b>This spec runs with <code>AI_PROVIDER=sample</code>: the app uses <code>docs/sample/</code> instead of Azure OpenAI, and every test uses the sample too (Principle XVI). Connect Azure later, on the <button class="link" data-goto="azure">Connect Azure OpenAI</button> slide.</div>
   <div class="flow"><span>plan</span><span>tasks</span><span>analyze</span><span class="g">G2</span><span>implement</span><span>converge</span><span class="g">G3</span><span>commit</span></div>
   <h3><span class="ph">Switch</span> to spec 005</h3>
@@ -478,6 +490,10 @@ git merge 004-record-and-transcribe</pre>
 
 Plan Feature Specification 005-extract-proposed-items, following the constitution&#x27;s
 Technology Standards exactly.
+
+This spec is an increment (Principle IX). It builds on: 004: the transcript of the meeting. 003: the action fields, lists and validation that every proposed item must satisfy.
+Reuse what is there; do not rebuild or restructure it. Every earlier
+spec&#x27;s tests must still pass.
 
 Extend the project; do not change its stack. Add a Proposed item model
 (with django-simple-history) belonging to the meeting, with the action
@@ -550,7 +566,7 @@ git commit -m &quot;feat: 005-extract-proposed-items&quot;</pre>
 <section class="slide" id="x006" data-group="Day 2 · Execute" data-title="Execute 006 · Review and confirm">
   <p class="eyebrow">Day 2 · 1:30 · execute · completes the MVP</p>
   <h2>Execute 006 — Review and Confirm Proposed Items</h2>
-  <p class="lead"><b>If you stop here:</b> Speak, review, confirm: the voice-capture MVP is complete.</p>
+  <p class="lead"><b>Builds on:</b> 005: the proposed items. 003: the action form and its validation, reused to edit proposed items and to create the confirmed actions.<br><b>If you stop here:</b> Speak, review, confirm: the voice-capture MVP is complete.</p>
   <div class="flow"><span>plan</span><span>tasks</span><span>analyze</span><span class="g">G2</span><span>implement</span><span>converge</span><span class="g">G3</span><span>commit</span></div>
   <h3><span class="ph">Switch</span> to spec 006</h3>
   <p>Spec Kit works on the spec whose branch you are on. The first line moves to this spec's branch; the second brings in everything built so far (the previous spec's branch).</p>
@@ -564,6 +580,10 @@ git merge 005-extract-proposed-items</pre>
 
 Plan Feature Specification 006-review-and-confirm, following the constitution&#x27;s
 Technology Standards exactly.
+
+This spec is an increment (Principle IX). It builds on: 005: the proposed items. 003: the action form and its validation, reused to edit proposed items and to create the confirmed actions.
+Reuse what is there; do not rebuild or restructure it. Every earlier
+spec&#x27;s tests must still pass.
 
 Extend the project; do not change its stack. The Review page is an
 ordinary Django page with one form for the selected items; Edit reuses
@@ -663,7 +683,7 @@ in any tracked file. Report only yes or no for each check.</pre>
 <section class="slide" id="x007" data-group="Day 2 · Stretch" data-title="Execute 007 · Carry forward and overdue">
   <p class="eyebrow">Day 2 · stretch, only after 006 is accepted</p>
   <h2>Execute 007 — Carry Forward and Overdue</h2>
-  <p class="lead"><b>If you stop here:</b> Open items carry forward and late ones stand out.</p>
+  <p class="lead"><b>Builds on:</b> 003: the actions and their statuses (including those confirmed in 006). 002: the meeting dates that decide what is &quot;earlier&quot;.<br><b>If you stop here:</b> Open items carry forward and late ones stand out.</p>
   <h3><span class="ph">1 · Specify</span></h3>
   <pre class="tall" data-label="Prompt · paste into Copilot Chat">
 /speckit-specify
@@ -694,6 +714,10 @@ Meeting Continuity
 Reference
 FEH requirements FR-006 and FR-009; docs/mockup/mvp-app.html meeting
 screen.
+
+Builds On
+003: the actions and their statuses (including those confirmed in
+006). 002: the meeting dates that decide what is &quot;earlier&quot;.
 
 Functional Requirements
 
@@ -757,6 +781,10 @@ Do not generate implementation. Do not generate source code.</pre>
 
 Plan Feature Specification 007-carry-forward-and-overdue, following the constitution&#x27;s
 Technology Standards exactly.
+
+This spec is an increment (Principle IX). It builds on: 003: the actions and their statuses (including those confirmed in 006). 002: the meeting dates that decide what is &quot;earlier&quot;.
+Reuse what is there; do not rebuild or restructure it. Every earlier
+spec&#x27;s tests must still pass.
 
 Extend the project; do not change its stack. Carry-forward and overdue
 are queries on the existing models through 001&#x27;s isolation; nothing is

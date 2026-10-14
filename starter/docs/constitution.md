@@ -93,10 +93,15 @@ Review is where the participant adds value.
 Each specification, task and commit MUST deliver exactly one
 demonstrable capability.
 One spec = one commit = one capability on screen.
+Each specification MUST be an increment on the ones before it in the
+delivery order: it MUST state what it builds on, extend the working app
+without rebuilding or restructuring what earlier specs delivered, and
+leave every earlier acceptance test passing.
 
 **Rationale**: Small capabilities can be approved, built, demonstrated
 and rolled back one at a time, which is what lets the workshop stop at
-any spec and still have something working.
+any spec and still have something working. Building each spec on the
+last means the app works after every spec, never only at the end.
 
 ### X. Built Through Spec Kit and GitHub Copilot
 
@@ -246,6 +251,7 @@ A specification is complete only when all of the following are true:
 - [ ] Specification approved at G1 by the FEH product owner
 - [ ] Plan and tasks approved at G2 by the VISEO technical lead
 - [ ] All tasks completed
+- [ ] Every earlier specification's tests still pass
 - [ ] pytest passes
 - [ ] Playwright passes for any journey the spec touches
 - [ ] Every acceptance criterion has a test whose name contains its ID
@@ -264,4 +270,4 @@ All specifications, plans, tasks and code are subject to this
 constitution. Non-compliance found during review MUST be raised before
 the artefact is committed.
 
-**Version**: 1.1.0 | **Ratified**: 2026-10-15 | **Last Amended**: 2026-10-15
+**Version**: 1.2.0 | **Ratified**: 2026-10-15 | **Last Amended**: 2026-10-15
