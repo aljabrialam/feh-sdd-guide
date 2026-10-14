@@ -107,8 +107,11 @@ loads exactly this data. Store dates and times in UTC; show them in the
 hotel's time zone.
 
 ## Screens and exact labels
-Desktop browser. Follow the images in docs/mockup/, leaving out anything
-this file says is not built.
+Desktop browser. FEH's screens are docs/mockup/01-meeting-screen.png and
+03-item-detail.png. VISEO's MVP versions, trimmed to what the workshop
+builds, are docs/mockup/mvp-1-sign-in.png, mvp-2-meetings.png,
+mvp-3-new-meeting.png, mvp-4-meeting-screen.png and mvp-5-add-action.png.
+Where they differ, follow the mvp-* screens and this file.
 Top bar (all screens): "Action Tracker" · "Meetings" · the person's name
 and hotel · "Sign out".
 - Sign in as (spec 001): heading "Sign in", one button per person showing name and

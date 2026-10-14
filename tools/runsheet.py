@@ -56,7 +56,8 @@ the Django project "tracker_site" and app "tracker", uv, pytest with
 pytest-django, and Playwright in e2e/.
 Add hotels and people with seed_demo loading exactly the "Hotels" and
 "People" sections of docs/reference.md. Build the "Sign in as" page and
-the top bar with the labels and look in docs/reference.md. Put hotel
+the top bar like docs/mockup/mvp-1-sign-in.png, with the labels and look
+in docs/reference.md. Put hotel
 isolation in one place (a hotel-scoped manager and a view mixin) that
 every later feature will reuse.''',
   ),
@@ -92,8 +93,8 @@ and attendee chips.''',
              '''Two people create a meeting for the same date at the same time.'''],
   plan='''Extend the project from 001; do not change its stack. Add the meeting
 with django-simple-history, scoped to the hotel through 001's isolation.
-Meetings list and "New meeting" form with the exact labels in
-docs/reference.md; seed_demo also loads the seeded meetings.''',
+Meetings list and "New meeting" form like docs/mockup/mvp-2-meetings.png
+and mvp-3-new-meeting.png, with the exact labels in docs/reference.md; seed_demo also loads the seeded meetings.''',
   ),
  dict(n='003', id='003-action-items', name='Action Items in a Meeting', short='Action items',
   when='Day 2, 10:00', stop='Actions are recorded with an owner and a due date. The spreadsheet could be retired.',
@@ -105,7 +106,7 @@ priority, so every action has an owner and a due date (FEH success
 measure: 100%).''',
   actors=['Hotel team member', 'Action owner'], cap='Action Tracking',
   ref='''docs/reference.md "Lists" and "Action items in the seed";
-docs/mockup/01-meeting-screen.png. FEH requirements FR-007, FR-008,
+docs/mockup/mvp-4-meeting-screen.png and mvp-5-add-action.png. FEH requirements FR-007, FR-008,
 FR-009, FR-013, FR-014.''',
   frs=['''The system shall let a person add an action to a meeting with a market
 segment, an issue category, the issue, the action required, an owner
@@ -135,8 +136,7 @@ changes its status to In progress.''',
 django-simple-history, belonging to the meeting it was raised in and
 scoped to the hotel through 001's isolation. "Add action" and "Edit"
 are ordinary Django forms on the meeting page, laid out like
-docs/mockup/01-meeting-screen.png without the parts docs/reference.md
-says are not built. seed_demo also loads the seeded actions.''',
+docs/mockup/mvp-4-meeting-screen.png and mvp-5-add-action.png. seed_demo also loads the seeded actions.''',
   ),
  dict(n='004', id='004-carry-forward', name='Carry Forward Open Items', short='Carry forward',
   when='Day 2, 11:30', stop='Open items are never lost between weeks: FEH\'s main pain is solved.',

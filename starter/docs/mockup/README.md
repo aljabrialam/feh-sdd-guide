@@ -8,3 +8,8 @@ into this folder:
 - 03-item-detail.png
 
 They show sample data for layout only.
+
+VISEO's MVP versions of the screens (same Teams file), trimmed to what the
+workshop builds: mvp-1-sign-in.png (spec 001), mvp-2-meetings.png and
+mvp-3-new-meeting.png (spec 002), mvp-4-meeting-screen.png (specs 003-005),
+mvp-5-add-action.png (spec 003).
