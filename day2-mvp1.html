@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261014155427">
+<meta name="build" content="20261014163027">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -256,6 +256,31 @@ proves. Mark tasks that can run in parallel.</pre>
     <li>Nothing is planned that no criterion asks for</li>
     <li><code>/speckit-analyze</code> reports no critical issues</li>
   </ul>
+  <p><b>Record the decision.</b> When the VISEO technical lead says "approved", paste this into Copilot Chat (Agent mode). Before you press Enter, replace the name in brackets with the name on the big screen. What a gate record is: <button class="link" data-goto="gates">Gate record</button>.</p>
+  <pre data-label="Prompt · paste into Copilot Chat">
+Create the file specs/002-weekly-meetings/gates/G2.md with the content below.
+Fill in each part in round brackets, then remove the brackets.
+Do not change any other file.
+
+# G2 — Plan approval
+
+Spec: specs/002-weekly-meetings/plan.md
+Approved by: (the VISEO technical lead&#x27;s name), Technical lead, VISEO
+Date: (today&#x27;s date)
+Decision: Approved
+
+Business decisions made at this gate:
+- (one line per main technical choice in plan.md (for example where hotel isolation is enforced))
+
+Conditions:
+- None
+
+Deferred to a later spec:
+- (anything spec.md lists as out of scope, or None)</pre>
+  <p class="expect">✓ You should see: a new file <code>specs/002-weekly-meetings/gates/G2.md</code> open in the editor. Read it; if Copilot shows <b>Keep</b>, click it.</p>
+  <pre data-label="Terminal or PowerShell · save it in Git">
+git add -A
+git commit -m &quot;gate: G2 approved 002-weekly-meetings&quot;</pre>
   <div class="note"><b>Match the room before moving on</b>Compare your <code>plan.md</code> with the approved version on the big screen. Different, or fell behind? The facilitator posts the approved file in the Teams chat. Paste this into Copilot Chat, then paste the approved file underneath:</div>
   <pre data-label="Prompt · catch up to the room's approved version">
 Replace the contents of specs/002-weekly-meetings/plan.md with the approved
@@ -288,8 +313,29 @@ npx playwright test</pre>
     <li>Every AC-002 criterion has a passing test whose name contains its ID</li>
     <li>All earlier specs' tests still pass</li>
     <li><code>/speckit-converge</code> reports no gaps</li>
-    <li><code>gates/G3.md</code> is signed by both</li>
   </ul>
+  <p><b>Record the decision.</b> When FEH and VISEO both say "approved", paste this into Copilot Chat (Agent mode). Before you press Enter, replace the name in brackets with the name on the big screen. What a gate record is: <button class="link" data-goto="gates">Gate record</button>.</p>
+  <pre data-label="Prompt · paste into Copilot Chat">
+Create the file specs/002-weekly-meetings/gates/G3.md with the content below.
+Fill in each part in round brackets, then remove the brackets.
+Do not change any other file.
+
+# G3 — Acceptance
+
+Spec: specs/002-weekly-meetings/spec.md
+Approved by: (the FEH product owner&#x27;s name and the VISEO technical lead&#x27;s name), FEH and VISEO
+Date: (today&#x27;s date)
+Decision: Approved
+
+Business decisions made at this gate:
+- (what was shown on screen, and how many pytest and Playwright tests passed)
+
+Conditions:
+- None
+
+Deferred to a later spec:
+- (anything spec.md lists as out of scope, or None)</pre>
+  <p class="expect">✓ You should see: a new file <code>specs/002-weekly-meetings/gates/G3.md</code> open in the editor. Read it; if Copilot shows <b>Keep</b>, click it.</p>
   <pre data-label="Terminal · one spec, one commit">
 git add -A
 git commit -m &quot;feat: 002-weekly-meetings&quot;</pre>
@@ -349,6 +395,31 @@ proves. Mark tasks that can run in parallel.</pre>
     <li>Nothing is planned that no criterion asks for</li>
     <li><code>/speckit-analyze</code> reports no critical issues</li>
   </ul>
+  <p><b>Record the decision.</b> When the VISEO technical lead says "approved", paste this into Copilot Chat (Agent mode). Before you press Enter, replace the name in brackets with the name on the big screen. What a gate record is: <button class="link" data-goto="gates">Gate record</button>.</p>
+  <pre data-label="Prompt · paste into Copilot Chat">
+Create the file specs/003-action-items/gates/G2.md with the content below.
+Fill in each part in round brackets, then remove the brackets.
+Do not change any other file.
+
+# G2 — Plan approval
+
+Spec: specs/003-action-items/plan.md
+Approved by: (the VISEO technical lead&#x27;s name), Technical lead, VISEO
+Date: (today&#x27;s date)
+Decision: Approved
+
+Business decisions made at this gate:
+- (one line per main technical choice in plan.md (for example where hotel isolation is enforced))
+
+Conditions:
+- None
+
+Deferred to a later spec:
+- (anything spec.md lists as out of scope, or None)</pre>
+  <p class="expect">✓ You should see: a new file <code>specs/003-action-items/gates/G2.md</code> open in the editor. Read it; if Copilot shows <b>Keep</b>, click it.</p>
+  <pre data-label="Terminal or PowerShell · save it in Git">
+git add -A
+git commit -m &quot;gate: G2 approved 003-action-items&quot;</pre>
   <div class="note"><b>Match the room before moving on</b>Compare your <code>plan.md</code> with the approved version on the big screen. Different, or fell behind? The facilitator posts the approved file in the Teams chat. Paste this into Copilot Chat, then paste the approved file underneath:</div>
   <pre data-label="Prompt · catch up to the room's approved version">
 Replace the contents of specs/003-action-items/plan.md with the approved
@@ -375,8 +446,29 @@ uv run python manage.py runserver</pre>
     <li>Every AC-003 criterion has a passing test whose name contains its ID</li>
     <li>All earlier specs' tests still pass</li>
     <li><code>/speckit-converge</code> reports no gaps</li>
-    <li><code>gates/G3.md</code> is signed by both</li>
   </ul>
+  <p><b>Record the decision.</b> When FEH and VISEO both say "approved", paste this into Copilot Chat (Agent mode). Before you press Enter, replace the name in brackets with the name on the big screen. What a gate record is: <button class="link" data-goto="gates">Gate record</button>.</p>
+  <pre data-label="Prompt · paste into Copilot Chat">
+Create the file specs/003-action-items/gates/G3.md with the content below.
+Fill in each part in round brackets, then remove the brackets.
+Do not change any other file.
+
+# G3 — Acceptance
+
+Spec: specs/003-action-items/spec.md
+Approved by: (the FEH product owner&#x27;s name and the VISEO technical lead&#x27;s name), FEH and VISEO
+Date: (today&#x27;s date)
+Decision: Approved
+
+Business decisions made at this gate:
+- (what was shown on screen, and how many pytest and Playwright tests passed)
+
+Conditions:
+- None
+
+Deferred to a later spec:
+- (anything spec.md lists as out of scope, or None)</pre>
+  <p class="expect">✓ You should see: a new file <code>specs/003-action-items/gates/G3.md</code> open in the editor. Read it; if Copilot shows <b>Keep</b>, click it.</p>
   <pre data-label="Terminal · one spec, one commit">
 git add -A
 git commit -m &quot;feat: 003-action-items&quot;</pre>
@@ -439,6 +531,31 @@ proves. Mark tasks that can run in parallel.</pre>
     <li>Nothing is planned that no criterion asks for</li>
     <li><code>/speckit-analyze</code> reports no critical issues</li>
   </ul>
+  <p><b>Record the decision.</b> When the VISEO technical lead says "approved", paste this into Copilot Chat (Agent mode). Before you press Enter, replace the name in brackets with the name on the big screen. What a gate record is: <button class="link" data-goto="gates">Gate record</button>.</p>
+  <pre data-label="Prompt · paste into Copilot Chat">
+Create the file specs/004-record-and-transcribe/gates/G2.md with the content below.
+Fill in each part in round brackets, then remove the brackets.
+Do not change any other file.
+
+# G2 — Plan approval
+
+Spec: specs/004-record-and-transcribe/plan.md
+Approved by: (the VISEO technical lead&#x27;s name), Technical lead, VISEO
+Date: (today&#x27;s date)
+Decision: Approved
+
+Business decisions made at this gate:
+- (one line per main technical choice in plan.md (for example where hotel isolation is enforced))
+
+Conditions:
+- None
+
+Deferred to a later spec:
+- (anything spec.md lists as out of scope, or None)</pre>
+  <p class="expect">✓ You should see: a new file <code>specs/004-record-and-transcribe/gates/G2.md</code> open in the editor. Read it; if Copilot shows <b>Keep</b>, click it.</p>
+  <pre data-label="Terminal or PowerShell · save it in Git">
+git add -A
+git commit -m &quot;gate: G2 approved 004-record-and-transcribe&quot;</pre>
   <div class="note"><b>Match the room before moving on</b>Compare your <code>plan.md</code> with the approved version on the big screen. Different, or fell behind? The facilitator posts the approved file in the Teams chat. Paste this into Copilot Chat, then paste the approved file underneath:</div>
   <pre data-label="Prompt · catch up to the room's approved version">
 Replace the contents of specs/004-record-and-transcribe/plan.md with the approved
@@ -465,8 +582,29 @@ uv run python manage.py runserver</pre>
     <li>Every AC-004 criterion has a passing test whose name contains its ID</li>
     <li>All earlier specs' tests still pass</li>
     <li><code>/speckit-converge</code> reports no gaps</li>
-    <li><code>gates/G3.md</code> is signed by both</li>
   </ul>
+  <p><b>Record the decision.</b> When FEH and VISEO both say "approved", paste this into Copilot Chat (Agent mode). Before you press Enter, replace the name in brackets with the name on the big screen. What a gate record is: <button class="link" data-goto="gates">Gate record</button>.</p>
+  <pre data-label="Prompt · paste into Copilot Chat">
+Create the file specs/004-record-and-transcribe/gates/G3.md with the content below.
+Fill in each part in round brackets, then remove the brackets.
+Do not change any other file.
+
+# G3 — Acceptance
+
+Spec: specs/004-record-and-transcribe/spec.md
+Approved by: (the FEH product owner&#x27;s name and the VISEO technical lead&#x27;s name), FEH and VISEO
+Date: (today&#x27;s date)
+Decision: Approved
+
+Business decisions made at this gate:
+- (what was shown on screen, and how many pytest and Playwright tests passed)
+
+Conditions:
+- None
+
+Deferred to a later spec:
+- (anything spec.md lists as out of scope, or None)</pre>
+  <p class="expect">✓ You should see: a new file <code>specs/004-record-and-transcribe/gates/G3.md</code> open in the editor. Read it; if Copilot shows <b>Keep</b>, click it.</p>
   <pre data-label="Terminal · one spec, one commit">
 git add -A
 git commit -m &quot;feat: 004-record-and-transcribe&quot;</pre>
@@ -530,6 +668,31 @@ proves. Mark tasks that can run in parallel.</pre>
     <li>Nothing is planned that no criterion asks for</li>
     <li><code>/speckit-analyze</code> reports no critical issues</li>
   </ul>
+  <p><b>Record the decision.</b> When the VISEO technical lead says "approved", paste this into Copilot Chat (Agent mode). Before you press Enter, replace the name in brackets with the name on the big screen. What a gate record is: <button class="link" data-goto="gates">Gate record</button>.</p>
+  <pre data-label="Prompt · paste into Copilot Chat">
+Create the file specs/005-extract-proposed-items/gates/G2.md with the content below.
+Fill in each part in round brackets, then remove the brackets.
+Do not change any other file.
+
+# G2 — Plan approval
+
+Spec: specs/005-extract-proposed-items/plan.md
+Approved by: (the VISEO technical lead&#x27;s name), Technical lead, VISEO
+Date: (today&#x27;s date)
+Decision: Approved
+
+Business decisions made at this gate:
+- (one line per main technical choice in plan.md (for example where hotel isolation is enforced))
+
+Conditions:
+- None
+
+Deferred to a later spec:
+- (anything spec.md lists as out of scope, or None)</pre>
+  <p class="expect">✓ You should see: a new file <code>specs/005-extract-proposed-items/gates/G2.md</code> open in the editor. Read it; if Copilot shows <b>Keep</b>, click it.</p>
+  <pre data-label="Terminal or PowerShell · save it in Git">
+git add -A
+git commit -m &quot;gate: G2 approved 005-extract-proposed-items&quot;</pre>
   <div class="note"><b>Match the room before moving on</b>Compare your <code>plan.md</code> with the approved version on the big screen. Different, or fell behind? The facilitator posts the approved file in the Teams chat. Paste this into Copilot Chat, then paste the approved file underneath:</div>
   <pre data-label="Prompt · catch up to the room's approved version">
 Replace the contents of specs/005-extract-proposed-items/plan.md with the approved
@@ -556,8 +719,29 @@ uv run python manage.py runserver</pre>
     <li>Every AC-005 criterion has a passing test whose name contains its ID</li>
     <li>All earlier specs' tests still pass</li>
     <li><code>/speckit-converge</code> reports no gaps</li>
-    <li><code>gates/G3.md</code> is signed by both</li>
   </ul>
+  <p><b>Record the decision.</b> When FEH and VISEO both say "approved", paste this into Copilot Chat (Agent mode). Before you press Enter, replace the name in brackets with the name on the big screen. What a gate record is: <button class="link" data-goto="gates">Gate record</button>.</p>
+  <pre data-label="Prompt · paste into Copilot Chat">
+Create the file specs/005-extract-proposed-items/gates/G3.md with the content below.
+Fill in each part in round brackets, then remove the brackets.
+Do not change any other file.
+
+# G3 — Acceptance
+
+Spec: specs/005-extract-proposed-items/spec.md
+Approved by: (the FEH product owner&#x27;s name and the VISEO technical lead&#x27;s name), FEH and VISEO
+Date: (today&#x27;s date)
+Decision: Approved
+
+Business decisions made at this gate:
+- (what was shown on screen, and how many pytest and Playwright tests passed)
+
+Conditions:
+- None
+
+Deferred to a later spec:
+- (anything spec.md lists as out of scope, or None)</pre>
+  <p class="expect">✓ You should see: a new file <code>specs/005-extract-proposed-items/gates/G3.md</code> open in the editor. Read it; if Copilot shows <b>Keep</b>, click it.</p>
   <pre data-label="Terminal · one spec, one commit">
 git add -A
 git commit -m &quot;feat: 005-extract-proposed-items&quot;</pre>
@@ -616,6 +800,31 @@ proves. Mark tasks that can run in parallel.</pre>
     <li>Nothing is planned that no criterion asks for</li>
     <li><code>/speckit-analyze</code> reports no critical issues</li>
   </ul>
+  <p><b>Record the decision.</b> When the VISEO technical lead says "approved", paste this into Copilot Chat (Agent mode). Before you press Enter, replace the name in brackets with the name on the big screen. What a gate record is: <button class="link" data-goto="gates">Gate record</button>.</p>
+  <pre data-label="Prompt · paste into Copilot Chat">
+Create the file specs/006-review-and-confirm/gates/G2.md with the content below.
+Fill in each part in round brackets, then remove the brackets.
+Do not change any other file.
+
+# G2 — Plan approval
+
+Spec: specs/006-review-and-confirm/plan.md
+Approved by: (the VISEO technical lead&#x27;s name), Technical lead, VISEO
+Date: (today&#x27;s date)
+Decision: Approved
+
+Business decisions made at this gate:
+- (one line per main technical choice in plan.md (for example where hotel isolation is enforced))
+
+Conditions:
+- None
+
+Deferred to a later spec:
+- (anything spec.md lists as out of scope, or None)</pre>
+  <p class="expect">✓ You should see: a new file <code>specs/006-review-and-confirm/gates/G2.md</code> open in the editor. Read it; if Copilot shows <b>Keep</b>, click it.</p>
+  <pre data-label="Terminal or PowerShell · save it in Git">
+git add -A
+git commit -m &quot;gate: G2 approved 006-review-and-confirm&quot;</pre>
   <div class="note"><b>Match the room before moving on</b>Compare your <code>plan.md</code> with the approved version on the big screen. Different, or fell behind? The facilitator posts the approved file in the Teams chat. Paste this into Copilot Chat, then paste the approved file underneath:</div>
   <pre data-label="Prompt · catch up to the room's approved version">
 Replace the contents of specs/006-review-and-confirm/plan.md with the approved
@@ -642,8 +851,29 @@ uv run python manage.py runserver</pre>
     <li>Every AC-006 criterion has a passing test whose name contains its ID</li>
     <li>All earlier specs' tests still pass</li>
     <li><code>/speckit-converge</code> reports no gaps</li>
-    <li><code>gates/G3.md</code> is signed by both</li>
   </ul>
+  <p><b>Record the decision.</b> When FEH and VISEO both say "approved", paste this into Copilot Chat (Agent mode). Before you press Enter, replace the name in brackets with the name on the big screen. What a gate record is: <button class="link" data-goto="gates">Gate record</button>.</p>
+  <pre data-label="Prompt · paste into Copilot Chat">
+Create the file specs/006-review-and-confirm/gates/G3.md with the content below.
+Fill in each part in round brackets, then remove the brackets.
+Do not change any other file.
+
+# G3 — Acceptance
+
+Spec: specs/006-review-and-confirm/spec.md
+Approved by: (the FEH product owner&#x27;s name and the VISEO technical lead&#x27;s name), FEH and VISEO
+Date: (today&#x27;s date)
+Decision: Approved
+
+Business decisions made at this gate:
+- (what was shown on screen, and how many pytest and Playwright tests passed)
+
+Conditions:
+- None
+
+Deferred to a later spec:
+- (anything spec.md lists as out of scope, or None)</pre>
+  <p class="expect">✓ You should see: a new file <code>specs/006-review-and-confirm/gates/G3.md</code> open in the editor. Read it; if Copilot shows <b>Keep</b>, click it.</p>
   <pre data-label="Terminal · one spec, one commit">
 git add -A
 git commit -m &quot;feat: 006-review-and-confirm&quot;</pre>
@@ -773,7 +1003,31 @@ in the room. Do not invent business rules.
 
 Do not generate implementation. Do not generate source code.</pre>
   <h3><span class="ph gate">G1</span> FEH approves</h3>
-  <p>Save <code>gates/G1.md</code> and commit.</p>
+  <p><b>Record the decision.</b> When the FEH product owner says "approved", paste this into Copilot Chat (Agent mode). Before you press Enter, replace the name in brackets with the name on the big screen. What a gate record is: <button class="link" data-goto="gates">Gate record</button>.</p>
+  <pre data-label="Prompt · paste into Copilot Chat">
+Create the file specs/007-carry-forward-and-overdue/gates/G1.md with the content below.
+Fill in each part in round brackets, then remove the brackets.
+Do not change any other file.
+
+# G1 — Specification approval
+
+Spec: specs/007-carry-forward-and-overdue/spec.md
+Approved by: (the FEH product owner&#x27;s name), Product owner, Far East Hospitality
+Date: (today&#x27;s date)
+Decision: Approved
+
+Business decisions made at this gate:
+- (one line per answer FEH gave in clarify (the Clarifications section of spec.md))
+
+Conditions:
+- None
+
+Deferred to a later spec:
+- (anything spec.md lists as out of scope, or None)</pre>
+  <p class="expect">✓ You should see: a new file <code>specs/007-carry-forward-and-overdue/gates/G1.md</code> open in the editor. Read it; if Copilot shows <b>Keep</b>, click it.</p>
+  <pre data-label="Terminal or PowerShell · save it in Git">
+git add -A
+git commit -m &quot;gate: G1 approved 007-carry-forward-and-overdue&quot;</pre>
   <div class="flow"><span>plan</span><span>tasks</span><span>analyze</span><span class="g">G2</span><span>implement</span><span>converge</span><span class="g">G3</span><span>commit</span></div>
   <h3><span class="ph">Plan</span></h3>
   <pre class="tall" data-label="Prompt · paste into Copilot Chat">
@@ -814,6 +1068,31 @@ proves. Mark tasks that can run in parallel.</pre>
     <li>Nothing is planned that no criterion asks for</li>
     <li><code>/speckit-analyze</code> reports no critical issues</li>
   </ul>
+  <p><b>Record the decision.</b> When the VISEO technical lead says "approved", paste this into Copilot Chat (Agent mode). Before you press Enter, replace the name in brackets with the name on the big screen. What a gate record is: <button class="link" data-goto="gates">Gate record</button>.</p>
+  <pre data-label="Prompt · paste into Copilot Chat">
+Create the file specs/007-carry-forward-and-overdue/gates/G2.md with the content below.
+Fill in each part in round brackets, then remove the brackets.
+Do not change any other file.
+
+# G2 — Plan approval
+
+Spec: specs/007-carry-forward-and-overdue/plan.md
+Approved by: (the VISEO technical lead&#x27;s name), Technical lead, VISEO
+Date: (today&#x27;s date)
+Decision: Approved
+
+Business decisions made at this gate:
+- (one line per main technical choice in plan.md (for example where hotel isolation is enforced))
+
+Conditions:
+- None
+
+Deferred to a later spec:
+- (anything spec.md lists as out of scope, or None)</pre>
+  <p class="expect">✓ You should see: a new file <code>specs/007-carry-forward-and-overdue/gates/G2.md</code> open in the editor. Read it; if Copilot shows <b>Keep</b>, click it.</p>
+  <pre data-label="Terminal or PowerShell · save it in Git">
+git add -A
+git commit -m &quot;gate: G2 approved 007-carry-forward-and-overdue&quot;</pre>
   <div class="note"><b>Match the room before moving on</b>Compare your <code>plan.md</code> with the approved version on the big screen. Different, or fell behind? The facilitator posts the approved file in the Teams chat. Paste this into Copilot Chat, then paste the approved file underneath:</div>
   <pre data-label="Prompt · catch up to the room's approved version">
 Replace the contents of specs/007-carry-forward-and-overdue/plan.md with the approved
@@ -840,8 +1119,29 @@ uv run python manage.py runserver</pre>
     <li>Every AC-007 criterion has a passing test whose name contains its ID</li>
     <li>All earlier specs' tests still pass</li>
     <li><code>/speckit-converge</code> reports no gaps</li>
-    <li><code>gates/G3.md</code> is signed by both</li>
   </ul>
+  <p><b>Record the decision.</b> When FEH and VISEO both say "approved", paste this into Copilot Chat (Agent mode). Before you press Enter, replace the name in brackets with the name on the big screen. What a gate record is: <button class="link" data-goto="gates">Gate record</button>.</p>
+  <pre data-label="Prompt · paste into Copilot Chat">
+Create the file specs/007-carry-forward-and-overdue/gates/G3.md with the content below.
+Fill in each part in round brackets, then remove the brackets.
+Do not change any other file.
+
+# G3 — Acceptance
+
+Spec: specs/007-carry-forward-and-overdue/spec.md
+Approved by: (the FEH product owner&#x27;s name and the VISEO technical lead&#x27;s name), FEH and VISEO
+Date: (today&#x27;s date)
+Decision: Approved
+
+Business decisions made at this gate:
+- (what was shown on screen, and how many pytest and Playwright tests passed)
+
+Conditions:
+- None
+
+Deferred to a later spec:
+- (anything spec.md lists as out of scope, or None)</pre>
+  <p class="expect">✓ You should see: a new file <code>specs/007-carry-forward-and-overdue/gates/G3.md</code> open in the editor. Read it; if Copilot shows <b>Keep</b>, click it.</p>
   <pre data-label="Terminal · one spec, one commit">
 git add -A
 git commit -m &quot;feat: 007-carry-forward-and-overdue&quot;</pre>

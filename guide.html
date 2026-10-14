@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261014155427">
+<meta name="build" content="20261014163027">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -1239,33 +1239,89 @@ Do not generate implementation. Do not generate code.</pre>
 </section>
 
 <section class="slide" id="gates" data-group="Day 1 · Spec" data-title="Toolkit · gate record">
-  <p class="eyebrow">Toolkit · used for every spec</p>
+  <p class="eyebrow">Toolkit · used for every spec, three times</p>
   <h2>Gate record</h2>
-  <p>Save as <code>specs/&lt;spec&gt;/gates/G1.md</code> (then G2, G3) and commit it before moving on.</p>
-  <pre data-label="File · specs/&lt;spec&gt;/gates/G1.md">
-# G&lt;n&gt; — &lt;Specification | Plan | Acceptance&gt; approval
+  <p class="lead">A <b>gate</b> is a stop where a person decides whether the work can move on. Each spec passes three gates. A <b>gate record</b> is a short text file in your project that writes that decision down: who approved, when, and what they decided. Six months from now, anyone can open it and see why the app works the way it does.</p>
+  <table>
+    <tr><th>Gate</th><th>When</th><th>Who says "approved"</th><th>The question</th><th>File</th></tr>
+    <tr><td><b>G1</b></td><td>After <code>/speckit-clarify</code></td><td>FEH product owner</td><td>Is this what we want?</td><td><code>gates/G1.md</code></td></tr>
+    <tr><td><b>G2</b></td><td>After <code>/speckit-analyze</code></td><td>VISEO technical lead</td><td>Is this a sound way to build it?</td><td><code>gates/G2.md</code></td></tr>
+    <tr><td><b>G3</b></td><td>After the app runs and tests pass</td><td>Both</td><td>Does it do what G1 approved?</td><td><code>gates/G3.md</code></td></tr>
+  </table>
+  <p>Spec Kit doesn't make these files; we add them. They go in a <code>gates</code> folder inside the spec's own folder, which <code>/speckit-specify</code> created. For spec 001 that is:</p>
+  <pre data-label="Where the files go">
+feh-app/
+└── specs/
+    └── 001-sign-in-hotel-access/   ← created by /speckit-specify
+        ├── spec.md
+        ├── plan.md
+        └── gates/                  ← Copilot creates this folder with the first file
+            ├── G1.md
+            ├── G2.md
+            └── G3.md</pre>
 
-Spec: specs/&lt;spec&gt;/spec.md
-Approved by: &lt;name, role, organisation&gt;
-Date: &lt;date&gt;
-Decision: Approved / Approved with conditions / Rejected
+  <h3>How to make one · 2 minutes</h3>
+  <div class="step1">
+    <h3><span class="ph">1</span> Wait for the decision</h3>
+    <p>The facilitator asks the approver on the big screen. When they say "approved", the facilitator types their name on screen.</p>
+  </div>
+  <div class="step1">
+    <h3><span class="ph">2</span> Paste the prompt into Copilot Chat</h3>
+    <p>Every spec slide has the ready-made prompt at its G1, G2 and G3 step, with the spec's folder already filled in. Copy it, replace the name in brackets with the name on screen, and press Enter in Copilot Chat (Agent mode). This is the G1 prompt for spec 001:</p>
+    <pre data-label="Prompt · paste into Copilot Chat">
+Create the file specs/001-sign-in-hotel-access/gates/G1.md with the content below.
+Fill in each part in round brackets, then remove the brackets.
+Do not change any other file.
+
+# G1 — Specification approval
+
+Spec: specs/001-sign-in-hotel-access/spec.md
+Approved by: (the FEH product owner&#x27;s name), Product owner, Far East Hospitality
+Date: (today&#x27;s date)
+Decision: Approved
 
 Business decisions made at this gate:
--
+- (one line per answer FEH gave in clarify (the Clarifications section of spec.md))
 
 Conditions:
--
+- None
 
 Deferred to a later spec:
--</pre>
-  <pre data-label="Terminal · after saving a gate record">
-git add -A &amp;&amp; git commit -m "gate: G1 approved"</pre>
-  <table>
-    <tr><th>Gate</th><th>Signed by</th><th>Question it answers</th></tr>
-    <tr><td>G1</td><td>FEH product owner</td><td>Is this what we want?</td></tr>
-    <tr><td>G2</td><td>VISEO tech lead</td><td>Is this a sound way to build it?</td></tr>
-    <tr><td>G3</td><td>Both</td><td>Does the working feature do what G1 approved?</td></tr>
-  </table>
+- (anything spec.md lists as out of scope, or None)</pre>
+    <p class="expect">✓ You should see: Copilot creates <code>specs/001-sign-in-hotel-access/gates/G1.md</code> and opens it. If it shows <b>Keep</b> and <b>Undo</b> buttons, click <b>Keep</b>.</p>
+  </div>
+  <div class="step1">
+    <h3><span class="ph">3</span> Read it</h3>
+    <p>Check the name, the date and the decisions. The decisions should be what FEH actually said, in plain words. Wrong? Edit the file directly (it's a note, not code) and save it with Cmd + S or Ctrl + S.</p>
+    <pre data-label="Example · a finished G1.md (the name and decisions are made up)">
+# G1 — Specification approval
+
+Spec: specs/001-sign-in-hotel-access/spec.md
+Approved by: Jane Lee, Product owner, Far East Hospitality
+Date: 15 Oct 2026
+Decision: Approved
+
+Business decisions made at this gate:
+- A page from another hotel shows "Page not found", as if it does not exist.
+- After signing out, the browser's Back button returns to the sign-in page.
+- Each person belongs to exactly one hotel.
+
+Conditions:
+- None
+
+Deferred to a later spec:
+- Passwords, roles and Microsoft Entra ID
+- Meetings (spec 002)</pre>
+  </div>
+  <div class="step1">
+    <h3><span class="ph">4</span> Save it in Git</h3>
+    <p>Run this in the VS Code terminal (View → Terminal). The spec slides show the exact message for each gate.</p>
+    <pre data-label="Terminal or PowerShell">git add -A
+git commit -m "gate: G1 approved 001-sign-in-hotel-access"</pre>
+    <p class="expect">✓ You should see: a line ending in <code>1 file changed</code>.</p>
+    <p class="muted"><b>If it fails:</b> "nothing to commit": the file wasn't saved, or Copilot put it somewhere else. Check the Explorer for <code>gates/G1.md</code> under the spec's folder.</p>
+  </div>
+  <div class="note"><b>Making it by hand</b>No Copilot? In the Explorer, right-click the spec's folder (for example <code>specs/001-sign-in-hotel-access</code>), choose <b>New File…</b>, type <code>gates/G1.md</code> and press Enter. VS Code creates the folder and the file. Copy the example above into it, change the details, save, then run step 4.</div>
 </section>
 
 <section class="slide" id="reference" data-group="Day 1 · Spec" data-title="Reference: data &amp; screens">
@@ -1602,7 +1658,32 @@ in the room. Do not invent business rules.
 Do not generate implementation. Do not generate source code.</pre>
   <div class="note"><b>One answer for the whole room</b>When Copilot asks a business question, the FEH product owner answers it once, out loud. The facilitator types it on the big screen and everyone gives Copilot the same answer. Add your own edge cases to "Give particular attention to:" before you paste.</div>
   <h3><span class="ph gate">G1</span> FEH approves the spec</h3>
-  <p>Save <code>specs/001-sign-in-hotel-access/gates/G1.md</code> from the <button class="link" data-goto="gates">gate template</button>, listing the business decisions made during clarify, then commit.</p>
+  <p><b>Record the decision.</b> When the FEH product owner says "approved", paste this into Copilot Chat (Agent mode). Before you press Enter, replace the name in brackets with the name on the big screen. What a gate record is: <button class="link" data-goto="gates">Gate record</button>.</p>
+  <pre data-label="Prompt · paste into Copilot Chat">
+Create the file specs/001-sign-in-hotel-access/gates/G1.md with the content below.
+Fill in each part in round brackets, then remove the brackets.
+Do not change any other file.
+
+# G1 — Specification approval
+
+Spec: specs/001-sign-in-hotel-access/spec.md
+Approved by: (the FEH product owner&#x27;s name), Product owner, Far East Hospitality
+Date: (today&#x27;s date)
+Decision: Approved
+
+Business decisions made at this gate:
+- (one line per answer FEH gave in clarify (the Clarifications section of spec.md))
+
+Conditions:
+- None
+
+Deferred to a later spec:
+- (anything spec.md lists as out of scope, or None)</pre>
+  <p class="expect">✓ You should see: a new file <code>specs/001-sign-in-hotel-access/gates/G1.md</code> open in the editor. Read it; if Copilot shows <b>Keep</b>, click it.</p>
+  <pre data-label="Terminal or PowerShell · save it in Git">
+git add -A
+git commit -m &quot;gate: G1 approved 001-sign-in-hotel-access&quot;</pre>
+
   <div class="note"><b>Match the room before moving on</b>Compare your <code>spec.md</code> with the approved version on the big screen. Different, or fell behind? The facilitator posts the approved file in the Teams chat. Paste this into Copilot Chat, then paste the approved file underneath:</div>
   <pre data-label="Prompt · catch up to the room's approved version">
 Replace the contents of specs/001-sign-in-hotel-access/spec.md with the approved
@@ -1717,7 +1798,32 @@ in the room. Do not invent business rules.
 Do not generate implementation. Do not generate source code.</pre>
   <div class="note"><b>One answer for the whole room</b>When Copilot asks a business question, the FEH product owner answers it once, out loud. The facilitator types it on the big screen and everyone gives Copilot the same answer. Add your own edge cases to "Give particular attention to:" before you paste.</div>
   <h3><span class="ph gate">G1</span> FEH approves the spec</h3>
-  <p>Save <code>specs/002-weekly-meetings/gates/G1.md</code> from the <button class="link" data-goto="gates">gate template</button>, listing the business decisions made during clarify, then commit.</p>
+  <p><b>Record the decision.</b> When the FEH product owner says "approved", paste this into Copilot Chat (Agent mode). Before you press Enter, replace the name in brackets with the name on the big screen. What a gate record is: <button class="link" data-goto="gates">Gate record</button>.</p>
+  <pre data-label="Prompt · paste into Copilot Chat">
+Create the file specs/002-weekly-meetings/gates/G1.md with the content below.
+Fill in each part in round brackets, then remove the brackets.
+Do not change any other file.
+
+# G1 — Specification approval
+
+Spec: specs/002-weekly-meetings/spec.md
+Approved by: (the FEH product owner&#x27;s name), Product owner, Far East Hospitality
+Date: (today&#x27;s date)
+Decision: Approved
+
+Business decisions made at this gate:
+- (one line per answer FEH gave in clarify (the Clarifications section of spec.md))
+
+Conditions:
+- None
+
+Deferred to a later spec:
+- (anything spec.md lists as out of scope, or None)</pre>
+  <p class="expect">✓ You should see: a new file <code>specs/002-weekly-meetings/gates/G1.md</code> open in the editor. Read it; if Copilot shows <b>Keep</b>, click it.</p>
+  <pre data-label="Terminal or PowerShell · save it in Git">
+git add -A
+git commit -m &quot;gate: G1 approved 002-weekly-meetings&quot;</pre>
+
   <div class="note"><b>Match the room before moving on</b>Compare your <code>spec.md</code> with the approved version on the big screen. Different, or fell behind? The facilitator posts the approved file in the Teams chat. Paste this into Copilot Chat, then paste the approved file underneath:</div>
   <pre data-label="Prompt · catch up to the room's approved version">
 Replace the contents of specs/002-weekly-meetings/spec.md with the approved
@@ -1839,7 +1945,32 @@ in the room. Do not invent business rules.
 Do not generate implementation. Do not generate source code.</pre>
   <div class="note"><b>One answer for the whole room</b>When Copilot asks a business question, the FEH product owner answers it once, out loud. The facilitator types it on the big screen and everyone gives Copilot the same answer. Add your own edge cases to "Give particular attention to:" before you paste.</div>
   <h3><span class="ph gate">G1</span> FEH approves the spec</h3>
-  <p>Save <code>specs/003-action-items/gates/G1.md</code> from the <button class="link" data-goto="gates">gate template</button>, listing the business decisions made during clarify, then commit.</p>
+  <p><b>Record the decision.</b> When the FEH product owner says "approved", paste this into Copilot Chat (Agent mode). Before you press Enter, replace the name in brackets with the name on the big screen. What a gate record is: <button class="link" data-goto="gates">Gate record</button>.</p>
+  <pre data-label="Prompt · paste into Copilot Chat">
+Create the file specs/003-action-items/gates/G1.md with the content below.
+Fill in each part in round brackets, then remove the brackets.
+Do not change any other file.
+
+# G1 — Specification approval
+
+Spec: specs/003-action-items/spec.md
+Approved by: (the FEH product owner&#x27;s name), Product owner, Far East Hospitality
+Date: (today&#x27;s date)
+Decision: Approved
+
+Business decisions made at this gate:
+- (one line per answer FEH gave in clarify (the Clarifications section of spec.md))
+
+Conditions:
+- None
+
+Deferred to a later spec:
+- (anything spec.md lists as out of scope, or None)</pre>
+  <p class="expect">✓ You should see: a new file <code>specs/003-action-items/gates/G1.md</code> open in the editor. Read it; if Copilot shows <b>Keep</b>, click it.</p>
+  <pre data-label="Terminal or PowerShell · save it in Git">
+git add -A
+git commit -m &quot;gate: G1 approved 003-action-items&quot;</pre>
+
   <div class="note"><b>Match the room before moving on</b>Compare your <code>spec.md</code> with the approved version on the big screen. Different, or fell behind? The facilitator posts the approved file in the Teams chat. Paste this into Copilot Chat, then paste the approved file underneath:</div>
   <pre data-label="Prompt · catch up to the room's approved version">
 Replace the contents of specs/003-action-items/spec.md with the approved
@@ -1953,7 +2084,32 @@ in the room. Do not invent business rules.
 Do not generate implementation. Do not generate source code.</pre>
   <div class="note"><b>One answer for the whole room</b>When Copilot asks a business question, the FEH product owner answers it once, out loud. The facilitator types it on the big screen and everyone gives Copilot the same answer. Add your own edge cases to "Give particular attention to:" before you paste.</div>
   <h3><span class="ph gate">G1</span> FEH approves the spec</h3>
-  <p>Save <code>specs/004-carry-forward/gates/G1.md</code> from the <button class="link" data-goto="gates">gate template</button>, listing the business decisions made during clarify, then commit.</p>
+  <p><b>Record the decision.</b> When the FEH product owner says "approved", paste this into Copilot Chat (Agent mode). Before you press Enter, replace the name in brackets with the name on the big screen. What a gate record is: <button class="link" data-goto="gates">Gate record</button>.</p>
+  <pre data-label="Prompt · paste into Copilot Chat">
+Create the file specs/004-carry-forward/gates/G1.md with the content below.
+Fill in each part in round brackets, then remove the brackets.
+Do not change any other file.
+
+# G1 — Specification approval
+
+Spec: specs/004-carry-forward/spec.md
+Approved by: (the FEH product owner&#x27;s name), Product owner, Far East Hospitality
+Date: (today&#x27;s date)
+Decision: Approved
+
+Business decisions made at this gate:
+- (one line per answer FEH gave in clarify (the Clarifications section of spec.md))
+
+Conditions:
+- None
+
+Deferred to a later spec:
+- (anything spec.md lists as out of scope, or None)</pre>
+  <p class="expect">✓ You should see: a new file <code>specs/004-carry-forward/gates/G1.md</code> open in the editor. Read it; if Copilot shows <b>Keep</b>, click it.</p>
+  <pre data-label="Terminal or PowerShell · save it in Git">
+git add -A
+git commit -m &quot;gate: G1 approved 004-carry-forward&quot;</pre>
+
   <div class="note"><b>Match the room before moving on</b>Compare your <code>spec.md</code> with the approved version on the big screen. Different, or fell behind? The facilitator posts the approved file in the Teams chat. Paste this into Copilot Chat, then paste the approved file underneath:</div>
   <pre data-label="Prompt · catch up to the room's approved version">
 Replace the contents of specs/004-carry-forward/spec.md with the approved
@@ -2065,7 +2221,32 @@ in the room. Do not invent business rules.
 Do not generate implementation. Do not generate source code.</pre>
   <div class="note"><b>One answer for the whole room</b>When Copilot asks a business question, the FEH product owner answers it once, out loud. The facilitator types it on the big screen and everyone gives Copilot the same answer. Add your own edge cases to "Give particular attention to:" before you paste.</div>
   <h3><span class="ph gate">G1</span> FEH approves the spec</h3>
-  <p>Save <code>specs/005-overdue-and-counts/gates/G1.md</code> from the <button class="link" data-goto="gates">gate template</button>, listing the business decisions made during clarify, then commit.</p>
+  <p><b>Record the decision.</b> When the FEH product owner says "approved", paste this into Copilot Chat (Agent mode). Before you press Enter, replace the name in brackets with the name on the big screen. What a gate record is: <button class="link" data-goto="gates">Gate record</button>.</p>
+  <pre data-label="Prompt · paste into Copilot Chat">
+Create the file specs/005-overdue-and-counts/gates/G1.md with the content below.
+Fill in each part in round brackets, then remove the brackets.
+Do not change any other file.
+
+# G1 — Specification approval
+
+Spec: specs/005-overdue-and-counts/spec.md
+Approved by: (the FEH product owner&#x27;s name), Product owner, Far East Hospitality
+Date: (today&#x27;s date)
+Decision: Approved
+
+Business decisions made at this gate:
+- (one line per answer FEH gave in clarify (the Clarifications section of spec.md))
+
+Conditions:
+- None
+
+Deferred to a later spec:
+- (anything spec.md lists as out of scope, or None)</pre>
+  <p class="expect">✓ You should see: a new file <code>specs/005-overdue-and-counts/gates/G1.md</code> open in the editor. Read it; if Copilot shows <b>Keep</b>, click it.</p>
+  <pre data-label="Terminal or PowerShell · save it in Git">
+git add -A
+git commit -m &quot;gate: G1 approved 005-overdue-and-counts&quot;</pre>
+
   <div class="note"><b>Match the room before moving on</b>Compare your <code>spec.md</code> with the approved version on the big screen. Different, or fell behind? The facilitator posts the approved file in the Teams chat. Paste this into Copilot Chat, then paste the approved file underneath:</div>
   <pre data-label="Prompt · catch up to the room's approved version">
 Replace the contents of specs/005-overdue-and-counts/spec.md with the approved
@@ -2124,7 +2305,7 @@ Label every acceptance criterion AC-&lt;spec number&gt;-&lt;nn&gt;.</pre>
   <ol>
     <li><code>/speckit-clarify</code> and the <button class="link" data-goto="clarify">clarify review prompt</button></li>
     <li>FEH answers every [NEEDS CLARIFICATION]</li>
-    <li>G1 signed by the FEH product owner (<button class="link" data-goto="gates">gate template</button>)</li>
+    <li>G1 approved by the FEH product owner and recorded in <code>gates/G1.md</code> (<button class="link" data-goto="gates">Gate record</button>)</li>
     <li>Add it to <code>docs/specs.md</code> at the right place in the delivery order, then execute it like the others (<button class="link" data-goto="plan101">how to execute a spec</button>)</li>
   </ol>
   <ul class="checks">
@@ -2287,7 +2468,29 @@ proves. Mark tasks that can run in parallel.</pre>
   <div class="step1">
     <h3><span class="ph gate">6 · G2</span> VISEO approves the plan and tasks · 5 min</h3>
     <ul class="checks"><li>Every AC-001 criterion maps to at least one test</li><li>Hotel isolation is in one place (one manager, one view mixin)</li><li>Nothing is planned that the spec doesn't ask for: no meetings, no actions</li><li><code>/speckit-analyze</code> reports no CRITICAL findings</li></ul>
-    <p>Save <code>specs/001-sign-in-hotel-access/gates/G2.md</code> from the <button class="link" data-goto="gates">gate template</button>, then save a commit:</p>
+    <p><b>Record the decision.</b> When the VISEO technical lead says "approved", paste this into Copilot Chat (Agent mode). Before you press Enter, replace the name in brackets with the name on the big screen. What a gate record is: <button class="link" data-goto="gates">Gate record</button>.</p>
+  <pre data-label="Prompt · paste into Copilot Chat">
+Create the file specs/001-sign-in-hotel-access/gates/G2.md with the content below.
+Fill in each part in round brackets, then remove the brackets.
+Do not change any other file.
+
+# G2 — Plan approval
+
+Spec: specs/001-sign-in-hotel-access/plan.md
+Approved by: (the VISEO technical lead&#x27;s name), Technical lead, VISEO
+Date: (today&#x27;s date)
+Decision: Approved
+
+Business decisions made at this gate:
+- (one line per main technical choice in plan.md (for example where hotel isolation is enforced))
+
+Conditions:
+- None
+
+Deferred to a later spec:
+- (anything spec.md lists as out of scope, or None)</pre>
+  <p class="expect">✓ You should see: a new file <code>specs/001-sign-in-hotel-access/gates/G2.md</code> open in the editor. Read it; if Copilot shows <b>Keep</b>, click it.</p>
+    <p>Then save the plan, the tasks and the gate record in Git:</p>
     <pre data-label="Terminal or PowerShell">git add -A
 git commit -m &quot;plan: 001-sign-in-hotel-access&quot;</pre>
     <p class="expect">✓ You should see: one line like <code>[001-sign-in-hotel-access 1a2b3c4] plan: 001-sign-in-hotel-access</code>.</p>
@@ -2333,7 +2536,29 @@ cd ..</pre>
     <h3><span class="ph gate">10 · G3</span> Converge, accept and commit · 5 min</h3>
     <p>Converge compares the code with the spec and adds anything missing as new tasks.</p>
     <pre data-label="Prompt · paste into Copilot Chat">/speckit-converge</pre>
-    <ul class="checks"><li>On screen: The sign-in page with one button per person; after choosing Mary Tan, the top bar shows &quot;Mary Tan · Hotel A&quot; and &quot;Sign out&quot;.</li><li>Every AC-001 criterion has a passing test whose name contains its ID</li><li><code>/speckit-converge</code> reports no gaps</li><li>FEH and VISEO sign <code>gates/G3.md</code></li></ul>
+    <ul class="checks"><li>On screen: The sign-in page with one button per person; after choosing Mary Tan, the top bar shows &quot;Mary Tan · Hotel A&quot; and &quot;Sign out&quot;.</li><li>Every AC-001 criterion has a passing test whose name contains its ID</li><li><code>/speckit-converge</code> reports no gaps</li></ul>
+    <p><b>Record the decision.</b> When both says "approved", paste this into Copilot Chat (Agent mode). Before you press Enter, replace the name in brackets with the name on the big screen. What a gate record is: <button class="link" data-goto="gates">Gate record</button>.</p>
+  <pre data-label="Prompt · paste into Copilot Chat">
+Create the file specs/001-sign-in-hotel-access/gates/G3.md with the content below.
+Fill in each part in round brackets, then remove the brackets.
+Do not change any other file.
+
+# G3 — Acceptance
+
+Spec: specs/001-sign-in-hotel-access/spec.md
+Approved by: (the FEH product owner&#x27;s name and the VISEO technical lead&#x27;s name), FEH and VISEO
+Date: (today&#x27;s date)
+Decision: Approved
+
+Business decisions made at this gate:
+- (what was shown on screen, and how many pytest and Playwright tests passed)
+
+Conditions:
+- None
+
+Deferred to a later spec:
+- (anything spec.md lists as out of scope, or None)</pre>
+  <p class="expect">✓ You should see: a new file <code>specs/001-sign-in-hotel-access/gates/G3.md</code> open in the editor. Read it; if Copilot shows <b>Keep</b>, click it.</p>
     <pre data-label="Terminal · one spec, one commit">git add -A
 git commit -m &quot;feat: 001-sign-in-hotel-access&quot;</pre>
     <p class="expect">✓ You should see: <code>git log --oneline</code> shows "feat: 001-sign-in-hotel-access" at the top.</p>
@@ -2505,7 +2730,7 @@ the AC-001 numbering. Do not add anything else.
 Then stop and show me the full list of acceptance criteria.</pre>
 
   <h3><span class="ph gate">G1</span> FEH approves the spec</h3>
-  <p>Save and commit <code>gates/G1.md</code> from the <button class="link" data-goto="gates">gate template</button>, listing the business decisions made during clarify.</p>
+  <p>Record the decision in <code>gates/G1.md</code> with the prompt on the <button class="link" data-goto="gates">Gate record</button> slide (change the spec folder to this spec's), then commit.</p>
   <p>The facilitator approves the room's version with FEH on the big screen, so the plan starts from one approved spec.</p>
   <div class="note"><b>Match the room before moving on</b>Compare your <code>spec.md</code> with the approved version on the big screen. Different, or fell behind? The facilitator posts the approved file in the Teams chat. Paste this into Copilot Chat, then paste the approved file underneath:</div>
   <pre data-label="Prompt · catch up to the room's approved version">
@@ -2637,7 +2862,7 @@ the AC-002 numbering. Do not add anything else.
 Then stop and show me the full list of acceptance criteria.</pre>
 
   <h3><span class="ph gate">G1</span> FEH approves the spec</h3>
-  <p>Save and commit <code>gates/G1.md</code>. The plan for this spec is done on Day 2.</p>
+  <p>Record the decision in <code>gates/G1.md</code> with the prompt on the <button class="link" data-goto="gates">Gate record</button> slide, then commit. The plan for this spec is done on Day 2.</p>
   <p>The facilitator approves the room's version with FEH on the big screen, so the plan starts from one approved spec.</p>
   <div class="note"><b>Match the room before moving on</b>Compare your <code>spec.md</code> with the approved version on the big screen. Different, or fell behind? The facilitator posts the approved file in the Teams chat. Paste this into Copilot Chat, then paste the approved file underneath:</div>
   <pre data-label="Prompt · catch up to the room's approved version">
@@ -2695,7 +2920,7 @@ the AC-003 numbering. Do not add anything else.
 Then stop and show me the full list of acceptance criteria.</pre>
 
   <h3><span class="ph gate">G1</span> FEH approves the spec</h3>
-  <p>Save and commit <code>gates/G1.md</code>.</p>
+  <p>Record the decision in <code>gates/G1.md</code> with the prompt on the <button class="link" data-goto="gates">Gate record</button> slide, then commit.</p>
   <p>The facilitator approves the room's version with FEH on the big screen, so the plan starts from one approved spec.</p>
   <div class="note"><b>Match the room before moving on</b>Compare your <code>spec.md</code> with the approved version on the big screen. Different, or fell behind? The facilitator posts the approved file in the Teams chat. Paste this into Copilot Chat, then paste the approved file underneath:</div>
   <pre data-label="Prompt · catch up to the room's approved version">

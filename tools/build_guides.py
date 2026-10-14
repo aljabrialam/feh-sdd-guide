@@ -59,6 +59,41 @@ def set_order_table(s, specs):
 
 
 # ---------------------------------------------------------------- slide builders
+GATES = {
+    'G1': ('Specification approval', 'spec.md', "the FEH product owner's name", 'Product owner, Far East Hospitality',
+           "one line per answer FEH gave in clarify (the Clarifications section of spec.md)"),
+    'G2': ('Plan approval', 'plan.md', "the VISEO technical lead's name", 'Technical lead, VISEO',
+           "one line per main technical choice in plan.md (for example where hotel isolation is enforced)"),
+    'G3': ('Acceptance', 'spec.md', "the FEH product owner's name and the VISEO technical lead's name", 'FEH and VISEO',
+           "what was shown on screen, and how many pytest and Playwright tests passed"),
+}
+def gate_prompt_text(sid, g):
+    title, doc, who, role, dec = GATES[g]
+    return ('Create the file specs/%(id)s/gates/%(g)s.md with the content below.\n'
+            'Fill in each part in round brackets, then remove the brackets.\n'
+            'Do not change any other file.\n\n'
+            '# %(g)s — %(title)s\n\n'
+            'Spec: specs/%(id)s/%(doc)s\n'
+            'Approved by: (%(who)s), %(role)s\n'
+            'Date: (today\'s date)\n'
+            'Decision: Approved\n\n'
+            'Business decisions made at this gate:\n'
+            '- (%(dec)s)\n\n'
+            'Conditions:\n'
+            '- None\n\n'
+            'Deferred to a later spec:\n'
+            '- (anything spec.md lists as out of scope, or None)') % dict(id=sid, g=g, title=title, doc=doc, who=who, role=role, dec=dec)
+def gate_steps(sid, g, commit=True):
+    who = {'G1': 'the FEH product owner says', 'G2': 'the VISEO technical lead says', 'G3': 'FEH and VISEO both say'}[g]
+    out = ('<p><b>Record the decision.</b> When %s "approved", paste this into Copilot Chat (Agent mode). '
+           'Before you press Enter, replace the name in brackets with the name on the big screen. '
+           'What a gate record is: <button class="link" data-goto="gates">Gate record</button>.</p>\n  %s\n'
+           '  <p class="expect">✓ You should see: a new file <code>specs/%s/gates/%s.md</code> open in the editor. Read it; if Copilot shows <b>Keep</b>, click it.</p>\n') % (
+        who, pre('Prompt · paste into Copilot Chat', gate_prompt_text(sid, g)), sid, g)
+    if commit:
+        out += '  %s\n' % pre('Terminal or PowerShell · save it in Git', 'git add -A\ngit commit -m "gate: %s approved %s"' % (g, sid))
+    return out
+
 def spec_slide(s, time, full, sources='<code>docs/feh-requirements.md</code> and <code>docs/voice-capture-sequence.mmd</code>'):
     draft = ('  <h3><span class="ph">1 · Draft</span> yourself first · %s</h3>\n'
              '  <p>%s Use the <button class="link" data-goto="spec101">spec template</button> and ask Copilot to review your draft. Don\'t run <code>/speckit-specify</code> yet.</p>\n') % (
@@ -82,12 +117,12 @@ def spec_slide(s, time, full, sources='<code>docs/feh-requirements.md</code> and
   %(clar)s
   <div class="note"><b>One answer for the whole room</b>When Copilot asks a business question, the FEH product owner answers it once, out loud. The facilitator types it on the big screen and everyone gives Copilot the same answer. Add your own edge cases to "Give particular attention to:" before you paste.</div>
   <h3><span class="ph gate">G1</span> FEH approves the spec</h3>
-  <p>Save <code>specs/%(id)s/gates/G1.md</code> from the <button class="link" data-goto="gates">gate template</button>, listing the business decisions made during clarify, then commit.</p>
+  %(gate)s
   %(catch)s
 </section>''' % dict(n=s['n'], short=E(s['short']), t=time, name=E(s['name']), goal=E(' '.join(s['goal'].split())),
                      stop=E(s['stop']), builds=E(' '.join(s['builds'].split())), draft=draft, spec=pre('Prompt · paste into Copilot Chat', R2.specify_block(s), True),
                      clar=pre('Prompt · paste into Copilot Chat', R2.clarify_block(s)), id=s['id'],
-                     catch=catch('specs/%s/spec.md' % s['id'], '<code>spec.md</code>'))
+                     catch=catch('specs/%s/spec.md' % s['id'], '<code>spec.md</code>'), gate=gate_steps(s['id'], 'G1'))
 
 RUN_FULL = '''  <h3><span class="ph">Run it</span></h3>
   <pre data-label="Terminal 1 · the app">
@@ -115,8 +150,8 @@ def exec_slide(s, group, eyebrow, prev=None, with_specify=False, full_run=False,
     top = ''
     if with_specify:
         top = ('  <h3><span class="ph">1 · Specify</span></h3>\n  %s\n  <h3><span class="ph">2 · Clarify</span> FEH answers</h3>\n  %s\n'
-               '  <h3><span class="ph gate">G1</span> FEH approves</h3>\n  <p>Save <code>gates/G1.md</code> and commit.</p>\n') % (
-            pre('Prompt · paste into Copilot Chat', R2.specify_block(s), True), pre('Prompt · paste into Copilot Chat', R2.clarify_block(s)))
+               '  <h3><span class="ph gate">G1</span> FEH approves</h3>\n  %s') % (
+            pre('Prompt · paste into Copilot Chat', R2.specify_block(s), True), pre('Prompt · paste into Copilot Chat', R2.clarify_block(s)), gate_steps(s['id'], 'G1'))
     switch = ''
     if prev:
         switch = ('  <h3><span class="ph">Switch</span> to spec %s</h3>\n'
@@ -143,7 +178,7 @@ def exec_slide(s, group, eyebrow, prev=None, with_specify=False, full_run=False,
     <li>Nothing is planned that no criterion asks for</li>
     <li><code>/speckit-analyze</code> reports no critical issues</li>
   </ul>
-  %(catch)s
+  %(g2)s  %(catch)s
   <h3><span class="ph">Implement</span> tests first</h3>
   %(impl)s
   <pre data-label="Prompt · then compare with the spec">/speckit-converge</pre>
@@ -155,9 +190,8 @@ def exec_slide(s, group, eyebrow, prev=None, with_specify=False, full_run=False,
     <li>Every AC-%(n)s criterion has a passing test whose name contains its ID</li>
     <li>All earlier specs' tests still pass</li>
     <li><code>/speckit-converge</code> reports no gaps</li>
-    <li><code>gates/G3.md</code> is signed by both</li>
   </ul>
-  %(commit)s
+  %(g3)s  %(commit)s
 </section>''' % dict(n=s['n'], group=group, short=E(s['short']), eb=eyebrow, name=E(s['name']), stop=E(s['stop']), builds=E(' '.join(s['builds'].split())),
                      ai=AI_NOTE if ai else '', top=top, switch=switch, mock=mock,
                      plan=pre('Prompt · paste into Copilot Chat', R2.plan_block(s), True),
@@ -165,7 +199,8 @@ def exec_slide(s, group, eyebrow, prev=None, with_specify=False, full_run=False,
                      impl=pre('Prompt · paste into Copilot Chat', R2.implement_block(s)),
                      run=RUN_FULL if full_run else RUN_SHORT, screen=E(' '.join(s['screen'].split())),
                      catch=catch('specs/%s/plan.md' % s['id'], '<code>plan.md</code>'),
-                     commit=pre('Terminal · one spec, one commit', R2.commit_block(s)))
+                     commit=pre('Terminal · one spec, one commit', R2.commit_block(s)),
+                     g2=gate_steps(s['id'], 'G2'), g3=gate_steps(s['id'], 'G3', commit=False))
 
 
 # ---------------------------------------------------------------- 1. MVP 2 refresh
