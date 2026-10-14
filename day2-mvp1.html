@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261014093755">
+<meta name="build" content="20261014094800">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -881,6 +881,7 @@ as a table. Do not change anything.</pre>
     <tr><td><b>A spec is too big</b></td><td>If it can't be built in half a day, split it before G1, not during implement.</td></tr>
     <tr><td><b>A participant falls behind or drifts</b></td><td>Paste the approved file from the Teams chat with the catch-up prompt on that slide. Nobody needs Git commands to catch up.</td></tr>
     <tr><td><b>The database is in a strange state</b></td><td>Run <code>uv run python manage.py seed_demo</code> to reload the invented seed data.</td></tr>
+    <tr><td><b>Copilot credits are running low</b></td><td>Switch to a mid-range model, start a new chat for the next spec, and close unneeded files. Finish the minimum line first; stretch specs are optional.</td></tr>
     <tr><td><b>The browser won't record</b></td><td>Allow the microphone when Chrome asks (or in the site settings by the address bar). Recording only works on <code>http://localhost</code> or https, so open the app as <code>localhost:8000</code>, not by IP address.</td></tr>
     <tr><td><b>"Transcribing…" never finishes</b></td><td>Look at Terminal 1. With <code>AI_PROVIDER=azure</code>, a wrong value or a blocked network shows there. Set <code>AI_PROVIDER=sample</code> and restart to carry on.</td></tr>
     <tr><td><b>A proposed item has empty fields</b></td><td>That's the spec working: values not in the fixed lists, or owners not in the hotel, are left empty for the chair. The item can't be confirmed until it's edited.</td></tr>
