@@ -112,7 +112,10 @@ def spec_slide(s, time, full, sources='<code>docs/feh-requirements.md</code> and
   %(spec)s
   </details>
   <h3><span class="ph">3 · Specify</span> run the room's agreed block</h3>
-  <p>Copy the answer-key block above (with any changes the room agreed) into Copilot Chat. Everyone runs the same block, so everyone builds the same thing.</p>
+  <p>Copy the answer-key block above (with any changes the room agreed) into Copilot Chat. Everyone runs the same block, so everyone builds the same thing. When Copilot asks to run a script, click <b>Allow</b>.</p>
+  <div class="note"><b>This step creates the spec's branch for you</b>You don't type any Git command here. <code>/speckit-specify</code> creates a new Git branch named <code>%(id)s</code> (a separate working copy of the project for this spec), switches to it, and writes <code>specs/%(id)s/spec.md</code>. Everything you do for this spec from now on, including the G1 commit below, is saved on that branch.</div>
+  <p class="expect">✓ You should see: Copilot reports the branch <code>%(id)s</code> and the file <code>specs/%(id)s/spec.md</code>, and the bottom-left corner of VS Code shows <code>%(id)s</code>. To check in the terminal, run <code>git branch</code>: the line with <code>*</code> is the branch you're on.</p>
+  <p class="muted"><b>If it fails:</b> the branch has a slightly different name: that's fine, use yours wherever the guide says <code>%(id)s</code>. No branch at all: tell the facilitator before you continue.</p>
   <h3><span class="ph">4 · Clarify</span> FEH answers</h3>
   %(clar)s
   <div class="note"><b>One answer for the whole room</b>When Copilot asks a business question, the FEH product owner answers it once, out loud. The facilitator types it on the big screen and everyone gives Copilot the same answer. Add your own edge cases to "Give particular attention to:" before you paste.</div>
@@ -149,7 +152,7 @@ AI_NOTE = ('  <div class="note"><b>No keys needed</b>This spec runs with <code>A
 def exec_slide(s, group, eyebrow, prev=None, with_specify=False, full_run=False, mock='mvp1/', ai=False):
     top = ''
     if with_specify:
-        top = ('  <h3><span class="ph">1 · Specify</span></h3>\n  %s\n  <h3><span class="ph">2 · Clarify</span> FEH answers</h3>\n  %s\n'
+        top = ('  <h3><span class="ph">1 · Specify</span></h3>\n  %s\n  <p class="expect">✓ You should see: <code>/speckit-specify</code> creates and switches to a new branch for this spec (its name is in the bottom-left corner of VS Code) and writes its <code>spec.md</code>. You don\'t type any Git command for this.</p>\n  <h3><span class="ph">2 · Clarify</span> FEH answers</h3>\n  %s\n'
                '  <h3><span class="ph gate">G1</span> FEH approves</h3>\n  %s') % (
             pre('Prompt · paste into Copilot Chat', R2.specify_block(s), True), pre('Prompt · paste into Copilot Chat', R2.clarify_block(s)), gate_steps(s['id'], 'G1'))
     switch = ''
