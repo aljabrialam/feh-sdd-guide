@@ -12,7 +12,7 @@ fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'}).then(function(r){re
 var m=t.match(/<meta name="build" content="(\\d+)"/);if(m&&m[1]!==me){u.searchParams.set('r',m[1]);location.replace(u.toString());}}).catch(function(){});}catch(e){}})();
 </script>
 <!--/build-->'''
-for f in ['index.html', 'guide.html', 'day2.html', 'guide-mvp1.html', 'day2-mvp1.html', 'setup.html', 'badge.html', 'certificate.html']:
+for f in ['index.html', 'guide.html', 'day2.html', 'guide-mvp1.html', 'day2-mvp1.html', 'qr.html', 'setup.html', 'badge.html', 'certificate.html']:
     p = pathlib.Path(f)
     if not p.exists(): continue
     s = p.read_text()

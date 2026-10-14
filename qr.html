@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="build" content="20261014134939">
+<meta http-equiv="Cache-Control" content="no-cache">
+<script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
+(function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
+if(u.searchParams.get('r')){u.searchParams.delete('r');history.replaceState(null,'',u.pathname+u.search+u.hash);return;}
+fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'}).then(function(r){return r.text();}).then(function(t){
+var m=t.match(/<meta name="build" content="(\d+)"/);if(m&&m[1]!==me){u.searchParams.set('r',m[1]);location.replace(u.toString());}}).catch(function(){});}catch(e){}})();
+</script>
+<!--/build-->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Workshop QR codes — FEH × VISEO</title>
+<meta name="description" content="QR codes for the FEH × VISEO Spec-Driven Development workshop: countdown, guides, badge maker and Wi-Fi.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="vendor/fonts/fonts.css">
+<style>
+:root{--bg:#001D21;--panel:#062a2f;--line:rgba(127,255,212,.28);--aqua:#7FFFD4;--text:#EEFAF7;--muted:#a9cfc9}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{background:
+ radial-gradient(1200px 700px at 85% 10%, rgba(31,79,153,.35), transparent 60%),
+ radial-gradient(900px 600px at 10% 95%, rgba(15,107,107,.45), transparent 60%),
+ linear-gradient(rgba(127,255,212,.04) 1px, transparent 1px) 0 0/48px 48px,
+ linear-gradient(90deg, rgba(127,255,212,.04) 1px, transparent 1px) 0 0/48px 48px, var(--bg);
+ color:var(--text);font-family:Inter,system-ui,sans-serif}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 32px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:14px}
+.brand img.v{height:30px}.brand img.f{height:32px;filter:brightness(0) invert(1)}.brand span{color:#8FB5B1;font-size:20px}
+.date{font-family:'JetBrains Mono',monospace;border:1px solid rgba(127,255,212,.4);border-radius:999px;padding:7px 16px;color:var(--aqua);font-size:14px;letter-spacing:.12em}
+nav.tabs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;padding:0 24px}
+nav.tabs button{font:inherit;font-weight:600;font-size:16px;color:var(--text);background:rgba(6,42,47,.85);border:1px solid var(--line);border-radius:999px;padding:10px 18px;cursor:pointer;min-height:44px}
+nav.tabs button[aria-selected="true"]{background:var(--aqua);color:var(--bg);border-color:var(--aqua)}
+main{padding:22px 32px 40px}
+.panel[hidden]{display:none}
+.eyebrow{font-family:'JetBrains Mono',monospace;color:var(--aqua);letter-spacing:.2em;font-weight:700;text-transform:uppercase;font-size:14px;text-align:center;margin:8px 0 6px}
+h1{font-weight:800;letter-spacing:-.02em;text-align:center;font-size:clamp(34px,5vw,64px);margin:0 0 6px}
+h1 em{font-style:normal;background:linear-gradient(90deg,#7FFFD4,#2EA8FF);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{text-align:center;color:var(--muted);font-size:clamp(16px,1.6vw,22px);margin:0 0 22px}
+.big{display:flex;flex-direction:column;align-items:center}
+.qrbox{background:#fff;border-radius:28px;padding:22px;box-shadow:0 0 0 8px rgba(127,255,212,.18),0 30px 80px rgba(0,0,0,.45)}
+.big .qrbox{width:min(62vh,560px,86vw)}
+.qrbox svg{display:block;width:100%;height:auto}
+.url{font-family:'JetBrains Mono',monospace;color:var(--aqua);font-weight:700;font-size:clamp(14px,1.6vw,22px);margin-top:18px;word-break:break-all;text-align:center}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;max-width:1500px;margin:10px auto 0}
+.card{position:relative;background:rgba(6,42,47,.85);border:1px solid var(--line);border-radius:24px;padding:24px 20px 20px;text-align:center;cursor:pointer}
+.card .qrbox{padding:14px;border-radius:16px;box-shadow:none}
+.card h3{font-size:24px;font-weight:800;margin:16px 0 4px}
+.card p{color:var(--muted);margin:0;font-size:15px}
+.card code{display:block;font-family:'JetBrains Mono',monospace;color:var(--aqua);font-weight:700;font-size:13px;margin-top:8px}
+.card .n{position:absolute;top:-14px;left:-14px;width:42px;height:42px;border-radius:50%;background:var(--aqua);color:var(--bg);display:grid;place-items:center;font-weight:800;font-size:20px}
+.wifi-info{display:grid;grid-template-columns:auto auto;gap:6px 18px;margin-top:20px;font-size:clamp(18px,2vw,28px)}
+.wifi-info dt{color:var(--muted)}.wifi-info dd{margin:0;font-weight:700;font-family:'JetBrains Mono',monospace}
+.wait{max-width:620px;margin:10px auto 0;text-align:center;border:1px dashed var(--line);border-radius:20px;padding:26px;color:var(--muted);font-size:18px}
+details.local{max-width:560px;margin:24px auto 0;background:rgba(6,42,47,.85);border:1px solid var(--line);border-radius:16px;padding:14px 18px}
+details.local summary{cursor:pointer;font-weight:600}
+details.local label{display:block;margin:12px 0 4px;font-size:14px;color:var(--muted)}
+details.local input,details.local select{width:100%;min-height:44px;border-radius:10px;border:1px solid var(--line);background:#00161a;color:var(--text);font:inherit;padding:0 12px}
+details.local button{margin-top:14px;min-height:44px;border-radius:999px;border:0;background:var(--aqua);color:var(--bg);font:inherit;font-weight:700;padding:0 20px;cursor:pointer}
+details.local small{display:block;color:var(--muted);margin-top:10px}
+footer{text-align:center;color:#8FB5B1;font-size:14px;padding:0 24px 28px}
+footer a{color:var(--aqua)}
+@media (max-width:1100px){.grid4{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){header,main{padding-left:16px;padding-right:16px}.grid4{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><img class="v" src="logo.svg" alt="VISEO"><span>×</span><img class="f" src="feh-logo.svg" alt="Far East Hospitality"></div>
+  <div class="date">15–16 OCT 2026 · SGT</div>
+</header>
+<nav class="tabs" role="tablist" aria-label="QR codes" id="tabs"></nav>
+<main id="panels"></main>
+<footer>Facilitated by Tony Pottier · Aljabri Alam · VISEO Asia · Use ← → to switch tabs · <a href="index.html">Countdown</a></footer>
+
+<script src="vendor/qrcode.js"></script>
+<script>
+(function () {
+  'use strict';
+  var BASE = 'https://aljabrialam.github.io/feh-sdd-guide/';
+
+  /* Venue Wi-Fi: fill in, then republish. Leave null to show "coming soon".
+     Example: { ssid: 'FEH-Guest', password: 'secret', security: 'WPA' }   security: WPA, WEP or nopass */
+  var WIFI = null;
+
+  var LINKS = [
+    { id: 'countdown', tab: 'Countdown', title: 'Countdown', sub: 'Home page and track choice', url: BASE, short: 'aljabrialam.github.io/feh-sdd-guide' },
+    { id: 'mvp1', tab: 'MVP 1 guide', title: 'MVP 1 guide', sub: 'Voice capture · start here', url: BASE + 'guide-mvp1.html', short: '…/guide-mvp1.html' },
+    { id: 'mvp2', tab: 'MVP 2 guide', title: 'MVP 2 guide', sub: 'Meeting action tracker · start here', url: BASE + 'guide.html', short: '…/guide.html' },
+    { id: 'badge', tab: 'Badge maker', title: 'Badge maker', sub: 'Make and share your badge', url: BASE + 'badge.html', short: '…/badge.html' }
+  ];
+
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function qrSvg(text) {
+    var q = qrcode(0, 'Q'); q.addData(text, 'Byte'); q.make();
+    var n = q.getModuleCount(), r = '';
+    for (var y = 0; y < n; y++) for (var x = 0; x < n; x++) if (q.isDark(y, x)) r += 'M' + x + ' ' + y + 'h1v1h-1z';
+    return '<svg viewBox="0 0 ' + n + ' ' + n + '" shape-rendering="crispEdges" role="img" aria-label="QR code"><path fill="#001D21" d="' + r + '"/></svg>';
+  }
+  function wifiText(w) {
+    function e(v) { return String(v).replace(/([\\;,:"])/g, '\\$1'); }
+    var t = (w.security || 'WPA').toUpperCase();
+    return 'WIFI:T:' + (t === 'NONE' ? 'nopass' : t) + ';S:' + e(w.ssid) + ';' + (t === 'NOPASS' || t === 'NONE' ? '' : 'P:' + e(w.password) + ';') + ';';
+  }
+  function wifiPanel(w) {
+    if (!w) {
+      return '<p class="eyebrow">Venue Wi-Fi</p><h1>Join the <em>Wi-Fi</em></h1>' +
+        '<div class="wait">Wi-Fi details will be added on the morning of the workshop.</div>' +
+        '<details class="local"><summary>Facilitator: show a Wi-Fi QR now (stays on this screen only)</summary>' +
+        '<label for="wf-ssid">Network name</label><input id="wf-ssid" autocomplete="off">' +
+        '<label for="wf-pass">Password</label><input id="wf-pass" autocomplete="off">' +
+        '<label for="wf-sec">Security</label><select id="wf-sec"><option>WPA</option><option>WEP</option><option value="nopass">None</option></select>' +
+        '<button type="button" id="wf-go">Show QR</button><small>Nothing is saved or sent anywhere; reloading the page clears it.</small></details>';
+    }
+    return '<p class="eyebrow">Venue Wi-Fi</p><h1>Join the <em>Wi-Fi</em></h1><p class="sub">Point your phone camera here to connect</p>' +
+      '<div class="big"><div class="qrbox">' + qrSvg(wifiText(w)) + '</div>' +
+      '<dl class="wifi-info"><dt>Network</dt><dd>' + esc(w.ssid) + '</dd>' +
+      (w.security === 'nopass' ? '' : '<dt>Password</dt><dd>' + esc(w.password) + '</dd>') + '</dl></div>';
+  }
+
+  var tabs = [{ id: 'all', tab: 'All' }].concat(LINKS).concat([{ id: 'wifi', tab: 'Wi-Fi' }]);
+  var nav = document.getElementById('tabs'), main = document.getElementById('panels');
+  nav.innerHTML = tabs.map(function (t) { return '<button role="tab" id="tab-' + t.id + '" aria-controls="p-' + t.id + '" data-id="' + t.id + '">' + esc(t.tab) + '</button>'; }).join('');
+  var html = '<section class="panel" role="tabpanel" id="p-all" aria-labelledby="tab-all"><p class="eyebrow">FEH × VISEO · Spec-Driven Development workshop</p>' +
+    '<h1>Scan with your <em>phone camera</em></h1><p class="sub">Start with your track\'s guide. Tap a code to show it full size.</p><div class="grid4">' +
+    LINKS.map(function (l, i) { return '<div class="card" data-id="' + l.id + '"><span class="n">' + (i + 1) + '</span><div class="qrbox">' + qrSvg(l.url) + '</div><h3>' + esc(l.title) + '</h3><p>' + esc(l.sub) + '</p><code>' + esc(l.short) + '</code></div>'; }).join('') +
+    '</div></section>';
+  html += LINKS.map(function (l) {
+    return '<section class="panel" role="tabpanel" id="p-' + l.id + '" aria-labelledby="tab-' + l.id + '" hidden><p class="eyebrow">' + esc(l.sub) + '</p><h1>' + esc(l.title) + '</h1>' +
+      '<p class="sub">Point your phone camera here</p><div class="big"><div class="qrbox">' + qrSvg(l.url) + '</div><div class="url">' + esc(l.url.replace('https://', '')) + '</div></div></section>';
+  }).join('');
+  html += '<section class="panel" role="tabpanel" id="p-wifi" aria-labelledby="tab-wifi" hidden>' + wifiPanel(WIFI) + '</section>';
+  main.innerHTML = html;
+
+  function show(id) {
+    if (!tabs.some(function (t) { return t.id === id; })) id = 'all';
+    tabs.forEach(function (t) {
+      document.getElementById('tab-' + t.id).setAttribute('aria-selected', t.id === id ? 'true' : 'false');
+      document.getElementById('p-' + t.id).hidden = t.id !== id;
+    });
+    if (location.hash !== '#' + id) history.replaceState(null, '', '#' + id);
+  }
+  nav.addEventListener('click', function (e) { var b = e.target.closest('button[data-id]'); if (b) show(b.getAttribute('data-id')); });
+  main.addEventListener('click', function (e) { var c = e.target.closest('.card[data-id]'); if (c) show(c.getAttribute('data-id')); });
+  document.addEventListener('keydown', function (e) {
+    if (/input|select|textarea/i.test(e.target.tagName)) return;
+    var i = tabs.findIndex(function (t) { return document.getElementById('tab-' + t.id).getAttribute('aria-selected') === 'true'; });
+    if (e.key === 'ArrowRight') show(tabs[(i + 1) % tabs.length].id);
+    if (e.key === 'ArrowLeft') show(tabs[(i - 1 + tabs.length) % tabs.length].id);
+  });
+  var go = document.getElementById('wf-go');
+  if (go) go.onclick = function () {
+    var w = { ssid: document.getElementById('wf-ssid').value.trim(), password: document.getElementById('wf-pass').value, security: document.getElementById('wf-sec').value };
+    if (!w.ssid) return;
+    document.getElementById('p-wifi').innerHTML = wifiPanel(w);
+  };
+  window.addEventListener('hashchange', function () { show(location.hash.slice(1)); });
+  show(location.hash.slice(1));
+})();
+</script>
+</body>
+</html>
