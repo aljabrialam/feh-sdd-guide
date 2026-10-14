@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261014152449">
+<meta name="build" content="20261014153915">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -383,7 +383,7 @@ npx playwright install chromium</pre>
   <p class="lead">Every participant creates the same empty project: Spec Kit set up for GitHub Copilot, plus the workshop documents. There is no app yet: Copilot creates the app at the end of Day 1, in <button class="link" data-goto="x001">Create the app: execute 001</button>, from the specs we agree. Do the steps in order and check each one before the next.</p>
 
   <h3>What you'll have at the end</h3>
-  <pre data-label="Your project folder">
+  <pre data-label="On your Desktop">
 feh-sdd/
 └── feh-app/                     ← the project; VS Code opens this folder
     ├── .github/skills/          ← the Spec Kit commands for Copilot (/speckit-specify, …)
@@ -406,10 +406,11 @@ feh-sdd/
   </div>
   <div class="step1">
     <h3><span class="ph">2</span> Make a workshop folder and go into it</h3>
-    <p>Creates a folder called <code>feh-sdd</code> in your home folder, so the project is easy to find, and moves the terminal into it.</p>
-    <pre data-label="Mac · Terminal">mkdir -p ~/feh-sdd &amp;&amp; cd ~/feh-sdd</pre>
-    <pre data-label="Windows · PowerShell">New-Item -ItemType Directory -Force $HOME\feh-sdd | Out-Null; cd $HOME\feh-sdd</pre>
+    <p>Creates a folder called <code>feh-sdd</code> on your <b>Desktop</b>, so you can find the project in Finder or File Explorer, and moves the terminal into it.</p>
+    <pre data-label="Mac · Terminal">mkdir -p ~/Desktop/feh-sdd &amp;&amp; cd ~/Desktop/feh-sdd</pre>
+    <pre data-label="Windows · PowerShell">$d = Join-Path ([Environment]::GetFolderPath('Desktop')) 'feh-sdd'; New-Item -ItemType Directory -Force $d | Out-Null; cd $d</pre>
     <p class="expect">✓ You should see: the prompt now ends in <code>feh-sdd</code>. Nothing else is printed.</p>
+    <p class="muted"><b>If your Desktop syncs to OneDrive or iCloud</b> and you later see sync errors or "file in use" messages, use your home folder instead: <code>mkdir -p ~/feh-sdd &amp;&amp; cd ~/feh-sdd</code> on a Mac, or <code>New-Item -ItemType Directory -Force $HOME\feh-sdd | Out-Null; cd $HOME\feh-sdd</code> on Windows.</p>
   </div>
   <div class="step1">
     <h3><span class="ph">3</span> Create the Spec Kit project</h3>

@@ -400,7 +400,7 @@ docs/reference.md. Target screens: docs/mockup/.%s
 # SETUP — done in Step 1 of the guide
 
 ```bash
-mkdir -p ~/feh-sdd && cd ~/feh-sdd
+mkdir -p ~/Desktop/feh-sdd && cd ~/Desktop/feh-sdd   # Windows: see Step 1 in the guide
 specify init feh-app --integration copilot
 cd feh-app
 # docs pack: docs/constitution.md, docs/specs.md, docs/reference.md
