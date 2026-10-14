@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261014092542">
+<meta name="build" content="20261014093755">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -393,6 +393,7 @@ feh-sdd/
         ├── mockup/              ← our MVP mockups: mvp-app.html (the whole MVP, interactive) and mvp-1 to mvp-5;
         │                          FEH's original screens 01 and 03
         ├── reference.md         ← invented hotels, people, lists, labels and colours
+        ├── mvp-sequence.mmd     ← the MVP as a sequence diagram, spec by spec
         ├── constitution.md      ← answer key for the Day 1 constitution exercise
         ├── specs.md             ← answer key for the specs: the run sheet
         └── backup/              ← the backup idea, only if the room switches</pre>
@@ -940,6 +941,11 @@ version below, exactly as written. Do not change any other file.</pre>
   <h2>FEH's brief, and the MVP we propose</h2>
   <p class="lead">Each week, team leaders at every hotel review performance and agree actions. Today those actions live in a spreadsheet, results are never recorded, and open items get lost between weeks. FEH's requirements describe the full Meeting Action Tracker; two days can't cover all of it, so we propose an MVP that can realistically be finished in the session.</p>
   <div class="note"><b>See the MVP before we build it</b>The <a href="mvp/" target="_blank" rel="noopener">interactive mockup</a> shows the whole workshop MVP working: sign in, meetings, the meeting screen with carry-forward and overdue, add and edit actions. It is a mockup, not the app. Over the two days we build the production MVP from it, spec by spec, with Spec Kit and GitHub Copilot. It is also in your project as <code>docs/mockup/mvp-app.html</code>, and every plan tells Copilot to check its work against it.</div>
+  <!--seq-->
+  <h3><span class="ph">How it works</span> the MVP as a sequence</h3>
+  <p>Each numbered step belongs to one spec. Source for Copilot: <code>docs/mvp-sequence.mmd</code> in your project.</p>
+  <a href="img/sequence-mvp2.svg" target="_blank" rel="noopener"><img src="img/sequence-mvp2.svg" alt="Sequence diagram of MVP 2: sign in, create the weekly meeting, carry forward and overdue, add an action" loading="lazy" style="display:block;width:100%;max-width:980px;border-radius:12px;border:1px solid var(--line)"></a>
+  <!--/seq-->
   <div class="cards">
     <div><b>MVP 1a</b>Data entry and tracking. <em>Our MVP is the core of this.</em></div>
     <div><b>MVP 1b</b>Listen to the meeting and propose actions. Built in the other track, <a href="guide-mvp1.html">MVP 1 · Voice capture</a>.</div>

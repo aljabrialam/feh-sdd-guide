@@ -261,7 +261,12 @@ seq = '''  <h3><span class="ph">FEH's happy path</span> <code>docs/voice-capture
     <li>The chair <b>reviews and accepts</b>; the items become <b>Confirmed</b> actions of the meeting.</li>
   </ol>
 '''
-idea = rep(idea, '  <h3><span class="ph">1</span> How we split work into specs</h3>', seq + '  <h3><span class="ph">1</span> How we split work into specs</h3>')
+fig1 = """<!--seq-->
+  <h3><span class="ph">How it works</span> FEH's happy path, spec by spec</h3>
+  <p>FEH's sequence (<code>docs/voice-capture-sequence.mmd</code>) with the meetings and action list it needs, each numbered step belonging to one spec. Source for Copilot: <code>docs/mvp-sequence.mmd</code> in your project.</p>
+  <a href="img/sequence-mvp1.svg" target="_blank" rel="noopener"><img src="img/sequence-mvp1.svg" alt="Sequence diagram of MVP 1: sign in and open the meeting, record and transcribe, extract proposed items, review and confirm" loading="lazy" style="display:block;width:100%;max-width:980px;border-radius:12px;border:1px solid var(--line)"></a>
+  <!--/seq-->"""
+idea = re.sub(r'<!--seq-->.*?<!--/seq-->', lambda m: fig1, idea, flags=re.S)
 idea = rep(idea, "Read docs/feh-requirements.md and docs/constitution.md. Propose an MVP\nthat a developer can build with GitHub Copilot in about one and a half\ndays.",
            "Read docs/voice-capture-sequence.mmd, docs/feh-requirements.md and\ndocs/constitution.md. Propose an MVP of FEH's voice-capture happy path\nthat a developer can build with GitHub Copilot in about one and a half\ndays, including the meetings and action list it needs.")
 idea = rep(idea, '<p style="margin-top:10px"><b>Minimum viable demonstration: through 005.</b></p>', '<p style="margin-top:10px"><b>Minimum viable demonstration: through 006</b> (speak, review, confirm).</p>')

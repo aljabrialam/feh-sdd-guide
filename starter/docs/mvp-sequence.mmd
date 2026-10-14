@@ -1,0 +1,36 @@
+sequenceDiagram
+    autonumber
+    actor Member as Team member (Mary Tan)
+    participant UI as Browser
+    participant App as Django app
+    participant DB as Database
+
+    rect rgba(127,255,212,0.06)
+    Note over Member,DB: 001 Sign-in and hotel access
+    Member->>UI: Sign in as Mary Tan
+    UI->>App: Sign in
+    App-->>UI: Meetings of Hotel A only
+    end
+
+    rect rgba(127,255,212,0.12)
+    Note over Member,DB: 002 Weekly meetings
+    Member->>UI: New meeting: date, chair, attendees
+    UI->>App: Create the meeting
+    App->>DB: Save it (one meeting per hotel per date)
+    end
+
+    rect rgba(127,255,212,0.06)
+    Note over Member,DB: 004 Carry forward · 005 Overdue and counts
+    App->>DB: Open, In progress and Blocked actions from earlier meetings
+    App->>App: Work out overdue from each due date and today
+    App-->>UI: Meeting screen: carried forward, raised, overdue counts
+    end
+
+    rect rgba(127,255,212,0.12)
+    Note over Member,DB: 003 Action items
+    Member->>UI: Add action: segment, category, issue, action, owner, due
+    UI->>App: Save the action
+    App->>App: Check the required fields
+    App->>DB: Save it with its change history
+    App-->>UI: The action appears under "Raised in this meeting"
+    end

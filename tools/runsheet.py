@@ -459,5 +459,5 @@ Build in this order. Each line marks what you have if you stop there.
 
 if __name__ == '__main__':
     p = os.path.join(os.path.dirname(__file__), '..', 'starter', 'docs', 'specs.md')
-    open(p, 'w').write(markdown())
+    open(p, 'w').write(markdown(extra_docs=' Sequence:\ndocs/mvp-sequence.mmd.'))
     print('wrote', os.path.normpath(p))

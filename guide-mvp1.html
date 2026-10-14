@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261014092542">
+<meta name="build" content="20261014093755">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -395,6 +395,7 @@ feh-sdd/
         ├── voice-capture-sequence.mmd ← FEH's happy-path sequence: what MVP 1 builds
         ├── sample/              ← the sample transcript and items the app uses without Azure keys
         ├── reference.md         ← invented hotels, people, lists, labels and colours
+        ├── mvp-sequence.mmd     ← the MVP as a sequence diagram, spec by spec
         ├── constitution.md      ← answer key for the Day 1 constitution exercise
         └── specs.md             ← answer key for the specs: the MVP 1 run sheet</pre>
 
@@ -941,20 +942,16 @@ version below, exactly as written. Do not change any other file.</pre>
   <h2>FEH's brief, and the MVP we propose</h2>
   <p class="lead">Each week, team leaders at every hotel review performance and agree actions, and someone types them into a spreadsheet afterwards. FEH's MVP 1b asks for the tracker to listen instead: record the meeting, turn it into text, and propose the action items for the chair to confirm. FEH has given us the happy path as a sequence diagram. MVP 1 builds exactly that, on top of the meetings and action list it needs.</p>
   <div class="note"><b>See the MVP before we build it</b>The <a href="mvp1/" target="_blank" rel="noopener">interactive mockup</a> shows the whole of MVP 1 working: sign in, meetings, add actions, Record, the transcript, the proposed items and the chair's review. It is a mockup, not the app. Over the two days we build the production MVP from it, spec by spec, with Spec Kit and GitHub Copilot. It is also in your project as <code>docs/mockup/mvp-app.html</code>, and every plan tells Copilot to check its work against it.</div>
+  <!--seq-->
+  <h3><span class="ph">How it works</span> FEH's happy path, spec by spec</h3>
+  <p>FEH's sequence (<code>docs/voice-capture-sequence.mmd</code>) with the meetings and action list it needs, each numbered step belonging to one spec. Source for Copilot: <code>docs/mvp-sequence.mmd</code> in your project.</p>
+  <a href="img/sequence-mvp1.svg" target="_blank" rel="noopener"><img src="img/sequence-mvp1.svg" alt="Sequence diagram of MVP 1: sign in and open the meeting, record and transcribe, extract proposed items, review and confirm" loading="lazy" style="display:block;width:100%;max-width:980px;border-radius:12px;border:1px solid var(--line)"></a>
+  <!--/seq-->
   <div class="cards">
     <div><b>MVP 1a</b>Data entry and tracking. <em>We build the part voice capture needs: meetings and the action list.</em></div>
     <div><b>MVP 1b</b>Listen to the meeting and propose actions. <em>This is MVP 1: FEH's happy path, with Azure OpenAI or the sample data.</em></div>
     <div><b>Phase 2 · Final</b>Databricks results, dashboards, Teams transcripts. Needs IT approval: not in the workshop.</div>
   </div>
-  <h3><span class="ph">FEH's happy path</span> <code>docs/voice-capture-sequence.mmd</code></h3>
-  <ol>
-    <li>The chair presses <b>Record</b>; the browser captures the microphone while the team discusses an issue and agrees an action.</li>
-    <li>The chair presses <b>Stop</b>; the audio goes to the Django app.</li>
-    <li>The app sends the audio to the transcription service and gets the <b>transcript</b> back.</li>
-    <li>The app sends the transcript and the action-item fields to the language model and gets <b>structured action items</b> back: segment, issue, action, owner, due date, anticipated result.</li>
-    <li>The app saves them as <b>Proposed</b> and shows the to-do table.</li>
-    <li>The chair <b>reviews and accepts</b>; the items become <b>Confirmed</b> actions of the meeting.</li>
-  </ol>
   <h3><span class="ph">1</span> How we split work into specs</h3>
   <ul class="checks">
     <li><b>One capability per spec.</b> Something a person can do and FEH can see, built and accepted on its own (Principle IX).</li>

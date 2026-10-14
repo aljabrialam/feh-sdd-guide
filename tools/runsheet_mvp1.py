@@ -231,7 +231,8 @@ every test passes with AI_PROVIDER=sample (Principle XVI).'''
 MINIMUM = '''**Minimum viable demonstration: through 006** (speak, review, confirm).
 007 is a stretch goal, only after 006 is accepted.'''
 EXTRA = ''' FEH's sequence:
-docs/voice-capture-sequence.mmd. Sample AI output: docs/sample/.'''
+docs/voice-capture-sequence.mmd; ours, spec by spec:
+docs/mvp-sequence.mmd. Sample AI output: docs/sample/.'''
 
 AZURE = '''---
 

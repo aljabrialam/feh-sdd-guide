@@ -1,0 +1,42 @@
+sequenceDiagram
+    autonumber
+    actor Chair as Chair (Mary Tan)
+    participant UI as Browser
+    participant App as Django app
+    participant AI as AI adapters<br/>sample or Azure OpenAI
+    participant DB as Database
+
+    rect rgba(127,255,212,0.06)
+    Note over Chair,DB: 001 Sign-in and hotel access · 002 Weekly meetings · 003 Action items
+    Chair->>UI: Sign in as Mary Tan, open today's meeting
+    UI->>App: Request the meeting
+    App->>DB: Load the meeting (Hotel A only)
+    App-->>UI: Meeting screen with Record and Add action
+    end
+
+    rect rgba(127,255,212,0.12)
+    Note over Chair,DB: 004 Record and transcribe
+    Chair->>UI: Start recording, the team agrees actions, Stop recording
+    UI->>App: Upload the audio
+    App->>AI: transcribe(audio)
+    AI-->>App: Transcript text
+    App->>DB: Save the transcript with the meeting
+    App-->>UI: Show the transcript
+    end
+
+    rect rgba(127,255,212,0.06)
+    Note over Chair,DB: 005 Extract proposed items
+    App->>AI: extract(transcript, fixed lists, hotel people, meeting date)
+    AI-->>App: Action items as JSON
+    App->>App: Keep only valid list values and hotel people
+    App->>DB: Save the items as Proposed
+    App-->>UI: Review page: "Proposed by AI"
+    end
+
+    rect rgba(127,255,212,0.12)
+    Note over Chair,DB: 006 Review and confirm (AI proposes, a person confirms)
+    Chair->>UI: Edit or remove items, then Confirm selected
+    UI->>App: Confirm the selected items
+    App->>DB: Create Open actions "From recording", mark items Confirmed
+    App-->>UI: The meeting shows the confirmed actions
+    end

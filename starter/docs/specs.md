@@ -3,7 +3,8 @@
 Complete set, in execution order. Every block is paste-ready.
 FEH requirements: "Meeting Action Tracker: Requirements", 13 Oct 2026.
 Governing rules: docs/constitution.md. Data, labels and look:
-docs/reference.md. Target screens: docs/mockup/.
+docs/reference.md. Target screens: docs/mockup/. Sequence:
+docs/mvp-sequence.mmd.
 
 ---
 
