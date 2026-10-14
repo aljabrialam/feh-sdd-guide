@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261014115430">
+<meta name="build" content="20261014115725">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -262,7 +262,7 @@ summary{cursor:pointer;font-weight:600}
   <p class="lead">Day 1 is mostly about Spec Kit itself: how it works, what each step produces, and who decides what. We use it on FEH's real brief, the Meeting Action Tracker.</p>
   <table>
     <tr><th>Time</th><th>Day 1 · Spec Kit and the specs (FEH-led)</th><th>Day 2 · Build (VISEO-led)</th></tr>
-    <tr><td>9:00</td><td>Why SDD: specs, gates and who decides</td><td rowspan="11" style="vertical-align:middle;color:var(--muted)">Revealed on the morning of Day 2.<br><br>Copilot builds the small MVP FEH approves on Day 1, spec by spec, and the day ends with a demo of the working tracker.</td></tr>
+    <tr><td>9:00</td><td>Why SDD: specs, gates and who decides</td><td rowspan="11" style="vertical-align:middle;color:var(--muted)">Revealed on the morning of Day 2.<br><br>Copilot builds spec 001 as FEH approved it on Day 1 (spec 002 if time allows), and the day ends with a demo.</td></tr>
     <tr><td>9:30</td><td>Anatomy of Spec Kit, who writes what</td></tr>
     <tr><td>10:15</td><td>Hands-on: open the machinery (skills and templates)</td></tr>
     <tr><td>10:45</td><td>Agree the constitution</td></tr>
@@ -270,7 +270,7 @@ summary{cursor:pointer;font-weight:600}
     <tr><td>12:00</td><td class="muted">Lunch</td></tr>
     <tr><td>1:00</td><td>Deep dive <code>/speckit-specify</code>, then spec 001</td></tr>
     <tr><td>1:45</td><td>Deep dive <code>/speckit-clarify</code>, FEH answers for spec 001</td></tr>
-    <tr><td>2:30</td><td>Spec 002 hands-on (003 if time)</td></tr>
+    <tr><td>2:30</td><td>Spec 002 hands-on</td></tr>
     <tr><td>3:30</td><td>Quality checks: analyze, checklist, pitfalls · <b>G1: FEH approves the specs</b></td></tr>
     <tr><td>4:15</td><td>Deep dive <code>/speckit-plan</code>, plan for spec 001 · <b>G2</b></td></tr>
   </table>
@@ -291,11 +291,11 @@ summary{cursor:pointer;font-weight:600}
   <h3><span class="ph gate">Built</span> In each participant's repo</h3>
   <ul class="checks">
     <li>A constitution agreed by FEH and VISEO</li>
-    <li>Specs 001 and 002 (and 003 if time), clarified with FEH and approved at G1</li>
+    <li>Specs 001 and 002, clarified with FEH and approved at G1</li>
     <li>An approved plan (G2) for the features built on Day 2</li>
-    <li>Spec 001, the meeting screen with its spreadsheet-style grid, running locally as a Django app and accepted at G3</li>
+    <li>Spec 001, the meeting and its spreadsheet-style action list, running locally as a Django app and accepted at G3</li>
     <li>Automated tests named after the acceptance criteria they prove, all passing</li>
-    <li>Spec 002 built and accepted (spec 003 as a stretch goal)</li>
+    <li>Spec 002 built too, if time allows</li>
   </ul>
 
   <h3><span class="ph">Learned</span> What people can do afterwards</h3>
@@ -320,7 +320,7 @@ summary{cursor:pointer;font-weight:600}
   <p class="lead">An AI agent never writes identical code twice, so "the same result" means the same behaviour: same specs, same decisions, same data, same screens, and the same acceptance tests passing. Five controls make that happen.</p>
   <table>
     <tr><th>Control</th><th>How it works</th></tr>
-    <tr><td><b>1 · One run sheet</b></td><td>Everyone sets up the project the same way (Step 1) and pastes the same blocks in the same order: constitution, then spec 001, 002 (003). <code>docs/reference.md</code> fixes the seed data, screen labels and colours.</td></tr>
+    <tr><td><b>1 · One run sheet</b></td><td>Everyone sets up the project the same way (Step 1) and pastes the same blocks in the same order: constitution, then spec 001 and 002. <code>docs/reference.md</code> fixes the seed data, screen labels and colours.</td></tr>
     <tr><td><b>2 · Decisions made once</b></td><td>Clarify questions are answered by FEH once, for the whole room. Every participant pastes the same <b>room decisions</b> block.</td></tr>
     <tr><td><b>3 · Converge at every gate</b></td><td>Participants practise specify, clarify and plan themselves, then match the room's approved version on the big screen before moving on.</td></tr>
     <tr><td><b>4 · Tests named after the criteria</b></td><td>Every acceptance criterion in the approved spec gets a test with its ID in the name. At G3, everyone's build must pass a test for every criterion.</td></tr>
@@ -393,7 +393,7 @@ code .</pre>
   <ul class="checks">
     <li>VS Code is open on <code>feh-app/</code> with Copilot Chat in <b>Agent</b> mode</li>
     <li>Typing <code>/speckit</code> in Copilot Chat lists the Spec Kit skills</li>
-    <li><code>docs/reference.md</code> exists, and <code>docs/mockup/</code> has FEH's three screens (01, 02, 03)</li>
+    <li><code>docs/reference.md</code> exists, and <code>docs/mockup/</code> has FEH's screens (01 and 03)</li>
   </ul>
 </section>
 
@@ -585,12 +585,11 @@ version below, exactly as written. Do not change any other file.</pre>
     <div><b>Phase 2 · Final</b>Actual results from Databricks, dashboards, Teams transcripts, summaries.</div>
   </div>
   <h3><span class="ph">1</span> The workshop MVP: small enough to finish</h3>
-  <p>Two days is for learning SDD on FEH's real requirements, not for building the whole tracker. We build a small MVP that every participant can finish and demo, and FEH's full requirements document becomes the backlog.</p>
+  <p>Two days is for learning SDD on FEH's real requirements, not for building the whole tracker. Day 1 specifies two features; Day 2 builds the first one, and the second only if time allows. FEH's full requirements document becomes the backlog.</p>
   <table>
     <tr><th>Spec</th><th>What a user can do</th><th>From FEH's requirements</th><th>FEH screen</th></tr>
-    <tr><td><b>001</b></td><td>Create the weekly meeting and record its actions in a spreadsheet-style list that saves as you type. Open items from earlier meetings are already there; overdue ones are flagged.</td><td>FR-004–007, 009, 013</td><td>01 Meeting screen</td></tr>
-    <tr><td><b>002</b></td><td>Open an action to post updates, record what was expected and what happened, rate the outcome, see every change, and close it.</td><td>FR-009–011, 014</td><td>03 Item detail</td></tr>
-    <tr><td>003 <span class="muted">stretch</span></td><td>See my open, overdue and done actions across all meetings.</td><td>FR-016 (My actions)</td><td>02 My actions</td></tr>
+    <tr><td><b>001</b> <span class="muted">Day 2 build</span></td><td>Create the weekly meeting and record its actions in a spreadsheet-style list that saves as you type. Open items from earlier meetings are already there; overdue ones are flagged.</td><td>FR-004–007, 009, 013</td><td>01 Meeting screen</td></tr>
+    <tr><td>002 <span class="muted">build if time</span></td><td>Open an action to post updates, record what was expected and what happened, rate the outcome, see every change, and close it.</td><td>FR-009–011, 014</td><td>03 Item detail</td></tr>
   </table>
   <h3><span class="ph">2</span> What we stub or leave out, and why</h3>
   <table>
@@ -599,17 +598,17 @@ version below, exactly as written. Do not change any other file.</pre>
     <tr><td>Microsoft Entra ID sign-in (FR-003)</td><td>A "Sign in as" page listing the invented people. Real SSO needs FEH's tenant.</td></tr>
     <tr><td>Roles, people in several hotels, group roll-up (FR-001, 002, 019, 020)</td><td>Simplified: each person belongs to one hotel and can do everything there.</td></tr>
     <tr><td>Numeric targets, supporting owners, stay periods (parts of FR-008, 011, 012)</td><td>Left out: results are text plus an outcome rating.</td></tr>
-    <tr><td>Email reminders and notifications, export, Databricks, Azure hosting</td><td>Left out: good first specs for after the workshop.</td></tr>
+    <tr><td>My actions, email reminders and notifications, export, Databricks, Azure hosting</td><td>Left out: good first specs for after the workshop.</td></tr>
   </table>
   <h3><span class="ph">3</span> Ask the agent to check the split</h3>
   <pre data-label="Prompt · paste into Copilot Chat">
 Do not write any code or specifications yet.
 
 Read docs/reference.md. Far East Hospitality wants a Meeting Action
-Tracker. For this two-day workshop we plan a small MVP in three
+Tracker. For this two-day workshop we plan a small MVP in two
 specifications, in this order: 001 meetings and the action list with
 carry-forward and overdue; 002 updates and results with the change
-history; 003 (stretch) my actions.
+history. Only 001 must be built in one day.
 
 For each, say in one sentence what a user can do when it is finished,
 what it depends on, and whether it is small enough to build in half a
@@ -801,10 +800,10 @@ for the two-day workshop. All hotels, people and text below are invented.
 Use exactly these.
 
 ## Workshop scope
-A small MVP from MVP 1a, in three specs:
-- 001 Meetings and the action list (carry-forward, overdue)
-- 002 Updates and results (update log, result, outcome, change history)
-- 003 My actions (stretch, if time allows)
+A small MVP from MVP 1a, in two specs:
+- 001 Meetings and the action list (carry-forward, overdue): built on Day 2
+- 002 Updates and results (update log, result, outcome, change history):
+  built only if time allows
 
 Kept deliberately simple for the workshop:
 - Each person belongs to one hotel and can do everything there. No roles,
@@ -815,7 +814,7 @@ Kept deliberately simple for the workshop:
   targets or currencies.
 - One owner per item. No supporting owners, stay periods or linked
   references.
-Not built in the workshop: email reminders, export, group roll-up,
+Not built in the workshop: My actions, email reminders, export, group roll-up,
 microphone and AI (MVP 1b), Teams transcripts, Databricks, Azure hosting.
 
 ## Hotels
@@ -901,8 +900,8 @@ hotel&#x27;s time zone.
 ## Screens and exact labels
 Desktop browser. Follow the images in docs/mockup/, leaving out anything
 this file says is not built.
-Top bar (all screens): &quot;Action Tracker&quot; · &quot;Meetings&quot; · &quot;My actions&quot;
-(spec 003) · the person&#x27;s name and hotel · &quot;Sign out&quot;.
+Top bar (all screens): &quot;Action Tracker&quot; · &quot;Meetings&quot; · the person&#x27;s name
+and hotel · &quot;Sign out&quot;.
 - Sign in as: heading &quot;Sign in&quot;, one button per person showing name and
   hotel; note &quot;Workshop sign-in. Microsoft Entra ID replaces this page in
   the real product.&quot;
@@ -926,10 +925,6 @@ Top bar (all screens): &quot;Action Tracker&quot; · &quot;Meetings&quot; · &qu
   status, priority), &quot;Result&quot; (fields &quot;What we expect&quot;, &quot;What happened&quot;,
   &quot;Outcome rating&quot;), &quot;Update log&quot; (field &quot;Add a comment&quot;, button &quot;Post
   comment&quot;), &quot;Change history&quot;. Buttons &quot;Cancel item&quot;, &quot;Mark as done&quot;.
-- My actions (spec 003, stretch): docs/mockup/02-my-actions.png,
-  simplified to tabs &quot;My open actions (n)&quot;, &quot;Overdue (n)&quot;, &quot;Done (n)&quot; and
-  columns &quot;Action and issue&quot;, &quot;Segment&quot;, &quot;Raised&quot;, &quot;Due&quot;, &quot;Status&quot;. No
-  filters and no &quot;Changes by others&quot; panel.
 
 ## Look (sampled from FEH&#x27;s mockups)
 Font: Inter (Google Fonts). Page background #F3F5F7, cards #FFFFFF with
@@ -1022,8 +1017,8 @@ the AC-001 numbering. Do not add anything else.
 - If two people change the same value, the last change wins.
 - One meeting per hotel per date.
 - Not in this spec: the update log, results and change history (spec
-  002); My actions (spec 003). Not in the workshop: completing a
-  meeting, filters, export, recording.
+  002). Not in the workshop: My actions, completing a meeting, filters,
+  export, recording.
 
 Then stop and show me the full list of acceptance criteria.</pre>
 
@@ -1037,7 +1032,7 @@ version below, exactly as written. Do not change any other file.</pre>
 </section>
 
 <section class="slide" id="s002" data-group="Day 1 · Spec" data-title="Spec 002 · Updates &amp; results">
-  <p class="eyebrow">Spec 002 · FEH screen 03 · Day 1, 2:30</p>
+  <p class="eyebrow">Spec 002 · FEH screen 03 · Day 1, 2:30 · built on Day 2 if time allows</p>
   <h2>Updates and results</h2>
   <p class="lead">Where "did it work?" lives: what was expected, what happened, the running update log, and the change history that makes open editing safe.</p>
 
@@ -1107,57 +1102,6 @@ Then stop and show me the full list of acceptance criteria.</pre>
   <div class="note"><b>Match the room before moving on</b>Compare your <code>spec.md</code> with the approved version on the big screen. Different, or fell behind? The facilitator posts the approved file in the Teams chat. Paste this into Copilot Chat, then paste the approved file underneath:</div>
   <pre data-label="Prompt · catch up to the room's approved version">
 Replace the contents of specs/002-*/spec.md with the approved
-version below, exactly as written. Do not change any other file.</pre>
-</section>
-
-<section class="slide" id="s003" data-group="Day 1 · Spec" data-title="Spec 003 · My actions">
-  <p class="eyebrow">Spec 003 · FEH screen 02 · stretch, if time allows</p>
-  <h2>My actions</h2>
-  <p class="lead">The page each owner opens before the next meeting, so nothing is forgotten between weeks.</p>
-
-  <h3><span class="ph">1 · Specify</span></h3>
-  <pre data-label="Prompt · paste into Copilot Chat">
-/speckit-specify
-
-A person sees, in one place, the action items they own across all
-meetings of their hotel.
-
-They can switch between their open actions, their overdue actions and
-their done actions, with how many are in each. Each row shows the
-action and the issue, the segment, when it was raised, when it is due
-(with overdue days) and the status, and opens the item.
-
-Label every acceptance criterion AC-003-&lt;nn&gt;.</pre>
-
-  <h3><span class="ph">2 · Clarify</span></h3>
-  <pre data-label="Prompt">/speckit-clarify</pre>
-  <p>Then paste the <button class="link" data-goto="clarify">clarify review prompt</button>. Questions FEH should expect:</p>
-  <ul>
-    <li>Should owners also get an <b>email</b> when something changes? (FR-015)</li>
-    <li>In what order should the actions be listed?</li>
-  </ul>
-
-  <h3><span class="ph">Room decisions</span> Paste after FEH has answered</h3>
-  <p>FEH answers the questions above once, for the whole room. These are the default answers; the facilitator edits them on screen if FEH decides differently, and every participant pastes the same block.</p>
-  <pre data-label="Prompt · paste into Copilot Chat">
-Apply these business decisions, agreed by FEH for the whole room, to
-the specification. Add or adjust acceptance criteria to match, keeping
-the AC-003 numbering. Do not add anything else.
-
-- No emails in the workshop; owners see their actions when they open
-  the page.
-- Open means Open, In progress or Blocked, earliest due date first.
-  Overdue uses the same rule as spec 001. Done shows Done items, most
-  recently closed first; Cancelled items are not shown.
-
-Then stop and show me the full list of acceptance criteria.</pre>
-
-  <h3><span class="ph gate">G1</span> FEH approves the spec</h3>
-  <p>Save and commit <code>gates/G1.md</code> from the <button class="link" data-goto="gates">gate template</button>, listing the business decisions made during clarify. The plan for this spec is done on Day 2, only if time allows.</p>
-  <p>The facilitator approves the room's version with FEH on the big screen, so the plan starts from one approved spec.</p>
-  <div class="note"><b>Match the room before moving on</b>Compare your <code>spec.md</code> with the approved version on the big screen. Different, or fell behind? The facilitator posts the approved file in the Teams chat. Paste this into Copilot Chat, then paste the approved file underneath:</div>
-  <pre data-label="Prompt · catch up to the room's approved version">
-Replace the contents of specs/003-*/spec.md with the approved
 version below, exactly as written. Do not change any other file.</pre>
 </section>
 
@@ -1277,7 +1221,7 @@ Give each item with its line and a suggested rewording.</pre>
     <li>The constitution check passed, with no unexplained exceptions</li>
     <li>Hotel isolation and the change history are designed in, not left for later</li>
     <li>Nothing is planned that no criterion asks for</li>
-    <li>The data model leaves room for specs 002 and 003 without rework</li>
+    <li>The data model leaves room for spec 002 without rework</li>
   </ul>
 </section>
 
@@ -1336,8 +1280,8 @@ cd e2e, then npm install and npx playwright test
 
 Write data-model.md and contracts/ (every page and every HTMX endpoint:
 URL, method, what it returns) before any code. Keep the model small,
-with room for the update log, results and closing (spec 002) and
-My actions (spec 003) without rework.</pre>
+with room for the update log, results and closing (spec 002) without
+rework.</pre>
 
   <h3><span class="ph gate">G2</span> VISEO approves the plan</h3>
   <div class="note"><b>G2 must confirm</b>Every AC-001 criterion is mapped to a test, isolation lives in one place, the change history is on the models from the start, the plan follows <code>docs/reference.md</code>, and nothing in it goes beyond the spec.</div>
@@ -1357,7 +1301,7 @@ version below, exactly as written. Do not change any other file.</pre>
   <p class="lead">The build steps appear here on the morning of Day 2. Today is about getting the specification right: on Day 2 the agent builds exactly what FEH approved today, so every decision made today shows up in the app.</p>
   <h3>Before you leave today</h3>
   <ul class="checks">
-    <li>Specs 001 and 002 (and 003 if done) are approved at G1, with gate records committed</li>
+    <li>Specs 001 and 002 are approved at G1, with gate records committed</li>
     <li>The plan for spec 001 is approved at G2</li>
     <li>Your spec and plan match the approved versions on the big screen</li>
     <li>Your laptop is charged, and GitHub Copilot still signs in</li>

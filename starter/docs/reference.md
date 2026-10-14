@@ -6,10 +6,10 @@ for the two-day workshop. All hotels, people and text below are invented.
 Use exactly these.
 
 ## Workshop scope
-A small MVP from MVP 1a, in three specs:
-- 001 Meetings and the action list (carry-forward, overdue)
-- 002 Updates and results (update log, result, outcome, change history)
-- 003 My actions (stretch, if time allows)
+A small MVP from MVP 1a, in two specs:
+- 001 Meetings and the action list (carry-forward, overdue): built on Day 2
+- 002 Updates and results (update log, result, outcome, change history):
+  built only if time allows
 
 Kept deliberately simple for the workshop:
 - Each person belongs to one hotel and can do everything there. No roles,
@@ -20,7 +20,7 @@ Kept deliberately simple for the workshop:
   targets or currencies.
 - One owner per item. No supporting owners, stay periods or linked
   references.
-Not built in the workshop: email reminders, export, group roll-up,
+Not built in the workshop: My actions, email reminders, export, group roll-up,
 microphone and AI (MVP 1b), Teams transcripts, Databricks, Azure hosting.
 
 ## Hotels
@@ -106,8 +106,8 @@ hotel's time zone.
 ## Screens and exact labels
 Desktop browser. Follow the images in docs/mockup/, leaving out anything
 this file says is not built.
-Top bar (all screens): "Action Tracker" · "Meetings" · "My actions"
-(spec 003) · the person's name and hotel · "Sign out".
+Top bar (all screens): "Action Tracker" · "Meetings" · the person's name
+and hotel · "Sign out".
 - Sign in as: heading "Sign in", one button per person showing name and
   hotel; note "Workshop sign-in. Microsoft Entra ID replaces this page in
   the real product."
@@ -131,10 +131,6 @@ Top bar (all screens): "Action Tracker" · "Meetings" · "My actions"
   status, priority), "Result" (fields "What we expect", "What happened",
   "Outcome rating"), "Update log" (field "Add a comment", button "Post
   comment"), "Change history". Buttons "Cancel item", "Mark as done".
-- My actions (spec 003, stretch): docs/mockup/02-my-actions.png,
-  simplified to tabs "My open actions (n)", "Overdue (n)", "Done (n)" and
-  columns "Action and issue", "Segment", "Raised", "Due", "Status". No
-  filters and no "Changes by others" panel.
 
 ## Look (sampled from FEH's mockups)
 Font: Inter (Google Fonts). Page background #F3F5F7, cards #FFFFFF with
