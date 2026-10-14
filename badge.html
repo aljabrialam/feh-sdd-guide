@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261014104919">
+<meta name="build" content="20261014105412">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -11,6 +11,8 @@ fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'}).then(function(r){re
 var m=t.match(/<meta name="build" content="(\d+)"/);if(m&&m[1]!==me){u.searchParams.set('r',m[1]);location.replace(u.toString());}}).catch(function(){});}catch(e){}})();
 </script>
 <!--/build-->
+<meta name="author" content="Aljabri Alam">
+<link rel="author" href="humans.txt">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Badge Maker · FEH × VISEO SDD Hackathon</title>
 <meta name="description" content="Make your sticker badge for the FEH × VISEO Spec-Driven Development hackathon, 15–16 October 2026.">
@@ -225,7 +227,7 @@ a{color:var(--aqua)}
 <body>
 <header class="top">
   <div class="brand"><img class="v" src="logo.svg" alt="VISEO"><span class="x">×</span><img class="f" src="feh-logo.svg" alt="Far East Hospitality"></div>
-  <nav><a href="index.html">Countdown</a><a href="guide.html">Workshop guide</a><a href="setup.html">Laptop setup</a></nav>
+  <nav><a href="index.html">Countdown</a><!-- hidden until the workshop: <a href="guide.html">Workshop guide</a> --><a href="setup.html">Laptop setup</a></nav>
 </header>
 
 <!-- ============ LANDING ============ -->
@@ -236,7 +238,7 @@ a{color:var(--aqua)}
       <h1>Make your<br><em>badge.</em></h1>
       <p>Spec first, badge second. Add your name, stick on your role, your stack and your vibe, doodle a little, pick your lanyard, then download it for your story.</p>
       <div class="steps"><span>1 · Name</span><span>2 · Stickers</span><span>3 · Doodle</span><span>4 · Lanyard</span><span>5 · Share</span></div>
-      <div class="cta"><button class="btn primary" id="go">Make my badge →</button><a class="btn ghost" href="guide.html" style="text-decoration:none">Open the guide</a></div>
+      <div class="cta"><button class="btn primary" id="go">Make my badge →</button><!-- hidden until the workshop: <a class="btn ghost" href="guide.html" style="text-decoration:none">Open the guide</a> --></div>
     </div>
     <div class="hangwrap" style="display:flex;justify-content:center"><div id="demoHang"></div></div>
   </div>
@@ -329,6 +331,8 @@ a{color:var(--aqua)}
 </div>
 <div class="toast" id="toast"></div>
 <button type="button" class="btn primary viewbadge" id="viewBadge" hidden>↑ View badge</button>
+
+<p class="madeby" style="margin:32px 0 12px;text-align:center;font-size:12px;line-height:1.5;color:#8FB5B1">Website designed &amp; built by <a href="https://www.linkedin.com/in/aljabri-alam/" target="_blank" rel="noopener" style="color:#7FFFD4">Aljabri Alam</a> · VISEO Asia</p>
 
 <div class="modal" id="cam" hidden role="dialog" aria-modal="true" aria-labelledby="camT">
   <div class="mbox">

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261014104919">
+<meta name="build" content="20261014105412">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -11,6 +11,9 @@ fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'}).then(function(r){re
 var m=t.match(/<meta name="build" content="(\d+)"/);if(m&&m[1]!==me){u.searchParams.set('r',m[1]);location.replace(u.toString());}}).catch(function(){});}catch(e){}})();
 </script>
 <!--/build-->
+<meta name="author" content="Aljabri Alam">
+<link rel="author" href="humans.txt">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Spec-Driven Development Hackathon","url":"https://aljabrialam.github.io/feh-sdd-guide/","author":{"@type":"Person","name":"Aljabri Alam","jobTitle":"Technical Lead · AI Advocate","worksFor":{"@type":"Organization","name":"VISEO Asia"},"url":"https://www.linkedin.com/in/aljabri-alam/","sameAs":["https://github.com/aljabrialam"]}}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Countdown — FEH × VISEO SDD Workshop</title>
 <meta name="description" content="Spec-Driven Development workshop by Far East Hospitality and VISEO, 15–16 October 2026.">
@@ -200,6 +203,7 @@ body.live .livebox{display:block}
 <footer>
   <span>VISEO Asia × Far East Hospitality · <span class="hosts-inline">Facilitated by <a href="https://www.linkedin.com/in/tonypottier/" target="_blank" rel="noopener">Tony Pottier</a> · <a href="https://www.linkedin.com/in/aljabri-alam/" target="_blank" rel="noopener">Aljabri Alam</a></span></span>
   <a class="guide-link" href="setup.html">Prepare now: laptop setup →</a>
+  <span class="madeby" style="flex-basis:100%;font-size:12px;color:#8FB5B1">Website designed &amp; built by <a href="https://www.linkedin.com/in/aljabri-alam/" target="_blank" rel="noopener">Aljabri Alam</a></span>
 </footer>
 
 <button id="launch" type="button" aria-label="Start the final countdown" title=""></button>

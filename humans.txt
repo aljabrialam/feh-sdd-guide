@@ -1,0 +1,17 @@
+/* TEAM */
+Designed & built by: Aljabri Alam
+Role: Technical Lead · AI Advocate, VISEO Asia
+LinkedIn: https://www.linkedin.com/in/aljabri-alam/
+GitHub: https://github.com/aljabrialam
+Location: Singapore
+
+Co-facilitator: Tony Pottier
+Role: Director, Digital & Data · AI · Consulting, VISEO
+LinkedIn: https://www.linkedin.com/in/tonypottier/
+
+/* SITE */
+Made for: Spec-Driven Development Hackathon, 15–16 October 2026
+Standards: HTML5, CSS3, vanilla JavaScript
+Components: html-to-image (MIT), qrcode-generator (MIT)
+Fonts: Sora, JetBrains Mono, Fraunces, Caveat (SIL Open Font License)
+Toolkit taught: GitHub Spec Kit with GitHub Copilot

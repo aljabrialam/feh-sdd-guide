@@ -85,3 +85,7 @@ Every page carries a build stamp. When a browser opens a cached copy, the page c
 ```bash
 python3 tools/stamp.py
 ```
+
+## Credits
+
+Designed and built by [Aljabri Alam](https://www.linkedin.com/in/aljabri-alam/) (Technical Lead · AI Advocate, VISEO Asia), co-facilitating with [Tony Pottier](https://www.linkedin.com/in/tonypottier/). See also [`humans.txt`](humans.txt).
