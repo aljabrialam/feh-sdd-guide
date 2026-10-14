@@ -10,6 +10,10 @@ into this folder:
 They show sample data for layout only.
 
 VISEO's MVP versions of the screens (same Teams file), trimmed to what the
-workshop builds: mvp-1-sign-in.png (spec 001), mvp-2-meetings.png and
-mvp-3-new-meeting.png (spec 002), mvp-4-meeting-screen.png (specs 003-005),
-mvp-5-add-action.png (spec 003).
+workshop builds. HTML mockups, so Copilot can read the exact structure,
+labels and colours; each explains its behaviour in a comment at the top,
+and has a PNG picture next to it. Start at index.html.
+- mvp-1-sign-in.html (spec 001)
+- mvp-2-meetings.html, mvp-3-new-meeting.html (spec 002)
+- mvp-4-meeting-screen.html (specs 003, 004, 005)
+- mvp-5-add-action.html (spec 003)

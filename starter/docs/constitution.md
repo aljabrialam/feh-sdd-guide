@@ -163,8 +163,10 @@ A capability that cannot be shown in the final demo earns nothing.
 
 ### Visual Design
 
-The look follows FEH's own screen mockups (docs/mockup/). Palette is
-fixed; colour carries meaning, never decoration.
+The look follows FEH's own screen mockups (docs/mockup/). Screens are
+built to VISEO's HTML mockups of the MVP (docs/mockup/mvp-*.html), which
+use exactly these tokens. Palette is fixed; colour carries meaning, never
+decoration.
 
 | Token        | Hex     | Meaning                         |
 |--------------|---------|---------------------------------|

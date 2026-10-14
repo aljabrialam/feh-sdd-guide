@@ -193,7 +193,7 @@ the Django project "tracker_site" and app "tracker", uv, pytest with
 pytest-django, and Playwright in e2e/.
 Add hotels and people with seed_demo loading exactly the "Hotels" and
 "People" sections of docs/reference.md. Build the "Sign in as" page and
-the top bar like docs/mockup/mvp-1-sign-in.png, with the labels and look
+the top bar like docs/mockup/mvp-1-sign-in.html, with the labels and look
 in docs/reference.md. Put hotel
 isolation in one place (a hotel-scoped manager and a view mixin) that
 every later feature will reuse.
@@ -343,8 +343,8 @@ Technology Standards exactly.
 
 Extend the project from 001; do not change its stack. Add the meeting
 with django-simple-history, scoped to the hotel through 001's isolation.
-Meetings list and "New meeting" form like docs/mockup/mvp-2-meetings.png
-and mvp-3-new-meeting.png, with the exact labels in docs/reference.md; seed_demo also loads the seeded meetings.
+Meetings list and "New meeting" form like docs/mockup/mvp-2-meetings.html
+and mvp-3-new-meeting.html, with the exact labels in docs/reference.md; seed_demo also loads the seeded meetings.
 
 Map every acceptance criterion to at least one test whose name
 contains its ID. Write data-model.md and the page contract in
@@ -419,7 +419,7 @@ Action Tracking
 
 Reference
 docs/reference.md "Lists" and "Action items in the seed";
-docs/mockup/mvp-4-meeting-screen.png and mvp-5-add-action.png. FEH requirements FR-007, FR-008,
+docs/mockup/mvp-4-meeting-screen.html and mvp-5-add-action.html. FEH requirements FR-007, FR-008,
 FR-009, FR-013, FR-014.
 
 Functional Requirements
@@ -500,7 +500,7 @@ Extend the project; do not change its stack. Add the action item with
 django-simple-history, belonging to the meeting it was raised in and
 scoped to the hotel through 001's isolation. "Add action" and "Edit"
 are ordinary Django forms on the meeting page, laid out like
-docs/mockup/mvp-4-meeting-screen.png and mvp-5-add-action.png. seed_demo also loads the seeded actions.
+docs/mockup/mvp-4-meeting-screen.html and mvp-5-add-action.html. seed_demo also loads the seeded actions.
 
 Map every acceptance criterion to at least one test whose name
 contains its ID. Write data-model.md and the page contract in

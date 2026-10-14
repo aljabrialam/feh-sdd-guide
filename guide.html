@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261014074446">
+<meta name="build" content="20261014074929">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -388,7 +388,7 @@ feh-sdd/
     ├── .specify/                ← Spec Kit's templates, scripts and the constitution slot
     └── docs/
         ├── feh-requirements.md  ← FEH's requirements (from Teams): what we build from
-        ├── mockup/              ← FEH's screens 01 and 03, and our MVP screens mvp-1 to mvp-5 (from Teams)
+        ├── mockup/              ← FEH's screens 01 and 03, and our MVP mockups mvp-1 to mvp-5 as HTML (from Teams)
         ├── reference.md         ← invented hotels, people, lists, labels and colours
         ├── constitution.md      ← answer key for the Day 1 constitution exercise
         ├── specs.md             ← answer key for the specs: the run sheet
@@ -467,7 +467,7 @@ git log --oneline</pre>
   <h3>Final check</h3>
   <ul class="checks">
     <li>VS Code is open on the <code>feh-app</code> folder itself (its name is at the top of the Explorer)</li>
-    <li>The Explorer shows <code>.github</code>, <code>.specify</code> and <code>docs</code>, and <code>docs</code> has <code>feh-requirements.md</code>, <code>reference.md</code>, <code>constitution.md</code>, <code>specs.md</code> and seven screens in <code>mockup</code> (FEH's 01 and 03, our mvp-1 to mvp-5)</li>
+    <li>The Explorer shows <code>.github</code>, <code>.specify</code> and <code>docs</code>, and <code>docs</code> has <code>feh-requirements.md</code>, <code>reference.md</code>, <code>constitution.md</code>, <code>specs.md</code> and <code>mockup</code> has FEH's screens 01 and 03 plus our <code>mvp-*.html</code> mockups</li>
     <li>Copilot Chat is in <b>Agent</b> mode and typing <code>/speckit</code> lists the Spec Kit commands</li>
     <li><code>git log --oneline</code> shows one commit, "Start: Spec Kit and workshop docs"</li>
   </ul>
@@ -820,8 +820,10 @@ A capability that cannot be shown in the final demo earns nothing.
 
 ### Visual Design
 
-The look follows FEH&#x27;s own screen mockups (docs/mockup/). Palette is
-fixed; colour carries meaning, never decoration.
+The look follows FEH&#x27;s own screen mockups (docs/mockup/). Screens are
+built to VISEO&#x27;s HTML mockups of the MVP (docs/mockup/mvp-*.html), which
+use exactly these tokens. Palette is fixed; colour carries meaning, never
+decoration.
 
 | Token        | Hex     | Meaning                         |
 |--------------|---------|---------------------------------|
@@ -1620,7 +1622,7 @@ Action Tracking
 
 Reference
 docs/reference.md &quot;Lists&quot; and &quot;Action items in the seed&quot;;
-docs/mockup/mvp-4-meeting-screen.png and mvp-5-add-action.png. FEH requirements FR-007, FR-008,
+docs/mockup/mvp-4-meeting-screen.html and mvp-5-add-action.html. FEH requirements FR-007, FR-008,
 FR-009, FR-013, FR-014.
 
 Functional Requirements
@@ -2089,7 +2091,7 @@ the Django project &quot;tracker_site&quot; and app &quot;tracker&quot;, uv, pyt
 pytest-django, and Playwright in e2e/.
 Add hotels and people with seed_demo loading exactly the &quot;Hotels&quot; and
 &quot;People&quot; sections of docs/reference.md. Build the &quot;Sign in as&quot; page and
-the top bar like docs/mockup/mvp-1-sign-in.png, with the labels and look
+the top bar like docs/mockup/mvp-1-sign-in.html, with the labels and look
 in docs/reference.md. Put hotel
 isolation in one place (a hotel-scoped manager and a view mixin) that
 every later feature will reuse.
