@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261014081836">
+<meta name="build" content="20261014082626">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -388,61 +388,52 @@ feh-sdd/
     ├── .github/skills/          ← the Spec Kit commands for Copilot (/speckit-specify, …)
     ├── .specify/                ← Spec Kit's templates, scripts and the constitution slot
     └── docs/
-        ├── feh-requirements.md  ← FEH's requirements (from Teams): what we build from
+        ├── feh-requirements.md  ← FEH's requirements: what we build from
         ├── mockup/              ← our MVP mockups: mvp-app.html (the whole MVP, interactive) and mvp-1 to mvp-5;
-        │                          FEH's screens 01 and 03 (from Teams)
+        │                          FEH's original screens 01 and 03
         ├── reference.md         ← invented hotels, people, lists, labels and colours
         ├── constitution.md      ← answer key for the Day 1 constitution exercise
         ├── specs.md             ← answer key for the specs: the run sheet
         └── backup/              ← the backup idea, only if the room switches</pre>
 
   <div class="step1">
-    <h3><span class="ph">1</span> Save the Teams file</h3>
-    <p>The facilitator posts <b>feh-workshop-files.zip</b> in the Teams chat. It holds FEH's requirements and FEH's two original screens, which aren't published on this site. Save it to your <b>Downloads</b> folder and leave it zipped.</p>
-
-    <p class="expect">✓ You should see: <code>feh-workshop-files.zip</code> in Downloads.</p>
-    <p class="muted"><b>If it fails:</b> If Teams saves it somewhere else, move it to Downloads, or change the path in step 6.</p>
-  </div>
-  <div class="step1">
-    <h3><span class="ph">2</span> Open a new terminal</h3>
+    <h3><span class="ph">1</span> Open a new terminal</h3>
     <p>Open <b>Terminal</b> on a Mac, or <b>PowerShell</b> on Windows. Use a new window so it picks up everything you installed in the laptop setup.</p>
 
     <p class="expect">✓ You should see: A prompt waiting for a command.</p>
   </div>
   <div class="step1">
-    <h3><span class="ph">3</span> Make a workshop folder and go into it</h3>
+    <h3><span class="ph">2</span> Make a workshop folder and go into it</h3>
     <p>Creates a folder called <code>feh-sdd</code> in your home folder, so the project is easy to find, and moves the terminal into it.</p>
     <pre data-label="Mac · Terminal">mkdir -p ~/feh-sdd &amp;&amp; cd ~/feh-sdd</pre>
     <pre data-label="Windows · PowerShell">New-Item -ItemType Directory -Force $HOME\feh-sdd | Out-Null; cd $HOME\feh-sdd</pre>
     <p class="expect">✓ You should see: the prompt now ends in <code>feh-sdd</code>. Nothing else is printed.</p>
   </div>
   <div class="step1">
-    <h3><span class="ph">4</span> Create the Spec Kit project</h3>
+    <h3><span class="ph">3</span> Create the Spec Kit project</h3>
     <p><code>specify</code> is the Spec Kit tool you installed in the laptop setup. <code>init feh-app</code> creates a new folder <code>feh-app</code>, and <code>--integration copilot</code> installs the Spec Kit commands for GitHub Copilot into it: the <code>/speckit-*</code> skills in <code>.github/skills/</code>, and the templates and scripts in <code>.specify/</code>. It doesn't write any app code.</p>
     <pre data-label="Terminal or PowerShell">specify init feh-app --integration copilot</pre>
     <p class="expect">✓ You should see: the Spec Kit banner, then a "Next steps" box listing <code>/speckit-constitution</code>, <code>/speckit-specify</code>, <code>/speckit-plan</code>, <code>/speckit-tasks</code> and <code>/speckit-implement</code>.</p>
     <p class="muted"><b>If it fails:</b> "specify: command not found": open a new terminal, or run <code>uv tool update-shell</code> and open a new one. A certificate error: run the company network fix on the <a href="setup.html#company-network">setup page</a>.</p>
   </div>
   <div class="step1">
-    <h3><span class="ph">5</span> Go into the project</h3>
+    <h3><span class="ph">4</span> Go into the project</h3>
     <p>All the following commands run inside the project folder.</p>
     <pre data-label="Terminal or PowerShell">cd feh-app</pre>
     <p class="expect">✓ You should see: the prompt now ends in <code>feh-app</code>.</p>
   </div>
   <div class="step1">
-    <h3><span class="ph">6</span> Add the workshop documents</h3>
-    <p>The first line downloads the workshop docs pack from this site and unpacks it into <code>docs/</code>: <code>reference.md</code> (the invented hotels, people, lists, labels and colours everyone builds with), <code>constitution.md</code> and <code>specs.md</code> (the Day 1 answer keys), our MVP mockups in <code>mockup/</code> (<code>mvp-app.html</code> is the whole MVP as an interactive mockup) and <code>backup/</code>. The second line unpacks the Teams file into <code>docs/</code>: <code>feh-requirements.md</code> and FEH's original screens in <code>mockup/</code>.</p>
+    <h3><span class="ph">5</span> Add the workshop documents</h3>
+    <p>The first line downloads the workshop docs pack from this site and unpacks it into <code>docs/</code>: <code>reference.md</code> (the invented hotels, people, lists, labels and colours everyone builds with), <code>constitution.md</code> and <code>specs.md</code> (the Day 1 answer keys), our MVP mockups in <code>mockup/</code> (<code>mvp-app.html</code> is the whole MVP as an interactive mockup), FEH's requirements (<code>feh-requirements.md</code>) with FEH's original screens in <code>mockup/</code>, and <code>backup/</code>. The second line lists what arrived.</p>
     <pre data-label="Mac · Terminal">curl -fsSL https://aljabrialam.github.io/feh-sdd-guide/starter/feh-sdd-docs.zip -o docs.zip &amp;&amp; unzip -oq docs.zip &amp;&amp; rm docs.zip
-unzip -oq ~/Downloads/feh-workshop-files.zip
 ls docs</pre>
     <pre data-label="Windows · PowerShell">irm https://aljabrialam.github.io/feh-sdd-guide/starter/feh-sdd-docs.zip -OutFile docs.zip; Expand-Archive docs.zip -DestinationPath . -Force; Remove-Item docs.zip
-Expand-Archive $HOME\Downloads\feh-workshop-files.zip -DestinationPath . -Force
 ls docs</pre>
     <p class="expect">✓ You should see: <code>ls docs</code> lists <code>backup</code>, <code>constitution.md</code>, <code>feh-requirements.md</code>, <code>mockup</code>, <code>reference.md</code> and <code>specs.md</code>.</p>
-    <p class="muted"><b>If it fails:</b> No <code>feh-requirements.md</code>: the Teams file isn't in Downloads (step 1). A certificate or download error: run the company network fix on the setup page, or download the docs pack in your browser and unzip it into <code>feh-app</code>.</p>
+    <p class="muted"><b>If it fails:</b> A certificate or download error: run the company network fix on the setup page, or download the docs pack in your browser and unzip it into <code>feh-app</code>.</p>
   </div>
   <div class="step1">
-    <h3><span class="ph">7</span> Save a starting point in Git</h3>
+    <h3><span class="ph">6</span> Save a starting point in Git</h3>
     <p>Turns the folder into a Git repository and saves everything so far as the first commit. Spec Kit creates a Git branch for every spec, and the commit gives you a clean point to go back to.</p>
     <pre data-label="Terminal or PowerShell">git init -b main
 git add -A
@@ -452,14 +443,14 @@ git log --oneline</pre>
     <p class="muted"><b>If it fails:</b> "Please tell me who you are": set your Git name and email (step 2 of the laptop setup), then run the commit again.</p>
   </div>
   <div class="step1">
-    <h3><span class="ph">8</span> Open the project in VS Code</h3>
+    <h3><span class="ph">7</span> Open the project in VS Code</h3>
     <p>Opens VS Code on the <code>feh-app</code> folder. It must be this folder, not <code>feh-sdd</code>, or Copilot won't find the Spec Kit commands.</p>
     <pre data-label="Terminal or PowerShell">code .</pre>
     <p class="expect">✓ You should see: VS Code opens, with <code>FEH-APP</code> at the top of the Explorer.</p>
     <p class="muted"><b>If it fails:</b> "code: command not found": see step 3 of the laptop setup, or open VS Code and use File → Open Folder.</p>
   </div>
   <div class="step1">
-    <h3><span class="ph">9</span> Check Copilot can see Spec Kit</h3>
+    <h3><span class="ph">8</span> Check Copilot can see Spec Kit</h3>
     <p>Open Copilot Chat (Mac: Ctrl + Cmd + I · Windows: Ctrl + Alt + I, or the chat icon at the top of VS Code), choose <b>Agent</b> mode in the dropdown under the chat box, and type <code>/speckit</code>.</p>
 
     <p class="expect">✓ You should see: a list including <code>/speckit-constitution</code>, <code>/speckit-specify</code> and <code>/speckit-plan</code>. Don't run any of them yet.</p>
@@ -1205,7 +1196,7 @@ git add -A &amp;&amp; git commit -m "gate: G1 approved"</pre>
   <h2>The reference everyone builds to</h2>
   <p class="lead">FEH's requirements say <em>what</em> the tracker does. This file fixes the details the specs deliberately leave out, so every participant's app has the same hotels, people, lists, labels and look. Every plan points Copilot at it.</p>
   <ul>
-    <li><b>Screens:</b> our MVP mockups are in your project under <code>docs/mockup/</code>: <code>mvp-app.html</code> is the whole MVP as an <a href="mvp/" target="_blank" rel="noopener">interactive mockup</a> (also online), and <code>mvp-1</code> to <code>mvp-5</code> are the single screens. They are FEH's screens 01 and 03 (from the Teams chat) trimmed to what we build. Every plan tells Copilot to follow them.</li>
+    <li><b>Screens:</b> our MVP mockups are in your project under <code>docs/mockup/</code>: <code>mvp-app.html</code> is the whole MVP as an <a href="mvp/" target="_blank" rel="noopener">interactive mockup</a> (also online), and <code>mvp-1</code> to <code>mvp-5</code> are the single screens. They are FEH's screens 01 and 03 (also in <code>docs/mockup/</code>) trimmed to what we build. Every plan tells Copilot to follow them.</li>
     <li><b>Sign-in:</b> a "Sign in as" page stands in for Microsoft Entra ID, so nobody types a password.</li>
   </ul>
   <pre class="tall" data-label="File · docs/reference.md">

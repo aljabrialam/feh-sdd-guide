@@ -384,7 +384,6 @@ mkdir -p ~/feh-sdd && cd ~/feh-sdd
 specify init feh-app --integration copilot
 cd feh-app
 # docs pack: docs/constitution.md, docs/specs.md, docs/reference.md
-# from Teams (feh-workshop-files.zip): docs/feh-requirements.md, docs/mockup/
 git init -b main && git add -A && git commit -m "chore: spec kit and workshop docs"
 code .
 ```

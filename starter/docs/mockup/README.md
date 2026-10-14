@@ -1,6 +1,6 @@
 # Target screens
 
-## VISEO's MVP mockups (in the docs pack)
+## VISEO's MVP mockups
 
 HTML mockups of the workshop MVP in FEH's look, trimmed to what the
 workshop builds. Copilot can read their exact structure, labels and
@@ -17,10 +17,9 @@ index.html.
 Each static page has a PNG picture next to it. These are mockups, not the
 app: the production MVP is built from them, spec by spec, in the workshop.
 
-## FEH's original screens (from Teams)
+## FEH's original screens
 
-The facilitator shares FEH's requirements and screens in the Teams chat as
-feh-workshop-files.zip; Step 1 of the guide unzips them here:
+FEH's own screens, from its requirements (docs/feh-requirements.md):
 
 - 01-meeting-screen.png
 - 03-item-detail.png
