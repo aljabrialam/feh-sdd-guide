@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261014095109">
+<meta name="build" content="20261014095710">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -119,7 +119,7 @@ h1 em{font-style:normal;color:var(--aqua)}
 <body>
 <header class="top">
   <div class="brand"><img class="v" src="logo.svg" alt="VISEO"><span class="x">×</span><img class="f" src="feh-logo.svg" alt="Far East Hospitality"></div>
-  <nav><a href="index.html">Countdown</a><!-- hidden until the workshop: <a href="guide.html">Workshop guide</a> --><a href="badge.html">Badge maker</a></nav>
+  <nav><a href="index.html">Countdown</a><a href="index.html#tracks" data-gate hidden>Workshop guides</a><a href="badge.html">Badge maker</a></nav>
 </header>
 
 <main class="wrap">
@@ -129,7 +129,7 @@ h1 em{font-style:normal;color:var(--aqua)}
     <h1>Unlocks at the <em>finish line.</em></h1>
     <p class="lead" style="margin:0 auto">Your certificate of completion opens here at the end of Day 2, Friday 16 October, 4:30 pm Singapore time.</p>
     <div class="cd" id="cd"></div>
-    <!-- hidden until the workshop: <a class="btn primary" href="guide.html">Open the workshop guide</a> --><a class="btn primary" href="badge.html">Make your badge</a>
+    <a class="btn primary" href="index.html#tracks" data-gate hidden>Open the workshop guides</a><a class="btn primary" href="badge.html">Make your badge</a>
   </section>
 
   <section id="maker" hidden>
@@ -318,5 +318,11 @@ h1 em{font-style:normal;color:var(--aqua)}
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') $('#out').hidden = true; });
 })();
 </script>
+<style>[data-gate][hidden],[data-gate-before][hidden]{display:none!important}</style>
+<script>/* guide links appear at 8:00 pm SGT on 14 Oct 2026 */
+(function(){var T=new Date('2026-10-14T20:00:00+08:00').getTime();function u(){var on=Date.now()>=T;
+[].forEach.call(document.querySelectorAll('[data-gate]'),function(e){e.hidden=!on;});
+[].forEach.call(document.querySelectorAll('[data-gate-before]'),function(e){e.hidden=on;});}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',u);else u();setInterval(u,30000);})();</script>
 </body>
 </html>
