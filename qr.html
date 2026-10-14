@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261014134939">
+<meta name="build" content="20261014151916">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -13,7 +13,7 @@ var m=t.match(/<meta name="build" content="(\d+)"/);if(m&&m[1]!==me){u.searchPar
 <!--/build-->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Workshop QR codes — FEH × VISEO</title>
-<meta name="description" content="QR codes for the FEH × VISEO Spec-Driven Development workshop: countdown, guides, badge maker and Wi-Fi.">
+<meta name="description" content="QR codes for the FEH × VISEO Spec-Driven Development workshop: countdown, guides, badge maker, certificate and Wi-Fi.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="vendor/fonts/fonts.css">
@@ -45,7 +45,7 @@ h1 em{font-style:normal;background:linear-gradient(90deg,#7FFFD4,#2EA8FF);-webki
 .big .qrbox{width:min(62vh,560px,86vw)}
 .qrbox svg{display:block;width:100%;height:auto}
 .url{font-family:'JetBrains Mono',monospace;color:var(--aqua);font-weight:700;font-size:clamp(14px,1.6vw,22px);margin-top:18px;word-break:break-all;text-align:center}
-.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;max-width:1500px;margin:10px auto 0}
+.grid4{display:grid;grid-template-columns:repeat(5,1fr);gap:22px;max-width:1700px;margin:10px auto 0}
 .card{position:relative;background:rgba(6,42,47,.85);border:1px solid var(--line);border-radius:24px;padding:24px 20px 20px;text-align:center;cursor:pointer}
 .card .qrbox{padding:14px;border-radius:16px;box-shadow:none}
 .card h3{font-size:24px;font-weight:800;margin:16px 0 4px}
@@ -63,7 +63,8 @@ details.local button{margin-top:14px;min-height:44px;border-radius:999px;border:
 details.local small{display:block;color:var(--muted);margin-top:10px}
 footer{text-align:center;color:#8FB5B1;font-size:14px;padding:0 24px 28px}
 footer a{color:var(--aqua)}
-@media (max-width:1100px){.grid4{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:1300px){.grid4{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:900px){.grid4{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:560px){header,main{padding-left:16px;padding-right:16px}.grid4{grid-template-columns:1fr}}
 </style>
 </head>
@@ -90,7 +91,8 @@ footer a{color:var(--aqua)}
     { id: 'countdown', tab: 'Countdown', title: 'Countdown', sub: 'Home page and track choice', url: BASE, short: 'aljabrialam.github.io/feh-sdd-guide' },
     { id: 'mvp1', tab: 'MVP 1 guide', title: 'MVP 1 guide', sub: 'Voice capture · start here', url: BASE + 'guide-mvp1.html', short: '…/guide-mvp1.html' },
     { id: 'mvp2', tab: 'MVP 2 guide', title: 'MVP 2 guide', sub: 'Meeting action tracker · start here', url: BASE + 'guide.html', short: '…/guide.html' },
-    { id: 'badge', tab: 'Badge maker', title: 'Badge maker', sub: 'Make and share your badge', url: BASE + 'badge.html', short: '…/badge.html' }
+    { id: 'badge', tab: 'Badge maker', title: 'Badge maker', sub: 'Make and share your badge', url: BASE + 'badge.html', short: '…/badge.html' },
+    { id: 'certificate', tab: 'Certificate', title: 'Certificate', sub: 'Unlocks Fri 16 Oct, 4:30 pm', url: BASE + 'certificate.html', short: '…/certificate.html' }
   ];
 
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
