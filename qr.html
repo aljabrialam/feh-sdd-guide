@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261014152125">
+<meta name="build" content="20261014152232">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -48,6 +48,9 @@ h1 em{font-style:normal;background:linear-gradient(90deg,#7FFFD4,#2EA8FF);-webki
 .grid4{display:grid;grid-template-columns:repeat(5,1fr);gap:22px;max-width:1700px;margin:10px auto 0}
 .card{position:relative;background:rgba(6,42,47,.85);border:1px solid var(--line);border-radius:24px;padding:24px 20px 20px;text-align:center;cursor:pointer}
 .card .qrbox{padding:14px;border-radius:16px;box-shadow:none}
+a.qrlink{display:block;border-radius:28px;transition:transform .15s}a.qrlink:hover{transform:scale(1.02)}a.qrlink:focus-visible{outline:3px solid var(--aqua);outline-offset:6px}
+a.urllink{text-decoration:none}a.urllink:hover code,a.url:hover{text-decoration:underline}
+.big a.qrlink{width:min(62vh,560px,86vw)}.big a.qrlink .qrbox{width:100%}
 .card h3{font-size:24px;font-weight:800;margin:16px 0 4px}
 .card p{color:var(--muted);margin:0;font-size:15px}
 .card code{display:block;font-family:'JetBrains Mono',monospace;color:var(--aqua);font-weight:700;font-size:13px;line-height:1.45;margin-top:8px}
@@ -128,12 +131,12 @@ footer a{color:var(--aqua)}
   var nav = document.getElementById('tabs'), main = document.getElementById('panels');
   nav.innerHTML = tabs.map(function (t) { return '<button role="tab" id="tab-' + t.id + '" aria-controls="p-' + t.id + '" data-id="' + t.id + '">' + esc(t.tab) + '</button>'; }).join('');
   var html = '<section class="panel" role="tabpanel" id="p-all" aria-labelledby="tab-all"><p class="eyebrow">FEH × VISEO · Spec-Driven Development workshop</p>' +
-    '<h1>Scan with your <em>phone camera</em></h1><p class="sub">Start with your track\'s guide. Tap a code to show it full size.</p><div class="grid4">' +
-    LINKS.map(function (l, i) { return '<div class="card" data-id="' + l.id + '"><span class="n">' + (i + 1) + '</span><div class="qrbox">' + qrSvg(l.url) + '</div><h3>' + esc(l.title) + '</h3><p>' + esc(l.sub) + '</p><code>' + full(l.url) + '</code></div>'; }).join('') +
+    '<h1>Scan with your <em>phone camera</em></h1><p class="sub">Start with your track\'s guide. Click a code to open it; click the card to show it full size.</p><div class="grid4">' +
+    LINKS.map(function (l, i) { return '<div class="card" data-id="' + l.id + '"><span class="n">' + (i + 1) + '</span><a class="qrlink" href="' + l.url + '" target="_blank" rel="noopener" aria-label="Open ' + esc(l.title) + '"><div class="qrbox">' + qrSvg(l.url) + '</div></a><h3>' + esc(l.title) + '</h3><p>' + esc(l.sub) + '</p><a class="urllink" href="' + l.url + '" target="_blank" rel="noopener"><code>' + full(l.url) + '</code></a></div>'; }).join('') +
     '</div></section>';
   html += LINKS.map(function (l) {
     return '<section class="panel" role="tabpanel" id="p-' + l.id + '" aria-labelledby="tab-' + l.id + '" hidden><p class="eyebrow">' + esc(l.sub) + '</p><h1>' + esc(l.title) + '</h1>' +
-      '<p class="sub">Point your phone camera here</p><div class="big"><div class="qrbox">' + qrSvg(l.url) + '</div><div class="url">' + esc(l.url.replace('https://', '')) + '</div></div></section>';
+      '<p class="sub">Point your phone camera here, or click the code to open it</p><div class="big"><a class="qrlink" href="' + l.url + '" target="_blank" rel="noopener" aria-label="Open ' + esc(l.title) + '"><div class="qrbox">' + qrSvg(l.url) + '</div></a><a class="url urllink" href="' + l.url + '" target="_blank" rel="noopener">' + esc(l.url.replace('https://', '')) + '</a></div></section>';
   }).join('');
   html += '<section class="panel" role="tabpanel" id="p-wifi" aria-labelledby="tab-wifi" hidden>' + wifiPanel(WIFI) + '</section>';
   main.innerHTML = html;
@@ -147,7 +150,7 @@ footer a{color:var(--aqua)}
     if (location.hash !== '#' + id) history.replaceState(null, '', '#' + id);
   }
   nav.addEventListener('click', function (e) { var b = e.target.closest('button[data-id]'); if (b) show(b.getAttribute('data-id')); });
-  main.addEventListener('click', function (e) { var c = e.target.closest('.card[data-id]'); if (c) show(c.getAttribute('data-id')); });
+  main.addEventListener('click', function (e) { if (e.target.closest('a')) return; var c = e.target.closest('.card[data-id]'); if (c) show(c.getAttribute('data-id')); });
   document.addEventListener('keydown', function (e) {
     if (/input|select|textarea/i.test(e.target.tagName)) return;
     var i = tabs.findIndex(function (t) { return document.getElementById('tab-' + t.id).getAttribute('aria-selected') === 'true'; });
