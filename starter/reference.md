@@ -109,8 +109,9 @@ hotel's time zone.
 ## Screens and exact labels
 Desktop browser. FEH's screens are docs/mockup/01-meeting-screen.png and
 03-item-detail.png. VISEO's MVP versions, trimmed to what the workshop
-builds, are HTML mockups in docs/mockup/. mvp-app.html is the whole MVP as one
-clickable app (sign in, meetings, meeting screen, add and edit actions,
+builds, are HTML mockups in docs/mockup/ (from the docs pack). mvp-app.html
+is the whole MVP as one interactive mockup, also online at
+https://aljabrialam.github.io/feh-sdd-guide/mvp/ (sign in, meetings, meeting screen, add and edit actions,
 carry-forward, overdue, hotel isolation). The same screens as separate
 static pages (open index.html in a browser;
 each file explains its behaviour in a comment at the top, and has a PNG

@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meeting screen · Action Tracker (workshop MVP mockup)</title>
+<!--
+  MOCKUP for the FEH x VISEO workshop MVP. Not production code.
+  Screen: Meeting screen
+  Built by: spec 003 (actions, Add action, Edit) · spec 004 (two groups, carry forward) · spec 005 (due text, overdue, counters)
+  Picture of this screen: mvp-4-meeting-screen.png
+  Source of truth for labels, lists and seed data: docs/reference.md
+  How to use it: copy the structure, labels, colours and spacing into Django
+  templates. Values below are the seed data on Fri 16 Oct 2026 and must come
+  from the database in the real app.
+  Behaviour:
+  - Today in this mockup is Fri 16 Oct 2026, Hotel A, signed in as Mary Tan.
+  - Spec 003: "Add action" opens mvp-5 empty; "Edit" opens mvp-5 filled in. Rows show every value.
+  - Spec 004: "Carried forward from earlier meetings (n)" = Open, In progress or Blocked actions from earlier
+    meetings of this hotel, oldest first. Done and Cancelled are not carried forward. Same action, not a copy.
+    "Raised in this meeting (n)" = actions raised in this meeting. "Raised <date>" = date of that meeting.
+  - Spec 005: overdue = due date before today (hotel time zone) and status Open, In progress or Blocked;
+    show "Overdue by n days" in red. "Due today" / "Due in n days" otherwise. Counters at the top.
+    Overdue is worked out each time, never stored as a status.
+  - Until spec 004 is built, show one list without the group headings; until 005, no counters or due text.
+  - Not built: Record meeting, Export, Complete meeting, Due this week, filters, Anticipated / actual,
+    editing in place (that is stretch spec 006).
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Design tokens: docs/reference.md "Look" and docs/constitution.md "Visual Design" */
+:root{
+  --page:#F3F5F7; --card:#FFFFFF; --border:#DDE3E8; --topbar:#0E2A33;
+  --ink:#14202B; --muted:#5B6670; --primary:#0F6B6B; --btn-border:#C9D2D9;
+  --overdue:#B42318; --group-carried:#EAF0F3; --group-raised:#E3F1F0; --avatar:#E3EAEE;
+  --prio-high-bg:#FDECEC; --prio-high:#B42318; --prio-medium-bg:#FDF3DC; --prio-medium:#8A5200;
+  --prio-low-bg:#EEF1F4; --prio-low:#34454F;
+  --status-open:#4A5A68; --status-in-progress:#1F4F99; --status-blocked:#8A5200;
+  --status-done:#0B7A55; --status-cancelled:#9AA3AB;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);font-family:Inter,system-ui,sans-serif;color:var(--ink);font-size:15px}
+.topbar{height:64px;background:var(--topbar);color:#fff;display:flex;align-items:center;padding:0 32px;gap:28px}
+.topbar .brand{font-size:20px;font-weight:700;margin-right:12px;color:#fff;text-decoration:none}
+.topbar nav a{color:#fff;text-decoration:none;padding:9px 14px;border-radius:8px;font-weight:500}
+.topbar nav a[aria-current="page"]{background:#1d4450}
+.topbar .user{margin-left:auto;display:flex;align-items:center;gap:12px;font-size:14px}
+.topbar .user small{display:block;opacity:.75;font-size:12.5px}
+.topbar .user button{background:none;color:#fff;border:1px solid #4b6670;height:40px;padding:0 12px;border-radius:8px;font:inherit;font-size:13px}
+main{padding:28px 32px}
+h1{font-size:30px;margin:4px 0 6px;font-weight:700}
+.breadcrumb{color:var(--muted);font-size:14px}
+.muted{color:var(--muted)}
+.btn{min-height:42px;padding:0 18px;border-radius:8px;border:1px solid var(--btn-border);background:#fff;font:inherit;font-weight:600;color:var(--ink);display:inline-flex;align-items:center;text-decoration:none;cursor:pointer}
+.btn-primary{background:var(--primary);border-color:var(--primary);color:#fff}
+.card{background:var(--card);border:1px solid var(--border);border-radius:8px}
+.avatar{width:30px;height:30px;border-radius:50%;background:var(--avatar);display:inline-grid;place-items:center;font-size:11.5px;font-weight:700;color:#34454F;margin-right:8px;vertical-align:middle}
+.priority{display:inline-block;padding:3px 10px;border-radius:999px;font-size:13px;font-weight:500}
+.priority-high{background:var(--prio-high-bg);color:var(--prio-high)}
+.priority-medium{background:var(--prio-medium-bg);color:var(--prio-medium)}
+.priority-low{background:var(--prio-low-bg);color:var(--prio-low)}
+.status::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px;vertical-align:1px;background:currentColor}
+.status-open::before{background:var(--status-open)} .status-in-progress::before{background:var(--status-in-progress)}
+.status-blocked::before{background:var(--status-blocked)} .status-done::before{background:var(--status-done)}
+.status-cancelled::before{background:var(--status-cancelled)}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font-size:13px;color:var(--muted);font-weight:600;padding:13px 14px;border-bottom:1px solid var(--border)}
+td{padding:14px;border-bottom:1px solid var(--border);vertical-align:top;font-size:14.5px}
+td .sub{display:block;color:var(--muted);font-size:12.5px;margin-top:3px}
+.overdue{color:var(--overdue);font-weight:600}
+tr.group th{font-size:13px;font-weight:600;padding:9px 14px;color:var(--ink)}
+tr.group-carried th{background:var(--group-carried)} tr.group-raised th{background:var(--group-raised)}
+a.link{color:var(--primary);font-weight:600;text-decoration:none}
+.counters{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:22px 0}
+.counters .card{padding:16px 20px}.counters dt{color:var(--muted);font-size:13.5px}.counters dd{margin:4px 0 0;font-size:30px;font-weight:700}
+.chips{list-style:none;padding:0;margin:12px 0 0;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.chips li{background:var(--group-raised);color:#0b4f4f;border-radius:999px;padding:4px 12px;font-size:13px}
+form .field{margin-bottom:16px}
+form label{display:block;font-size:13.5px;font-weight:600;margin-bottom:6px}
+form input,form select{width:100%;height:42px;border:1px solid var(--btn-border);border-radius:8px;background:#fff;padding:0 12px;font:inherit;color:var(--ink)}
+form select[multiple]{height:auto;padding:6px}
+form [aria-invalid="true"]{border-color:var(--overdue)}
+.error{color:var(--overdue);font-size:13px;margin-top:5px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:0 20px}
+.actions{display:flex;gap:10px;margin-top:8px}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="mvp-2-meetings.html">Action Tracker</a>
+  <nav aria-label="Main"><a href="mvp-2-meetings.html" aria-current="page">Meetings</a></nav>
+  <div class="user"><span class="avatar" style="margin:0">MT</span><div>Mary Tan<small>Hotel A</small></div>
+    <form method="post" action="/sign-out" style="margin:0"><button type="submit">Sign out</button></form></div>
+</header>
+<main>
+  <div style="display:flex;align-items:end">
+    <div>
+      <div class="breadcrumb"><a class="link" href="mvp-2-meetings.html">Meetings</a> / 16 Oct 2026</div>
+      <h1>Weekly performance meeting</h1>
+      <div class="muted" style="font-size:14px">Fri 16 Oct 2026, 10:00 · Chair: John Lim · <a class="link" href="#">Teams meeting link</a></div>
+    </div>
+    <a class="btn btn-primary" href="mvp-5-add-action.html" style="margin-left:auto">Add action</a>
+  </div>
+  <ul class="chips" aria-label="Attendees"><li style="background:none;color:var(--muted);padding-left:0">Attendees (5)</li><li>Mary Tan</li><li>John Lim</li><li>Alex Wong</li><li>Sam Ng</li><li>Priya Rao</li></ul>
+
+  <dl class="counters">
+    <div class="card"><dt>Carried forward</dt><dd>7</dd></div>
+    <div class="card"><dt>Raised in this meeting</dt><dd>1</dd></div>
+    <div class="card"><dt>Overdue</dt><dd style="color:var(--overdue)">3</dd></div>
+  </dl>
+
+  <div class="card">
+  <table>
+    <thead><tr><th style="width:130px">Market segment</th><th style="width:140px">Issue category</th><th>Issue</th><th>Action required</th><th style="width:150px">Owner</th><th style="width:100px">Priority</th><th style="width:140px">Due</th><th style="width:130px">Status</th><th style="width:60px"><span hidden>Edit</span></th></tr></thead>
+    <tbody>
+      <tr class="group group-carried"><th colspan="9" scope="rowgroup">Carried forward from earlier meetings (7)</th></tr>
+      <tr>
+        <td>MICE / Groups</td><td>Cancellations / wash</td>
+        <td>Group wash risk for Company ABC<span class="sub">Raised 29 Sep 2026</span></td>
+        <td>Contact company organizer for rooming list update</td>
+        <td><span class="avatar">MT</span>Mary Tan</td>
+        <td><span class="priority priority-medium">Medium</span></td>
+        <td>16 Oct<span class="sub">Due today</span></td>
+        <td><span class="status status-blocked">Blocked</span></td>
+        <td><a class="link" href="mvp-5-add-action.html">Edit</a></td>
+      </tr>
+      <tr>
+        <td>OTA</td><td>Rate / ADR</td>
+        <td>Parity gap on weekend rates<span class="sub">Raised 29 Sep 2026</span></td>
+        <td>Adjust weekend rates on OTA channels</td>
+        <td><span class="avatar">AW</span>Alex Wong</td>
+        <td><span class="priority priority-medium">Medium</span></td>
+        <td>11 Oct<span class="sub overdue">Overdue by 5 days</span></td>
+        <td><span class="status status-in-progress">In progress</span></td>
+        <td><a class="link" href="mvp-5-add-action.html">Edit</a></td>
+      </tr>
+      <tr>
+        <td>Corporate</td><td>Pace / pickup</td>
+        <td>Corporate segment below forecast<span class="sub">Raised 6 Oct 2026</span></td>
+        <td>Review upcoming opportunities for sales</td>
+        <td><span class="avatar">JL</span>John Lim</td>
+        <td><span class="priority priority-high">High</span></td>
+        <td>10 Oct<span class="sub overdue">Overdue by 6 days</span></td>
+        <td><span class="status status-in-progress">In progress</span></td>
+        <td><a class="link" href="mvp-5-add-action.html">Edit</a></td>
+      </tr>
+      <tr>
+        <td>Government</td><td>Pace / pickup</td>
+        <td>Forecast not submitted<span class="sub">Raised 6 Oct 2026</span></td>
+        <td>Send Q4 forecast to regional office</td>
+        <td><span class="avatar">MT</span>Mary Tan</td>
+        <td><span class="priority priority-medium">Medium</span></td>
+        <td>9 Oct<span class="sub overdue">Overdue by 7 days</span></td>
+        <td><span class="status status-in-progress">In progress</span></td>
+        <td><a class="link" href="mvp-5-add-action.html">Edit</a></td>
+      </tr>
+      <tr>
+        <td>Leisure / Transient</td><td>Event / compression</td>
+        <td>Concert on 14 Nov compresses demand<span class="sub">Raised 13 Oct 2026</span></td>
+        <td>Set minimum stay for 13 to 15 Nov</td>
+        <td><span class="avatar">SN</span>Sam Ng</td>
+        <td><span class="priority priority-high">High</span></td>
+        <td>20 Oct<span class="sub">Due in 4 days</span></td>
+        <td><span class="status status-open">Open</span></td>
+        <td><a class="link" href="mvp-5-add-action.html">Edit</a></td>
+      </tr>
+      <tr>
+        <td>Airline</td><td>Distribution</td>
+        <td>Crew block release date not confirmed<span class="sub">Raised 13 Oct 2026</span></td>
+        <td>Confirm release date with airline contact</td>
+        <td><span class="avatar">PR</span>Priya Rao</td>
+        <td><span class="priority priority-low">Low</span></td>
+        <td>23 Oct<span class="sub">Due in 7 days</span></td>
+        <td><span class="status status-open">Open</span></td>
+        <td><a class="link" href="mvp-5-add-action.html">Edit</a></td>
+      </tr>
+      <tr>
+        <td>Wholesale</td><td>Pace / pickup</td>
+        <td>Wholesale pickup behind forecast<span class="sub">Raised 13 Oct 2026</span></td>
+        <td>Call top three wholesale partners</td>
+        <td><span class="avatar">MT</span>Mary Tan</td>
+        <td><span class="priority priority-medium">Medium</span></td>
+        <td>20 Oct<span class="sub">Due in 4 days</span></td>
+        <td><span class="status status-open">Open</span></td>
+        <td><a class="link" href="mvp-5-add-action.html">Edit</a></td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr class="group group-raised"><th colspan="9" scope="rowgroup">Raised in this meeting (1)</th></tr>
+      <tr>
+        <td>Corporate</td><td>Pace / pickup</td>
+        <td>December corporate pace behind last year<span class="sub">Raised 16 Oct 2026</span></td>
+        <td>Review December corporate pipeline with sales</td>
+        <td><span class="avatar">AW</span>Alex Wong</td>
+        <td><span class="priority priority-medium">Medium</span></td>
+        <td>23 Oct<span class="sub">Due in 7 days</span></td>
+        <td><span class="status status-open">Open</span></td>
+        <td><a class="link" href="mvp-5-add-action.html">Edit</a></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</main>
+</body>
+</html>

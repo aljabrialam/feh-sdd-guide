@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>New meeting · Action Tracker (workshop MVP mockup)</title>
+<!--
+  MOCKUP for the FEH x VISEO workshop MVP. Not production code.
+  Screen: New meeting
+  Built by: spec 002 · Weekly Meetings
+  Picture of this screen: mvp-3-new-meeting.png
+  Source of truth for labels, lists and seed data: docs/reference.md
+  How to use it: copy the structure, labels, colours and spacing into Django
+  templates. Values below are the seed data on Fri 16 Oct 2026 and must come
+  from the database in the real app.
+  Behaviour:
+  - Chair and attendees list only people of the signed-in hotel.
+  - One meeting per hotel per date: if the date is taken, show the error under Date.
+  - "Create meeting" saves and opens the new meeting (mvp-4). "Cancel" returns to Meetings.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Design tokens: docs/reference.md "Look" and docs/constitution.md "Visual Design" */
+:root{
+  --page:#F3F5F7; --card:#FFFFFF; --border:#DDE3E8; --topbar:#0E2A33;
+  --ink:#14202B; --muted:#5B6670; --primary:#0F6B6B; --btn-border:#C9D2D9;
+  --overdue:#B42318; --group-carried:#EAF0F3; --group-raised:#E3F1F0; --avatar:#E3EAEE;
+  --prio-high-bg:#FDECEC; --prio-high:#B42318; --prio-medium-bg:#FDF3DC; --prio-medium:#8A5200;
+  --prio-low-bg:#EEF1F4; --prio-low:#34454F;
+  --status-open:#4A5A68; --status-in-progress:#1F4F99; --status-blocked:#8A5200;
+  --status-done:#0B7A55; --status-cancelled:#9AA3AB;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);font-family:Inter,system-ui,sans-serif;color:var(--ink);font-size:15px}
+.topbar{height:64px;background:var(--topbar);color:#fff;display:flex;align-items:center;padding:0 32px;gap:28px}
+.topbar .brand{font-size:20px;font-weight:700;margin-right:12px;color:#fff;text-decoration:none}
+.topbar nav a{color:#fff;text-decoration:none;padding:9px 14px;border-radius:8px;font-weight:500}
+.topbar nav a[aria-current="page"]{background:#1d4450}
+.topbar .user{margin-left:auto;display:flex;align-items:center;gap:12px;font-size:14px}
+.topbar .user small{display:block;opacity:.75;font-size:12.5px}
+.topbar .user button{background:none;color:#fff;border:1px solid #4b6670;height:40px;padding:0 12px;border-radius:8px;font:inherit;font-size:13px}
+main{padding:28px 32px}
+h1{font-size:30px;margin:4px 0 6px;font-weight:700}
+.breadcrumb{color:var(--muted);font-size:14px}
+.muted{color:var(--muted)}
+.btn{min-height:42px;padding:0 18px;border-radius:8px;border:1px solid var(--btn-border);background:#fff;font:inherit;font-weight:600;color:var(--ink);display:inline-flex;align-items:center;text-decoration:none;cursor:pointer}
+.btn-primary{background:var(--primary);border-color:var(--primary);color:#fff}
+.card{background:var(--card);border:1px solid var(--border);border-radius:8px}
+.avatar{width:30px;height:30px;border-radius:50%;background:var(--avatar);display:inline-grid;place-items:center;font-size:11.5px;font-weight:700;color:#34454F;margin-right:8px;vertical-align:middle}
+.priority{display:inline-block;padding:3px 10px;border-radius:999px;font-size:13px;font-weight:500}
+.priority-high{background:var(--prio-high-bg);color:var(--prio-high)}
+.priority-medium{background:var(--prio-medium-bg);color:var(--prio-medium)}
+.priority-low{background:var(--prio-low-bg);color:var(--prio-low)}
+.status::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px;vertical-align:1px;background:currentColor}
+.status-open::before{background:var(--status-open)} .status-in-progress::before{background:var(--status-in-progress)}
+.status-blocked::before{background:var(--status-blocked)} .status-done::before{background:var(--status-done)}
+.status-cancelled::before{background:var(--status-cancelled)}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font-size:13px;color:var(--muted);font-weight:600;padding:13px 14px;border-bottom:1px solid var(--border)}
+td{padding:14px;border-bottom:1px solid var(--border);vertical-align:top;font-size:14.5px}
+td .sub{display:block;color:var(--muted);font-size:12.5px;margin-top:3px}
+.overdue{color:var(--overdue);font-weight:600}
+tr.group th{font-size:13px;font-weight:600;padding:9px 14px;color:var(--ink)}
+tr.group-carried th{background:var(--group-carried)} tr.group-raised th{background:var(--group-raised)}
+a.link{color:var(--primary);font-weight:600;text-decoration:none}
+.counters{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:22px 0}
+.counters .card{padding:16px 20px}.counters dt{color:var(--muted);font-size:13.5px}.counters dd{margin:4px 0 0;font-size:30px;font-weight:700}
+.chips{list-style:none;padding:0;margin:12px 0 0;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.chips li{background:var(--group-raised);color:#0b4f4f;border-radius:999px;padding:4px 12px;font-size:13px}
+form .field{margin-bottom:16px}
+form label{display:block;font-size:13.5px;font-weight:600;margin-bottom:6px}
+form input,form select{width:100%;height:42px;border:1px solid var(--btn-border);border-radius:8px;background:#fff;padding:0 12px;font:inherit;color:var(--ink)}
+form select[multiple]{height:auto;padding:6px}
+form [aria-invalid="true"]{border-color:var(--overdue)}
+.error{color:var(--overdue);font-size:13px;margin-top:5px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:0 20px}
+.actions{display:flex;gap:10px;margin-top:8px}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="mvp-2-meetings.html">Action Tracker</a>
+  <nav aria-label="Main"><a href="mvp-2-meetings.html" aria-current="page">Meetings</a></nav>
+  <div class="user"><span class="avatar" style="margin:0">MT</span><div>Mary Tan<small>Hotel A</small></div>
+    <form method="post" action="/sign-out" style="margin:0"><button type="submit">Sign out</button></form></div>
+</header>
+<main>
+  <div class="breadcrumb"><a class="link" href="mvp-2-meetings.html">Meetings</a> / New meeting</div>
+  <h1>New meeting</h1>
+  <form class="card" method="post" action="/meetings/new" style="width:760px;padding:28px;margin-top:18px">
+    <div class="two-col">
+      <div class="field"><label for="date">Date</label><input id="date" name="date" type="date" value="2026-10-16" required></div>
+      <div class="field"><label for="time">Time</label><input id="time" name="time" type="time" value="10:00" required></div>
+    </div>
+    <div class="field"><label for="title">Title</label><input id="title" name="title" value="Weekly performance meeting" required></div>
+    <div class="field"><label for="chair">Chair</label>
+      <select id="chair" name="chair" required>
+          <option>Mary Tan</option>
+          <option selected>John Lim</option>
+          <option>Alex Wong</option>
+          <option>Sam Ng</option>
+          <option>Priya Rao</option>
+      </select></div>
+    <div class="field"><label for="attendees">Attendees</label>
+      <select id="attendees" name="attendees" multiple size="5">
+          <option selected>Mary Tan</option>
+          <option selected>John Lim</option>
+          <option selected>Alex Wong</option>
+          <option selected>Sam Ng</option>
+          <option selected>Priya Rao</option>
+      </select></div>
+    <div class="field"><label for="teams">Teams meeting link <span class="muted" style="font-weight:400">(optional)</span></label>
+      <input id="teams" name="teams_link" type="url" placeholder="https://teams.microsoft.com/..."></div>
+    <div class="actions"><button class="btn btn-primary" type="submit">Create meeting</button><a class="btn" href="mvp-2-meetings.html">Cancel</a></div>
+  </form>
+</main>
+</body>
+</html>

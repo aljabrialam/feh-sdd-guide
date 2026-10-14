@@ -581,7 +581,7 @@ Business Capability
 Meeting Continuity
 
 Reference
-FEH requirement FR-006; docs/mockup/01-meeting-screen.png group
+FEH requirement FR-006; docs/mockup/mvp-4-meeting-screen.html group
 headings.
 
 Functional Requirements
@@ -733,7 +733,7 @@ Follow-up Visibility
 
 Reference
 FEH requirement FR-009 (overdue is calculated, not a status);
-docs/mockup/01-meeting-screen.png counters and due-date cell.
+docs/mockup/mvp-4-meeting-screen.html counters and due-date cell.
 
 Functional Requirements
 

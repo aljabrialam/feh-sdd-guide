@@ -145,7 +145,7 @@ meeting automatically, so nothing is lost between weeks.''',
   value='''FEH: "open items are easy to lose between weeks". Success measure:
 open actions from earlier meetings appear in the next meeting, 100%.''',
   actors=['Meeting chair', 'Hotel team member'], cap='Meeting Continuity',
-  ref='''FEH requirement FR-006; docs/mockup/01-meeting-screen.png group
+  ref='''FEH requirement FR-006; docs/mockup/mvp-4-meeting-screen.html group
 headings.''',
   frs=['''The system shall show, in every meeting, the hotel's actions from
 earlier meetings that are Open, In progress or Blocked, under the
@@ -181,7 +181,7 @@ overdue. FEH's mockup shows this as red "Overdue by n days" and three
 counters at the top.''',
   actors=['Meeting chair', 'Action owner'], cap='Follow-up Visibility',
   ref='''FEH requirement FR-009 (overdue is calculated, not a status);
-docs/mockup/01-meeting-screen.png counters and due-date cell.''',
+docs/mockup/mvp-4-meeting-screen.html counters and due-date cell.''',
   frs=['''The system shall show an action as overdue when its due date is
 before today in the hotel's time zone and its status is Open, In
 progress or Blocked, with "Overdue by n days" in red.''',
