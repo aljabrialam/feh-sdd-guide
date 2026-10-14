@@ -403,6 +403,7 @@ docs/reference.md. Target screens: docs/mockup/.%s
 mkdir -p ~/Desktop/feh-sdd && cd ~/Desktop/feh-sdd   # Windows: see Step 1 in the guide
 specify init feh-app --integration copilot
 cd feh-app
+specify extension add git      # each /speckit-specify creates the spec's branch
 # docs pack: docs/constitution.md, docs/specs.md, docs/reference.md
 git init -b main && git add -A && git commit -m "chore: spec kit and workshop docs"
 code .

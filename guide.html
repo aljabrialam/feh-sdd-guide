@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261014165927">
+<meta name="build" content="20261014170349">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -436,8 +436,15 @@ ls docs</pre>
     <p class="muted"><b>If it fails:</b> A certificate or download error: run the company network fix on the setup page, or download the docs pack in your browser and unzip it into <code>feh-app</code>.</p>
   </div>
   <div class="step1">
-    <h3><span class="ph">6</span> Save a starting point in Git</h3>
-    <p>Turns the folder into a Git repository and saves everything so far as the first commit. Spec Kit creates a Git branch for every spec, and the commit gives you a clean point to go back to.</p>
+    <h3><span class="ph">6</span> Turn on Spec Kit's Git branches</h3>
+    <p>Spec Kit can give every spec its own Git <b>branch</b> (a separate working copy of the project for that spec), but in current versions this is an add-on you switch on once per project. This line adds it. From now on, each <code>/speckit-specify</code> creates and switches to a new branch named after the spec, such as <code>001-sign-in-hotel-access</code>.</p>
+    <pre data-label="Terminal or PowerShell">specify extension add git</pre>
+    <p class="expect">✓ You should see: a list of git commands such as <code>speckit.git.feature</code>, then "agent skill(s) auto-registered".</p>
+    <p class="muted"><b>If it fails:</b> "No such command 'extension'": your Spec Kit is too old. Run <code>uv tool install --force specify-cli</code>, open a new terminal, and run it again.</p>
+  </div>
+  <div class="step1">
+    <h3><span class="ph">7</span> Save a starting point in Git</h3>
+    <p>Turns the folder into a Git repository and saves everything so far as the first commit. The commit gives you a clean point to go back to; each spec's branch will start from it.</p>
     <pre data-label="Terminal or PowerShell">git init -b main
 git add -A
 git commit -m "Start: Spec Kit and workshop docs"
@@ -446,14 +453,14 @@ git log --oneline</pre>
     <p class="muted"><b>If it fails:</b> "Please tell me who you are": set your Git name and email (step 2 of the laptop setup), then run the commit again.</p>
   </div>
   <div class="step1">
-    <h3><span class="ph">7</span> Open the project in VS Code</h3>
+    <h3><span class="ph">8</span> Open the project in VS Code</h3>
     <p>Opens VS Code on the <code>feh-app</code> folder. It must be this folder, not <code>feh-sdd</code>, or Copilot won't find the Spec Kit commands.</p>
     <pre data-label="Terminal or PowerShell">code .</pre>
     <p class="expect">✓ You should see: VS Code opens, with <code>FEH-APP</code> at the top of the Explorer.</p>
     <p class="muted"><b>If it fails:</b> "code: command not found": see step 3 of the laptop setup, or open VS Code and use File → Open Folder.</p>
   </div>
   <div class="step1">
-    <h3><span class="ph">8</span> Make sure GitHub Copilot is installed and signed in</h3>
+    <h3><span class="ph">9</span> Make sure GitHub Copilot is installed and signed in</h3>
     <p>Copilot Chat is the VS Code extension that runs the Spec Kit commands. If you did step 10 of the <a href="setup.html">laptop setup</a> it's already there; check anyway.</p>
     <ol>
       <li>Click the <b>Extensions</b> icon in the left bar (four squares), or press <b>Cmd + Shift + X</b> on a Mac, <b>Ctrl + Shift + X</b> on Windows.</li>
@@ -466,17 +473,17 @@ git log --oneline</pre>
     <p class="muted"><b>If it fails:</b> "You don't have access to GitHub Copilot": check you signed in with the account you sent us and accepted the GitHub invitation email, then reload the window. Still nothing: tell the facilitator your GitHub username.</p>
   </div>
   <div class="step1">
-    <h3><span class="ph">9</span> Open Copilot Chat in Agent mode</h3>
+    <h3><span class="ph">10</span> Open Copilot Chat in Agent mode</h3>
     <ol>
       <li>Open the chat: press <b>Ctrl + Cmd + I</b> on a Mac or <b>Ctrl + Alt + I</b> on Windows. Or click the <b>chat icon</b> at the top of VS Code, next to the search box, or use the menu <b>View → Chat</b>. The chat opens as a panel on the right.</li>
       <li>Under the box where you type, find the mode dropdown (it may say <b>Ask</b> or <b>Edit</b>). Choose <b>Agent</b>. Spec Kit only works in Agent mode, because Copilot has to create files and run scripts.</li>
       <li>Next to it is the model picker. Choose a mid-range model, not the most expensive one; it keeps you well inside the workshop's AI credits.</li>
     </ol>
     <p class="expect">✓ You should see: the chat panel on the right, showing <b>Agent</b> under the text box.</p>
-    <p class="muted"><b>If it fails:</b> No chat icon or shortcut does nothing: Copilot Chat isn't installed or signed in, so redo step 8. No Agent option: update VS Code (Code → Check for Updates on a Mac, Help → Check for Updates on Windows) and reload.</p>
+    <p class="muted"><b>If it fails:</b> No chat icon or shortcut does nothing: Copilot Chat isn't installed or signed in, so redo step 9. No Agent option: update VS Code (Code → Check for Updates on a Mac, Help → Check for Updates on Windows) and reload.</p>
   </div>
   <div class="step1">
-    <h3><span class="ph">10</span> Check Copilot can see Spec Kit</h3>
+    <h3><span class="ph">11</span> Check Copilot can see Spec Kit</h3>
     <p>In the chat box, type <code>/speckit</code> and wait a moment. Don't press Enter.</p>
     <p class="expect">✓ You should see: a list including <code>/speckit-constitution</code>, <code>/speckit-specify</code> and <code>/speckit-plan</code>. Don't run any of them yet.</p>
     <p class="muted"><b>If it fails:</b> Nothing appears: check the mode is Agent and VS Code is on <code>feh-app</code> (its name is at the top of the Explorer), then run <b>Developer: Reload Window</b> (Cmd/Ctrl + Shift + P).</p>
@@ -489,6 +496,7 @@ git log --oneline</pre>
     <li>GitHub Copilot Chat is installed and signed in (Copilot icon at the bottom, no warning)</li>
     <li>Copilot Chat is open in <b>Agent</b> mode with a mid-range model, and typing <code>/speckit</code> lists the Spec Kit commands</li>
     <li><code>git log --oneline</code> shows one commit, "Start: Spec Kit and workshop docs"</li>
+    <li>The Explorer has <code>.specify/extensions/git</code> (Spec Kit's Git branches are on)</li>
   </ul>
   <div class="warnbox"><b>Don't skip ahead</b><code>constitution.md</code> and <code>specs.md</code> are the answer keys for Day 1. You'll write your own first, then compare.</div>
 </section>
