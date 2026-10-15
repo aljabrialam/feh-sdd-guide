@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="20261014170349">
+<meta name="build" content="20261015051813">
 <meta http-equiv="Cache-Control" content="no-cache">
 <script>/* always show the newest version: if the server has a newer build than this cached copy, load it once */
 (function(){try{var me=document.querySelector('meta[name=build]').content,u=new URL(location.href);
@@ -200,6 +200,29 @@ summary{cursor:pointer;font-weight:600}
 .step1{border:1px solid var(--line);border-radius:12px;padding:4px 18px 10px;margin:14px 0;background:var(--panel)}
 .step1 h3{margin-top:12px}
 .step1 .expect{color:var(--aqua);font-weight:600}
+
+#side .foot.printwrap{border-top:0;padding-top:0}#side .foot .printbtn{width:100%;background:var(--aqua);color:var(--bg);border:0;border-radius:8px;padding:9px 12px;font-weight:700;font-size:14px;text-decoration:none}#side .foot .printbtn:hover{filter:brightness(1.08)}
+/* ---------- print / Save as PDF: every slide, light theme ---------- */
+@media print{
+  @page{size:A4;margin:14mm 12mm}
+  :root{--bg:#ffffff;--panel:#f3f7f6;--panel2:#e9f1ef;--line:#c9d8d5;--text:#10201d;--muted:#4b5f5b;--aqua:#0b6b5d;--dodger:#1559b0;--warn:#8a5a00;--bad:#b42318}
+  html,body{height:auto!important;overflow:visible!important;display:block!important;background:#fff!important;color:var(--text);font-size:11.5pt}
+  #side,#nav,#bar,#menu,.code .copy,.printbtn{display:none!important}
+  #main,#stage{display:block!important;height:auto!important;overflow:visible!important}
+  .slide{display:block!important;max-width:none!important;padding:0 0 8mm!important;break-before:page}
+  .slide:first-of-type{break-before:auto}
+  pre{white-space:pre-wrap!important;word-break:break-word;max-height:none!important;overflow:visible!important}
+  .tall{max-height:none!important}
+  tr,img,.step1,.note,.warnbox{break-inside:avoid}
+  h2,h3{break-after:avoid}
+  .logo,.hero-logo{filter:invert(1) brightness(.2)}
+  a{color:var(--aqua)}
+  .code{background:#f7faf9!important}
+  .code pre{font-size:8.6pt!important;color:#10201d}
+  .lead{color:#33463f!important}
+  #side .brand .wm,.hero-wm,.feh-text{color:#10201d!important}
+  .feh-logo{filter:brightness(0)!important}
+}
 </style>
 </head>
 <body>
@@ -212,6 +235,7 @@ summary{cursor:pointer;font-weight:600}
   </div>
   <nav id="toc"></nav>
   <div class="foot"><span id="doneCount"></span><button id="reset" type="button">Reset progress</button></div>
+  <div class="foot printwrap"><button id="printPdf" class="printbtn" type="button">⬇ Download the whole guide (PDF)</button></div>
   <div class="foot2"><span class="hosts-inline">Facilitated by <a href="https://www.linkedin.com/in/tonypottier/" target="_blank" rel="noopener">Tony Pottier</a> · <a href="https://www.linkedin.com/in/aljabri-alam/" target="_blank" rel="noopener">Aljabri Alam</a></span><br>VISEO Asia · Optimising the present, transforming the future.<br><span class="madeby">Website by <a href="https://www.linkedin.com/in/aljabri-alam/" target="_blank" rel="noopener">Aljabri Alam</a></span></div>
 </aside>
 
@@ -3011,6 +3035,18 @@ function boot() {
   fetch('day2-mvp1.html', { cache: 'no-store' })
     .then(function (r) { return r.ok ? r.text() : ''; })
     .then(done, function () { done(''); });
+})();
+</script>
+<script>
+/* Download as PDF: open every collapsed answer key, then use the browser's Save as PDF */
+(function(){
+  var opened=[];
+  function openAll(){opened=[].filter.call(document.querySelectorAll('details:not([open])'),function(d){d.open=true;return true;});}
+  function restore(){opened.forEach(function(d){d.open=false;});opened=[];}
+  window.addEventListener('beforeprint',openAll);
+  window.addEventListener('afterprint',restore);
+  var b=document.getElementById('printPdf');
+  if(b)b.addEventListener('click',function(){openAll();setTimeout(function(){window.print();},50);});
 })();
 </script>
 </body>
