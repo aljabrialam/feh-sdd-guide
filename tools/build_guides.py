@@ -282,6 +282,33 @@ cd feh-sdd-guide</pre>
   <div class="note"><b>This is the guide, not your app</b>Your app lives in your own <code>feh-app</code> folder, with your specs and commits. Keep that one; this repository only holds the workshop material.</div>
 </section>""" % dict(g=guide_file)
 
+
+def md_to_slide_html(md):
+    import markdown
+    md = re.sub(r'(?m)^((?:   )+)(?=\S)', lambda m: '    ' * (len(m.group(1)) // 3), md)
+    body = markdown.markdown(md, extensions=['tables', 'pymdownx.superfences', 'pymdownx.highlight'],
+                             extension_configs={'pymdownx.highlight': {'use_pygments': False}})
+    body = re.sub(r'<div class="highlight">\s*(<pre.*?</pre>)\s*</div>', r'\1', body, flags=re.S)
+    def fence(m):
+        code = m.group(1)
+        first = code.lstrip()
+        label = 'Prompt · paste into Copilot Chat' if first.startswith('/speckit') else (
+            'Terminal or PowerShell' if re.match(r'(git|npx|uv|cd|python|specify)\b', first) else 'Prompt · copy and adapt')
+        return '<pre data-label="%s">\n%s</pre>' % (label, code.rstrip('\n'))
+    body = re.sub(r'<pre[^>]*><code[^>]*>(.*?)</code></pre>', fence, body, flags=re.S)
+    return body.replace('<h2>', '<h3>').replace('</h2>', '</h3>').replace('<hr />', '')
+
+def playbook_slide():
+    md = rd('starter/docs/spec-squad-prompt-playbook.md').split('\n', 1)[1]
+    return """
+<section class="slide" id="playbook" data-group="After the workshop" data-title="Spec Squad prompt playbook">
+  <p class="eyebrow">After the workshop · for the Spec Squad</p>
+  <h2>Spec Squad prompt playbook</h2>
+  <p class="lead">The series of prompts that built this whole workshop, in order, from framing the engagement to the deployment spec. Reuse them to run Spec-Driven Development on your own projects.</p>
+  <p><a class="btn" href="starter/docs/spec-squad-prompt-playbook.md" download>⬇ Download the playbook (Markdown)</a> It is also in the docs pack as <code>docs/spec-squad-prompt-playbook.md</code>.</p>
+%s
+</section>""" % md_to_slide_html(md)
+
 def put_after(s, after_id, sid, html_):
     if '<section class="slide" id="%s"' % sid in s:
         return replace(s, sid, html_)
@@ -313,6 +340,7 @@ i, _ = bounds(d2, 'x002'); _, j = bounds(d2, 'x007')
 d2 = d2[:i] + '\n\n'.join(x.strip() for x in X2) + d2[j:]
 d2 = put_after(d2, 'gotchas', 'deploy', deploy_slide('005-overdue-and-counts', 'MVP 2', 'mvp/'))
 d2 = put_after(d2, 'deploy', 'clone', clone_slide('guide.html'))
+d2 = put_after(d2, 'clone', 'playbook', playbook_slide())
 d2 = d2.replace('<a href="#gotchas">Gotchas</a><a href="guide.html">', '<a href="#gotchas">Gotchas</a><a href="#deploy">Deploy</a><a href="#clone">Clone</a><a href="guide.html">')
 wr('day2.html', d2)
 
@@ -492,7 +520,7 @@ i, _ = bounds(d, 'x002')
 _, j = bounds(d, 'x007')
 d = d[:i] + '\n\n'.join(x.strip() for x in X) + d[j:]
 d = re.sub(r'<nav class="jump" aria-label="Day 2 sections">.*?</nav>',
-           '<nav class="jump" aria-label="Day 2 sections"><a href="mvp1/" target="_blank" rel="noopener">MVP 1 mockup</a><a href="#x002">002</a><a href="#x003">003</a><a href="#x004">004</a><a href="#x005">005</a><a href="#x006">006</a><a href="#azure">Azure</a><a href="#x007">007 stretch</a><a href="#change">Change</a><a href="#demo">Demo</a><a href="#gotchas">Gotchas</a><a href="#deploy">Deploy</a><a href="#clone">Clone</a><a href="guide-mvp1.html">Full guide</a></nav>', d, flags=re.S)
+           '<nav class="jump" aria-label="Day 2 sections"><a href="mvp1/" target="_blank" rel="noopener">MVP 1 mockup</a><a href="#x002">002</a><a href="#x003">003</a><a href="#x004">004</a><a href="#x005">005</a><a href="#x006">006</a><a href="#azure">Azure</a><a href="#x007">007 stretch</a><a href="#change">Change</a><a href="#demo">Demo</a><a href="#gotchas">Gotchas</a><a href="#deploy">Deploy</a><a href="#clone">Clone</a><a href="#playbook">Playbook</a><a href="guide-mvp1.html">Full guide</a></nav>', d, flags=re.S)
 d = d.replace('<title>', '<title>MVP 1 · ', 1)
 DEMO = '''
 <section class="slide" id="demo" data-group="Day 2 · Build" data-title="Final demo">
@@ -529,5 +557,6 @@ if '<section class="slide" id="bbuild"' in d:
     d = remove(d, 'bbuild')
 d = put_after(d, 'gotchas', 'deploy', deploy_slide('006-review-and-confirm', 'MVP 1', 'mvp1/'))
 d = put_after(d, 'deploy', 'clone', clone_slide('guide-mvp1.html'))
+d = put_after(d, 'clone', 'playbook', playbook_slide())
 wr('day2-mvp1.html', d)
 print('guide.html refreshed; wrote guide-mvp1.html and day2-mvp1.html')

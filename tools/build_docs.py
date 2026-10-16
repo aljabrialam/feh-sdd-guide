@@ -25,7 +25,7 @@ with zipfile.ZipFile(out2, 'w', zipfile.ZIP_DEFLATED) as z:
 shared = os.path.join(root, 'docs')
 out1 = os.path.join(root, 'feh-sdd-docs-mvp1.zip')
 with zipfile.ZipFile(out1, 'w', zipfile.ZIP_DEFLATED) as z:
-    for f in ['constitution.md', 'reference.md', 'feh-requirements.md', 'deployment-spec.md',
+    for f in ['constitution.md', 'reference.md', 'feh-requirements.md', 'deployment-spec.md', 'spec-squad-prompt-playbook.md',
               'mockup/01-meeting-screen.png', 'mockup/03-item-detail.png']:
         z.write(os.path.join(shared, f), 'docs/' + f)
     add_tree(z, os.path.join(root, 'mvp1', 'docs'), 'docs')
