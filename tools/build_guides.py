@@ -206,6 +206,40 @@ def exec_slide(s, group, eyebrow, prev=None, with_specify=False, full_run=False,
                      g2=gate_steps(s['id'], 'G2'), g3=gate_steps(s['id'], 'G3', commit=False))
 
 
+
+# ---------------------------------------------------------------- deployment spec slide (both tracks)
+def deploy_slide(prev_branch, track, mock):
+    import markdown
+    md = rd('starter/docs/deployment-spec.md')
+    md = md.split('\n', 1)[1]                      # drop the H1: the slide has its own title
+    md = md.replace('<last accepted branch, e.g. 006-review-and-confirm>', prev_branch)
+    # python-markdown nests list content at 4 spaces; the spec is written with 3
+    md = re.sub(r'(?m)^((?:   )+)(?=\S)', lambda m: '    ' * (len(m.group(1)) // 3), md)
+    body = markdown.markdown(md, extensions=['tables', 'pymdownx.superfences', 'pymdownx.highlight'],
+                             extension_configs={'pymdownx.highlight': {'use_pygments': False}})
+    body = re.sub(r'<div class="highlight">\s*(<pre.*?</pre>)\s*</div>', r'\1', body, flags=re.S)
+    def fence(m):
+        code = m.group(1)
+        label = 'Prompt · paste into Copilot Chat' if code.lstrip().startswith('/speckit') else 'Terminal or PowerShell'
+        return '<pre data-label="%s">\n%s</pre>' % (label, code.rstrip('\n'))
+    body = re.sub(r'<pre[^>]*><code[^>]*>(.*?)</code></pre>', fence, body, flags=re.S)
+    body = body.replace('<h2>', '<h3>').replace('</h2>', '</h3>').replace('<h3>', '<h3>', 1)
+    body = re.sub(r'<h3>([^<]*)</h3>(?=\s*<p>)', r'<h3>\1</h3>', body)
+    body = body.replace('<hr />', '')
+    return """
+<section class="slide" id="deploy" data-group="After the workshop" data-title="Deployment spec">
+  <p class="eyebrow">After the workshop · spec 008 · %s</p>
+  <h2>Deployment spec</h2>
+  <p class="lead">Put the accepted MVP online as a private demo on Vercel, so FEH can open it from any laptop or phone. Same Spec Kit cycle as every other spec: amend the constitution, specify, clarify, G1, plan, G2, implement, G3. Compare the result with the <a href="%s" target="_blank" rel="noopener">interactive mockup</a>.</p>
+  <p><a class="btn" href="starter/docs/deployment-spec.md" download>⬇ Download the deployment spec (Markdown)</a> It is also in your project as <code>docs/deployment-spec.md</code> if you downloaded the docs pack after 16 Oct.</p>
+%s
+</section>""" % (track, mock, body)
+def put_after(s, after_id, sid, html_):
+    if '<section class="slide" id="%s"' % sid in s:
+        return replace(s, sid, html_)
+    _, j = bounds(s, after_id)
+    return s[:j] + '\n\n' + html_.strip() + s[j:]
+
 # ---------------------------------------------------------------- 1. MVP 2 refresh
 CONST = rd('starter/docs/constitution.md')
 REF = rd('starter/docs/reference.md')
@@ -229,6 +263,8 @@ X2 = [exec_slide(S2['002'], 'Day 2 · Execute', 'Day 2 · 9:00 · execute (finis
       exec_slide(S2['007'], 'Day 2 · Stretch', 'Day 2 · stretch, after 006 or instead of it', with_specify=True, mock='mvp/')]
 i, _ = bounds(d2, 'x002'); _, j = bounds(d2, 'x007')
 d2 = d2[:i] + '\n\n'.join(x.strip() for x in X2) + d2[j:]
+d2 = put_after(d2, 'gotchas', 'deploy', deploy_slide('005-overdue-and-counts', 'MVP 2', 'mvp/'))
+d2 = d2.replace('<a href="#gotchas">Gotchas</a><a href="guide.html">', '<a href="#gotchas">Gotchas</a><a href="#deploy">Deploy</a><a href="guide.html">')
 wr('day2.html', d2)
 
 # ---------------------------------------------------------------- 2. MVP 1 guide
@@ -407,7 +443,7 @@ i, _ = bounds(d, 'x002')
 _, j = bounds(d, 'x007')
 d = d[:i] + '\n\n'.join(x.strip() for x in X) + d[j:]
 d = re.sub(r'<nav class="jump" aria-label="Day 2 sections">.*?</nav>',
-           '<nav class="jump" aria-label="Day 2 sections"><a href="mvp1/" target="_blank" rel="noopener">MVP 1 mockup</a><a href="#x002">002</a><a href="#x003">003</a><a href="#x004">004</a><a href="#x005">005</a><a href="#x006">006</a><a href="#azure">Azure</a><a href="#x007">007 stretch</a><a href="#change">Change</a><a href="#demo">Demo</a><a href="#gotchas">Gotchas</a><a href="guide-mvp1.html">Full guide</a></nav>', d, flags=re.S)
+           '<nav class="jump" aria-label="Day 2 sections"><a href="mvp1/" target="_blank" rel="noopener">MVP 1 mockup</a><a href="#x002">002</a><a href="#x003">003</a><a href="#x004">004</a><a href="#x005">005</a><a href="#x006">006</a><a href="#azure">Azure</a><a href="#x007">007 stretch</a><a href="#change">Change</a><a href="#demo">Demo</a><a href="#gotchas">Gotchas</a><a href="#deploy">Deploy</a><a href="guide-mvp1.html">Full guide</a></nav>', d, flags=re.S)
 d = d.replace('<title>', '<title>MVP 1 · ', 1)
 DEMO = '''
 <section class="slide" id="demo" data-group="Day 2 · Build" data-title="Final demo">
@@ -442,5 +478,6 @@ gt = rep(gt, '    <tr><td><b>Spec Kit commands vanish or change</b>', '''    <tr
 d = replace(d, 'gotchas', gt)
 if '<section class="slide" id="bbuild"' in d:
     d = remove(d, 'bbuild')
+d = put_after(d, 'gotchas', 'deploy', deploy_slide('006-review-and-confirm', 'MVP 1', 'mvp1/'))
 wr('day2-mvp1.html', d)
 print('guide.html refreshed; wrote guide-mvp1.html and day2-mvp1.html')
