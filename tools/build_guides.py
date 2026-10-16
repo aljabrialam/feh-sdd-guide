@@ -234,6 +234,54 @@ def deploy_slide(prev_branch, track, mock):
   <p><a class="btn" href="starter/docs/deployment-spec.md" download>⬇ Download the deployment spec (Markdown)</a> It is also in your project as <code>docs/deployment-spec.md</code> if you downloaded the docs pack after 16 Oct.</p>
 %s
 </section>""" % (track, mock, body)
+
+def clone_slide(guide_file):
+    return """
+<section class="slide" id="clone" data-group="After the workshop" data-title="Get this guide on your laptop">
+  <p class="eyebrow">After the workshop · keep everything</p>
+  <h2>Get this guide on your laptop</h2>
+  <p class="lead">Everything on this site, the guides for both tracks, the interactive mockups, the docs packs and the deployment spec, lives in one GitHub repository. Clone it to keep a copy that works offline and to see updates later.</p>
+
+  <div class="step1">
+    <h3><span class="ph">1</span> Go to a folder for it</h3>
+    <p>For example your Desktop, next to <code>feh-sdd</code>.</p>
+    <pre data-label="Mac · Terminal">cd ~/Desktop</pre>
+    <pre data-label="Windows · PowerShell">cd ([Environment]::GetFolderPath('Desktop'))</pre>
+  </div>
+  <div class="step1">
+    <h3><span class="ph">2</span> Clone the repository</h3>
+    <pre data-label="Terminal or PowerShell">git clone https://github.com/aljabrialam/feh-sdd-guide.git
+cd feh-sdd-guide</pre>
+    <p class="expect">✓ You should see: "Cloning into 'feh-sdd-guide'…" and then "done". The prompt now ends in <code>feh-sdd-guide</code>.</p>
+    <p class="muted"><b>If it fails:</b> a certificate error: run the company network fix on the <a href="setup.html#company-network">setup page</a>. No Git at all: on the <a href="https://github.com/aljabrialam/feh-sdd-guide" target="_blank" rel="noopener">repository page</a> click <b>Code → Download ZIP</b> and unzip it.</p>
+  </div>
+  <div class="step1">
+    <h3><span class="ph">3</span> Open the guide</h3>
+    <p>Start a small local web server in the folder. The guide needs one, because it loads the Day 2 slides as a separate file.</p>
+    <pre data-label="Mac · Terminal">python3 -m http.server 8080</pre>
+    <pre data-label="Windows · PowerShell">python -m http.server 8080</pre>
+    <p>Then open <code>http://localhost:8080/%(g)s</code> in Chrome. Press <b>Ctrl + C</b> in the terminal to stop the server.</p>
+    <p class="expect">✓ You should see: this guide, with every Day 2 slide, running from your own laptop.</p>
+    <p class="muted">Double-clicking <code>%(g)s</code> also opens it, but without the Day 2 slides.</p>
+  </div>
+  <div class="step1">
+    <h3><span class="ph">4</span> Get updates later</h3>
+    <p>Inside <code>feh-sdd-guide</code>:</p>
+    <pre data-label="Terminal or PowerShell">git pull</pre>
+  </div>
+
+  <h3>What's inside</h3>
+  <table>
+    <tr><th>File or folder</th><th>What it is</th></tr>
+    <tr><td><code>guide-mvp1.html</code>, <code>day2-mvp1.html</code></td><td>The MVP 1 · Voice capture guide</td></tr>
+    <tr><td><code>guide.html</code>, <code>day2.html</code></td><td>The MVP 2 · Meeting action tracker guide</td></tr>
+    <tr><td><code>mvp1/</code>, <code>mvp/</code></td><td>The interactive mockups for each track</td></tr>
+    <tr><td><code>starter/docs/</code></td><td>Constitution, reference, run sheets, mockups and <code>deployment-spec.md</code></td></tr>
+    <tr><td><code>starter/*.zip</code></td><td>The docs packs from Step 1</td></tr>
+  </table>
+  <div class="note"><b>This is the guide, not your app</b>Your app lives in your own <code>feh-app</code> folder, with your specs and commits. Keep that one; this repository only holds the workshop material.</div>
+</section>""" % dict(g=guide_file)
+
 def put_after(s, after_id, sid, html_):
     if '<section class="slide" id="%s"' % sid in s:
         return replace(s, sid, html_)
@@ -264,7 +312,8 @@ X2 = [exec_slide(S2['002'], 'Day 2 · Execute', 'Day 2 · 9:00 · execute (finis
 i, _ = bounds(d2, 'x002'); _, j = bounds(d2, 'x007')
 d2 = d2[:i] + '\n\n'.join(x.strip() for x in X2) + d2[j:]
 d2 = put_after(d2, 'gotchas', 'deploy', deploy_slide('005-overdue-and-counts', 'MVP 2', 'mvp/'))
-d2 = d2.replace('<a href="#gotchas">Gotchas</a><a href="guide.html">', '<a href="#gotchas">Gotchas</a><a href="#deploy">Deploy</a><a href="guide.html">')
+d2 = put_after(d2, 'deploy', 'clone', clone_slide('guide.html'))
+d2 = d2.replace('<a href="#gotchas">Gotchas</a><a href="guide.html">', '<a href="#gotchas">Gotchas</a><a href="#deploy">Deploy</a><a href="#clone">Clone</a><a href="guide.html">')
 wr('day2.html', d2)
 
 # ---------------------------------------------------------------- 2. MVP 1 guide
@@ -443,7 +492,7 @@ i, _ = bounds(d, 'x002')
 _, j = bounds(d, 'x007')
 d = d[:i] + '\n\n'.join(x.strip() for x in X) + d[j:]
 d = re.sub(r'<nav class="jump" aria-label="Day 2 sections">.*?</nav>',
-           '<nav class="jump" aria-label="Day 2 sections"><a href="mvp1/" target="_blank" rel="noopener">MVP 1 mockup</a><a href="#x002">002</a><a href="#x003">003</a><a href="#x004">004</a><a href="#x005">005</a><a href="#x006">006</a><a href="#azure">Azure</a><a href="#x007">007 stretch</a><a href="#change">Change</a><a href="#demo">Demo</a><a href="#gotchas">Gotchas</a><a href="#deploy">Deploy</a><a href="guide-mvp1.html">Full guide</a></nav>', d, flags=re.S)
+           '<nav class="jump" aria-label="Day 2 sections"><a href="mvp1/" target="_blank" rel="noopener">MVP 1 mockup</a><a href="#x002">002</a><a href="#x003">003</a><a href="#x004">004</a><a href="#x005">005</a><a href="#x006">006</a><a href="#azure">Azure</a><a href="#x007">007 stretch</a><a href="#change">Change</a><a href="#demo">Demo</a><a href="#gotchas">Gotchas</a><a href="#deploy">Deploy</a><a href="#clone">Clone</a><a href="guide-mvp1.html">Full guide</a></nav>', d, flags=re.S)
 d = d.replace('<title>', '<title>MVP 1 · ', 1)
 DEMO = '''
 <section class="slide" id="demo" data-group="Day 2 · Build" data-title="Final demo">
@@ -479,5 +528,6 @@ d = replace(d, 'gotchas', gt)
 if '<section class="slide" id="bbuild"' in d:
     d = remove(d, 'bbuild')
 d = put_after(d, 'gotchas', 'deploy', deploy_slide('006-review-and-confirm', 'MVP 1', 'mvp1/'))
+d = put_after(d, 'deploy', 'clone', clone_slide('guide-mvp1.html'))
 wr('day2-mvp1.html', d)
 print('guide.html refreshed; wrote guide-mvp1.html and day2-mvp1.html')
